@@ -1,0 +1,159 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="WebForms.Site" %>
+
+<!DOCTYPE html>
+
+<html>
+
+<head runat="server">
+    <title><%: Page.Title %></title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="Content/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="Content/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="Content/favicon-16x16.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/Style.css" />
+    <link rel="stylesheet" href="Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="Content/bootstrap-icons.min.css" />
+    <asp:ContentPlaceHolder ID="HeadPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+</head>
+
+<body>
+    <form id="form1" runat="server">
+
+        <%--MENU--%>
+
+        <header>
+            <nav class="navbar navbar-expand-lg bg-body-tertiary py-4">
+                <div class="container">
+                    <a class="navbar-brand" href="/">TPC Equipo 16</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse justify-content-end navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="Home.aspx">Tienda</a>
+                            </li>
+                        </ul>
+                        <div class="d-flex">
+                            <button type="button" class="btn me-md-4 mt-2 position-relative" data-bs-toggle="offcanvas" data-bs-target="#cartList">
+                                <i class="bi bi-bag"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"><%:_productSets.Count()%>
+                                    <span class="visually-hidden">Productos en el carrito</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <%--BODY--%>
+
+        <div>
+            <asp:ContentPlaceHolder ID="BodyPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+        </div>
+
+        <%--CART--%>
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="cartList" aria-labelledby="cartListLabel">
+            <div class="offcanvas-header">
+                <h5 id="cartListLabel">Tu Carrito (<%:_productSets.Count()%>)</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <% 
+                if (_productSets.Count == 0)
+                {
+            %>
+            <div class="d-flex flex-column align-items-center">
+                <div class="col-6">
+                    <p class="text-center">Nada por aqui...</p>
+                </div>
+                <div class="col-6">
+                    <img src="Content/img/add-to-cart.svg" class="img-fluid" />
+                </div>
+            </div>
+            <%
+                }
+                else
+                {
+            %>
+            <ul class="list-group list-group-lg list-group-flush mb-auto">
+                <%
+                    decimal total = 0;
+
+                    foreach (ProductSet productSet in _productSets)
+                    {
+                        string imageUrl = "Content/img/placeholder.jpg";
+                        total += productSet.Price * productSet.Amount;
+                        if (0 < productSet.Images.Count)
+                        {
+                            imageUrl = productSet.Images[0].Url;
+                        }
+
+                %>
+                <li class="list-group-item">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <a href="ViewProduct.aspx?id=<%:productSet.Id%>">
+                                <img class="img-fluid" src="<%:imageUrl%>" alt="Imagen de <%:productSet.Name%>" onerror="this.src='Content/img/placeholder.jpg'">
+                            </a>
+                        </div>
+                        <div class="col-8">
+                            <p class="fs-sm fw-bold mb-6">
+                                <a class="text-body text-decoration-none" href="ProductReg.aspx?id=id"><%:productSet.Name%></a>
+                                <br>
+                                <span class="text-muted">$<%:productSet.Price .ToString("0.00")%></span>
+                                <br>
+                                <span class="fw-normal">Cantidad:<%:productSet.Amount%></span>
+                                <br>
+                                <strong>Subtotal Item:</strong>
+                                <strong class="ms-auto">$ <%:productSet.Subtotal .ToString("0.00")%></strong>
+
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <%
+                    } // cierre foreach
+                %>
+            </ul>
+            <div class="p-4 d-flex justify-content-between fs-sm bg-light mt-4">
+                <strong>Total:</strong>
+                <strong class="ms-auto">$ <%:total.ToString("0.00")%></strong>
+            </div>
+            <div class="d-flex p-4">
+                <a class="btn btn-primary w-100" href="ProductsCartForm.aspx">Ir al carrito
+                </a>
+            </div>
+            <%
+                } // cierre bloque if
+            %>
+        </div>
+
+        <%--FOOTER--%>
+
+        <div class="bg-body-tertiary mt-auto">
+            <footer class="container-xxl py-3 my-4">
+                <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                    <li class="nav-item"><a href="Default.aspx" class="nav-link px-2 text-body-secondary">Tienda</a></li>
+                    <li class="nav-item"><a href="ProductsCartForm.aspx" class="nav-link px-2 text-body-secondary">Ir al carrito</a></li>
+                    <li class="nav-item"><a href="#mainForm" class="nav-link px-2 text-body-secondary">Ir arriba</a></li>
+                </ul>
+                <div class="d-flex align-items-center justify-content-between">
+                    <p class="text-center mb-0 text-body-secondary">© 2024 TP Web - Equipo 16</p>
+                    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                        <li class="ms-3">
+                            <a class="text-body-secondary fs-4" href="https://github.com/FacuMasino/tp-web-equipo-16" target="_blank"><i class="bi bi-github"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+        </div>
+
+    </form>
+</body>
+
+</html>

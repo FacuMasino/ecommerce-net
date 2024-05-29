@@ -1,0 +1,76 @@
+﻿body {
+    font-family: 'Jost', sans-serif !important;
+}
+
+.list-group.custom-list-group {
+    --bs-list-group-item-padding-y: 1rem !important;
+}
+
+.column-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.half-vh {
+    height: 50vh;
+}
+
+.text-align-center {
+    text-align: center
+}
+
+.carousel img {
+    height: 50vh;
+    width: 100%;
+    object-position: center;
+}
+
+.itemcount {
+    align-content: center;
+    align-items: center;
+    border-radius: .25rem;
+    display: inline-flex;
+}
+
+.itemcount-control {
+    border: 0;
+    line-height: 2;
+}
+
+.itemcount input.itemcount-control {
+    text-align: center;
+    width: 3rem;
+}
+
+.itemcount-control.minus {
+    border-radius: .25rem 0 0 .25rem;
+}
+
+.itemcount-control.plus {
+    border-radius: .25rem .25rem .25rem 0;
+}
+
+.itemcount input.itemcount-control[type=number] {
+    appearance: textfield;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.itemcount input.itemcount-control::-webkit-outer-spin-button, ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.fs-lg {
+    font-size: 1.125rem !important;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.invalid .invalid-feedback {
+    display: block !important;
+}
