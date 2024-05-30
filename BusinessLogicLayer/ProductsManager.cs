@@ -254,7 +254,7 @@ namespace BusinessLogicLayer
                     if (image.Id == 0) // si es una imagen nueva, se agrega y obtiene id
                     {
                         _imagesManager.Add(image, productId);
-                        image.Id = Helper.GetLastId("imagenes");
+                        image.Id = Helper.GetLastId("Images");
                     }
                     else // sino se edita solamente
                     {

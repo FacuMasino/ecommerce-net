@@ -4,18 +4,18 @@
     {
         public int Id { get; set; }
 
-        public string Description { get; set; }
+        public string Name { get; set; }
 
         public Category()
         {
-            Description = "";
+            Name = "";
         }
 
         public override string ToString()
         {
-            if (Description != null)
+            if (Name != null)
             {
-                return Description;
+                return Name;
             }
             else
             {

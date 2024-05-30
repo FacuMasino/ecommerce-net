@@ -25,8 +25,8 @@ namespace BusinessLogicLayer
 
                     category.Id = (int)_dataAccess.Reader["CategoryId"];
 
-                    category.Description = _dataAccess.Reader["CategoryDescription"]?.ToString();
-                    category.Description = category.Description ?? "";
+                    category.Name = _dataAccess.Reader["CategoryDescription"]?.ToString();
+                    category.Name = category.Name ?? "";
 
                     categories.Add(category);
                 }
@@ -57,8 +57,8 @@ namespace BusinessLogicLayer
                 {
                     category.Id = categoryId;
 
-                    category.Description = _dataAccess.Reader["CategoryDescription"]?.ToString();
-                    category.Description = category.Description ?? "";
+                    category.Name = _dataAccess.Reader["CategoryDescription"]?.ToString();
+                    category.Name = category.Name ?? "";
                 }
             }
             catch (Exception ex)
@@ -157,7 +157,7 @@ namespace BusinessLogicLayer
             catch (Exception ex)
             {
                 throw new Exception(
-                    $"Ocurrió un error al verificar si la categoría {category?.Description} existe.",
+                    $"Ocurrió un error al verificar si la categoría {category?.Name} existe.",
                     ex
                 );
             }
@@ -179,7 +179,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery("select CategoryId from Categories where CategoryDescription = @CategoryDescription");
-                _dataAccess.SetParameter("@CategoryDescription", category.Description);
+                _dataAccess.SetParameter("@CategoryDescription", category.Name);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
@@ -201,9 +201,9 @@ namespace BusinessLogicLayer
 
         private void SetParameters(Category category)
         {
-            if (category.Description != null)
+            if (category.Name != null)
             {
-                _dataAccess.SetParameter("@CategoryDescription", category.Description);
+                _dataAccess.SetParameter("@CategoryDescription", category.Name);
             }
         }
     }

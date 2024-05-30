@@ -24,8 +24,8 @@ namespace BusinessLogicLayer
                     Brand brand = new Brand();
 
                     brand.Id = (int)_dataAccess.Reader["BrandId"];
-                    brand.Description = _dataAccess.Reader["BrandDescription"]?.ToString();
-                    brand.Description = brand.Description ?? "";
+                    brand.Name = _dataAccess.Reader["BrandDescription"]?.ToString();
+                    brand.Name = brand.Name ?? "";
 
                     brands.Add(brand);
                 }
@@ -56,8 +56,8 @@ namespace BusinessLogicLayer
                 {
                     brand.Id = brandId;
 
-                    brand.Description = _dataAccess.Reader["BrandDescription"]?.ToString();
-                    brand.Description = brand.Description ?? "";
+                    brand.Name = _dataAccess.Reader["BrandDescription"]?.ToString();
+                    brand.Name = brand.Name ?? "";
                 }
             }
             catch (Exception ex)
@@ -139,7 +139,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery("select BrandId from Brands where BrandDescription = @BrandDescription");
-                _dataAccess.SetParameter("@BrandDescription", brand.Description);
+                _dataAccess.SetParameter("@BrandDescription", brand.Name);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
@@ -186,7 +186,7 @@ namespace BusinessLogicLayer
             catch (Exception ex)
             {
                 throw new Exception(
-                    $"Ocurrió un error al verificar si la marca {brand?.Description} existe.",
+                    $"Ocurrió un error al verificar si la marca {brand?.Name} existe.",
                     ex
                 );
             }
@@ -198,9 +198,9 @@ namespace BusinessLogicLayer
 
         private void SetParameters(Brand brand)
         {
-            if (brand.Description != null)
+            if (brand.Name != null)
             {
-                _dataAccess.SetParameter("@BrandDescription", brand.Description);
+                _dataAccess.SetParameter("@BrandDescription", brand.Name);
             }
         }
     }

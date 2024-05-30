@@ -14,11 +14,11 @@ namespace DomainModelLayer
         [DisplayName("Nombre")]
         public string Name { get; set; }
 
-        [DisplayName("Precio")]
-        public decimal Price { get; set; }
-
         [DisplayName("Descripción")]
         public string Description { get; set; }
+
+        [DisplayName("Precio")]
+        public decimal Price { get; set; }
 
         [DisplayName("Marca")]
         public Brand Brand { get; set; }

@@ -11,8 +11,6 @@
             this._url = url;
         }
 
-        public Image() { }
-
         public int Id
         {
             get { return _id; }
@@ -24,5 +22,7 @@
             get { return _url; }
             set { _url = value; }
         }
+
+        public Image() { }
     }
 }
