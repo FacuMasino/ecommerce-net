@@ -50,12 +50,12 @@ go
 
 create table Products(
 	ProductId int primary key identity(1,1) not null,
-	Code varchar(50) not null,
+	Code varchar(50) null,
 	ProductName varchar(50) not null,
 	ProductDescription varchar(150) null,
 	Price decimal(15,2) not null,
-	BrandId int foreign key references Brands(BrandId) not null,
-	CategoryId int foreign key references Categories(CategoryId) not null
+	BrandId int foreign key references Brands(BrandId) null,
+	CategoryId int foreign key references Categories(CategoryId) null
 )
 go
 

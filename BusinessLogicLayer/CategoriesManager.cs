@@ -16,17 +16,17 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select Id, Descripcion from Categorias");
+                _dataAccess.SetQuery("select CategoryId, CategoryDescription from Categories");
                 _dataAccess.ExecuteRead();
 
                 while (_dataAccess.Reader.Read())
                 {
                     Category category = new Category();
 
-                    category.Id = (int)_dataAccess.Reader["Id"];
+                    category.Id = (int)_dataAccess.Reader["CategoryId"];
 
-                    category.Description = _dataAccess.Reader["Descripcion"]?.ToString();
-                    category.Description = category.Description ?? ""; // Si es null asigna cadena vacía
+                    category.Description = _dataAccess.Reader["CategoryDescription"]?.ToString();
+                    category.Description = category.Description ?? "";
 
                     categories.Add(category);
                 }
@@ -43,21 +43,21 @@ namespace BusinessLogicLayer
             return categories;
         }
 
-        public Category Read(int id)
+        public Category Read(int categoryId)
         {
             Category category = new Category();
 
             try
             {
-                _dataAccess.SetQuery("select Descripcion from Categorias where Id = @Id");
-                _dataAccess.SetParameter("@Id", id);
+                _dataAccess.SetQuery("select CategoryDescription from Categories where CategoryId = @CategoryId");
+                _dataAccess.SetParameter("@CategoryId", categoryId);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
                 {
-                    category.Id = id;
+                    category.Id = categoryId;
 
-                    category.Description = _dataAccess.Reader["Descripcion"]?.ToString();
+                    category.Description = _dataAccess.Reader["CategoryDescription"]?.ToString();
                     category.Description = category.Description ?? "";
                 }
             }
@@ -77,7 +77,7 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery("insert into Categorias (Descripcion) values (@Descripcion)");
+                _dataAccess.SetQuery("insert into Categories (CategoryDescription) values (@CategoryDescription)");
                 SetParameters(category);
                 _dataAccess.ExecuteAction();
             }
@@ -96,9 +96,9 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "update Categorias set Descripcion = @Descripcion where Id = @Id"
+                    "update Categories set CategoryDescription = @CategoryDescription where CategoryId = @CategoryId"
                 );
-                _dataAccess.SetParameter("@Id", category.Id);
+                _dataAccess.SetParameter("@CategoryId", category.Id);
                 SetParameters(category);
                 _dataAccess.ExecuteAction();
             }
@@ -116,8 +116,8 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery("delete from Categorias where Id = @Id");
-                _dataAccess.SetParameter("@Id", category.Id);
+                _dataAccess.SetQuery("delete from Categories where CategoryId = @CategoryId");
+                _dataAccess.SetParameter("@CategoryId", category.Id);
                 _dataAccess.ExecuteAction();
             }
             catch (Exception ex)
@@ -149,7 +149,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "select COUNT(*) as Total from Articulos where IdCategoria = @CategoryId"
+                    "select count(*) as Total from Products where CategoryId = @CategoryId"
                 );
                 _dataAccess.SetParameter("@CategoryId", category.Id);
                 return _dataAccess.ExecuteScalar() > 0;
@@ -178,13 +178,13 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select Id from Categorias where Descripcion = @Descripcion");
-                _dataAccess.SetParameter("@Descripcion", category.Description);
+                _dataAccess.SetQuery("select CategoryId from Categories where CategoryDescription = @CategoryDescription");
+                _dataAccess.SetParameter("@CategoryDescription", category.Description);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
                 {
-                    id = (int)_dataAccess.Reader["Id"];
+                    id = (int)_dataAccess.Reader["CategoryId"];
                 }
             }
             catch (Exception ex)
@@ -203,7 +203,7 @@ namespace BusinessLogicLayer
         {
             if (category.Description != null)
             {
-                _dataAccess.SetParameter("@Descripcion", category.Description);
+                _dataAccess.SetParameter("@CategoryDescription", category.Description);
             }
         }
     }

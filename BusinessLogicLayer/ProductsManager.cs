@@ -16,7 +16,7 @@ namespace BusinessLogicLayer
 
         public List<Product> List()
         {
-            List<Product> Products = new List<Product>();
+            List<Product> products = new List<Product>();
 
             try
             {
@@ -25,25 +25,16 @@ namespace BusinessLogicLayer
 
                 while (_dataAccess.Reader.Read())
                 {
-                    Product Product = new Product();
-
-                    Product.Id = (int)_dataAccess.Reader["Id"];
-
-                    Product.Code = _dataAccess.Reader["Codigo"]?.ToString();
-                    Product.Name = _dataAccess.Reader["Nombre"]?.ToString();
-                    Product.Description = _dataAccess.Reader["Descripcion"]?.ToString();
-
-                    /*Acá intenta convertir IdMarca a un int "Nullable" si es null, entonces el operador ?.
-                     * va a evaluar la expresión de la derecha y se queda con Product.Brand.Id
-                     * , sino se asigna el IdMarca obtenido */
-                    Product.Brand.Id = _dataAccess.Reader["IdMarca"] as int? ?? Product.Brand.Id;
-                    Product.Category.Id =
-                        _dataAccess.Reader["IdCategoria"] as int? ?? Product.Category.Id;
-                    Product.Price = _dataAccess.Reader["Precio"] as decimal? ?? Product.Price;
-
-                    Product.Images = _imagesManager.List(Product.Id);
-
-                    Products.Add(Product);
+                    Product product = new Product();
+                    product.Id = (int)_dataAccess.Reader["ProductId"];
+                    product.Code = _dataAccess.Reader["Code"]?.ToString();
+                    product.Name = _dataAccess.Reader["ProductName"]?.ToString();
+                    product.Description = _dataAccess.Reader["ProductDescription"]?.ToString();
+                    product.Price = _dataAccess.Reader["Price"] as decimal? ?? product.Price;
+                    product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
+                    product.Category.Id = _dataAccess.Reader["CategoryId"] as int? ?? product.Category.Id;
+                    product.Images = _imagesManager.List(product.Id);
+                    products.Add(product);
                 }
             }
             catch (Exception ex)
@@ -55,43 +46,34 @@ namespace BusinessLogicLayer
                 _dataAccess.CloseConnection();
             }
 
-            foreach (Product Product in Products)
+            foreach (Product product in products)
             {
-                Product.Brand = _brandsManager.Read(Product.Brand.Id);
-                Product.Category = _categoriesManager.Read(Product.Category.Id);
+                product.Brand = _brandsManager.Read(product.Brand.Id);
+                product.Category = _categoriesManager.Read(product.Category.Id);
             }
 
-            return Products;
+            return products;
         }
 
-        public Product Read(int id)
+        public Product Read(int productId)
         {
             Product Product = new Product();
 
             try
             {
-                _dataAccess.SetQuery(
-                    "select Codigo, Nombre, Descripcion, IdMarca, IdCategoria, Precio from Articulos where Id = @Id"
-                );
-                _dataAccess.SetParameter("@Id", id);
+                _dataAccess.SetQuery("select Code, ProductName, ProductDescription, Price, BrandId, CategoryId from Products where ProductId = @ProductId");
+                _dataAccess.SetParameter("@ProductId", productId);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
                 {
-                    Product.Id = id;
-
-                    Product.Code = _dataAccess.Reader["Codigo"]?.ToString();
-                    Product.Name = _dataAccess.Reader["Nombre"]?.ToString();
-                    Product.Description = _dataAccess.Reader["Descripcion"]?.ToString();
-                    Product.Brand.Id = _dataAccess.Reader["IdMarca"] as int? ?? Product.Brand.Id;
-                    Product.Category.Id =
-                        _dataAccess.Reader["IdCategoria"] as int? ?? Product.Category.Id;
-
-                    if (!(_dataAccess.Reader["Precio"] is DBNull))
-                    {
-                        Product.Price = (decimal)_dataAccess.Reader["Precio"];
-                    }
-
+                    Product.Id = productId;
+                    Product.Code = _dataAccess.Reader["Code"]?.ToString();
+                    Product.Name = _dataAccess.Reader["ProductName"]?.ToString();
+                    Product.Description = _dataAccess.Reader["ProductDescription"]?.ToString();
+                    Product.Price = _dataAccess.Reader["Price"] as decimal? ?? Product.Price;
+                    Product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? Product.Brand.Id;
+                    Product.Category.Id = _dataAccess.Reader["CategoryId"] as int? ?? Product.Category.Id;
                     Product.Images = _imagesManager.List(Product.Id);
                 }
             }
@@ -117,9 +99,7 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery(
-                    "insert into Articulos (Codigo, Nombre, Descripcion, IdMarca, IdCategoria, Precio) values (@Codigo, @Nombre, @Descripcion, @IdMarca, @IdCategoria, @Precio)"
-                );
+                _dataAccess.SetQuery("insert into Products (Code, ProductName, ProductDescription, Price, BrandId, CategoryId) values (@Code, @ProductName, @ProductDescription, @Price, @BrandId, @CategoryId)");
                 SetParameters(Product);
                 _dataAccess.ExecuteAction();
                 SetImages(Product); // Las imagenes se agregan luego de agregar el articulo ya que van con le id del mismo asociadas
@@ -134,19 +114,17 @@ namespace BusinessLogicLayer
             }
         }
 
-        public void Edit(Product Product)
+        public void Edit(Product product)
         {
-            SetBrandId(Product);
-            SetCategoryId(Product);
-            SetImages(Product);
+            SetBrandId(product);
+            SetCategoryId(product);
+            SetImages(product);
 
             try
             {
-                _dataAccess.SetQuery(
-                    "update Articulos set Codigo = @Codigo, Nombre = @Nombre, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria, Precio = @Precio where Id = @Id"
-                );
-                _dataAccess.SetParameter("@Id", Product.Id);
-                SetParameters(Product);
+                _dataAccess.SetQuery("update Products set Code = @Code, ProductName = @ProductName, ProductDescription = @ProductDescription, Price = @Price, BrandId = @BrandId, CategoryId = @CategoryId where ProductId = @ProductId");
+                _dataAccess.SetParameter("@ProductId", product.Id);
+                SetParameters(product);
                 _dataAccess.ExecuteAction();
             }
             catch (Exception ex)
@@ -159,12 +137,12 @@ namespace BusinessLogicLayer
             }
         }
 
-        public void Delete(Product Product, bool purgeBrand = false, bool purgeCategory = false)
+        public void Delete(Product product, bool purgeBrand = false, bool purgeCategory = false)
         {
             try
             {
-                _dataAccess.SetQuery("delete from Articulos where Id = @Id");
-                _dataAccess.SetParameter("@Id", Product.Id);
+                _dataAccess.SetQuery("delete from Products where ProductId = @ProductId");
+                _dataAccess.SetParameter("@ProductId", product.Id);
                 _dataAccess.ExecuteAction();
             }
             catch (Exception ex)
@@ -178,18 +156,18 @@ namespace BusinessLogicLayer
 
             if (purgeBrand)
             {
-                _brandsManager.PurgeBrand(Product.Brand);
+                _brandsManager.PurgeBrand(product.Brand);
             }
 
             if (purgeCategory)
             {
-                _categoriesManager.PurgeCategory(Product.Category);
+                _categoriesManager.PurgeCategory(product.Category);
             }
         }
 
-        public int GetId(Product Product)
+        public int GetId(Product product)
         {
-            if (Product == null)
+            if (product == null)
             {
                 return 0;
             }
@@ -198,13 +176,13 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select Id from Articulos where Codigo = @Codigo");
-                _dataAccess.SetParameter("@Codigo", Product.Code);
+                _dataAccess.SetQuery("select ProductId from Products where Code = @Code");
+                _dataAccess.SetParameter("@Code", product.Code);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
                 {
-                    id = (int)_dataAccess.Reader["Id"];
+                    id = (int)_dataAccess.Reader["ProductId"];
                 }
             }
             catch (Exception ex)
@@ -219,75 +197,64 @@ namespace BusinessLogicLayer
             return id;
         }
 
-        private void SetParameters(Product Product)
+        private void SetParameters(Product product)
         {
-            SetParameterIfNotNull("@Codigo", Product.Code);
-
-            SetParameterIfNotNull("@Nombre", Product.Name);
-            SetParameterIfNotNull("@Descripcion", Product.Description);
-            SetParameterIfNotNull("@IdMarca", Product.Brand?.Id);
-            SetParameterIfNotNull("@IdCategoria", Product.Category?.Id);
-
-            _dataAccess.SetParameter("@Precio", Product.Price);
+            _dataAccess.SetParameter("@Code", product.Code);
+            _dataAccess.SetParameter("@ProductName", product.Name);
+            _dataAccess.SetParameter("@ProductDescription", product.Description);
+            _dataAccess.SetParameter("@Precio", product.Price);
+            _dataAccess.SetParameter("@BrandId", product.Brand?.Id);
+            _dataAccess.SetParameter("@CategoryId", product.Category?.Id);
         }
 
-        private void SetParameterIfNotNull(string parameterKey, object value)
+        private void SetBrandId(Product product)
         {
-            if (value != null)
+            if (product.Brand != null)
             {
-                _dataAccess.SetParameter(parameterKey, value);
-            }
-        }
-
-        private void SetBrandId(Product Product)
-        {
-            if (Product.Brand != null)
-            {
-                int dbBrandId = _brandsManager.GetId(Product.Brand);
+                int dbBrandId = _brandsManager.GetId(product.Brand);
 
                 if (dbBrandId == 0)
                 {
-                    _brandsManager.Add(Product.Brand);
-                    Product.Brand.Id = Helper.GetLastId("Marcas");
+                    _brandsManager.Add(product.Brand);
+                    product.Brand.Id = Helper.GetLastId("Brands");
                 }
                 else
                 {
-                    Product.Brand.Id = dbBrandId;
+                    product.Brand.Id = dbBrandId;
                 }
             }
         }
 
-        private void SetCategoryId(Product Product)
+        private void SetCategoryId(Product product)
         {
-            if (Product.Category != null)
+            if (product.Category != null)
             {
-                int dbCategoryId = _categoriesManager.GetId(Product.Category);
+                int dbCategoryId = _categoriesManager.GetId(product.Category);
 
                 if (dbCategoryId == 0)
                 {
-                    _categoriesManager.Add(Product.Category);
-                    Product.Category.Id = Helper.GetLastId("Categorias");
+                    _categoriesManager.Add(product.Category);
+                    product.Category.Id = Helper.GetLastId("Categories");
                 }
                 else
                 {
-                    Product.Category.Id = dbCategoryId;
+                    product.Category.Id = dbCategoryId;
                 }
             }
         }
 
-        private void SetImages(Product Product)
+        private void SetImages(Product product)
         {
-            int ProductId = Product.Id == 0 ? Helper.GetLastId("Articulos") : Product.Id; // si es un articulo nuevo, se obtiene el id nuevo
+            int productId = product.Id == 0 ? Helper.GetLastId("Products") : product.Id; // si es un articulo nuevo, se obtiene el id nuevo
 
-            foreach (var image in Product.Images)
+            foreach (var image in product.Images)
             {
                 if (image != null)
                 {
                     if (image.Id == 0) // si es una imagen nueva, se agrega y obtiene id
                     {
-                        _imagesManager.Add(image, ProductId);
+                        _imagesManager.Add(image, productId);
                         image.Id = Helper.GetLastId("imagenes");
-                        Debug.Print("imagen: " + image.Id.ToString());
                     }
                     else // sino se edita solamente
                     {

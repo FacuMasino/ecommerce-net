@@ -49,7 +49,10 @@ namespace DataAccessLayer
         /// <param name="value">Valor que se va a reemplazar por el parámetro al ejecutar una consulta.</param>
         public void SetParameter(string key, object value)
         {
-            _command.Parameters.AddWithValue(key, value);
+            if (value != null)
+            {
+                _command.Parameters.AddWithValue(key, value);
+            }
         }
 
         /// <summary>

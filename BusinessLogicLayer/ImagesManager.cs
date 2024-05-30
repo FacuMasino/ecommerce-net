@@ -9,21 +9,21 @@ namespace BusinessLogicLayer
     {
         private readonly DataAccess _dataAccess = new DataAccess();
 
-        public List<Image> List(int ProductId)
+        public List<Image> List(int productId)
         {
             List<Image> images = new List<Image>();
 
             try
             {
-                _dataAccess.SetQuery("select * from imagenes where IdArticulo = @ProductId");
-                _dataAccess.SetParameter("@ProductId", ProductId);
+                _dataAccess.SetQuery("select * from Images where ProductId = @ProductId");
+                _dataAccess.SetParameter("@ProductId", productId);
                 _dataAccess.ExecuteRead();
 
                 while (_dataAccess.Reader.Read())
                 {
                     Image auxImg = new Image();
-                    auxImg.Id = _dataAccess.Reader["Id"] as int? ?? auxImg.Id;
-                    auxImg.Url = _dataAccess.Reader["ImagenUrl"]?.ToString();
+                    auxImg.Id = _dataAccess.Reader["ImageId"] as int? ?? auxImg.Id;
+                    auxImg.Url = _dataAccess.Reader["ImageUrl"]?.ToString();
 
                     images.Add(auxImg);
                 }
@@ -40,15 +40,13 @@ namespace BusinessLogicLayer
             return images;
         }
 
-        public void Add(Image image, int ProductId)
+        public void Add(Image image, int productId)
         {
             try
             {
-                _dataAccess.SetQuery(
-                    "insert into imagenes(IdArticulo, ImagenUrl) values (@ProductId, @imageUrl)"
-                );
-                _dataAccess.SetParameter("@ProductId", ProductId);
-                _dataAccess.SetParameter("@imageUrl", image.Url);
+                _dataAccess.SetQuery("insert into Images (ProductId, ImageUrl) values (@ProductId, @ImageUrl)");
+                _dataAccess.SetParameter("@ProductId", productId);
+                _dataAccess.SetParameter("@ImageUrl", image.Url);
                 _dataAccess.ExecuteAction();
             }
             catch (Exception ex)
@@ -61,17 +59,15 @@ namespace BusinessLogicLayer
             }
         }
 
-        public void Add(List<Image> images, int ProductId)
+        public void Add(List<Image> images, int productId)
         {
             try
             {
                 foreach (Image image in images)
                 {
-                    _dataAccess.SetQuery(
-                        "insert into imagenes(IdArticulo, ImagenUrl) values (@ProductId, @imageUrl)"
-                    );
-                    _dataAccess.SetParameter("@ProductId", ProductId);
-                    _dataAccess.SetParameter("@imageUrl", image.Url);
+                    _dataAccess.SetQuery("insert into Images (ProductId, ImageUrl) values (@ProductId, @ImageUrl)");
+                    _dataAccess.SetParameter("@ProductId", productId);
+                    _dataAccess.SetParameter("@ImageUrl", image.Url);
                     _dataAccess.ExecuteAction();
                 }
             }
@@ -89,9 +85,9 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery("update imagenes set ImagenUrl = @imageUrl where Id = @Id");
-                _dataAccess.SetParameter("@Id", image.Id);
-                _dataAccess.SetParameter("@imageUrl", image.Url);
+                _dataAccess.SetQuery("update Images set ImageUrl = @ImageUrl where ImageId = @ImageId");
+                _dataAccess.SetParameter("@ImageId", image.Id);
+                _dataAccess.SetParameter("@ImageUrl", image.Url);
                 _dataAccess.ExecuteAction();
             }
             catch (Exception ex)
@@ -108,8 +104,8 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery("delete from imagenes where Id = @Id");
-                _dataAccess.SetParameter("@Id", image.Id);
+                _dataAccess.SetQuery("delete from Images where ImageId = @ImageId");
+                _dataAccess.SetParameter("@ImageId", image.Id);
                 _dataAccess.ExecuteAction();
             }
             catch (Exception ex)
@@ -133,13 +129,13 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select Id from imagenes where ImagenUrl = @ImageUrl");
+                _dataAccess.SetQuery("select ImageId from Images where ImageUrl = @ImageUrl");
                 _dataAccess.SetParameter("@ImageUrl", image.Url);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
                 {
-                    id = (int)_dataAccess.Reader["Id"];
+                    id = (int)_dataAccess.Reader["ImageId"];
                 }
             }
             catch (Exception ex)
