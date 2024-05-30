@@ -185,12 +185,22 @@ go
 create table People(
 	PersonId int primary key identity(1,1) not null,
 	PersonStatus bit not null default(1),
+	PersonFirstName varchar(30) not null,
+	PersonLastName varchar(30) not null,
 	TaxCode varchar(30) null,
 	Phone varchar(30) null,
 	Email varchar(30) null,
 	Birth date null,
 	AdressId int foreign key references Adresses(AdressId) null,
 )
+go
+
+insert into People
+(PersonFirstName, PersonLastName, TaxCode, Phone, Email, Birth, AdressId)
+values
+('Ana', 'Bertello', null, null, null, null, 1),
+('Facundo', 'Masino', null, null, null, null, 2),
+('Maximiliano', 'Malvicino', null, null, null, null, 3);
 go
 
 -----------
@@ -218,8 +228,8 @@ create table Users(
 	UserId int primary key identity(1,1) not null,
 	UserName varchar(30) not null,
 	UserPassword varchar(30) not null,
-	PersonId int foreign key references People(PersonId) not null,
-	RoleId tinyint foreign key references Roles(RoleId) not null
+	RoleId tinyint foreign key references Roles(RoleId) not null,
+	PersonId int foreign key references People(PersonId) not null
 )
 go
 
@@ -274,7 +284,7 @@ go
 insert into Orders
 (OrderDate, AdressId, OrderStatusId, UserId)
 values
-('2024-02-20', '0', '1', '2'),
+('2024-02-20', '4', '1', '2'),
 ('2024-03-30', null, '1', '3');
 go
 
@@ -287,4 +297,14 @@ create table OrdersXProducts(
 	ProductId int foreign key references Products(ProductId) not null,
 	Amount int default(1) not null
 )
+go
+
+insert into OrdersXProducts
+(OrderId, ProductId, Amount)
+values
+('1', '1', '1'),
+('1', '2', '2'),
+('2', '3', '3'),
+('2', '4', '4'),
+('2', '5', '5');
 go
