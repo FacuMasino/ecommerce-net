@@ -1,0 +1,108 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="AdminMP.Master.cs" Inherits="WebForms.Admin.Admin" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title><%: Page.Title %></title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="Content/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="Content/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="Content/favicon-16x16.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="/Content/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="/CSS/Style.css" />
+    <asp:ContentPlaceHolder ID="HeadPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body class="bg-light">
+    <form id="form1" runat="server" class="d-flex vh-100 flex-column">
+        <%--MENU--%>
+        <header>
+            <nav class="navbar navbar-dark navbar-expand-lg bg-black py-4">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">eCommerce</a>
+                    <div class="collapse justify-content-end navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="/">Ir a la Tienda</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="container-fluid d-flex flex-grow-1 p-0">
+            <div class="d-flex position-relative">
+                <div class="d-lg-flex custom-sidebar position-absolute h-100 collapse" id="sidebarMenu">
+                    <div class="d-flex flex-column w-100 h-100 p-3 bg-body-secondary">
+                        <ul class="custom-nav nav nav-pills flex-column mb-auto">
+                            <li class="nav-item">
+                                <a id="BtnNavHome" href="/admin" class="nav-link text-black" aria-current="page" runat="server">
+                                    <i class="bi bi-house me-2"></i>
+                                    Inicio
+                                </a>
+                            </li>
+                            <li>
+                                <a id="BtnNavProducts" href="Products.aspx" class="nav-link text-black" runat="server">
+                                    <i class="bi bi-tag me-2"></i>
+                                    Productos
+                                </a>
+                            </li>
+                            <li>
+                                <a id="BtnNavCategories" href="#" class="nav-link text-black" runat="server">
+                                    <i class="bi bi-bookmarks me-2"></i>
+                                    Categorías
+                                </a>
+                            </li>
+                            <li>
+                                <a id="BtnNavOrders" href="Orders.aspx" class="nav-link text-black" runat="server">
+                                    <i class="bi bi-inbox me-2"></i>
+                                    Pedidos
+                                </a>
+                            </li>
+                            <li>
+                                <a id="BtnNavUsers" href="#" class="nav-link text-black" runat="server">
+                                    <i class="bi bi-people me-2"></i>
+                                    Usuarios
+                                </a>
+                            </li>
+                        </ul>
+                        <hr>
+                        <div class="dropdown">
+                            <a href="#" class="d-flex align-items-center text-decoration-none text-black dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person me-2 rounded-circle"></i>
+                                <strong>Usuario</strong>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                                <li><a class="dropdown-item" href="/">Ir a la tienda</a></li>
+                                <li><a class="dropdown-item" href="#">Mis datos</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <asp:ScriptManager ID="ScriptManager1" runat="server">
+                </asp:ScriptManager>
+                <asp:UpdatePanel ID="UPMain" runat="server">
+                    <ContentTemplate>
+                        <asp:ContentPlaceHolder ID="BodyPlaceHolder" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+        </div>
+    </form>
+    <script src="/Scripts/bootstrap.bundle.min.js"></script>
+</body>
+</html>

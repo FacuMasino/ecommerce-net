@@ -6,6 +6,19 @@
     --bs-list-group-item-padding-y: 1rem !important;
 }
 
+.custom-nav.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: var(--bs-light) !important;
+    font-weight: 500;
+}
+
+.custom-sidebar {
+    width: 280px;
+}
+
+.custom-sidebar.collapsing {
+    transition: none !important;
+}
+
 .column-div {
     display: flex;
     flex-direction: column;
