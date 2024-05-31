@@ -41,7 +41,7 @@
         </header>
         <div class="container-fluid d-flex flex-grow-1 p-0">
             <div class="d-flex position-relative">
-                <div class="d-lg-flex custom-sidebar position-absolute h-100 collapse" id="sidebarMenu">
+                <div class="d-lg-flex custom-sidebar h-100 collapse" id="sidebarMenu">
                     <div class="d-flex flex-column w-100 h-100 p-3 bg-body-secondary">
                         <ul class="custom-nav nav nav-pills flex-column mb-auto">
                             <li class="nav-item">
@@ -92,15 +92,15 @@
                         </div>
                     </div>
                 </div>
-                <asp:ScriptManager ID="ScriptManager1" runat="server">
-                </asp:ScriptManager>
-                <asp:UpdatePanel ID="UPMain" runat="server">
-                    <ContentTemplate>
-                        <asp:ContentPlaceHolder ID="BodyPlaceHolder" runat="server">
-                        </asp:ContentPlaceHolder>
-                    </ContentTemplate>
-                </asp:UpdatePanel>
             </div>
+            <asp:ScriptManager ID="ScriptManager1" runat="server">
+            </asp:ScriptManager>
+            <asp:UpdatePanel class="p-4 col" ID="UPMain" runat="server">
+                <ContentTemplate>
+                    <asp:ContentPlaceHolder ID="BodyPlaceHolder" runat="server">
+                    </asp:ContentPlaceHolder>
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </div>
     </form>
     <script src="/Scripts/bootstrap.bundle.min.js"></script>

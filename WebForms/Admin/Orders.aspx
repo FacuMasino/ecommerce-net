@@ -4,6 +4,11 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
+    <div class="d-flex">
+        <div class="col">
+            <h2 class="fs-4">Administrar pedidos</h2>
+        </div>
+    </div>
     <table class="table table-striped table-hover">
         <thead>
             <tr>

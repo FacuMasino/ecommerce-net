@@ -12,6 +12,7 @@
 }
 
 .custom-sidebar {
+    position: absolute;
     width: 280px;
 }
 
@@ -86,4 +87,11 @@
 
 .invalid .invalid-feedback {
     display: block !important;
+}
+
+/* Large screen */
+@media (min-width: 992px) {
+    .custom-sidebar {
+        position: relative;
+    }
 }
