@@ -1,33 +1,39 @@
-USE ecommerce GO
+use ecommerce go
+
 ------------
 -- BRANDS --
 ------------
-INSERT INTO
+
+insert into
 	Brands (BrandName)
-VALUES
+values
 	('Samsung'),
 	('Apple'),
 	('Sony'),
 	('Huawei'),
 	('Motorola');
 
-GO
+go
+
 ----------------
 -- CATEGORIES --
 ----------------
-INSERT INTO
+
+insert into
 	Categories (CategoryName)
-VALUES
+values
 	('Celulares'),
 	('Televisores'),
 	('Media'),
 	('Audio');
 
-GO
+go
+
 --------------
 -- PRODUCTS --
 --------------
-INSERT INTO
+
+insert into
 	Products (
 		Code,
 		ProductName,
@@ -36,7 +42,7 @@ INSERT INTO
 		BrandId,
 		CategoryId
 	)
-VALUES
+values
 	(
 		'S01',
 		'Galaxy S10',
@@ -78,10 +84,12 @@ VALUES
 		'2'
 	);
 
-GO
+go
+
 ------------
 -- IMAGES --
 ------------
+
 insert into
 	Images (ImageUrl, ProductId)
 values
@@ -95,9 +103,11 @@ values
 	);
 
 go
+
 ---------------
 -- COUNTRIES --
 ---------------
+
 insert into
 	Countries (CountryName)
 values
@@ -107,9 +117,11 @@ values
 	('Brasil');
 
 go
+
 ---------------
 -- PROVINCES --
 ---------------
+
 insert into
 	Provinces (ProvinceName, CountryId)
 values
@@ -118,9 +130,11 @@ values
 	('Río Negro', '1');
 
 go
+
 ------------
 -- CITIES --
 ------------
+
 insert into
 	Cities (CityName, ZipCode, ProvinceId)
 values
@@ -134,9 +148,11 @@ values
 	('San Carlos de Bariloche', '8400', '3');
 
 go
+
 --------------
 -- ADRESSES --
 --------------
+
 insert into
 	Adresses (StreetName, StreetNumber, Flat, Details, CityId)
 values
@@ -160,9 +176,11 @@ values
 	('Santa Fé', '1290', '', '', '3');
 
 go
+
 ------------
 -- PEOPLE --
 ------------
+
 insert into
 	People (
 		PersonFirstName,
@@ -187,19 +205,24 @@ values
 	);
 
 go
+
 -----------
 -- ROLES --
 -----------
+
 insert into
 	Roles (RoleName)
 values
 	('Admin'),
-	('Customer');
+	('Cliente'),
+	('Visitante');
 
 go
+
 -----------
 -- USERS --
 -----------
+
 insert into
 	Users (UserName, UserPassword, RoleId, PersonId)
 values
@@ -208,9 +231,11 @@ values
 	('mrmalvicino', 'elchili', '2', '3');
 
 go
+
 -------------------
 -- ORDERSTATUSES --
 -------------------
+
 insert into
 	OrderStatuses (OrderStatusName)
 values
@@ -228,9 +253,11 @@ values
 	('Retiro pendiente');
 
 go
+
 ------------
 -- ORDERS --
 ------------
+
 insert into
 	Orders (OrderDate, AdressId, OrderStatusId, UserId)
 values
@@ -238,9 +265,11 @@ values
 	('2024-03-30', null, '1', '3');
 
 go
+
 -----------------------
 -- ORDERS X PRODUCTS --
 -----------------------
+
 insert into
 	OrdersXProducts (OrderId, ProductId, Amount)
 values

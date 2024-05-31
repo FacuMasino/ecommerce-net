@@ -33,7 +33,7 @@ namespace BusinessLogicLayer
                 {
                     City city = new City();
 
-                    city.CityId = Convert.ToInt32(_dataAccess.Reader["CityId"]);
+                    city.Id = Convert.ToInt32(_dataAccess.Reader["CityId"]);
                     city.Name = (string)_dataAccess.Reader["CityName"];
 
                     if (!(_dataAccess.Reader["ZipCode"] is DBNull))
@@ -79,7 +79,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery("update Cities set CityName = @CityName, ZipCode = @ZipCode, ProvinceId = @ProvinceId where CityId = @CityId");
-                _dataAccess.SetParameter("@CityId", city.CityId);
+                _dataAccess.SetParameter("@CityId", city.Id);
                 SetParameters(city, provinceId);
                 _dataAccess.ExecuteAction();
             }

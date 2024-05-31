@@ -26,7 +26,7 @@ namespace BusinessLogicLayer
                 {
                     Country country = new Country();
 
-                    country.CountryId = Convert.ToInt32(_dataAccess.Reader["CountryId"]);
+                    country.Id = Convert.ToInt32(_dataAccess.Reader["CountryId"]);
                     country.Name = (string)_dataAccess.Reader["CountryName"];
 
                     countriesList.Add(country);
@@ -67,7 +67,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery("update Countries set CountryName = @CountryName where CountryId = @CountryId");
-                _dataAccess.SetParameter("@CountryId", country.CountryId);
+                _dataAccess.SetParameter("@CountryId", country.Id);
                 SetParameters(country);
                 _dataAccess.ExecuteAction();
             }

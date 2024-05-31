@@ -33,7 +33,7 @@ namespace BusinessLogicLayer
                 {
                     Province province = new Province();
 
-                    province.ProvinceId = Convert.ToInt32(_dataAccess.Reader["ProvinceId"]);
+                    province.Id = Convert.ToInt32(_dataAccess.Reader["ProvinceId"]);
                     province.Name = (string)_dataAccess.Reader["ProvinceName"];
 
                     provincesList.Add(province);
@@ -74,7 +74,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery("update Provinces set ProvinceName = @ProvinceName, CountryId = @CountryId where ProvinceId = @ProvinceId");
-                _dataAccess.SetParameter("@ProvinceId", province.ProvinceId);
+                _dataAccess.SetParameter("@ProvinceId", province.Id);
                 SetParameters(province, countryId);
                 _dataAccess.ExecuteAction();
             }

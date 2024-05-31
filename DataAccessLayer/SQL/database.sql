@@ -3,25 +3,31 @@ database ecommerce
 collate Latin1_General_100_CI_AS_SC_UTF8;
 
 go use ecommerce go
+
 ------------
 -- BRANDS --
 ------------
+
 create table
 	Brands (
 		BrandId int primary key identity(1, 1) not null,
 		BrandName varchar(30) unique not null
 	) go
-	----------------
-	-- CATEGORIES --
-	----------------
+
+----------------
+-- CATEGORIES --
+----------------
+
 create table
 	Categories (
 		CategoryId int primary key identity(1, 1) not null,
 		CategoryName varchar(30) unique not null
 	) go
-	--------------
-	-- PRODUCTS --
-	--------------
+
+--------------
+-- PRODUCTS --
+--------------
+
 create table
 	Products (
 		ProductId int primary key identity(1, 1) not null,
@@ -32,26 +38,32 @@ create table
 		BrandId int foreign key references Brands (BrandId) null,
 		CategoryId int foreign key references Categories (CategoryId) null
 	) go
-	------------
-	-- IMAGES --
-	------------
+
+------------
+-- IMAGES --
+------------
+
 create table
 	Images (
 		ImageId int primary key identity(1, 1) not null,
 		ImageUrl varchar(300) unique not null,
 		ProductId int foreign key references Products (ProductId) not null
 	) go
-	---------------
-	-- COUNTRIES --
-	---------------
+
+---------------
+-- COUNTRIES --
+---------------
+
 create table
 	Countries (
 		CountryId tinyint primary key identity(1, 1) not null,
 		CountryName varchar(30) unique not null
 	) go
-	---------------
-	-- PROVINCES --
-	---------------
+
+---------------
+-- PROVINCES --
+---------------
+
 create table
 	Provinces (
 		ProvinceId smallint primary key identity(1, 1) not null,
@@ -59,9 +71,11 @@ create table
 		CountryId tinyint foreign key references Countries (CountryId) not null,
 		constraint UC_Province unique (ProvinceName, CountryId)
 	) go
-	------------
-	-- CITIES --
-	------------
+
+------------
+-- CITIES --
+------------
+
 create table
 	Cities (
 		CityId smallint primary key identity(1, 1) not null,
@@ -70,9 +84,11 @@ create table
 		ProvinceId smallint foreign key references Provinces (ProvinceId) not null,
 		constraint UC_City unique (CityName, ProvinceId)
 	) go
-	--------------
-	-- ADRESSES --
-	--------------
+
+--------------
+-- ADRESSES --
+--------------
+
 create table
 	Adresses (
 		AdressId int primary key identity(1, 1) not null,
@@ -83,9 +99,11 @@ create table
 		CityId smallint foreign key references Cities (CityId) not null,
 		constraint UC_Adress unique (StreetName, StreetNumber, CityId)
 	) go
-	------------
-	-- PEOPLE --
-	------------
+
+------------
+-- PEOPLE --
+------------
+
 create table
 	People (
 		PersonId int primary key identity(1, 1) not null,
@@ -98,17 +116,21 @@ create table
 		Birth date null,
 		AdressId int foreign key references Adresses (AdressId) null,
 	) go
-	-----------
-	-- ROLES --
-	-----------
+
+-----------
+-- ROLES --
+-----------
+
 create table
 	Roles (
 		RoleId tinyint primary key identity(1, 1) not null,
 		RoleName varchar(50) not null
 	) go
-	-----------
-	-- USERS --
-	-----------
+
+-----------
+-- USERS --
+-----------
+
 create table
 	Users (
 		UserId int primary key identity(1, 1) not null,
@@ -117,17 +139,21 @@ create table
 		RoleId tinyint foreign key references Roles (RoleId) not null,
 		PersonId int foreign key references People (PersonId) not null
 	) go
-	-------------------
-	-- ORDERSTATUSES --
-	-------------------
+
+-------------------
+-- ORDERSTATUSES --
+-------------------
+
 create table
 	OrderStatuses (
 		OrderStatusId int primary key identity(1, 1) not null,
 		OrderStatusName varchar(30) not null
 	) go
-	------------
-	-- ORDERS --
-	------------
+
+------------
+-- ORDERS --
+------------
+
 create table
 	Orders (
 		OrderId int primary key identity(1, 1) not null,
@@ -136,9 +162,11 @@ create table
 		OrderStatusId int foreign key references OrderStatuses (OrderStatusId) not null,
 		UserId int foreign key references Users (UserId) not null
 	) go
-	-----------------------
-	-- ORDERS X PRODUCTS --
-	-----------------------
+
+-----------------------
+-- ORDERS X PRODUCTS --
+-----------------------
+
 create table
 	OrdersXProducts (
 		OrderId int foreign key references Orders (OrderId) not null,

@@ -6,8 +6,8 @@ namespace DomainModelLayer
     {
         // PROPERTIES
 
-        [DisplayName("ID de país")]
-        public int CountryId { get; set; }
+        [DisplayName("ID")]
+        public int Id { get; set; }
 
         [DisplayName("País")]
         public string Name { get; set; }
