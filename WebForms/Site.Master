@@ -5,6 +5,8 @@
 <html>
 
 <head runat="server">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title><%: Page.Title %></title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="Content/apple-touch-icon.png">
@@ -20,7 +22,7 @@
 </head>
 
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" class="d-flex flex-column min-vh-100">
 
         <%--MENU--%>
 
@@ -32,18 +34,35 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse justify-content-end navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" href="Home.aspx">Tienda</a>
+                                <a class="nav-link active" href="Home.aspx">Inicio</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDDProducts" role="button" data-bs-toggle="dropdown" aria-expanded="false">Productos
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDDProducts">
+                                    <li><a class="dropdown-item" href="#">Categoría 1</a></li>
+                                    <li><a class="dropdown-item" href="#">Categoría 2</a></li>
+                                </ul>
                             </li>
                         </ul>
-                        <div class="d-flex">
-                            <button type="button" class="btn me-md-4 mt-2 position-relative" data-bs-toggle="offcanvas" data-bs-target="#cartList">
-                                <i class="bi bi-bag"></i>
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"><%:_productSets.Count()%>
+                        <div class="d-flex align-items-center justify-content-md-center justify-content-end">
+                            <button type="button" class="nav-btn btn mt-2 me-2 position-relative" data-bs-toggle="offcanvas" data-bs-target="#cartList">
+                                <i class="bi bi-bag fs-4"></i>
+                                <span class="position-absolute top-15 start-90 translate-middle badge rounded-pill bg-danger"><%:_productSets.Count()%>
                                     <span class="visually-hidden">Productos en el carrito</span>
                                 </span>
                             </button>
+                            <div class="nav-item dropdown">
+                                <button type="button" class="nav-btn btn mt-2" data-bs-toggle="dropdown">
+                                    <i class="bi bi-person fs-4"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDDProducts">
+                                    <li><a class="dropdown-item" href="#">Iniciar sesión</a></li>
+                                    <li><a class="dropdown-item" href="#">Registrarse</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -52,7 +71,7 @@
 
         <%--BODY--%>
 
-        <div>
+        <div class="container m-auto">
             <asp:ContentPlaceHolder ID="BodyPlaceHolder" runat="server"></asp:ContentPlaceHolder>
         </div>
 
@@ -154,6 +173,6 @@
         </div>
 
     </form>
-    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/bootstrap.bundle.min.js"></script>
 </body>
 </html>

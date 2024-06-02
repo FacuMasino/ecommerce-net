@@ -89,6 +89,19 @@
     display: block !important;
 }
 
+.top-15 {
+    top: 15% !important;
+}
+
+.start-90 {
+    left: 90%;
+}
+
+.nav-btn:active, .nav-btn.show {
+    border-color: transparent !important;
+    background-color: var(--bs-gray-400) !important;
+}
+
 /* Large screen */
 @media (min-width: 992px) {
     .custom-sidebar {
