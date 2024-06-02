@@ -1,20 +1,28 @@
-﻿using DomainModelLayer;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using BusinessLogicLayer;
+using DomainModelLayer;
 
 namespace WebForms
 {
     public partial class Site : System.Web.UI.MasterPage
     {
         // ATTRIBUTES
-
         public List<ProductSet> _productSets;
+        private CategoriesManager _categoriesManager;
+
+        // PROPERTIES
+
+        public List<Category> Categories;
 
         // CONSTRUCT
 
         public Site()
         {
+            _categoriesManager = new CategoriesManager();
             _productSets = new List<ProductSet>();
+            Categories = new List<Category>();
+            Categories = _categoriesManager.List();
         }
 
         // EVENTS

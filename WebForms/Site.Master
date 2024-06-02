@@ -42,8 +42,28 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDDProducts" role="button" data-bs-toggle="dropdown" aria-expanded="false">Productos
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDDProducts">
-                                    <li><a class="dropdown-item" href="#">Categoría 1</a></li>
-                                    <li><a class="dropdown-item" href="#">Categoría 2</a></li>
+                                    <!-- Todas las categrías -->
+                                    <li class="dropdown-item">
+                                        <a href="Home.aspx" class="text-decoration-none text-black">Todas
+                                        </a>
+                                    </li>
+                                    <%
+                                        foreach (Category category in Categories)
+                                        {
+                                    %>
+                                    <!-- Item Categoría -->
+                                    <li class="dropdown-item">
+                                        <a href="Home.aspx?catId=<%:category.Id%>" class="text-decoration-none text-black"><%:category.Name%>
+                                        </a>
+                                    </li>
+                                    <%
+                                        }
+                                    %>
+                                    <!-- Productos sin categoría -->
+                                    <li class="dropdown-item">
+                                        <a href="Home.aspx?catId=-1" class="text-decoration-none text-black">Sin Categoría
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -59,8 +79,8 @@
                                     <i class="bi bi-person fs-4"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDDProducts">
-                                    <li><a class="dropdown-item" href="#">Iniciar sesión</a></li>
-                                    <li><a class="dropdown-item" href="#">Registrarse</a></li>
+                                    <li><a class="dropdown-item" href="Login.aspx">Iniciar sesión</a></li>
+                                    <li><a class="dropdown-item" href="Signup.aspx">Registrarse</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -165,7 +185,7 @@
                     <p class="text-center mb-0 text-body-secondary">© 2024 TPC - Equipo 16</p>
                     <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
                         <li class="ms-3">
-                            <a class="text-body-secondary fs-4" href="https://github.com/FacuMasino/tp-web-equipo-16" target="_blank"><i class="bi bi-github"></i></a>
+                            <a class="text-body-secondary fs-4" href="https://github.com/FacuMasino/tpc-equipo-16" target="_blank"><i class="bi bi-github"></i></a>
                         </li>
                     </ul>
                 </div>
