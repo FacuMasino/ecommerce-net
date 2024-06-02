@@ -4,8 +4,8 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
-    <div class="row justify-content-center my-5">
-        <div class="col-md-4 col-12 p-md-0 p-4">
+    <div class="row justify-content-center my-md-5 my-3">
+        <div class="col-md-4 col-12 p-md-0 px-4">
             <div class="mb-4 text-center">
                <h2 class="fs-3">Crear una cuenta</h2>
             </div>
