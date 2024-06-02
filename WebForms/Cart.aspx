@@ -66,7 +66,7 @@
                     </ul>
                 </div>
                 <a class="btn w-100 btn-dark mb-2" href="#">Ir a Pagar</a>
-                <a class="mb-2 w-100 d-block text-black" href="Default.aspx">Volver a la tienda</a>
+                <a class="mb-2 w-100 d-block text-black" href="Home.aspx">Volver a la tienda</a>
             </div>
         </div>
         <%

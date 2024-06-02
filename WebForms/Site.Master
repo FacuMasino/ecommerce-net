@@ -125,7 +125,7 @@
                 <strong class="ms-auto">$ <%:total.ToString("0.00")%></strong>
             </div>
             <div class="d-flex p-4">
-                <a class="btn btn-primary w-100" href="ProductsCartForm.aspx">Ir al carrito
+                <a class="btn btn-primary w-100" href="Cart.aspx">Ir al carrito
                 </a>
             </div>
             <%
