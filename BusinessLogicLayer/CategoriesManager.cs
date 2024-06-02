@@ -16,7 +16,7 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select CategoryId, CategoryDescription from Categories");
+                _dataAccess.SetQuery("select CategoryId, CategoryName from Categories");
                 _dataAccess.ExecuteRead();
 
                 while (_dataAccess.Reader.Read())
@@ -25,7 +25,7 @@ namespace BusinessLogicLayer
 
                     category.Id = (int)_dataAccess.Reader["CategoryId"];
 
-                    category.Name = _dataAccess.Reader["CategoryDescription"]?.ToString();
+                    category.Name = _dataAccess.Reader["CategoryName"]?.ToString();
                     category.Name = category.Name ?? "";
 
                     categories.Add(category);
@@ -49,7 +49,9 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select CategoryDescription from Categories where CategoryId = @CategoryId");
+                _dataAccess.SetQuery(
+                    "select CategoryName from Categories where CategoryId = @CategoryId"
+                );
                 _dataAccess.SetParameter("@CategoryId", categoryId);
                 _dataAccess.ExecuteRead();
 
@@ -57,7 +59,7 @@ namespace BusinessLogicLayer
                 {
                     category.Id = categoryId;
 
-                    category.Name = _dataAccess.Reader["CategoryDescription"]?.ToString();
+                    category.Name = _dataAccess.Reader["CategoryName"]?.ToString();
                     category.Name = category.Name ?? "";
                 }
             }
@@ -77,7 +79,9 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery("insert into Categories (CategoryDescription) values (@CategoryDescription)");
+                _dataAccess.SetQuery(
+                    "insert into Categories (CategoryName) values (@CategoryName)"
+                );
                 SetParameters(category);
                 _dataAccess.ExecuteAction();
             }
@@ -178,7 +182,9 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select CategoryId from Categories where CategoryDescription = @CategoryDescription");
+                _dataAccess.SetQuery(
+                    "select CategoryId from Categories where CategoryDescription = @CategoryDescription"
+                );
                 _dataAccess.SetParameter("@CategoryDescription", category.Name);
                 _dataAccess.ExecuteRead();
 

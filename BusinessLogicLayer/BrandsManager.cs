@@ -16,7 +16,7 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select BrandId, BrandDescription from Brands");
+                _dataAccess.SetQuery("select BrandId, BrandName from Brands");
                 _dataAccess.ExecuteRead();
 
                 while (_dataAccess.Reader.Read())
@@ -24,7 +24,7 @@ namespace BusinessLogicLayer
                     Brand brand = new Brand();
 
                     brand.Id = (int)_dataAccess.Reader["BrandId"];
-                    brand.Name = _dataAccess.Reader["BrandDescription"]?.ToString();
+                    brand.Name = _dataAccess.Reader["BrandName"]?.ToString();
                     brand.Name = brand.Name ?? "";
 
                     brands.Add(brand);
@@ -48,7 +48,7 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select BrandDescription from Brands where BrandId = @BrandId");
+                _dataAccess.SetQuery("select BrandName from Brands where BrandId = @BrandId");
                 _dataAccess.SetParameter("@BrandId", brandId);
                 _dataAccess.ExecuteRead();
 
@@ -56,7 +56,7 @@ namespace BusinessLogicLayer
                 {
                     brand.Id = brandId;
 
-                    brand.Name = _dataAccess.Reader["BrandDescription"]?.ToString();
+                    brand.Name = _dataAccess.Reader["BrandName"]?.ToString();
                     brand.Name = brand.Name ?? "";
                 }
             }
@@ -76,7 +76,9 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery("insert into Brands (BrandDescription) values (@BrandDescription)");
+                _dataAccess.SetQuery(
+                    "insert into Brands (BrandDescription) values (@BrandDescription)"
+                );
                 SetParameters(brand);
                 _dataAccess.ExecuteAction();
             }
@@ -94,7 +96,9 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery("update Brands set BrandDescription = @BrandDescription where BrandId = @BrandId");
+                _dataAccess.SetQuery(
+                    "update Brands set BrandDescription = @BrandDescription where BrandId = @BrandId"
+                );
                 _dataAccess.SetParameter("@BrandId", brand.Id);
                 SetParameters(brand);
                 _dataAccess.ExecuteAction();
@@ -138,7 +142,9 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select BrandId from Brands where BrandDescription = @BrandDescription");
+                _dataAccess.SetQuery(
+                    "select BrandId from Brands where BrandDescription = @BrandDescription"
+                );
                 _dataAccess.SetParameter("@BrandDescription", brand.Name);
                 _dataAccess.ExecuteRead();
 
