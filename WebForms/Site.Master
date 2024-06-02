@@ -9,15 +9,18 @@
 
     <title><%: Page.Title %></title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="Content/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="Content/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="Content/favicon-16x16.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true">
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Content/bootstrap.min.css" />
     <link rel="stylesheet" href="Content/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="CSS/Style.css" />
+    <!--Favicon-->
+    <link rel="apple-touch-icon" sizes="180x180" href="Content/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="Content/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="Content/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="Content/favicon-48x48.png">
+    <link rel="manifest" href="Content/site.webmanifest">
     <asp:ContentPlaceHolder ID="HeadPlaceHolder" runat="server"></asp:ContentPlaceHolder>
 </head>
 
@@ -79,8 +82,8 @@
                                     <i class="bi bi-person fs-4"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDDProducts">
-                                    <li><a class="dropdown-item" href="Login.aspx">Iniciar sesión</a></li>
-                                    <li><a class="dropdown-item" href="Signup.aspx">Registrarse</a></li>
+                                    <li class="dropdown-item"><a class="text-decoration-none text-black" href="Login.aspx">Iniciar sesión</a></li>
+                                    <li class="dropdown-item"><a class="text-decoration-none text-black" href="Signup.aspx">Registrarse</a></li>
                                 </ul>
                             </div>
                         </div>

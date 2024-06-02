@@ -97,9 +97,21 @@
     left: 90%;
 }
 
+/* Color activo en los navbar buttons */
 .nav-btn:active, .nav-btn.show {
     border-color: transparent !important;
     background-color: var(--bs-gray-400) !important;
+}
+
+/* Color item dropdown activo */
+.dropdown-item.active, .dropdown-item:active {
+    background-color: var(--bs-gray-400) !important;
+}
+
+/* Borde resaltado de inputs en estado focus*/
+.form-control:focus {
+    border-color: var(--bs-body-color) !important;
+    box-shadow: 0 0 0 .25rem rgb(30 30 30 / 25%) !important;
 }
 
 /* Large screen */

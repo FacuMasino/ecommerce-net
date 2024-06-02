@@ -1,48 +1,52 @@
-use ecommerce go
+USE ecommerce 
+GO
 
 ------------
 -- BRANDS --
 ------------
 
-insert into
-	Brands (BrandName)
-values
+INSERT INTO
+	Brands
+	(BrandName)
+VALUES
 	('Samsung'),
 	('Apple'),
 	('Sony'),
 	('Huawei'),
 	('Motorola');
 
-go
+GO
 
 ----------------
 -- CATEGORIES --
 ----------------
 
-insert into
-	Categories (CategoryName)
-values
+INSERT INTO
+	Categories
+	(CategoryName)
+VALUES
 	('Celulares'),
 	('Televisores'),
 	('Media'),
 	('Audio');
 
-go
+GO
 
 --------------
 -- PRODUCTS --
 --------------
 
-insert into
-	Products (
-		Code,
-		ProductName,
-		ProductDescription,
-		Price,
-		BrandId,
-		CategoryId
+INSERT INTO
+	Products
+	(
+	Code,
+	ProductName,
+	ProductDescription,
+	Price,
+	BrandId,
+	CategoryId
 	)
-values
+VALUES
 	(
 		'S01',
 		'Galaxy S10',
@@ -84,15 +88,16 @@ values
 		'2'
 	);
 
-go
+GO
 
 ------------
 -- IMAGES --
 ------------
 
-insert into
-	Images (ImageUrl, ProductId)
-values
+INSERT INTO
+	Images
+	(ImageUrl, ProductId)
+VALUES
 	(
 		'https://images.samsung.com/is/image/samsung/co-galaxy-s10-sm-g970-sm-g970fzyjcoo-frontcanaryyellow-thumb-149016542',
 		'1'
@@ -102,42 +107,45 @@ values
 		'2'
 	);
 
-go
+GO
 
 ---------------
 -- COUNTRIES --
 ---------------
 
-insert into
-	Countries (CountryName)
-values
+INSERT INTO
+	Countries
+	(CountryName)
+VALUES
 	('Argentina'),
 	('Estados Unidos'),
 	('España'),
 	('Brasil');
 
-go
+GO
 
 ---------------
 -- PROVINCES --
 ---------------
 
-insert into
-	Provinces (ProvinceName, CountryId)
-values
+INSERT INTO
+	Provinces
+	(ProvinceName, CountryId)
+VALUES
 	('Buenos Aires', '1'),
 	('Córdoba', '1'),
 	('Río Negro', '1');
 
-go
+GO
 
 ------------
 -- CITIES --
 ------------
 
-insert into
-	Cities (CityName, ZipCode, ProvinceId)
-values
+INSERT INTO
+	Cities
+	(CityName, ZipCode, ProvinceId)
+VALUES
 	('CABA', '1000', '1'),
 	('Villa Adelina', '1607', '1'),
 	('General Pacheco', '1617', '1'),
@@ -147,15 +155,16 @@ values
 	('Villa Carlos Paz', '5152', '2'),
 	('San Carlos de Bariloche', '8400', '3');
 
-go
+GO
 
 --------------
 -- ADRESSES --
 --------------
 
-insert into
-	Adresses (StreetName, StreetNumber, Flat, Details, CityId)
-values
+INSERT INTO
+	Adresses
+	(StreetName, StreetNumber, Flat, Details, CityId)
+VALUES
 	(
 		'Piedra Buena',
 		'389',
@@ -175,70 +184,74 @@ values
 	('Cazón', '768', '', '', '5'),
 	('Santa Fé', '1290', '', '', '3');
 
-go
+GO
 
 ------------
 -- PEOPLE --
 ------------
 
-insert into
-	People (
-		PersonFirstName,
-		PersonLastName,
-		TaxCode,
-		Phone,
-		Email,
-		Birth,
-		AdressId
+INSERT INTO
+	People
+	(
+	PersonFirstName,
+	PersonLastName,
+	TaxCode,
+	Phone,
+	Email,
+	Birth,
+	AdressId
 	)
-values
-	('Ana', 'Bertello', null, null, null, null, 1),
-	('Facundo', 'Masino', null, null, null, null, 2),
+VALUES
+	('Ana', 'Bertello', NULL, NULL, NULL, NULL, 1),
+	('Facundo', 'Masino', NULL, NULL, NULL, NULL, 2),
 	(
 		'Maximiliano',
 		'Malvicino',
-		null,
-		null,
-		null,
-		null,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
 		3
 	);
 
-go
+GO
 
 -----------
 -- ROLES --
 -----------
 
-insert into
-	Roles (RoleName)
-values
+INSERT INTO
+	Roles
+	(RoleName)
+VALUES
 	('Admin'),
 	('Cliente'),
 	('Visitante');
 
-go
+GO
 
 -----------
 -- USERS --
 -----------
 
-insert into
-	Users (UserName, UserPassword, RoleId, PersonId)
-values
+INSERT INTO
+	Users
+	(UserName, UserPassword, RoleId, PersonId)
+VALUES
 	('Ani77aa', 'restrepo', '1', '1'),
 	('FacuMasino', 'donpablo', '2', '2'),
 	('mrmalvicino', 'elchili', '2', '3');
 
-go
+GO
 
 -------------------
 -- ORDERSTATUSES --
 -------------------
 
-insert into
-	OrderStatuses (OrderStatusName)
-values
+INSERT INTO
+	OrderStatuses
+	(OrderStatusName)
+VALUES
 	('Orden generada'),
 	('Pago pendiente'),
 	('Procesando pago'),
@@ -252,31 +265,33 @@ values
 	('Pago y retiro pendiente'),
 	('Retiro pendiente');
 
-go
+GO
 
 ------------
 -- ORDERS --
 ------------
 
-insert into
-	Orders (OrderDate, AdressId, OrderStatusId, UserId)
-values
+INSERT INTO
+	Orders
+	(OrderDate, AdressId, OrderStatusId, UserId)
+VALUES
 	('2024-02-20', '4', '1', '2'),
-	('2024-03-30', null, '1', '3');
+	('2024-03-30', NULL, '1', '3');
 
-go
+GO
 
 -----------------------
 -- ORDERS X PRODUCTS --
 -----------------------
 
-insert into
-	OrdersXProducts (OrderId, ProductId, Amount)
-values
+INSERT INTO
+	OrdersXProducts
+	(OrderId, ProductId, Amount)
+VALUES
 	('1', '1', '1'),
 	('1', '2', '2'),
 	('2', '3', '3'),
 	('2', '4', '4'),
 	('2', '5', '5');
 
-go
+GO

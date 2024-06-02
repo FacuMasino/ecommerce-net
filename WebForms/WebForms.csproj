@@ -70,6 +70,9 @@
     <Content Include="Admin\Product.aspx" />
     <Content Include="Admin\Products.aspx" />
     <Content Include="Cart.aspx" />
+    <Content Include="Content\android-chrome-192x192.png" />
+    <Content Include="Content\android-chrome-512x512.png" />
+    <Content Include="Content\apple-touch-icon.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -86,6 +89,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\favicon-16x16.png" />
+    <Content Include="Content\favicon-32x32.png" />
+    <Content Include="Content\favicon-48x48.png" />
+    <Content Include="Content\favicon.ico" />
     <Content Include="Details.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="OrderConfirmation.aspx" />
@@ -241,6 +248,7 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Admin\AdminMP.Master" />
+    <Content Include="Content\site.webmanifest" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
