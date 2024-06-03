@@ -101,9 +101,30 @@ namespace BusinessLogicLayer
             _cart.ProductSets.Clear();
         }
 
+        /// <summary>
+        /// Cuenta el total de productos en el carrito
+        /// </summary>
+        /// <returns>Cantidad de productos</returns>
         public int Count()
         {
             return _cart.ProductSets.Count;
+        }
+
+        /// <summary>
+        /// Cuenta la cantidad de un producto en el carrito
+        /// según el Id pasado como parámetro
+        /// </summary>
+        /// <returns>Cantidad del producto</returns>
+        public int Count(int productId)
+        {
+            int count = 0;
+            if (_cart.ProductSets.Count > 0)
+            {
+                // Si .Find no devuelve null, intenta acceder a la prop Amount
+                // Sino se asigna 0
+                count = _cart.ProductSets.Find(p => p.Id == productId)?.Amount ?? 0;
+            }
+            return count;
         }
 
         public decimal GetTotal()
