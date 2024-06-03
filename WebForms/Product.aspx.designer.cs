@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebForms.ClientSide
+namespace WebForms
 {
 
 
-    public partial class Product
+    public partial class Details
     {
     }
 }

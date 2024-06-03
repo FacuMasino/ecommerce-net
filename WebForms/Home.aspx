@@ -109,7 +109,7 @@
                             <p class="card-subtitle mb-0 mt-auto text-muted pe-3 fw-bold">$<%:product.Price.ToString("0.00")%></p>
                             <div class='d-flex justify-content-end mt-auto'>
                                 <a href='<%= "Cart.aspx?id=" + product.Id %>' class="btn py-0 fs-5"><i class="bi bi-cart-plus"></i></a>
-                                <a href="Details.aspx?id=<%:product.Id%>" class="btn py-0 fs-5"><i class="bi bi-eye"></i></a>
+                                <a href="Product.aspx?id=<%:product.Id%>" class="btn py-0 fs-5"><i class="bi bi-eye"></i></a>
                             </div>
                         </div>
                     </div>

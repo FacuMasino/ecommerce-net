@@ -139,13 +139,13 @@
                 <li class="list-group-item">
                     <div class="row align-items-center">
                         <div class="col-4">
-                            <a href="ViewProduct.aspx?id=<%:productSet.Id%>">
+                            <a href="Product.aspx?id=<%:productSet.Id%>">
                                 <img class="img-fluid" src="<%:imageUrl%>" alt="Imagen de <%:productSet.Name%>" onerror="this.src='Content/img/placeholder.jpg'">
                             </a>
                         </div>
                         <div class="col-8">
                             <p class="fs-sm fw-bold mb-6">
-                                <a class="text-body text-decoration-none" href="ProductReg.aspx?id=id"><%:productSet.Name%></a>
+                                <a class="text-body text-decoration-none" href="Product.aspx?id=<%:productSet.Id%>"><%:productSet.Name%></a>
                                 <br>
                                 <span class="text-muted">$<%:productSet.Price .ToString("0.00")%></span>
                                 <br>

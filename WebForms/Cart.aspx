@@ -20,13 +20,13 @@
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-4">
-                                        <a href="ArticleRegisterForm.aspx?id=<%#Eval("id")%>">
+                                        <a href="Product.aspx?id=<%#Eval("id")%>">
                                             <img class="img-fluid" id="articleImage" runat="server" onerror="this.src='Content/img/placeholder.jpg'">
                                         </a>
                                     </div>
                                     <div class="col-8 d-flex flex-column justify-content-between py-2">
                                         <div class="d-flex mb-2 fw-bold">
-                                            <a class="text-body text-decoration-none" href="ArticleRegisterForm.aspx?id=<%#Eval("id")%>"><%#Eval("brand")%> - <%#Eval("name")%></a>
+                                            <a class="text-body text-decoration-none" href="Product.aspx?id=<%#Eval("id")%>"><%#Eval("brand")%> - <%#Eval("name")%></a>
                                             <span class="text-muted ms-auto"> <%# Eval("price", "{0:C}")%></span>
                                          
 

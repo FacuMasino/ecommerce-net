@@ -103,11 +103,23 @@ VALUES
 		'1'
 	),
 	(
+		'https://ik.imagekit.io/tpce16/products/prod-171-c1c8ff3e46f669939c15718532203779-1024-1024.jpg?updatedAt=1717374050896',
+		'1'
+	),
+	(
 		'https://ik.imagekit.io/tpce16/products/motogplay7magen_1024x1024.png?updatedAt=1717373361655',
 		'2'
 	),
 	(
+		'https://ik.imagekit.io/tpce16/products/723755131859-001-1400Wx1400H.jpeg?updatedAt=1717374542249',
+		'2'
+	),
+	(
 		'https://ik.imagekit.io/tpce16/products/Playstation-5.webp?updatedAt=1717373430693',
+		'3'
+	),
+	(
+		'https://ik.imagekit.io/tpce16/products/783661-11-729d40384c5a2ec86916826086826570-1024-1024.jpg?updatedAt=1717374648104',
 		'3'
 	),
 	(
