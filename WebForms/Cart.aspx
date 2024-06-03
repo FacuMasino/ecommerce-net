@@ -65,7 +65,7 @@
                         </li>
                     </ul>
                 </div>
-                <a class="btn w-100 btn-dark mb-2" href="#">Ir a Pagar</a>
+                <a class="btn w-100 btn-dark mb-2" href="OrderConfirmation.aspx">Ir a Pagar</a>
                 <a class="mb-2 w-100 d-block text-black" href="Home.aspx">Volver a la tienda</a>
             </div>
         </div>
