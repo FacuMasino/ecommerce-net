@@ -27,11 +27,7 @@
                                     <div class="col-8 d-flex flex-column justify-content-between py-2">
                                         <div class="d-flex mb-2 fw-bold">
                                             <a class="text-body text-decoration-none" href="Product.aspx?id=<%#Eval("id")%>"><%#Eval("brand")%> - <%#Eval("name")%></a>
-                                            <span class="text-muted ms-auto"> <%# Eval("price", "{0:C}")%></span>
-                                         
-
-                                            
-
+                                            <span class="text-muted ms-auto"><%# Eval("price", "{0:C}")%></span>
                                         </div>
                                         <p class="text-muted mb-auto">Subtotal <%# Eval("subtotal", "{0:C}")%></p>
                                         <div class="d-inline-flex align-items-center justify-content-between w-100">
