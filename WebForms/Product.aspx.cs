@@ -16,11 +16,6 @@ namespace WebForms
 
         // PROPERTIES
 
-        public int CartQty
-        {
-            get { return _cartManager.Count(); }
-        }
-
         // CONSTRUCT
 
         public Details()
@@ -41,14 +36,23 @@ namespace WebForms
             }
         }
 
+        // Tenemos esto para obtener la cantidad de productos en Session
+        // Para poder actualizar la cantidad en caso de modificarse
+        // Desde los eventos Add y Remove
         private void CheckSession()
         {
-            // TODO: Hay que arreglar esto, cuenta mal :(
             if (Session["CurrentProductSets"] != null)
             {
                 _cartManager.CurrentProductSets = (List<ProductSet>)Session["CurrentProductSets"];
-                Debug.Print(_cartManager.Count().ToString());
             }
+        }
+
+        /// <summary>
+        /// Cantidad de producto en el carrito
+        /// </summary>
+        public int GetCartQty()
+        {
+            return _cartManager.Count(_product.Id);
         }
 
         // EVENTS

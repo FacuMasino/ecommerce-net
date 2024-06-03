@@ -52,7 +52,7 @@
                         <p class="card-text fw-bold fs-5 align-self-end mb-0">$<%:_product.Price.ToString("0.00")%></p>
                         <div class="itemcount bg-body-tertiary">
                             <asp:LinkButton Text='<i class="bi bi-dash"></i>' CssClass="itemcount-control minus bg-body-tertiary text-decoration-none text-black fs-5 px-2" CommandArgument='<%#Eval("_product.Id")%>' ID="RemoveLnkButton" OnClick="RemoveLnkButton_Click" runat="server" />
-                            <input type="number" class="itemcount-control bg-body-tertiary" value="<%: CartQty%>" disabled>
+                            <input type="number" class="itemcount-control bg-body-tertiary" value="<%:GetCartQty()%>" disabled>
                             <asp:LinkButton Text='<i class="bi bi-plus"></i>' CssClass="itemcount-control plus bg-body-tertiary text-decoration-none text-black fs-5 px-2"  CommandArgument='<%#Eval("_product.Id")%>' ID="AddLnkButton" OnClick="AddLnkButton_Click" runat="server" />
                         </div>
                     </div>
