@@ -99,12 +99,20 @@ INSERT INTO
 	(ImageUrl, ProductId)
 VALUES
 	(
-		'https://images.samsung.com/is/image/samsung/co-galaxy-s10-sm-g970-sm-g970fzyjcoo-frontcanaryyellow-thumb-149016542',
+		'https://ik.imagekit.io/tpce16/products/S10-01-1024x1024.png?updatedAt=1717372633354',
 		'1'
 	),
 	(
-		'https://i.blogs.es/9da288/moto-g7-/1366_2000.jpg',
+		'https://ik.imagekit.io/tpce16/products/motogplay7magen_1024x1024.png?updatedAt=1717373361655',
 		'2'
+	),
+	(
+		'https://ik.imagekit.io/tpce16/products/Playstation-5.webp?updatedAt=1717373430693',
+		'3'
+	),
+	(
+		'https://ik.imagekit.io/tpce16/products/Sonyx80j_4S._SL1500_1024x.webp?updatedAt=1717373650982',
+		'4'
 	);
 
 GO
