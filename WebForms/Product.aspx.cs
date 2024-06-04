@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
 
@@ -63,8 +64,16 @@ namespace WebForms
             RequestOpenArticle();
         }
 
-        protected void RemoveLnkButton_Click(object sender, EventArgs e) { }
+        protected void RemoveLnkButton_Click(object sender, EventArgs e)
+        {
+            _cartManager.Remove(_product.Id);
+            Session["CurrentProductSets"] = _cartManager.List();
+        }
 
-        protected void AddLnkButton_Click(object sender, EventArgs e) { }
+        protected void AddLnkButton_Click(object sender, EventArgs e)
+        {
+            _cartManager.Add(_product.Id);
+            Session["CurrentProductSets"] = _cartManager.List();
+        }
     }
 }
