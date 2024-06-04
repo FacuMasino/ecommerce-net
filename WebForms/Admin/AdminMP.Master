@@ -6,11 +6,14 @@
 <head runat="server">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title><%: Page.Title %></title>
+    <title>Panel Admin - <%: Page.Title %></title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="Content/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="Content/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="Content/favicon-16x16.png">
+    <!--Favicon-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/Content/Admin/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Content/Admin/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Content/Admin/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/Content/Admin/favicon-48x48.png">
+    <link rel="manifest" href="Content/Admin/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true">
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
@@ -66,6 +69,7 @@
                                 <a id="BtnNavOrders" href="Orders.aspx" class="nav-link text-black" runat="server">
                                     <i class="bi bi-inbox me-2"></i>
                                     Pedidos
+                                    <span class="badge bg-danger">4</span>
                                 </a>
                             </li>
                             <li>

@@ -70,6 +70,11 @@
     <Content Include="Admin\Product.aspx" />
     <Content Include="Admin\Products.aspx" />
     <Content Include="Cart.aspx" />
+    <Content Include="Content\Admin\android-chrome-192x192.png" />
+    <Content Include="Content\Admin\android-chrome-256x256.png" />
+    <Content Include="Content\Admin\apple-touch-icon.png" />
+    <Content Include="Content\Admin\favicon-16x16.png" />
+    <Content Include="Content\Admin\favicon-32x32.png" />
     <Content Include="Content\android-chrome-192x192.png" />
     <Content Include="Content\android-chrome-512x512.png" />
     <Content Include="Content\apple-touch-icon.png" />
