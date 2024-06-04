@@ -1,4 +1,8 @@
-﻿body {
+﻿:root {
+    --navbar-desktop-width: 88px; 
+}
+
+body {
     font-family: 'Jost', sans-serif !important;
 }
 
@@ -9,6 +13,10 @@
 .custom-nav.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     background-color: var(--bs-light) !important;
     font-weight: 500;
+}
+
+.custom-nav-wrapper {
+    height: calc(100vh - var(--navbar-desktop-width));
 }
 
 .custom-sidebar {
@@ -130,6 +138,10 @@
 
 .border-dashed {
     border-style: dashed;
+}
+
+.container-main-admin {
+    top: 88px;
 }
 
 /* Large screen */

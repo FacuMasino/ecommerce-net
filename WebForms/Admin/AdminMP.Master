@@ -26,7 +26,7 @@
     <form id="form1" runat="server" class="d-flex vh-100 flex-column">
         <%--MENU--%>
         <header>
-            <nav class="navbar navbar-dark navbar-expand-lg bg-black py-4">
+            <nav class="navbar navbar-dark navbar-expand-lg position-fixed w-100 z-3 bg-black py-4">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -42,10 +42,10 @@
                 </div>
             </nav>
         </header>
-        <div class="container-fluid d-flex flex-grow-1 p-0">
-            <div class="d-flex position-relative">
-                <div class="d-lg-flex custom-sidebar h-100 collapse" id="sidebarMenu">
-                    <div class="d-flex flex-column w-100 h-100 p-3 bg-body-secondary">
+        <div class="container-fluid container-main-admin position-relative d-flex flex-grow-1 p-0">
+            <div class="d-flex z-1">
+                <div class="d-lg-flex custom-sidebar h-100  bg-body-secondary collapse" id="sidebarMenu">
+                    <div class="d-flex custom-nav-wrapper position-fixed flex-column p-3">
                         <ul class="custom-nav nav nav-pills flex-column mb-auto">
                             <li class="nav-item">
                                 <a id="BtnNavHome" href="/admin" class="nav-link text-black" aria-current="page" runat="server">
@@ -99,7 +99,7 @@
             </div>
             <asp:ScriptManager ID="ScriptManager1" runat="server">
             </asp:ScriptManager>
-            <asp:UpdatePanel class="p-4 col" ID="UPMain" runat="server">
+            <asp:UpdatePanel class="p-4 col z-0" ID="UPMain" runat="server">
                 <ContentTemplate>
                     <asp:ContentPlaceHolder ID="BodyPlaceHolder" runat="server">
                     </asp:ContentPlaceHolder>
