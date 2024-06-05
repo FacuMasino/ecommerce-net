@@ -43,6 +43,7 @@ INSERT INTO
 	ProductName,
 	ProductDescription,
 	Price,
+	Stock,
 	BrandId,
 	CategoryId
 	)
@@ -52,6 +53,7 @@ VALUES
 		'Galaxy S10',
 		'El Samsung Galaxy S10 es una línea de teléfonos inteligentes Android de gama alta fabricados por Samsung. La línea incluye los modelos S10, S10+, S10e y S10 5G',
 		'69.99',
+		'5',
 		'1',
 		'1'
 	),
@@ -60,6 +62,7 @@ VALUES
 		'Moto G Play 7ma Gen',
 		'Momentos únicos, capturas reales. Capturá tus mejores momentos y revivilos cuando quieras con la cámara trasera de 13 Mpx.',
 		'228576',
+		'10',
 		'5',
 		'1'
 	),
@@ -68,6 +71,7 @@ VALUES
 		'Play Station 5',
 		'Experimenta una velocidad sorprendente con una SSD de velocidad ultrarrápida, una inmersión más profunda con soporte para respuesta háptica, gatillos adaptables y audio 3D',
 		'1350000',
+		'15',
 		'3',
 		'3'
 	),
@@ -76,6 +80,7 @@ VALUES
 		'X80J Curvo 3D 4k',
 		'Disfruta de tu contenido favorito de Google TV en 4K HDR gracias al color, el contraste y la claridad de alta calidad de BRAVIA.',
 		'1899999',
+		'20',
 		'3',
 		'2'
 	),
@@ -84,6 +89,7 @@ VALUES
 		'Apple TV',
 		'Con este dispositivo podrás acceder a diversas aplicaciones para disfrutar de todas las herramientas y funcionalidades multimedia que ofrece. ¡Entretenimiento asegurado!',
 		'269990',
+		'0',
 		'2',
 		'2'
 	);

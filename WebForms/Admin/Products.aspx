@@ -45,7 +45,7 @@
                                 </th>
                                 <td><%#Eval("Category")%></td>
                                 <td>$ <%#Eval("Price")%></td>
-                                <td>IMPLEMENTAR</td>
+                                <td><%#Eval("Stock")%></td>
                                 <td>Test</td>
                             </tr>
                         </ItemTemplate>

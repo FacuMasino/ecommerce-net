@@ -7,7 +7,7 @@ go
 
 create or alter procedure SP_List_Products as
 begin
-	select ProductId, Code, ProductName, ProductDescription, Price, BrandId, CategoryId
+	select ProductId, Code, ProductName, ProductDescription, Price, Stock, BrandId, CategoryId
 	from Products
 end
 go
