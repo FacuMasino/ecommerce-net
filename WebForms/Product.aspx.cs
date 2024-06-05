@@ -7,7 +7,7 @@ using DomainModelLayer;
 
 namespace WebForms
 {
-    public partial class Details : System.Web.UI.Page
+    public partial class ProductView : System.Web.UI.Page
     {
         // ATTRIBUTES
 
@@ -19,7 +19,7 @@ namespace WebForms
 
         // CONSTRUCT
 
-        public Details()
+        public ProductView()
         {
             _product = new Product();
             _productsManager = new ProductsManager();

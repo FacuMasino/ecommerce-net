@@ -19,12 +19,12 @@ Y CAMBIAR PAGE TITLE */
             </div>
             <div class="row justify-content-between gx-4 mb-3">
                 <div class="col-md-6 col-12 mb-md-0 mb-3">
-                    <label for="ProductBrand" class="form-label">Marca</label>
-                    <asp:DropDownList ID="ProductBrand" CssClass="form-select" runat="server" />
+                    <label for="ProductBrandDDL" class="form-label">Marca</label>
+                    <asp:DropDownList ID="ProductBrandDDL" CssClass="form-select" runat="server" />
                 </div>
                 <div class="col-md-6 col-12 mb-md-0 mb-3">
-                    <label for="ProductCategory" class="form-label">Categoría</label>
-                    <asp:DropDownList ID="ProductCategory" CssClass="form-select" runat="server" />
+                    <label for="ProductCategoryDDL" class="form-label">Categoría</label>
+                    <asp:DropDownList ID="ProductCategoryDDL" CssClass="form-select" runat="server" />
                 </div>
             </div>
             <div class="mb-3">

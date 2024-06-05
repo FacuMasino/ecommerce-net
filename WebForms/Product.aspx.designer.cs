@@ -11,7 +11,7 @@ namespace WebForms
 {
 
 
-    public partial class Details
+    public partial class ProductView
     {
 
         /// <summary>
