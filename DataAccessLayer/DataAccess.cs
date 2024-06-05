@@ -23,11 +23,11 @@ namespace DataAccessLayer
         }
 
         /// <summary>
-        /// <c>DataAccess</c> Crea una conexión usando una de las cadenas de conexión de App.config.
+        /// <c>DataAccess</c> Crea una conexión usando una de las cadenas de conexión de Web.config.
         /// </summary>
         public DataAccess()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["ana"].ToString(); // Modificar en esta línea el argumento de ConnectionString["ana ó facu ó maxi"] para elegir la base de datos.
+            _connectionString = ConfigurationManager.ConnectionStrings["maxi_mac"].ToString(); // Modificar en esta línea el argumento de ConnectionString["ana ó facu ó maxi"] para elegir la base de datos.
             _connection = new SqlConnection(_connectionString);
             _command = new SqlCommand();
         }
