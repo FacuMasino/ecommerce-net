@@ -182,7 +182,7 @@
                 <ul class="nav justify-content-center border-bottom pb-3 mb-3">
                     <li class="nav-item"><a href="Home.aspx" class="nav-link px-2 text-body-secondary">Tienda</a></li>
                     <li class="nav-item"><a href="Cart.aspx" class="nav-link px-2 text-body-secondary">Ir al carrito</a></li>
-                    <li class="nav-item"><a href="#/admin" class="nav-link px-2 text-body-secondary">Panel Admin</a></li>
+                    <li class="nav-item"><a href="/admin" class="nav-link px-2 text-body-secondary">Panel Admin</a></li>
                     <li class="nav-item"><a href="#mainForm" class="nav-link px-2 text-body-secondary">Ir arriba</a></li>
                 </ul>
                 <div class="d-flex align-items-center justify-content-between">

@@ -98,7 +98,7 @@ Y CAMBIAR PAGE TITLE */
             </div>
         </div>
         <div class="d-flex gap-3 justify-content-end w-100">
-            <button class="btn btn-outline-secondary" type="button">Cancelar</button>
+            <a class="btn btn-outline-secondary" href="Products.aspx">Cancelar</a>
             <button class="btn btn-dark" type="button">Guardar Producto</button>
         </div>
     </div>
