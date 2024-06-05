@@ -31,6 +31,7 @@ namespace BusinessLogicLayer
                     product.Name = _dataAccess.Reader["ProductName"]?.ToString();
                     product.Description = _dataAccess.Reader["ProductDescription"]?.ToString();
                     product.Price = _dataAccess.Reader["Price"] as decimal? ?? product.Price;
+                    product.Stock = _dataAccess.Reader["Stock"] as int? ?? product.Stock;
                     product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
                     product.Category.Id = _dataAccess.Reader["CategoryId"] as int? ?? product.Category.Id;
                     product.Images = _imagesManager.List(product.Id);
