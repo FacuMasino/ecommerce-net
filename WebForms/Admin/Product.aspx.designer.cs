@@ -11,7 +11,7 @@ namespace WebForms.Admin
 {
 
 
-    public partial class Product
+    public partial class ProductAdmin
     {
 
         /// <summary>

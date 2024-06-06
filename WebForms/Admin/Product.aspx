@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Nuevo Producto" Language="C#" MasterPageFile="AdminMP.Master" AutoEventWireup="true"
-    CodeBehind="Product.aspx.cs" Inherits="WebForms.Admin.Product" %>
+    CodeBehind="Product.aspx.cs" Inherits="WebForms.Admin.ProductAdmin" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
 </asp:Content>
