@@ -2,11 +2,11 @@
 {
     public class ProductSet : Product
     {
-        public int Amount { get; set; }
+        public int Quantity { get; set; }
 
         public decimal Subtotal
         {
-            get { return Amount * Price; }
+            get { return Quantity * Price; }
         }
     }
 }

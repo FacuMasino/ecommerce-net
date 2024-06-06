@@ -33,7 +33,7 @@
                                         <div class="d-inline-flex align-items-center justify-content-between w-100">
                                             <div class="itemcount bg-body-tertiary">
                                                 <asp:LinkButton Text='<i class="bi bi-dash"></i>' CssClass="itemcount-control minus bg-body-tertiary text-decoration-none text-black fs-5 px-2" CommandArgument='<%#Eval("Id")%>' ID="removeLnkButton" OnClick="removeLnkButton_Click" runat="server" />
-                                                <input type="number" class="itemcount-control bg-body-tertiary" value="<%#Eval("amount") %>" disabled>
+                                                <input type="number" class="itemcount-control bg-body-tertiary" value="<%#Eval("quantity") %>" disabled>
                                                 <asp:LinkButton Text='<i class="bi bi-plus"></i>' CssClass="itemcount-control plus bg-body-tertiary text-decoration-none text-black fs-5 px-2" CommandArgument='<%#Eval("Id")%>' ID="addLnkButton" OnClick="addLnkButton_Click" runat="server" />
                                             </div>
                                             <asp:LinkButton Text="X Eliminar" CssClass="text-muted text-decoration-none" CommandArgument='<%#Eval("Id")%>' ID="deleteLnkButton" OnClick="deleteLnkButton_Click" runat="server" />

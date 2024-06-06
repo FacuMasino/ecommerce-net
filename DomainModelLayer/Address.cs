@@ -2,7 +2,7 @@
 
 namespace DomainModelLayer
 {
-    public sealed class Adress
+    public sealed class Address
     {
         // PROPERTIES
 
@@ -42,7 +42,7 @@ namespace DomainModelLayer
 
         // CONSTRUCT
 
-        public Adress()
+        public Address()
         {
             Country = new Country();
             Province = new Province();

@@ -18,7 +18,7 @@ namespace DomainModelLayer
         public DateTime DeliveryDate { get; set; }
 
         [DisplayName("Domicilio de entrega")]
-        public Adress DeliveryAdress { get; set; }
+        public Address DeliveryAddress { get; set; }
 
         [DisplayName("Estado")]
         public OrderStatus Status { get; set; }

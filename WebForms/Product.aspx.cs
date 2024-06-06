@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
 
@@ -72,7 +70,7 @@ namespace WebForms
 
         protected void AddLnkButton_Click(object sender, EventArgs e)
         {
-            _cartManager.Add(_product.Id);
+            _cartManager.Add(_product);
             Session["CurrentProductSets"] = _cartManager.List();
         }
     }

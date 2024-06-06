@@ -5,7 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
-    <div class="d-flex flex-column gy-4 container-800 mx-auto gap-3">
+    <div class="d-flex flex-column container-800 mx-auto gap-3">
         <% /* Agregar condición para que sea Editar/Nuevo
 Y CAMBIAR PAGE TITLE */
         %>
@@ -15,7 +15,7 @@ Y CAMBIAR PAGE TITLE */
             <h2 class="fs-5">Información Básica</h2>
             <div class="mb-3">
                 <label for="ProductName" class="form-label">Nombre</label>
-                <input type="email" class="form-control" id="ProductName" placeholder="Ingresa el nombre de tu producto">
+                <input type="text" class="form-control" id="ProductName" placeholder="Ingresa el nombre de tu producto">
             </div>
             <div class="row justify-content-between gx-4 mb-3">
                 <div class="col-md-6 col-12 mb-md-0 mb-3">
@@ -78,10 +78,18 @@ Y CAMBIAR PAGE TITLE */
         </div>
         <!-- Sección Precio -->
         <div class="d-flex flex-column border-1 border rounded p-3">
-            <h2 class="fs-5">Precio</h2>
+            <h2 class="fs-5">Precio y Stock</h2>
             <div class="mb-3">
-                <label for="ProductPrice" class="form-label">Precio de venta</label>
-                <input type="number" class="form-control" id="ProductSellPrice" placeholder="$ 0.00">
+                <div class="d-flex justify-content-between gap-3">
+                    <div class="col">
+                        <label for="ProductPrice" class="form-label">Precio de venta</label>
+                        <input type="number" class="form-control" id="ProductSellPrice" placeholder="$ 0.00">
+                    </div>
+                    <div class="col">
+                        <label for="ProductStock" class="form-label">Cantidad disponible</label>
+                        <input type="number" class="form-control" id="ProductStock" placeholder="0">
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
                 <div class="d-flex justify-content-between gap-3">
@@ -90,7 +98,7 @@ Y CAMBIAR PAGE TITLE */
                         <input type="number" class="form-control" id="ProductCost" placeholder="$ 0.00">
                     </div>
                     <div class="col">
-                        <label for="ProductReturns" class="form-label">Ganancia</label>
+                        <label for="ProductReturns" class="form-label">Ganancia por venta</label>
                         <input type="number" class="form-control" id="ProductReturns" placeholder="0 %" disabled>
                     </div>
                 </div>

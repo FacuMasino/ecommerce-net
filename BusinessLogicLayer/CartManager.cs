@@ -46,7 +46,7 @@ namespace BusinessLogicLayer
             return _cart.ProductSets.Find(x => x.Id == id);
         }
 
-        public void Add(Product Product, int amount = 1)
+        public void Add(Product Product, int quantity = 1)
         {
             if (ProductExists(Product.Id))
             {
@@ -64,26 +64,26 @@ namespace BusinessLogicLayer
                     Brand = Product.Brand,
                     Category = Product.Category,
                     Images = Product.Images,
-                    Amount = amount
+                    Quantity = quantity
                 };
 
                 _cart.ProductSets.Add(_ProductSet);
             }
         }
 
-        public void Add(int ProductId, int amount = 1)
+        public void Add(int ProductId, int quantity = 1)
         {
             _ProductSet = ReadProductSet(ProductId);
-            _ProductSet.Amount += amount;
+            _ProductSet.Quantity += quantity;
         }
 
-        public void Remove(int ProductId, int amount = 1)
+        public void Remove(int ProductId, int quantity = 1)
         {
             _ProductSet = ReadProductSet(ProductId);
 
-            if (_ProductSet.Amount != amount)
+            if (_ProductSet.Quantity != quantity)
             {
-                _ProductSet.Amount -= amount;
+                _ProductSet.Quantity -= quantity;
                 return;
             }
 
@@ -120,9 +120,9 @@ namespace BusinessLogicLayer
             int count = 0;
             if (_cart.ProductSets.Count > 0)
             {
-                // Si .Find no devuelve null, intenta acceder a la prop Amount
+                // Si .Find no devuelve null, intenta acceder a la prop Quantiy
                 // Sino se asigna 0
-                count = _cart.ProductSets.Find(p => p.Id == productId)?.Amount ?? 0;
+                count = _cart.ProductSets.Find(p => p.Id == productId)?.Quantity ?? 0;
             }
             return count;
         }

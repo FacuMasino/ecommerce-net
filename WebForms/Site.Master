@@ -129,7 +129,7 @@
                     foreach (ProductSet productSet in _productSets)
                     {
                         string imageUrl = "Content/img/placeholder.jpg";
-                        total += productSet.Price * productSet.Amount;
+                        total += productSet.Price * productSet.Quantity;
                         if (0 < productSet.Images.Count)
                         {
                             imageUrl = productSet.Images[0].Url;
@@ -149,7 +149,7 @@
                                 <br>
                                 <span class="text-muted">$<%:productSet.Price .ToString("0.00")%></span>
                                 <br>
-                                <span class="fw-normal">Cantidad:<%:productSet.Amount%></span>
+                                <span class="fw-normal">Cantidad:<%:productSet.Quantity%></span>
                                 <br>
                                 <strong>Subtotal Item:</strong>
                                 <strong class="ms-auto">$ <%:productSet.Subtotal .ToString("0.00")%></strong>

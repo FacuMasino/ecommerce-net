@@ -5,7 +5,7 @@ using UtilitiesLayer;
 
 namespace BusinessLogicLayer
 {
-    public class AdressesManager
+    public class AddressesManager
     {
         // ATTRIBUTES
 
@@ -16,22 +16,22 @@ namespace BusinessLogicLayer
 
         // METHODS
 
-        public Adress Read(int adressId)
+        public Address Read(int adressId)
         {
-            Adress adress = new Adress();
+            Address adress = new Address();
 
             try
             {
                 _dataAccess.SetQuery(
-                    "select " +
-                    "A.AdressId, A.StreetName, A.StreetNumber, A.Flat, A.Details, A.CityId, " +
-                    "CI.CityName, CI.ZipCode, CI.ProvinceId, " +
-                    "P.ProvinceName, P.CountryId, CO.CountryName " +
-                    "from Adresses A " +
-                    "inner join Cities CI on A.CityId = CI.CityId " +
-                    "inner join Provinces P on CI.ProvinceId = P.ProvinceId " +
-                    "inner join Countries CO on P.CountryId = CO.CountryId " +
-                    "where AdressId = @AdressId"
+                    "select "
+                        + "A.AdressId, A.StreetName, A.StreetNumber, A.Flat, A.Details, A.CityId, "
+                        + "CI.CityName, CI.ZipCode, CI.ProvinceId, "
+                        + "P.ProvinceName, P.CountryId, CO.CountryName "
+                        + "from Adresses A "
+                        + "inner join Cities CI on A.CityId = CI.CityId "
+                        + "inner join Provinces P on CI.ProvinceId = P.ProvinceId "
+                        + "inner join Countries CO on P.CountryId = CO.CountryId "
+                        + "where AdressId = @AdressId"
                 );
                 _dataAccess.SetParameter("@AdressId", adressId);
                 _dataAccess.ExecuteRead();
@@ -78,10 +78,10 @@ namespace BusinessLogicLayer
             return adress;
         }
 
-        public void Add(Adress adress)
+        public void Add(Address adress)
         {
             int dbCountryId = _countriesManager.GetId(adress.Country);
-            
+
             if (dbCountryId == 0)
             {
                 _countriesManager.Add(adress.Country);
@@ -93,7 +93,7 @@ namespace BusinessLogicLayer
             }
 
             int dbProvinceId = _provincesManager.GetId(adress.Province);
-            
+
             if (dbProvinceId == 0)
             {
                 _provincesManager.Add(adress.Province, adress.Country.Id);
@@ -105,7 +105,7 @@ namespace BusinessLogicLayer
             }
 
             int dbCityId = _citiesManager.GetId(adress.City);
-            
+
             if (dbCityId == 0)
             {
                 _citiesManager.Add(adress.City, adress.Province.Id);
@@ -118,7 +118,9 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("insert into Adresses (StreetName, StreetNumber, Flat, Details, CityId) values (@StreetName, @StreetNumber, @Flat, @Details, @CityId)");
+                _dataAccess.SetQuery(
+                    "insert into Adresses (StreetName, StreetNumber, Flat, Details, CityId) values (@StreetName, @StreetNumber, @Flat, @Details, @CityId)"
+                );
                 SetParameters(adress);
                 _dataAccess.ExecuteAction();
             }
@@ -132,7 +134,7 @@ namespace BusinessLogicLayer
             }
         }
 
-        public void Edit(Adress adress)
+        public void Edit(Address adress)
         {
             int dbCountryId = _countriesManager.GetId(adress.Country);
 
@@ -184,7 +186,9 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("update Adresses set StreetName = @StreetName, StreetNumber = @StreetNumber, Flat = @Flat, Details = @Details, CityId = @CityId where AdressId = @AdressId");
+                _dataAccess.SetQuery(
+                    "update Adresses set StreetName = @StreetName, StreetNumber = @StreetNumber, Flat = @Flat, Details = @Details, CityId = @CityId where AdressId = @AdressId"
+                );
                 _dataAccess.SetParameter("@AdressId", adress.Id);
                 SetParameters(adress);
                 _dataAccess.ExecuteAction();
@@ -199,7 +203,7 @@ namespace BusinessLogicLayer
             }
         }
 
-        public int GetId(Adress adress)
+        public int GetId(Address adress)
         {
             if (adress == null)
             {
@@ -210,7 +214,9 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select AdressId from Adresses where StreetName = @StreetName and StreetNumber = @StreetNumber and CityId = @CityId");
+                _dataAccess.SetQuery(
+                    "select AdressId from Adresses where StreetName = @StreetName and StreetNumber = @StreetNumber and CityId = @CityId"
+                );
                 _dataAccess.SetParameter("@StreetName", adress.StreetName);
                 _dataAccess.SetParameter("@StreetNumber", adress.StreetNumber);
                 _dataAccess.SetParameter("@CityId", adress.City.Id);
@@ -233,7 +239,7 @@ namespace BusinessLogicLayer
             return adressId;
         }
 
-        private void SetParameters(Adress adress)
+        private void SetParameters(Address adress)
         {
             _dataAccess.SetParameter("@StreetName", adress.StreetName);
             _dataAccess.SetParameter("@StreetNumber", adress.StreetNumber);

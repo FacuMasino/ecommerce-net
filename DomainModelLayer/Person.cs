@@ -30,6 +30,6 @@ namespace DomainModelLayer
         public DateTime Birth { get; set; }
 
         [DisplayName("Domicilio")]
-        public Adress Adress { get; set; }
+        public Address Address { get; set; }
     }
 }
