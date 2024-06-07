@@ -68,7 +68,8 @@
                     </ItemTemplate>
                 </asp:Repeater>
             </div>
-            <%}%>
+            <%}
+%>
         </div>
         <!-- Sección Precio -->
         <div class="d-flex flex-column border-1 border rounded p-3">
@@ -77,12 +78,12 @@
                 <div class="d-flex justify-content-between gap-3">
                     <div class="col">
                         <label for="ProductPrice" class="form-label">Precio de venta</label>
-                        <input type="number" class="form-control" id="ProductPrice" placeholder="$ 0.00"
-                            runat="server">
+                        <Asp:TextBox TextMode="Number" class="form-control" id="ProductPrice" placeholder="0,00"
+                            OnTextChanged="CalcReturns_TextChanged" step=".01" AutoPostBack="true" runat="server"/>
                     </div>
                     <div class="col">
                         <label for="ProductStock" class="form-label">Cantidad disponible</label>
-                        <input type="number" class="form-control" id="ProductStock" placeholder="0" runat="server">
+                        <Asp:TextBox TextMode="Number" class="form-control" id="ProductStock" placeholder="0" runat="server" />
                     </div>
                 </div>
             </div>
@@ -90,11 +91,11 @@
                 <div class="d-flex justify-content-between gap-3">
                     <div class="col">
                         <label for="ProductCost" class="form-label">Costo</label>
-                        <input type="number" class="form-control" id="ProductCost" placeholder="$ 0.00" runat="server">
+                        <Asp:TextBox TextMode="Number" CssClass="form-control" id="ProductCost" placeholder="0,00" OnTextChanged="CalcReturns_TextChanged" AutoPostBack="true" step="any" runat="server" />
                     </div>
                     <div class="col">
                         <label for="ProductReturns" class="form-label">Ganancia por venta</label>
-                        <input type="number" class="form-control" id="ProductReturns" placeholder="0 %" disabled>
+                        <Asp:TextBox CssClass="form-control" id="ProductReturns" placeholder="0 %" Enabled="false" runat="server" />
                     </div>
                 </div>
                 <span class="form-text">El costo del producto no se muestra al público.</span>

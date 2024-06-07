@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using BusinessLogicLayer;
 using DomainModelLayer;
 
@@ -93,8 +94,8 @@ namespace WebForms.Admin
                 ProductDescription.Value = _product.Description;
                 ProductBrandDDL.SelectedValue = _product.Brand.Id.ToString();
                 ProductCategoryDDL.SelectedValue = _product.Category.Id.ToString();
-                ProductPrice.Value = _product.Price.ToString();
-                ProductStock.Value = _product.Stock.ToString();
+                ProductPrice.Text = _product.Price.ToString("F2"); // Problema con el textbox, no acepta comas desde el codebehind
+                ProductStock.Text = _product.Stock.ToString();
                 BindImages();
             }
         }
@@ -130,12 +131,23 @@ namespace WebForms.Admin
             }
         }
 
+        // EVENTS
+
         protected void AddImageBtn_Click(object sender, EventArgs e)
         {
             Image auxImg = new Image();
             auxImg.Url = ProductImageUrl.Text;
             _product.Images.Add(auxImg);
             BindImages(); // Actualizar repeater imágenes
+        }
+
+        protected void CalcReturns_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(ProductPrice.Text) || string.IsNullOrEmpty(ProductCost.Text))
+                return;
+            decimal returns =
+                ((decimal.Parse(ProductPrice.Text) / decimal.Parse(ProductCost.Text)) - 1) * 100;
+            ProductReturns.Text = $"{returns:#.##} %";
         }
     }
 }
