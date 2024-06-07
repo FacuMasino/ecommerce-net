@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdressesManager.cs" />
+    <Compile Include="AddressesManager.cs" />
     <Compile Include="CitiesManager.cs" />
     <Compile Include="CountriesManager.cs" />
     <Compile Include="OrdersManager.cs" />

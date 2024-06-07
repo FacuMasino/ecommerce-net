@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using DataAccessLayer;
 using DomainModelLayer;
 using UtilitiesLayer;
@@ -31,9 +30,10 @@ namespace BusinessLogicLayer
                     product.Name = _dataAccess.Reader["ProductName"]?.ToString();
                     product.Description = _dataAccess.Reader["ProductDescription"]?.ToString();
                     product.Price = _dataAccess.Reader["Price"] as decimal? ?? product.Price;
-                    product.Stock = _dataAccess.Reader["Stock"] as int? ?? product.Stock;
+                    product.Stock = (int)_dataAccess.Reader["Stock"] as int? ?? product.Stock;
                     product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
-                    product.Category.Id = _dataAccess.Reader["CategoryId"] as int? ?? product.Category.Id;
+                    product.Category.Id =
+                        _dataAccess.Reader["CategoryId"] as int? ?? product.Category.Id;
                     product.Images = _imagesManager.List(product.Id);
                     products.Add(product);
                 }
@@ -62,7 +62,9 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select Code, ProductName, ProductDescription, Price, BrandId, CategoryId from Products where ProductId = @ProductId");
+                _dataAccess.SetQuery(
+                    "select Code, ProductName, ProductDescription, Price, Stock, BrandId, CategoryId from Products where ProductId = @ProductId"
+                );
                 _dataAccess.SetParameter("@ProductId", productId);
                 _dataAccess.ExecuteRead();
 
@@ -73,8 +75,10 @@ namespace BusinessLogicLayer
                     Product.Name = _dataAccess.Reader["ProductName"]?.ToString();
                     Product.Description = _dataAccess.Reader["ProductDescription"]?.ToString();
                     Product.Price = _dataAccess.Reader["Price"] as decimal? ?? Product.Price;
+                    Product.Stock = (int)_dataAccess.Reader["Stock"] as int? ?? Product.Stock;
                     Product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? Product.Brand.Id;
-                    Product.Category.Id = _dataAccess.Reader["CategoryId"] as int? ?? Product.Category.Id;
+                    Product.Category.Id =
+                        _dataAccess.Reader["CategoryId"] as int? ?? Product.Category.Id;
                     Product.Images = _imagesManager.List(Product.Id);
                 }
             }
@@ -100,7 +104,9 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("insert into Products (Code, ProductName, ProductDescription, Price, BrandId, CategoryId) values (@Code, @ProductName, @ProductDescription, @Price, @BrandId, @CategoryId)");
+                _dataAccess.SetQuery(
+                    "insert into Products (Code, ProductName, ProductDescription, Price, BrandId, CategoryId) values (@Code, @ProductName, @ProductDescription, @Price, @BrandId, @CategoryId)"
+                );
                 SetParameters(Product);
                 _dataAccess.ExecuteAction();
                 SetImages(Product); // Las imagenes se agregan luego de agregar el articulo ya que van con le id del mismo asociadas
@@ -123,7 +129,9 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("update Products set Code = @Code, ProductName = @ProductName, ProductDescription = @ProductDescription, Price = @Price, BrandId = @BrandId, CategoryId = @CategoryId where ProductId = @ProductId");
+                _dataAccess.SetQuery(
+                    "update Products set Code = @Code, ProductName = @ProductName, ProductDescription = @ProductDescription, Price = @Price, BrandId = @BrandId, CategoryId = @CategoryId where ProductId = @ProductId"
+                );
                 _dataAccess.SetParameter("@ProductId", product.Id);
                 SetParameters(product);
                 _dataAccess.ExecuteAction();

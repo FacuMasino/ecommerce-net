@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
 
@@ -15,6 +10,17 @@ namespace WebForms.Admin
         private CategoriesManager _categoriesManager;
         private ProductsManager _productsManager;
         private Product _product;
+        private bool _isEditing;
+
+        public bool IsEditing
+        {
+            get { return _isEditing; }
+        }
+
+        public Product CurrentProduct
+        {
+            get { return _product; }
+        }
 
         public ProductAdmin()
         {
@@ -27,13 +33,23 @@ namespace WebForms.Admin
         private void BindBrands()
         {
             ProductBrandDDL.DataSource = _brandsManager.List();
+            ProductBrandDDL.DataValueField = "Id";
+            ProductBrandDDL.DataTextField = "Name";
             ProductBrandDDL.DataBind();
         }
 
         private void BindCategories()
         {
             ProductCategoryDDL.DataSource = _categoriesManager.List();
+            ProductCategoryDDL.DataValueField = "Id";
+            ProductCategoryDDL.DataTextField = "Name";
             ProductCategoryDDL.DataBind();
+        }
+
+        private void BindImages()
+        {
+            ProductImagesRPT.DataSource = _product.Images;
+            ProductImagesRPT.DataBind();
         }
 
         /// <summary>
@@ -46,6 +62,7 @@ namespace WebForms.Admin
             try
             {
                 int articleId = Convert.ToInt32(Request.QueryString["Id"].ToString());
+                _isEditing = true;
                 LoadProduct(articleId);
             }
             catch (Exception ex)
@@ -64,13 +81,26 @@ namespace WebForms.Admin
         private void LoadProduct(int id)
         {
             _product = _productsManager.Read(id);
-            // TODO: llenar controles
-            // TODO: Verificar que pasa cuando se manda un Id que no existe
+            if (_product.Name != null)
+            {
+                ProductName.Value = _product.Name;
+                ProductDescription.Value = _product.Description;
+                ProductBrandDDL.SelectedValue = _product.Brand.Id.ToString();
+                ProductCategoryDDL.SelectedValue = _product.Category.Id.ToString();
+                ProductPrice.Value = _product.Price.ToString();
+                ProductStock.Value = _product.Stock.ToString();
+                BindImages();
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             CheckRequest(); // Verificar si se pasó un Id
+
+            if (_isEditing)
+            {
+                this.Title = "Editar Producto";
+            }
 
             if (!IsPostBack)
             {
