@@ -51,6 +51,24 @@ namespace WebForms.Admin
         protected global::System.Web.UI.HtmlControls.HtmlTextArea ProductDescription;
 
         /// <summary>
+        /// ProductImageUrl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ProductImageUrl;
+
+        /// <summary>
+        /// AddImageBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AddImageBtn;
+
+        /// <summary>
         /// ProductImagesRPT control.
         /// </summary>
         /// <remarks>

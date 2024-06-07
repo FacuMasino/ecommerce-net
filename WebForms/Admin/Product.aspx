@@ -6,10 +6,9 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
     <div class="d-flex flex-column container-800 mx-auto gap-3">
-        <% /* Agregar condición para que sea Editar/Nuevo
-Y CAMBIAR PAGE TITLE */
-        %>
-        <h1 class="fs-4"><%: IsEditing ? "Editar":"Nuevo" %> Producto</h1>
+        <% if (CurrentProduct.Name != null || !IsEditing)
+            {       %>
+        <h1 class="fs-4"><%: IsEditing ? "Editar" : "Nuevo" %> Producto</h1>
         <!-- Sección Info Básica -->
         <div class="d-flex flex-column border-1 border rounded p-3">
             <h2 class="fs-5">Información Básica</h2>
@@ -31,7 +30,7 @@ Y CAMBIAR PAGE TITLE */
                 <label for="ProductDescription" class="form-label">Descripción</label>
                 <textarea class="form-control" id="ProductDescription"
                     placeholder="Ingrese una breve descripción de hasta 300 caracteres"
-                    rows="3" runat="server"></textarea>
+                    rows="3" maxlength="300" runat="server"></textarea>
             </div>
         </div>
         <!-- Sección Imágenes -->
@@ -40,8 +39,8 @@ Y CAMBIAR PAGE TITLE */
             <div class="mb-3">
                 <label for="ProductImage" class="form-label">Agregar nueva</label>
                 <div class="d-flex gap-3">
-                    <input type="text" class="form-control" id="ProductImage" placeholder="http://urldelaimagen.com/producto.png">
-                    <button class="btn btn-dark" type="button">Agregar</button>
+                    <Asp:TextBox TextMode="Url" class="form-control" id="ProductImageUrl" runat="server" placeholder="http://urldelaimagen.com/producto.png" />
+                    <Asp:Button ID="AddImageBtn" class="btn btn-dark" OnClick="AddImageBtn_Click" runat="server" Text="Agregar"/>
                 </div>
                 <span class="form-text fw-bold">Tip: </span>
                 <span class="form-text">Para un mejor resultado utilizar imágenes PNG transparentes
@@ -69,7 +68,7 @@ Y CAMBIAR PAGE TITLE */
                     </ItemTemplate>
                 </asp:Repeater>
             </div>
-                <%} %>
+            <%}%>
         </div>
         <!-- Sección Precio -->
         <div class="d-flex flex-column border-1 border rounded p-3">
@@ -105,5 +104,19 @@ Y CAMBIAR PAGE TITLE */
             <a class="btn btn-outline-secondary" href="Products.aspx">Cancelar</a>
             <button class="btn btn-dark" type="button">Guardar Producto</button>
         </div>
+        <%}
+            else
+            {
+        %>
+        <div class="col-md-8 col align-self-center text-center">
+            <h5 class="text-align-center">Ups! El producto que intentás editar no existe
+            </h5>
+            <img src="/Content/img/Empty-cuate.svg" class="img-fluid object-fit-cover h-75" />
+            <p>Intentá elegir otro desde la lista</p>
+            <a href="Products.aspx" class="btn btn-dark text-center" type="button">Ver Productos</a>
+        </div>
+        <div class="col-md-8 col text-center">
+        </div>
+        <%} %>
     </div>
 </asp:Content>

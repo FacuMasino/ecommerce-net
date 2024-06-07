@@ -98,6 +98,9 @@
     <Content Include="Content\favicon-32x32.png" />
     <Content Include="Content\favicon-48x48.png" />
     <Content Include="Content\favicon.ico" />
+    <Content Include="Content\img\add-to-cart.svg" />
+    <Content Include="Content\img\Empty-pana.svg" />
+    <Content Include="Content\img\placeholder.jpg" />
     <Content Include="Product.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="OrderConfirmation.aspx" />

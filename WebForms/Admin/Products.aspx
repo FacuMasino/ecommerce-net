@@ -37,8 +37,8 @@
                         <ItemTemplate>
                             <tr>
                                 <th scope="row">
-                                    <a  class="text-black"
-                                        href="/Product.aspx?id=<%#Eval("Id")%>" 
+                                    <a class="text-black"
+                                        href="/Product.aspx?id=<%#Eval("Id")%>"
                                         target="_blank">
                                         <%#Eval("Brand")%> - <%#Eval("name")%>
                                     </a>
@@ -46,7 +46,18 @@
                                 <td><%#Eval("Category")%></td>
                                 <td>$ <%#Eval("Price")%></td>
                                 <td><%#Eval("Stock")%></td>
-                                <td>Test</td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <!-- Editar -->
+                                        <a href="Product.aspx?id=<%#Eval("Id")%>" class="p-0 text-black fs-5">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <!-- Eliminar -->
+                                        <a href="#" class="p-0 text-black fs-5">
+                                            <i class="bi bi-trash3"></i>
+                                        </a>
+                                    </div>
+                                </td>
                             </tr>
                         </ItemTemplate>
                     </asp:Repeater>

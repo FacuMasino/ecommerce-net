@@ -53,7 +53,8 @@ namespace WebForms.Admin
         }
 
         /// <summary>
-        /// Verifica si se una consulta por parametro en la URL
+        /// Verifica si se pasó una consulta por parametro en la URL
+        /// para editar un producto
         /// </summary>
         private void CheckRequest()
         {
@@ -78,11 +79,16 @@ namespace WebForms.Admin
             }
         }
 
+        /// <summary>
+        /// Carga de un producto para edición
+        /// </summary>
+        /// <param name="id">Id del producto</param>
         private void LoadProduct(int id)
         {
             _product = _productsManager.Read(id);
             if (_product.Name != null)
             {
+                Session["CurrentProduct"] = _product;
                 ProductName.Value = _product.Name;
                 ProductDescription.Value = _product.Description;
                 ProductBrandDDL.SelectedValue = _product.Brand.Id.ToString();
@@ -93,9 +99,23 @@ namespace WebForms.Admin
             }
         }
 
+        /// <summary>
+        /// Verifica si hay un producto guardado en sesión,
+        /// si es así, se lo asigna a _product
+        /// </summary>
+        private void CheckSession()
+        {
+            if (Session["CurrentProduct"] != null)
+            {
+                // Se asigna por referencia el mismo objeto
+                // Cuando se actualice _product también se actualiza el de la Session
+                _product = (Product)Session["CurrentProduct"];
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            CheckRequest(); // Verificar si se pasó un Id
+            CheckSession();
 
             if (_isEditing)
             {
@@ -104,9 +124,18 @@ namespace WebForms.Admin
 
             if (!IsPostBack)
             {
+                CheckRequest();
                 BindBrands();
                 BindCategories();
             }
+        }
+
+        protected void AddImageBtn_Click(object sender, EventArgs e)
+        {
+            Image auxImg = new Image();
+            auxImg.Url = ProductImageUrl.Text;
+            _product.Images.Add(auxImg);
+            BindImages(); // Actualizar repeater imágenes
         }
     }
 }
