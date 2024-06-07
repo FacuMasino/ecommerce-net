@@ -78,7 +78,7 @@
                 <div class="d-flex justify-content-between gap-3">
                     <div class="col">
                         <label for="ProductPrice" class="form-label">Precio de venta</label>
-                        <Asp:TextBox TextMode="Number" class="form-control" id="ProductPrice" placeholder="0,00"
+                        <Asp:TextBox pattern="-?[0-9]+[\,.]*[0-9]+" class="form-control" id="ProductPrice" placeholder="0,00"
                             OnTextChanged="CalcReturns_TextChanged" step=".01" AutoPostBack="true" runat="server"/>
                     </div>
                     <div class="col">
@@ -91,7 +91,7 @@
                 <div class="d-flex justify-content-between gap-3">
                     <div class="col">
                         <label for="ProductCost" class="form-label">Costo</label>
-                        <Asp:TextBox TextMode="Number" CssClass="form-control" id="ProductCost" placeholder="0,00" OnTextChanged="CalcReturns_TextChanged" AutoPostBack="true" step="any" runat="server" />
+                        <Asp:TextBox pattern="-?[0-9]+[\,.]*[0-9]+" CssClass="form-control" id="ProductCost" placeholder="0,00" OnTextChanged="CalcReturns_TextChanged" AutoPostBack="true" step="any" runat="server" />
                     </div>
                     <div class="col">
                         <label for="ProductReturns" class="form-label">Ganancia por venta</label>

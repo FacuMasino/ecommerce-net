@@ -94,7 +94,7 @@ namespace WebForms.Admin
                 ProductDescription.Value = _product.Description;
                 ProductBrandDDL.SelectedValue = _product.Brand.Id.ToString();
                 ProductCategoryDDL.SelectedValue = _product.Category.Id.ToString();
-                ProductPrice.Text = _product.Price.ToString("F2"); // Problema con el textbox, no acepta comas desde el codebehind
+                ProductPrice.Text = _product.Price.ToString("F2");
                 ProductStock.Text = _product.Stock.ToString();
                 BindImages();
             }
