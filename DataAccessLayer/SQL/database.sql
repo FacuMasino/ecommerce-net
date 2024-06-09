@@ -40,9 +40,20 @@ CREATE TABLE Products
 	ProductDescription varchar(300) NULL,
 	Price decimal(15, 2) NOT NULL,
 	Stock int check(0 <= Stock) NOT NULL,
-	BrandId int FOREIGN KEY REFERENCES Brands (BrandId) NULL,
-	CategoryId int FOREIGN KEY REFERENCES Categories (CategoryId) NULL
-) 
+	BrandId int FOREIGN KEY REFERENCES Brands (BrandId) NULL
+)
+GO
+
+------------------------
+-- PRODUCT CATEGORIES --
+------------------------
+
+CREATE TABLE ProductCategories
+(
+	ProductId int FOREIGN KEY REFERENCES Products(ProductId) NOT NULL,
+	CategoryId int FOREIGN KEY REFERENCES Categories(CategoryId) NOT NULL,
+	PRIMARY KEY (ProductId, CategoryId)
+)
 GO
 
 ------------
@@ -179,14 +190,15 @@ CREATE TABLE Orders
 ) 
 GO
 
------------------------
--- ORDERS X PRODUCTS --
------------------------
+--------------------
+-- PRODUCT ORDERS --
+--------------------
 
-CREATE TABLE OrdersXProducts
+CREATE TABLE ProductOrders
 (
 	OrderId int FOREIGN KEY REFERENCES Orders (OrderId) NOT NULL,
 	ProductId int FOREIGN KEY REFERENCES Products (ProductId) NOT NULL,
-	Amount int DEFAULT (1) NOT NULL
+	Amount int DEFAULT (1) NOT NULL,
+	PRIMARY KEY (OrderId, ProductId)
 ) 
 GO

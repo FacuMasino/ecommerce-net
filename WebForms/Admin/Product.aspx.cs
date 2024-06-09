@@ -93,7 +93,7 @@ namespace WebForms.Admin
                 ProductName.Value = _product.Name;
                 ProductDescription.Value = _product.Description;
                 ProductBrandDDL.SelectedValue = _product.Brand.Id.ToString();
-                ProductCategoryDDL.SelectedValue = _product.Category.Id.ToString();
+                //ProductCategoryDDL.SelectedValue = _product.Category.Id.ToString(); // hack
                 ProductPrice.Text = _product.Price.ToString("F2");
                 ProductStock.Text = _product.Stock.ToString();
                 BindImages();

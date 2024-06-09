@@ -62,7 +62,6 @@ namespace BusinessLogicLayer
                     Price = Product.Price,
                     Description = Product.Description,
                     Brand = Product.Brand,
-                    Category = Product.Category,
                     Images = Product.Images,
                     Quantity = quantity
                 };

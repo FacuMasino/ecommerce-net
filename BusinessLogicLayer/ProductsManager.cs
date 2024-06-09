@@ -32,8 +32,7 @@ namespace BusinessLogicLayer
                     product.Price = _dataAccess.Reader["Price"] as decimal? ?? product.Price;
                     product.Stock = (int)_dataAccess.Reader["Stock"] as int? ?? product.Stock;
                     product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
-                    product.Category.Id =
-                        _dataAccess.Reader["CategoryId"] as int? ?? product.Category.Id;
+                    product.Categories = _categoriesManager.List(product.Id);
                     product.Images = _imagesManager.List(product.Id);
                     products.Add(product);
                 }
@@ -50,7 +49,6 @@ namespace BusinessLogicLayer
             foreach (Product product in products)
             {
                 product.Brand = _brandsManager.Read(product.Brand.Id);
-                product.Category = _categoriesManager.Read(product.Category.Id);
             }
 
             return products;
@@ -58,28 +56,27 @@ namespace BusinessLogicLayer
 
         public Product Read(int productId)
         {
-            Product Product = new Product();
+            Product product = new Product();
 
             try
             {
                 _dataAccess.SetQuery(
-                    "select Code, ProductName, ProductDescription, Price, Stock, BrandId, CategoryId from Products where ProductId = @ProductId"
+                    "select Code, ProductName, ProductDescription, Price, Stock, BrandId from Products where ProductId = @ProductId"
                 );
                 _dataAccess.SetParameter("@ProductId", productId);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
                 {
-                    Product.Id = productId;
-                    Product.Code = _dataAccess.Reader["Code"]?.ToString();
-                    Product.Name = _dataAccess.Reader["ProductName"]?.ToString();
-                    Product.Description = _dataAccess.Reader["ProductDescription"]?.ToString();
-                    Product.Price = _dataAccess.Reader["Price"] as decimal? ?? Product.Price;
-                    Product.Stock = (int)_dataAccess.Reader["Stock"] as int? ?? Product.Stock;
-                    Product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? Product.Brand.Id;
-                    Product.Category.Id =
-                        _dataAccess.Reader["CategoryId"] as int? ?? Product.Category.Id;
-                    Product.Images = _imagesManager.List(Product.Id);
+                    product.Id = productId;
+                    product.Code = _dataAccess.Reader["Code"]?.ToString();
+                    product.Name = _dataAccess.Reader["ProductName"]?.ToString();
+                    product.Description = _dataAccess.Reader["ProductDescription"]?.ToString();
+                    product.Price = _dataAccess.Reader["Price"] as decimal? ?? product.Price;
+                    product.Stock = (int)_dataAccess.Reader["Stock"] as int? ?? product.Stock;
+                    product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
+                    product.Categories = _categoriesManager.List(product.Id);
+                    product.Images = _imagesManager.List(product.Id);
                 }
             }
             catch (Exception ex)
@@ -91,21 +88,19 @@ namespace BusinessLogicLayer
                 _dataAccess.CloseConnection();
             }
 
-            Product.Brand = _brandsManager.Read(Product.Brand.Id);
-            Product.Category = _categoriesManager.Read(Product.Category.Id);
+            product.Brand = _brandsManager.Read(product.Brand.Id);
 
-            return Product;
+            return product;
         }
 
         public void Add(Product Product)
         {
             SetBrandId(Product);
-            SetCategoryId(Product);
 
             try
             {
                 _dataAccess.SetQuery(
-                    "insert into Products (Code, ProductName, ProductDescription, Price, BrandId, CategoryId) values (@Code, @ProductName, @ProductDescription, @Price, @BrandId, @CategoryId)"
+                    "insert into Products (Code, ProductName, ProductDescription, Price, BrandId) values (@Code, @ProductName, @ProductDescription, @Price, @BrandId)"
                 );
                 SetParameters(Product);
                 _dataAccess.ExecuteAction();
@@ -124,13 +119,12 @@ namespace BusinessLogicLayer
         public void Edit(Product product)
         {
             SetBrandId(product);
-            SetCategoryId(product);
             SetImages(product);
 
             try
             {
                 _dataAccess.SetQuery(
-                    "update Products set Code = @Code, ProductName = @ProductName, ProductDescription = @ProductDescription, Price = @Price, BrandId = @BrandId, CategoryId = @CategoryId where ProductId = @ProductId"
+                    "update Products set Code = @Code, ProductName = @ProductName, ProductDescription = @ProductDescription, Price = @Price, BrandId = @BrandId where ProductId = @ProductId"
                 );
                 _dataAccess.SetParameter("@ProductId", product.Id);
                 SetParameters(product);
@@ -170,7 +164,10 @@ namespace BusinessLogicLayer
 
             if (purgeCategory)
             {
-                _categoriesManager.PurgeCategory(product.Category);
+                foreach (Category category in product.Categories)
+                {
+                    _categoriesManager.PurgeCategory(category);
+                }
             }
         }
 
@@ -213,7 +210,6 @@ namespace BusinessLogicLayer
             _dataAccess.SetParameter("@ProductDescription", product.Description);
             _dataAccess.SetParameter("@Precio", product.Price);
             _dataAccess.SetParameter("@BrandId", product.Brand?.Id);
-            _dataAccess.SetParameter("@CategoryId", product.Category?.Id);
         }
 
         private void SetBrandId(Product product)
@@ -230,24 +226,6 @@ namespace BusinessLogicLayer
                 else
                 {
                     product.Brand.Id = dbBrandId;
-                }
-            }
-        }
-
-        private void SetCategoryId(Product product)
-        {
-            if (product.Category != null)
-            {
-                int dbCategoryId = _categoriesManager.GetId(product.Category);
-
-                if (dbCategoryId == 0)
-                {
-                    _categoriesManager.Add(product.Category);
-                    product.Category.Id = Helper.GetLastId("Categories");
-                }
-                else
-                {
-                    product.Category.Id = dbCategoryId;
                 }
             }
         }

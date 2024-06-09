@@ -43,7 +43,7 @@
                                         <%#Eval("Brand")%> - <%#Eval("name")%>
                                     </a>
                                 </th>
-                                <td><%#Eval("Category")%></td>
+                                <td><%//#Eval("Category") // hack%></td>
                                 <td>$ <%#Eval("Price")%></td>
                                 <td><%#Eval("Stock")%></td>
                                 <td>

@@ -44,8 +44,7 @@ INSERT INTO
 	ProductDescription,
 	Price,
 	Stock,
-	BrandId,
-	CategoryId
+	BrandId
 	)
 VALUES
 	(
@@ -54,7 +53,6 @@ VALUES
 		'El Samsung Galaxy S10 es una línea de teléfonos inteligentes Android de gama alta fabricados por Samsung. La línea incluye los modelos S10, S10+, S10e y S10 5G',
 		'69.99',
 		'5',
-		'1',
 		'1'
 	),
 	(
@@ -63,8 +61,7 @@ VALUES
 		'Momentos únicos, capturas reales. Capturá tus mejores momentos y revivilos cuando quieras con la cámara trasera de 13 Mpx.',
 		'228576',
 		'10',
-		'5',
-		'1'
+		'5'
 	),
 	(
 		'S99',
@@ -72,7 +69,6 @@ VALUES
 		'Experimenta una velocidad sorprendente con una SSD de velocidad ultrarrápida, una inmersión más profunda con soporte para respuesta háptica, gatillos adaptables y audio 3D',
 		'1350000',
 		'15',
-		'3',
 		'3'
 	),
 	(
@@ -81,8 +77,7 @@ VALUES
 		'Disfruta de tu contenido favorito de Google TV en 4K HDR gracias al color, el contraste y la claridad de alta calidad de BRAVIA.',
 		'1899999',
 		'20',
-		'3',
-		'2'
+		'3'
 	),
 	(
 		'A23',
@@ -90,9 +85,25 @@ VALUES
 		'Con este dispositivo podrás acceder a diversas aplicaciones para disfrutar de todas las herramientas y funcionalidades multimedia que ofrece. ¡Entretenimiento asegurado!',
 		'269990',
 		'0',
-		'2',
 		'2'
 	);
+
+GO
+
+---------------------------
+-- CATEGORIES X PRODUCTS --
+---------------------------
+
+INSERT INTO
+	ProductCategories
+	(ProductId, CategoryId)
+VALUES
+	(1,1),
+	(2,1),
+	(3,3),
+	(4,2),
+	(5,2),
+	(2,3);
 
 GO
 
@@ -311,7 +322,7 @@ GO
 -----------------------
 
 INSERT INTO
-	OrdersXProducts
+	ProductOrders
 	(OrderId, ProductId, Amount)
 VALUES
 	('1', '1', '1'),

@@ -16,7 +16,7 @@
                 <div id="carouselExampleIndicators" class="carousel slide h-100">
                     <div class="carousel-inner h-100">
                         <%
-                            string category = _product.Category.ToString() == "" ? "Sin Categoría" : _product.Category.ToString();
+                            // string category = _product.Category.ToString() == "" ? "Sin Categoría" : _product.Category.ToString(); // hack
                             foreach (DomainModelLayer.Image image in _product.Images)
                             {
                         %>
@@ -47,7 +47,7 @@
             <div class="col-md-5 card mb-3">
                 <div class="card-body d-flex flex-column justify-content-between h-100">
                     <div class="mb-4">
-                        <p class="mb-0"><small class="text-body-secondary"><%:category%></small></p>
+                        <p class="mb-0"><small class="text-body-secondary"><%//:category // hack%></small></p>
                         <h5 class="card-title mb-0"><%:_product.Name%></h5>
                         <p class="card-text">
                             <small class="text-body-secondary"><%:_product.Brand.ToString()%></small>

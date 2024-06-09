@@ -10,13 +10,20 @@ namespace BusinessLogicLayer
     {
         private DataAccess _dataAccess = new DataAccess();
 
-        public List<Category> List()
+        public List<Category> List(int productId = 0)
         {
             List<Category> categories = new List<Category>();
+            string query = "select C.CategoryId, C.CategoryName from Categories C";
+
+            if (0 < productId)
+            {
+                query += " inner join ProductCategories PC on C.CategoryId = PC.CategoryId where PC.ProductId = @ProductId";
+                _dataAccess.SetParameter("@ProductId", productId);
+            }
 
             try
             {
-                _dataAccess.SetQuery("select CategoryId, CategoryName from Categories");
+                _dataAccess.SetQuery(query);
                 _dataAccess.ExecuteRead();
 
                 while (_dataAccess.Reader.Read())
@@ -211,6 +218,13 @@ namespace BusinessLogicLayer
             {
                 _dataAccess.SetParameter("@CategoryDescription", category.Name);
             }
+        }
+
+        private List<int> GetCategoriesIds(int productId)
+        {
+            List<int> categoriesId = new List<int>();
+
+            return categoriesId;
         }
     }
 }

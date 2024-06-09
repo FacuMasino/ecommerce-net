@@ -26,15 +26,15 @@ namespace DomainModelLayer
         [DisplayName("Marca")]
         public Brand Brand { get; set; }
 
-        [DisplayName("Categoría")]
-        public Category Category { get; set; }
+        [DisplayName("Categorías")]
+        public List<Category> Categories { get; set; }
 
         public List<Image> Images { get; set; }
 
         public Product()
         {
             Brand = new Brand();
-            Category = new Category();
+            Categories = new List<Category>();
             Images = new List<Image>();
         }
     }

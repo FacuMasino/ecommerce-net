@@ -41,12 +41,14 @@ namespace WebForms
 
         private void FilterProductsByCategory(int id)
         {
+            /*
             if (id == -1) //Productos sin categoría
             {
                 Products = Products.FindAll(a => a.Category.Name == "");
                 return;
             }
             Products = Products.FindAll(a => a.Category.Id == id);
+            */ // hack
         }
 
         private void FilterProductsByBrand(int id)
@@ -89,10 +91,10 @@ namespace WebForms
                 searchPanel.CssClass = "input-group mb-3";
                 Products = Products.FindAll(x =>
                     x.Name.ToUpper().Contains(filter.ToUpper())
-                    || x.Category.ToString().ToUpper().Contains(filter.ToUpper())
                     || x.Brand.ToString().ToUpper().Contains(filter.ToUpper())
                     || x.Code.ToUpper().Contains(filter.ToUpper())
                     || x.Description.ToUpper().Contains(filter.ToUpper())
+                    //|| x.Category.ToString().ToUpper().Contains(filter.ToUpper()) // HACK
                 );
             }
             else

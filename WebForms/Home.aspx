@@ -90,9 +90,10 @@
                     foreach (Product product in Products)
                     {
                         string imageUrl = "Content/img/placeholder.jpg";
-                        string category = product.Category.Name;
+                        string category = ""; // hack
+                        // string category = product.Category.Name; // hack
                         System.Diagnostics.Debug.Print(product.Name);
-                        System.Diagnostics.Debug.Print(product.Category.Name);
+                        // System.Diagnostics.Debug.Print(product.Category.Name); // hack
                         if (0 < product.Images.Count)
                         {
                             imageUrl = product.Images[0].Url;
