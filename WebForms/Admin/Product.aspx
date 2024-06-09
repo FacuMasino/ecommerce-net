@@ -6,8 +6,10 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
     <div class="d-flex flex-column container-800 mx-auto gap-3">
-        <% if (CurrentProduct.Name != null || !IsEditing)
-            {       %>
+        <%
+            if (CurrentProduct.Name != null || !IsEditing)
+            {
+        %>
         <h1 class="fs-4"><%: IsEditing ? "Editar" : "Nuevo" %> Producto</h1>
         <!-- Sección Info Básica -->
         <div class="d-flex flex-column border-1 border rounded p-3">
@@ -22,8 +24,9 @@
                     <asp:DropDownList ID="ProductBrandDDL" CssClass="form-select" runat="server" />
                 </div>
                 <div class="col-md-6 col-12 mb-md-0 mb-3">
-                    <label for="ProductCategoryDDL" class="form-label">Categoría</label>
-                    <asp:DropDownList ID="ProductCategoryDDL" CssClass="form-select" runat="server" />
+                    <!-- hack: ¿Agrego la clase Modelo? (después de implementar categorias) -->
+                    <label for="ProductModelDdl" class="form-label">Modelo</label>
+                    <asp:DropDownList ID="ProductModelDdl" CssClass="form-select" runat="server" />
                 </div>
             </div>
             <div class="mb-3">
@@ -33,22 +36,63 @@
                     rows="3" maxlength="300" runat="server"></textarea>
             </div>
         </div>
+
+        <!-- Sección Categorías -->
+        <div class="d-flex flex-column border-1 border rounded p-3">
+            <h2 class="fs-5">Categorías</h2>
+            <div class="mb-3">
+                <div class="d-flex gap-3">
+                    <asp:DropDownList ID="CategoriesDdl" CssClass="form-select" runat="server" />
+                    <asp:Button ID="AddCategoryBtn" class="btn btn-dark" OnClick="AddCategoryBtn_Click" runat="server" Text="Agregar" />
+                </div>
+            </div>
+            <%
+                if (CurrentProduct.Categories.Count > 0)
+                {
+            %>
+            <hr />
+            <div class="row row-cols-1 row-cols-md-4 g-4">
+                <asp:Repeater ID="ProductCategoriesRpt" runat="server">
+                    <ItemTemplate>
+                        <div class="col">
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <div class="row g-0 align-items-center">
+                                    <div class="col-md-8">
+                                        <h6 class="text-center"><%#Eval("Name")%></h6>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="card-body d-flex justify-content-center align-items-center">
+                                            <button href="#" class="btn py-0 fs-5"><i class="bi bi-trash"></i></button> <!-- hack: convertir en asp buttons -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
+            <%
+                }
+            %>
+        </div>
+
         <!-- Sección Imágenes -->
         <div class="d-flex flex-column border-1 border rounded p-3">
             <h2 class="fs-5">Imágenes</h2>
             <div class="mb-3">
                 <label for="ProductImage" class="form-label">Agregar nueva</label>
                 <div class="d-flex gap-3">
-                    <Asp:TextBox TextMode="Url" class="form-control" id="ProductImageUrl" runat="server" placeholder="http://urldelaimagen.com/producto.png" />
-                    <Asp:Button ID="AddImageBtn" class="btn btn-dark" OnClick="AddImageBtn_Click" runat="server" Text="Agregar"/>
+                    <asp:TextBox TextMode="Url" class="form-control" ID="ProductImageUrl" runat="server" placeholder="http://urldelaimagen.com/producto.png" />
+                    <asp:Button ID="AddImageBtn" class="btn btn-dark" OnClick="AddImageBtn_Click" runat="server" Text="Agregar" />
                 </div>
                 <span class="form-text fw-bold">Tip: </span>
-                <span class="form-text">Para un mejor resultado utilizar imágenes PNG transparentes
+                <span class="form-text">Para un mejor resultado, utilizar imágenes PNG transparentes
                     de 1024x1024px</span>
             </div>
             <% if (CurrentProduct.Images.Count > 0)
                 // Repeater condicional, solo si hay imágenes
-                { %>
+                {
+            %>
             <hr />
             <div class="row row-cols-1 row-cols-md-4 g-4">
                 <!-- Imagenes -->
@@ -59,8 +103,7 @@
                                 <img src="<%#Eval("Url")%>"
                                     class="card-img-top" alt="Imagen de Galaxy S10" onerror="this.src='Content/img/placeholder.jpg'">
                                 <div class="card-body border-1 border-top d-flex justify-content-end align-items-center">
-                                    <!-- convertir en asp buttons -->
-                                    <button href="#" class="btn py-0 fs-5"><i class="bi bi-trash"></i></button>
+                                    <button href="#" class="btn py-0 fs-5"><i class="bi bi-trash"></i></button> <!-- hack: convertir en asp buttons -->
                                     <button href="#" class="btn py-0 fs-5"><i class="bi bi-pencil-square"></i></button>
                                 </div>
                             </div>
@@ -68,9 +111,11 @@
                     </ItemTemplate>
                 </asp:Repeater>
             </div>
-            <%}
-%>
+            <%
+                }
+            %>
         </div>
+
         <!-- Sección Precio -->
         <div class="d-flex flex-column border-1 border rounded p-3">
             <h2 class="fs-5">Precio y Stock</h2>
@@ -78,12 +123,12 @@
                 <div class="d-flex justify-content-between gap-3">
                     <div class="col">
                         <label for="ProductPrice" class="form-label">Precio de venta</label>
-                        <Asp:TextBox pattern="-?[0-9]+[\,.]*[0-9]+" class="form-control" id="ProductPrice" placeholder="0,00"
-                            OnTextChanged="CalcReturns_TextChanged" step=".01" AutoPostBack="true" runat="server"/>
+                        <asp:TextBox pattern="-?[0-9]+[\,.]*[0-9]+" class="form-control" ID="ProductPrice" placeholder="0,00"
+                            OnTextChanged="CalcReturns_TextChanged" step=".01" AutoPostBack="true" runat="server" />
                     </div>
                     <div class="col">
                         <label for="ProductStock" class="form-label">Cantidad disponible</label>
-                        <Asp:TextBox TextMode="Number" class="form-control" id="ProductStock" placeholder="0" runat="server" />
+                        <asp:TextBox TextMode="Number" class="form-control" ID="ProductStock" placeholder="0" runat="server" />
                     </div>
                 </div>
             </div>
@@ -91,11 +136,11 @@
                 <div class="d-flex justify-content-between gap-3">
                     <div class="col">
                         <label for="ProductCost" class="form-label">Costo</label>
-                        <Asp:TextBox pattern="-?[0-9]+[\,.]*[0-9]+" CssClass="form-control" id="ProductCost" placeholder="0,00" OnTextChanged="CalcReturns_TextChanged" AutoPostBack="true" step="any" runat="server" />
+                        <asp:TextBox pattern="-?[0-9]+[\,.]*[0-9]+" CssClass="form-control" ID="ProductCost" placeholder="0,00" OnTextChanged="CalcReturns_TextChanged" AutoPostBack="true" step="any" runat="server" />
                     </div>
                     <div class="col">
                         <label for="ProductReturns" class="form-label">Ganancia por venta</label>
-                        <Asp:TextBox CssClass="form-control" id="ProductReturns" placeholder="0 %" Enabled="false" runat="server" />
+                        <asp:TextBox CssClass="form-control" ID="ProductReturns" placeholder="0 %" Enabled="false" runat="server" />
                     </div>
                 </div>
                 <span class="form-text">El costo del producto no se muestra al público.</span>
@@ -105,7 +150,8 @@
             <a class="btn btn-outline-secondary" href="Products.aspx">Cancelar</a>
             <button class="btn btn-dark" type="button">Guardar Producto</button>
         </div>
-        <%}
+        <%
+            }
             else
             {
         %>
@@ -118,6 +164,8 @@
         </div>
         <div class="col-md-8 col text-center">
         </div>
-        <%} %>
+        <%
+            }
+        %>
     </div>
 </asp:Content>

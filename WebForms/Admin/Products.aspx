@@ -43,7 +43,10 @@
                                         <%#Eval("Brand")%> - <%#Eval("name")%>
                                     </a>
                                 </th>
-                                <td><%//#Eval("Category") // hack%></td>
+                                <td>
+                                    <%#Eval("Categories[0]")%>
+                                    <%#PrintCategoriesCount(Eval("Categories"))%>
+                                </td>
                                 <td>$ <%#Eval("Price")%></td>
                                 <td><%#Eval("Stock")%></td>
                                 <td>

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using BusinessLogicLayer;
+using DomainModelLayer;
 
 namespace WebForms.Admin
 {
@@ -13,10 +15,17 @@ namespace WebForms.Admin
         }
 
         // METHODS
-        protected void Page_Load(object sender, EventArgs e)
+
+        protected string PrintCategoriesCount(object categoriesList)
         {
-            if (!IsPostBack)
-                BindProductList();
+            var categories = categoriesList as List<Category>;
+
+            if (categories == null || categories.Count < 2)
+            {
+                return "";
+            }
+
+            return $" (+{categories.Count - 1})";
         }
 
         private void BindProductList()
@@ -25,6 +34,19 @@ namespace WebForms.Admin
             ProductListRepeater.DataBind();
         }
 
-        protected void SearchBtn_Click(object sender, EventArgs e) { }
+        // EVENTS
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                BindProductList();
+            }
+        }
+
+        protected void SearchBtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

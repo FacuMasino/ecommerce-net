@@ -5,7 +5,7 @@ namespace UtilitiesLayer
 {
     public static class Helper
     {
-        // HACK: Reemplazar GetLastId() implementando el comando output en las consultas de los métodos Add() de todos los managers.
+        // hack: reemplazar GetLastId() implementando el comando output en las consultas de los métodos Add() de todos los managers.
         public static int GetLastId(string table)
         {
             int lastId = 0;

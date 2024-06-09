@@ -31,7 +31,9 @@ namespace WebForms.Admin
             _product = new Product();
         }
 
-        private void BindBrands()
+        // METHODS
+
+        private void BindBrandsDdl()
         {
             ProductBrandDDL.DataSource = _brandsManager.List();
             ProductBrandDDL.DataValueField = "Id";
@@ -39,15 +41,21 @@ namespace WebForms.Admin
             ProductBrandDDL.DataBind();
         }
 
-        private void BindCategories()
+        private void BindCategoriesDdl()
         {
-            ProductCategoryDDL.DataSource = _categoriesManager.List();
-            ProductCategoryDDL.DataValueField = "Id";
-            ProductCategoryDDL.DataTextField = "Name";
-            ProductCategoryDDL.DataBind();
+            CategoriesDdl.DataSource = _categoriesManager.List();
+            CategoriesDdl.DataValueField = "Id";
+            CategoriesDdl.DataTextField = "Name";
+            CategoriesDdl.DataBind();
         }
 
-        private void BindImages()
+        private void BindCategoriesRpt()
+        {
+            ProductCategoriesRpt.DataSource = _product.Categories;
+            ProductCategoriesRpt.DataBind();
+        }
+
+        private void BindImagesRpt()
         {
             ProductImagesRPT.DataSource = _product.Images;
             ProductImagesRPT.DataBind();
@@ -96,7 +104,8 @@ namespace WebForms.Admin
                 //ProductCategoryDDL.SelectedValue = _product.Category.Id.ToString(); // hack
                 ProductPrice.Text = _product.Price.ToString("F2");
                 ProductStock.Text = _product.Stock.ToString();
-                BindImages();
+                BindImagesRpt();
+                BindCategoriesRpt();
             }
         }
 
@@ -114,6 +123,8 @@ namespace WebForms.Admin
             }
         }
 
+        // EVENTS
+
         protected void Page_Load(object sender, EventArgs e)
         {
             CheckSession();
@@ -126,19 +137,26 @@ namespace WebForms.Admin
             if (!IsPostBack)
             {
                 CheckRequest();
-                BindBrands();
-                BindCategories();
+                BindBrandsDdl();
+                BindCategoriesDdl();
             }
         }
-
-        // EVENTS
 
         protected void AddImageBtn_Click(object sender, EventArgs e)
         {
             Image auxImg = new Image();
             auxImg.Url = ProductImageUrl.Text;
             _product.Images.Add(auxImg);
-            BindImages(); // Actualizar repeater imágenes
+            BindImagesRpt(); // Actualizar repeater imágenes
+        }
+
+        protected void AddCategoryBtn_Click(object sender, EventArgs e)
+        {
+            Category category = new Category();
+            category.Id = Convert.ToInt32(CategoriesDdl.SelectedValue);
+            category = _categoriesManager.Read(category.Id);
+            _product.Categories.Add(category);
+            BindCategoriesRpt();
         }
 
         protected void CalcReturns_TextChanged(object sender, EventArgs e)

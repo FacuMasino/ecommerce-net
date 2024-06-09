@@ -94,7 +94,7 @@ namespace WebForms
                     || x.Brand.ToString().ToUpper().Contains(filter.ToUpper())
                     || x.Code.ToUpper().Contains(filter.ToUpper())
                     || x.Description.ToUpper().Contains(filter.ToUpper())
-                    //|| x.Category.ToString().ToUpper().Contains(filter.ToUpper()) // HACK
+                    //|| x.Category.ToString().ToUpper().Contains(filter.ToUpper()) // hack
                 );
             }
             else
