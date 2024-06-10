@@ -4,12 +4,12 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
-        <div class="row py-5">
+    <div class="row py-5">
         <div class="col-3">
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <asp:Panel ID="searchPanel" runat="server" CssClass="input-group mb-3" DefaultButton="searchBtn">
-                        <asp:TextBox CssClass="form-control" ID="searchTextBox" runat="server" Text="" placeholder="Buscar producto" required/>
+                        <asp:TextBox CssClass="form-control" ID="searchTextBox" runat="server" Text="" placeholder="Buscar producto" required />
                         <asp:LinkButton Text='<i class="bi bi-search"></i>' ID="searchBtn" CssClass="btn btn-outline-secondary" runat="server" OnClick="searchBtn_Click" />
                         <div class="invalid-feedback">
                             Ingrese al menos 2 caracteres.    
@@ -90,10 +90,10 @@
                     foreach (Product product in Products)
                     {
                         string imageUrl = "Content/img/placeholder.jpg";
-                        string category = ""; // hack
-                        // string category = product.Category.Name; // hack
+                        string category = product.Categories[0].Name;
                         System.Diagnostics.Debug.Print(product.Name);
-                        // System.Diagnostics.Debug.Print(product.Category.Name); // hack
+                        System.Diagnostics.Debug.Print(product.Categories[0].Name);
+
                         if (0 < product.Images.Count)
                         {
                             imageUrl = product.Images[0].Url;

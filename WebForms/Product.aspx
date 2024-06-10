@@ -1,10 +1,11 @@
 ﻿<%@ Page Title="Detalles del producto" Language="C#" MasterPageFile="~/Site.Master"
     AutoEventWireup="true" CodeBehind="Product.aspx.cs" Inherits="WebForms.ProductView" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
+<asp:Content ID="HeadContent" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
     <link href="CSS/Style.css" rel="stylesheet" />
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
+
+<asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
     <%
         if (0 < _product.Id)
         {
@@ -16,7 +17,6 @@
                 <div id="carouselExampleIndicators" class="carousel slide h-100">
                     <div class="carousel-inner h-100">
                         <%
-                            // string category = _product.Category.ToString() == "" ? "Sin Categoría" : _product.Category.ToString(); // hack
                             foreach (DomainModelLayer.Image image in _product.Images)
                             {
                         %>
@@ -28,7 +28,8 @@
                             }
                         %>
                     </div>
-                    <% if (_product.Images.Count > 1)
+                    <%
+                        if (_product.Images.Count > 1)
                         {
                     %>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -41,13 +42,28 @@
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Siguiente</span>
                     </button>
-                    <%} %>
+                    <%
+                        }
+                    %>
                 </div>
             </div>
             <div class="col-md-5 card mb-3">
                 <div class="card-body d-flex flex-column justify-content-between h-100">
                     <div class="mb-4">
-                        <p class="mb-0"><small class="text-body-secondary"><%//:category // hack%></small></p>
+                        <%
+                            string categories = "";
+
+                            for (int i = 0; i < _product.Categories.Count; i++)
+                            {
+                                categories += _product.Categories[i].Name;
+
+                                if (i < _product.Categories.Count - 1)
+                                {
+                                    categories += ", ";
+                                }
+                            }
+                        %>
+                        <p class="mb-0"><small class="text-body-secondary"><%:categories%></small></p>
                         <h5 class="card-title mb-0"><%:_product.Name%></h5>
                         <p class="card-text">
                             <small class="text-body-secondary"><%:_product.Brand.ToString()%></small>

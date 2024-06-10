@@ -23,11 +23,6 @@
                     <label for="ProductBrandDDL" class="form-label">Marca</label>
                     <asp:DropDownList ID="ProductBrandDDL" CssClass="form-select" runat="server" />
                 </div>
-                <div class="col-md-6 col-12 mb-md-0 mb-3">
-                    <!-- hack: ¿Agrego la clase Modelo? (después de implementar categorias) -->
-                    <label for="ProductModelDdl" class="form-label">Modelo</label>
-                    <asp:DropDownList ID="ProductModelDdl" CssClass="form-select" runat="server" />
-                </div>
             </div>
             <div class="mb-3">
                 <label for="ProductDescription" class="form-label">Descripción</label>

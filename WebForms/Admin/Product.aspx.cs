@@ -95,13 +95,14 @@ namespace WebForms.Admin
         private void LoadProduct(int id)
         {
             _product = _productsManager.Read(id);
+
             if (_product.Name != null)
             {
                 Session["CurrentProduct"] = _product;
                 ProductName.Value = _product.Name;
                 ProductDescription.Value = _product.Description;
                 ProductBrandDDL.SelectedValue = _product.Brand.Id.ToString();
-                //ProductCategoryDDL.SelectedValue = _product.Category.Id.ToString(); // hack
+                CategoriesDdl.SelectedValue = _product.Categories[0].Id.ToString();
                 ProductPrice.Text = _product.Price.ToString("F2");
                 ProductStock.Text = _product.Stock.ToString();
                 BindImagesRpt();

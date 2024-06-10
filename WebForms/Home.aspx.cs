@@ -19,10 +19,10 @@ namespace WebForms
 
         // PROPERTIES
 
+        public int TotalProducts;
         public List<Product> Products { get; set; }
         public List<Category> Categories { get; }
         public List<Brand> Brands { get; }
-        public int TotalProducts;
 
         // CONSTRUCT
 
@@ -41,14 +41,13 @@ namespace WebForms
 
         private void FilterProductsByCategory(int id)
         {
-            /*
-            if (id == -1) //Productos sin categoría
+            if (id == -1) // Productos sin categoría
             {
-                Products = Products.FindAll(a => a.Category.Name == "");
+                Products = Products.FindAll(a => a.Categories.Count < 1);
                 return;
             }
-            Products = Products.FindAll(a => a.Category.Id == id);
-            */ // hack
+
+            Products = Products.Where(p => p.Categories.Any(c => c.Id == id)).ToList();
         }
 
         private void FilterProductsByBrand(int id)
@@ -58,6 +57,7 @@ namespace WebForms
                 Products = Products.FindAll(a => a.Brand.Name == "");
                 return;
             }
+
             Products = Products.FindAll(a => a.Brand.Id == id);
         }
 
@@ -68,6 +68,7 @@ namespace WebForms
                 int categoryId = Convert.ToInt32(Request.QueryString["catId"].ToString());
                 FilterProductsByCategory(categoryId);
             }
+
             if (!string.IsNullOrEmpty(Request.QueryString["brandId"]))
             {
                 int brandId = Convert.ToInt32(Request.QueryString["brandId"].ToString());
@@ -94,7 +95,7 @@ namespace WebForms
                     || x.Brand.ToString().ToUpper().Contains(filter.ToUpper())
                     || x.Code.ToUpper().Contains(filter.ToUpper())
                     || x.Description.ToUpper().Contains(filter.ToUpper())
-                    //|| x.Category.ToString().ToUpper().Contains(filter.ToUpper()) // hack
+                    || x.Categories.Any(c => c.Name.ToUpper().Contains(filter.ToUpper()))
                 );
             }
             else
