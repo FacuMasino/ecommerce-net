@@ -108,7 +108,9 @@
                     <ItemTemplate>
                         <div class="col">
                             <div class="card">
-                                <%--  <img src = "<%# Eval("Images[0].Url") %>" class="card-img-top" alt=""  >---%>
+                                <img
+                                    src="<%# ((Product)Container.DataItem).Images.Count() > 0 ? Eval("Images[0].Url") : "" %>" 
+                                    class="card-img-top" alt="">
                                 <div class="card-body d-flex flex-column">
                                     <h5 class="card-title fs-6 mb-0"><%#Eval("Name") %></h5>
                                     <p class="card-subtitle mb-0 mt-auto text-muted pe-3 fw-bold"><%#Eval("Price") %></p>
