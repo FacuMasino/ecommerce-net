@@ -11,7 +11,7 @@ namespace WebForms
 {
 
 
-    public partial class Login
+    public partial class AccountRecovery
     {
     }
 }

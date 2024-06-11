@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account.aspx" />
+    <Content Include="AccountRecovery.aspx" />
     <Content Include="Admin\Dashboard.aspx" />
     <Content Include="Admin\Orders.aspx" />
     <Content Include="Admin\Product.aspx" />
@@ -125,6 +126,13 @@
     </Compile>
     <Compile Include="Account.aspx.designer.cs">
       <DependentUpon>Account.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AccountRecovery.aspx.cs">
+      <DependentUpon>AccountRecovery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AccountRecovery.aspx.designer.cs">
+      <DependentUpon>AccountRecovery.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\AdminMP.Master.cs">
       <DependentUpon>AdminMP.Master</DependentUpon>
