@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Globalization;
 using BusinessLogicLayer;
 using DomainModelLayer;
+using UtilitiesLayer;
 
 namespace WebForms.Admin
 {
@@ -104,7 +105,11 @@ namespace WebForms.Admin
                 ProductBrandDDL.SelectedValue = _product.Brand.Id.ToString();
                 CategoriesDdl.SelectedValue = _product.Categories[0].Id.ToString();
                 ProductPrice.Text = _product.Price.ToString("F2");
+                ProductCost.Text = _product.Cost.ToString("F2");
                 ProductStock.Text = _product.Stock.ToString();
+                ProductReturns.Text = Helper
+                    .CalcReturns(_product.Price, _product.Cost)
+                    .ToString("#.##'%'", CultureInfo.InvariantCulture);
                 BindImagesRpt();
                 BindCategoriesRpt();
             }
@@ -164,9 +169,11 @@ namespace WebForms.Admin
         {
             if (string.IsNullOrEmpty(ProductPrice.Text) || string.IsNullOrEmpty(ProductCost.Text))
                 return;
-            decimal returns =
-                ((decimal.Parse(ProductPrice.Text) / decimal.Parse(ProductCost.Text)) - 1) * 100;
-            ProductReturns.Text = $"{returns:#.##} %";
+            decimal returns = Helper.CalcReturns(
+                decimal.Parse(ProductPrice.Text),
+                decimal.Parse(ProductCost.Text)
+            );
+            ProductReturns.Text = $"{returns:#.##}%";
         }
     }
 }

@@ -281,6 +281,10 @@
       <Project>{aa3a026a-2cc6-495e-ac98-2639ebaef293}</Project>
       <Name>DomainModelLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UtilitiesLayer\UtilitiesLayer.csproj">
+      <Project>{d6c85dfc-ff7a-4ffe-9bd8-7ff2d1635c0c}</Project>
+      <Name>UtilitiesLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

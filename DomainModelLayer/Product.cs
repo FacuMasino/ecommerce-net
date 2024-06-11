@@ -20,6 +20,9 @@ namespace DomainModelLayer
         [DisplayName("Precio")]
         public decimal Price { get; set; }
 
+        [DisplayName("Costo")]
+        public decimal Cost { get; set; }
+
         [DisplayName("Stock")]
         public int Stock { get; set; }
 

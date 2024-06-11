@@ -1,5 +1,5 @@
-﻿using DataAccessLayer;
-using System;
+﻿using System;
+using DataAccessLayer;
 
 namespace UtilitiesLayer
 {
@@ -32,6 +32,17 @@ namespace UtilitiesLayer
             }
 
             return lastId;
+        }
+
+        /// <summary>
+        /// Calcula el margen de ganancia de un producto
+        /// </summary>
+        /// <param name="price">Precio de venta</param>
+        /// <param name="cost">Costo del producto</param>
+        /// <returns>Porcentaje de ganancia</returns>
+        public static decimal CalcReturns(decimal price, decimal cost)
+        {
+            return ((price / cost) - 1) * 100;
         }
     }
 }

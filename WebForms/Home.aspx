@@ -10,7 +10,7 @@
                 <li class="nav-item">
                     <asp:Panel ID="searchPanel" runat="server" CssClass="input-group mb-3" DefaultButton="searchBtn">
                         <asp:TextBox CssClass="form-control" ID="searchTextBox" runat="server" Text="" placeholder="Buscar producto" required />
-                        <asp:LinkButton Text='<i class="bi bi-search"></i>' ID="searchBtn" CssClass="btn btn-outline-secondary" runat="server" OnClick="searchBtn_Click" />
+                        <asp:LinkButton Text='<i class="bi bi-search"></i>' ID="searchBtn" CssClass="btn btn-outline-secondary rounded-end" runat="server" OnClick="searchBtn_Click" />
                         <div class="invalid-feedback">
                             Ingrese al menos 2 caracteres.    
                         </div>

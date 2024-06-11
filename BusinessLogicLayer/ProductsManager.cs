@@ -30,6 +30,7 @@ namespace BusinessLogicLayer
                     product.Name = _dataAccess.Reader["ProductName"]?.ToString();
                     product.Description = _dataAccess.Reader["ProductDescription"]?.ToString();
                     product.Price = _dataAccess.Reader["Price"] as decimal? ?? product.Price;
+                    product.Cost = _dataAccess.Reader["Cost"] as decimal? ?? product.Cost;
                     product.Stock = (int)_dataAccess.Reader["Stock"] as int? ?? product.Stock;
                     product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
                     product.Categories = _categoriesManager.List(product.Id);
@@ -61,7 +62,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "select Code, ProductName, ProductDescription, Price, Stock, BrandId from Products where ProductId = @ProductId"
+                    "select Code, ProductName, ProductDescription, Price, Cost, Stock, BrandId from Products where ProductId = @ProductId"
                 );
                 _dataAccess.SetParameter("@ProductId", productId);
                 _dataAccess.ExecuteRead();
@@ -73,6 +74,7 @@ namespace BusinessLogicLayer
                     product.Name = _dataAccess.Reader["ProductName"]?.ToString();
                     product.Description = _dataAccess.Reader["ProductDescription"]?.ToString();
                     product.Price = _dataAccess.Reader["Price"] as decimal? ?? product.Price;
+                    product.Cost = _dataAccess.Reader["Cost"] as decimal? ?? product.Cost;
                     product.Stock = (int)_dataAccess.Reader["Stock"] as int? ?? product.Stock;
                     product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
                     product.Categories = _categoriesManager.List(product.Id);
@@ -100,7 +102,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "insert into Products (Code, ProductName, ProductDescription, Price, BrandId) values (@Code, @ProductName, @ProductDescription, @Price, @BrandId)"
+                    "insert into Products (Code, ProductName, ProductDescription, Price, Cost, BrandId) values (@Code, @ProductName, @ProductDescription, @Price, @Cost, @BrandId)"
                 );
                 SetParameters(Product);
                 _dataAccess.ExecuteAction();
@@ -124,7 +126,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "update Products set Code = @Code, ProductName = @ProductName, ProductDescription = @ProductDescription, Price = @Price, BrandId = @BrandId where ProductId = @ProductId"
+                    "update Products set Code = @Code, ProductName = @ProductName, ProductDescription = @ProductDescription, Price = @Price, Cost = @Cost, BrandId = @BrandId where ProductId = @ProductId"
                 );
                 _dataAccess.SetParameter("@ProductId", product.Id);
                 SetParameters(product);
@@ -208,7 +210,8 @@ namespace BusinessLogicLayer
             _dataAccess.SetParameter("@Code", product.Code);
             _dataAccess.SetParameter("@ProductName", product.Name);
             _dataAccess.SetParameter("@ProductDescription", product.Description);
-            _dataAccess.SetParameter("@Precio", product.Price);
+            _dataAccess.SetParameter("@Price", product.Price);
+            _dataAccess.SetParameter("@Cost", product.Cost);
             _dataAccess.SetParameter("@BrandId", product.Brand?.Id);
         }
 
