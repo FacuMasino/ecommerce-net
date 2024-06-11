@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
 
@@ -14,6 +15,7 @@ namespace WebForms
         private CartManager _cartManager;
 
         // PROPERTIES
+        public List<Product> Products { get; set; }
 
         // CONSTRUCT
 
@@ -22,6 +24,7 @@ namespace WebForms
             _product = new Product();
             _productsManager = new ProductsManager();
             _cartManager = new CartManager();
+            Products = new List<Product>();
         }
 
         // METHODS
@@ -60,6 +63,9 @@ namespace WebForms
         {
             CheckSession();
             RequestOpenArticle();
+            Products = _productsManager.List();
+            SuggestedRepeater.DataSource = Products;
+            SuggestedRepeater.DataBind();
         }
 
         protected void RemoveLnkButton_Click(object sender, EventArgs e)

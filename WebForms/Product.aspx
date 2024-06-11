@@ -99,11 +99,31 @@
                 </div>
             </div>
         </div>
+
         <div class="d-flex flex-column my-5">
             <h3 class="text-bold fs-4">Productos que pueden interesarte</h3>
             <div class="row row-cols-md-6 py-2 row-cols-2 gx-4">
 
-                <div class="col">
+                <asp:Repeater ID="SuggestedRepeater" runat="server">
+                    <ItemTemplate>
+                        <div class="col">
+                            <div class="card">
+                                <%--  <img src = "<%# Eval("Images[0].Url") %>" class="card-img-top" alt=""  >---%>
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title fs-6 mb-0"><%#Eval("Name") %></h5>
+                                    <p class="card-subtitle mb-0 mt-auto text-muted pe-3 fw-bold"><%#Eval("Price") %></p>
+                                    <a href="Product.aspx?id=<%#Eval("Id") %>">AMPLIAR</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
+        </div>
+    </div>
+
+    <%--   <div class="col">
                     <div class="card">
                         <img src="https://ik.imagekit.io/tpce16/products/S10-01-1024x1024.png?updatedAt=1717372633354"
                             class="card-img-top" alt="Imagen de Galaxy S10" onerror="this.src='Content/img/placeholder.jpg'">
@@ -138,7 +158,7 @@
 
             </div>
         </div>
-    </div>
+    </div>----%>
     <%
         }
     %>
