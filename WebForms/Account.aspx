@@ -37,12 +37,16 @@
             <div class="col p-4 border-start">
                 <h2 class="fs-5 mb-3">Datos para tus envíos</h2>
                 <div class="mb-3">
-                    <select class="form-select" aria-label="Selección por defecto">
-                        <option selected>Provincia</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+                    <input type="text" class="form-control" id="UsrAdre" placeholder="Domicilio">
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <input type="text" class="form-control" id="UsrNmber" placeholder="Numero">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" id="UsrDpt" placeholder="Piso/Depto/Oficina">
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col">
@@ -53,7 +57,15 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <input type="number" class="form-control" id="UsrPhone" placeholder="DNI">
+                    <select class="form-select" aria-label="Selección por defecto">
+                        <option selected>Provincia</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <input type="number" class="form-control" id="UsrPhone" placeholder="Teléfono">
                 </div>
             </div>
         </div>
