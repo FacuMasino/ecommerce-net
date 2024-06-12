@@ -61,12 +61,8 @@ namespace WebForms
             return _cartManager.Count(_product.Id);
         }
 
-        // EVENTS
-
-        protected void Page_Load(object sender, EventArgs e)
+        protected void FilterBySuggestedList()
         {
-            CheckSession();
-            RequestOpenArticle();
             Products = _productsManager.List();
             int zise = Products.Count;
 
@@ -81,6 +77,15 @@ namespace WebForms
                 SuggestedRepeater.DataSource = Products;
                 SuggestedRepeater.DataBind();
             }
+        }
+
+        // EVENTS
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            CheckSession();
+            RequestOpenArticle();
+            FilterBySuggestedList();
         }
 
         protected void RemoveLnkButton_Click(object sender, EventArgs e)
