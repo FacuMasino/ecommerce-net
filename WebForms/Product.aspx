@@ -50,20 +50,7 @@
             <div class="col-md-5 card mb-3">
                 <div class="card-body d-flex flex-column justify-content-between h-100">
                     <div class="mb-4">
-                        <%
-                            string categories = "";
-
-                            for (int i = 0; i < _product.Categories.Count; i++)
-                            {
-                                categories += _product.Categories[i].Name;
-
-                                if (i < _product.Categories.Count - 1)
-                                {
-                                    categories += ", ";
-                                }
-                            }
-                        %>
-                        <p class="mb-0"><small class="text-body-secondary"><%:categories%></small></p>
+                        <p class="mb-0"><small class="text-body-secondary"><%:Helper.GetCategoriesList(_product.Categories)%></small></p>
                         <h5 class="card-title mb-0"><%:_product.Name%></h5>
                         <p class="card-text">
                             <small class="text-body-secondary"><%:_product.Brand.ToString()%></small>

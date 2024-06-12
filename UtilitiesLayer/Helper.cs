@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using DataAccessLayer;
+using DomainModelLayer;
 
 namespace UtilitiesLayer
 {
@@ -43,6 +45,28 @@ namespace UtilitiesLayer
         public static decimal CalcReturns(decimal price, decimal cost)
         {
             return ((price / cost) - 1) * 100;
+        }
+
+        /// <summary>
+        /// Genera una lista de nombres de categorías separados por comas a partir de una lista de categorías.
+        /// </summary>
+        /// <param name="categories">La lista de categorías a procesar.</param>
+        /// <returns>Una cadena que contiene los nombres de las categorías, separados por comas.</returns>
+        public static string GetCategoriesList(List<Category> categories)
+        {
+            string categoriesList = "";
+
+            for (int i = 0; i < categories.Count; i++)
+            {
+                categoriesList += categories[i].Name;
+
+                if (i < categories.Count - 1)
+                {
+                    categoriesList += ", ";
+                }
+            }
+
+            return categoriesList;
         }
     }
 }

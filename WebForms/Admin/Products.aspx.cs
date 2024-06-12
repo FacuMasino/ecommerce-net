@@ -44,9 +44,6 @@ namespace WebForms.Admin
             }
         }
 
-        protected void SearchBtn_Click(object sender, EventArgs e)
-        {
-
-        }
+        protected void SearchBtn_Click(object sender, EventArgs e) { }
     }
 }

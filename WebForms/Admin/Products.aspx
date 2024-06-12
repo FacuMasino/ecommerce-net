@@ -5,7 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
-    <div class="d-flex flex-column gy-4 container-800 mx-auto gap-3">
+    <div class="d-flex flex-column container-800 mx-auto gap-3">
         <div class="d-flex align-items-center justify-content-between">
             <h1 class="fs-4 m-0">Productos</h1>
             <a class="btn btn-dark" href="Product.aspx">Nuevo producto</a>
@@ -43,7 +43,7 @@
                                         <%#Eval("Brand")%> - <%#Eval("name")%>
                                     </a>
                                 </th>
-                                <td>
+                                <td title="<%#Helper.GetCategoriesList((List<Category>)Eval("Categories"))%>">
                                     <%#Eval("Categories[0]")%>
                                     <%#PrintCategoriesCount(Eval("Categories"))%>
                                 </td>
