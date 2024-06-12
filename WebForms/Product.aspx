@@ -109,12 +109,12 @@
                         <div class="col">
                             <div class="card">
                                 <img
-                                    src="<%# ((Product)Container.DataItem).Images.Count() > 0 ? Eval("Images[0].Url") : "" %>" 
-                                    class="card-img-top" alt="">
+                                    src="<%# ((Product)Container.DataItem).Images.Count() > 0 ? Eval("Images[0].Url") : "" %>"
+                                                                        class="card-img-top" alt=""  onerror="this.src='Content/img/placeholder.jpg'">
                                 <div class="card-body d-flex flex-column">
                                     <h5 class="card-title fs-6 mb-0"><%#Eval("Name") %></h5>
-                                    <p class="card-subtitle mb-0 mt-auto text-muted pe-3 fw-bold"><%#Eval("Price") %></p>
-                                    <a href="Product.aspx?id=<%#Eval("Id") %>">AMPLIAR</a>
+                                    <p class="card-subtitle mb-0 mt-auto text-muted pe-3 fw-bold"><%#Eval("Price", "{0:C}") %></p>
+                                    <a href="Product.aspx?id=<%#Eval("Id") %>" class="stretched-link"></a>
                                 </div>
                             </div>
                         </div>

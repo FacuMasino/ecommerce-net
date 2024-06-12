@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
@@ -16,6 +18,7 @@ namespace WebForms
 
         // PROPERTIES
         public List<Product> Products { get; set; }
+        public List<Product> SugProducts { get; set; }
 
         // CONSTRUCT
 
@@ -25,6 +28,7 @@ namespace WebForms
             _productsManager = new ProductsManager();
             _cartManager = new CartManager();
             Products = new List<Product>();
+            SugProducts = new List<Product>();
         }
 
         // METHODS
@@ -64,8 +68,19 @@ namespace WebForms
             CheckSession();
             RequestOpenArticle();
             Products = _productsManager.List();
-            SuggestedRepeater.DataSource = Products;
-            SuggestedRepeater.DataBind();
+            int zise = Products.Count;
+
+            if (zise > 5)
+            {
+                SugProducts = Products.GetRange(0, 5);
+                SuggestedRepeater.DataSource = SugProducts;
+                SuggestedRepeater.DataBind();
+            }
+            else
+            {
+                SuggestedRepeater.DataSource = Products;
+                SuggestedRepeater.DataBind();
+            }
         }
 
         protected void RemoveLnkButton_Click(object sender, EventArgs e)
