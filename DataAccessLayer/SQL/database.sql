@@ -38,7 +38,7 @@ CREATE TABLE Products
 	Code varchar(50) NOT NULL,
 	ProductName varchar(50) NOT NULL,
 	ProductDescription varchar(300) NULL,
-	Price decimal(15, 2) NOT NULL,
+	Price money NOT NULL,
 	Cost money NOT NULL,
 	Stock int check(0 <= Stock) NOT NULL,
 	BrandId int FOREIGN KEY REFERENCES Brands (BrandId) NULL
