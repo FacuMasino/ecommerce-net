@@ -16,6 +16,7 @@ body {
 }
 
 .custom-nav-wrapper {
+    width: 280px;
     height: calc(100vh - var(--navbar-desktop-width));
 }
 

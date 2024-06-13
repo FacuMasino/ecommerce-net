@@ -28,7 +28,8 @@ VALUES
 	('Celulares'),
 	('Televisores'),
 	('Media'),
-	('Audio');
+	('Audio'),
+	('Entretenimiento');
 
 GO
 
@@ -92,6 +93,28 @@ VALUES
 		'215000',
 		'0',
 		'2'
+	),	
+	(
+		'APL-VP-1',
+		'Vision Pro',
+		'Apple Vision Pro combina a la perfección el contenido digital con tu espacio físico.<br/>
+		 Para que pueda trabajar, mirar, revivir recuerdos y conectarse de maneras nunca antes posibles.<br/>
+		 La era de la computación espacial ya está aquí.',
+		'5600000',
+		'4050000',
+		'4',
+		'2'
+	),
+	(
+		'APL-IPRO-15',
+		'iPhone 15 Pro',
+		'Forjado en titanio y equipado con el revolucionario chip A17 Pro, un Botón de Acción personalizable 
+		y el sistema de cámaras Pro más versátil. Tiene un diseño resistente y ligero, con titanio de calidad 
+		aeroespacial y parte posterior de vidrio mate texturizado.',
+		'1450000',
+		'995000',
+		'8',
+		'2'
 	);
 
 GO
@@ -109,7 +132,11 @@ VALUES
 	(3,3),
 	(4,2),
 	(5,2),
-	(2,3);
+	(2,3),
+	(3,5),
+	(6,5),
+	(6,3),
+	(7,1);
 
 GO
 
@@ -148,6 +175,22 @@ VALUES
 	(
 		'https://ik.imagekit.io/tpce16/products/Sonyx80j_4S._SL1500_1024x.webp?updatedAt=1717373650982',
 		'4'
+	),
+	(
+		'https://ik.imagekit.io/tpce16/products/Apple-Vision-Pro-1024x1024.png?updatedAt=1718281729142',
+		'6'
+	),
+	(
+		'https://ik.imagekit.io/tpce16/products/06techfix-top-fzqj-mobileMasterAt3x-1024x1024.jpg?updatedAt=1718281754644',
+		'6'
+	),
+	(
+		'https://ik.imagekit.io/tpce16/products/iphone-15-pro-a-2f70988805588cc27816964316066050-1024-1024.png?updatedAt=1718288634185',
+		'7'
+	),
+	(
+		'https://ik.imagekit.io/tpce16/products/IPHONE15PRO_WHITE_1024x1024.png_v=1710128219?updatedAt=1718288712790',
+		'7'
 	);
 
 GO

@@ -4,7 +4,8 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
-    <%=""; // Evita errores de intellisense (https://stackoverflow.com/a/31886588/10302170)%>
+    <%// Evita errores de intellisense (https://stackoverflow.com/a/31886588/10302170) %>
+    <%=""%>
     <div class="row py-5">
         <div class="col-3">
             <ul class="nav flex-column">

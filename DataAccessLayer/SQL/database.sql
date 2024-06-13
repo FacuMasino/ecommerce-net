@@ -35,7 +35,7 @@ GO
 CREATE TABLE Products
 (
 	ProductId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	Code varchar(50) NOT NULL,
+	Code varchar(50) NOT NULL UNIQUE,
 	ProductName varchar(50) NOT NULL,
 	ProductDescription varchar(300) NULL,
 	Price money NOT NULL,

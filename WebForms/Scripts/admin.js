@@ -37,6 +37,6 @@ function setInputFilter(textbox, inputFilter, errMsg, cssIndicator) {
 // CSS 'input-error' para aplicar un estilo al control
 const bindNumberValidation = (elementId, cssIndicator = false) => {
     setInputFilter(document.getElementById(elementId), function (value) {
-        return /^\d*\.?\d*$/.test(value); // Solo números y '.', RegExp.
-    }, 'Solo se permiten números y el separador decimal "."');
+        return /^\d*(?:[.,]\d*)?$/.test(value); // Solo números y '.', RegExp.
+    }, 'Solo se permiten números y "," o "."');
 };

@@ -23,6 +23,11 @@
                     <label for="ProductBrandDDL" class="form-label">Marca</label>
                     <asp:DropDownList ID="ProductBrandDDL" CssClass="form-select" runat="server" />
                 </div>
+                <div class="col-md-6 col-12 mb-md-0 mb-3">
+                    <label for="ProductCode" class="form-label">SKU</label>
+                    <asp:TextBox class="form-control" ID="ProductCode" placeholder="AAA-BBB-100"
+                        runat="server" />
+                </div>
             </div>
             <div class="mb-3">
                 <label for="ProductDescription" class="form-label">Descripción</label>
@@ -51,12 +56,12 @@
                 <asp:Repeater ID="ProductCategoriesRpt" runat="server">
                     <ItemTemplate>
                         <div class="col">
-                            <div class="card p-3" style="max-width: fit-content;">
+                            <div class="card p-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h6 class="m-0 text-center"><%#Eval("Name")%></h6>
                                     </div>
-                                    <div class="card-body p-0 ms-3 d-flex justify-content-center align-items-center">
+                                    <div class="card-body p-0 ms-3 d-flex justify-content-end align-items-center">
                                         <button href="#" class="btn p-0 fs-5"><i class="bi h-fit d-flex bi-trash"></i></button>
                                         <!-- hack: convertir en asp buttons -->
                                     </div>

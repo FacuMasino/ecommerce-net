@@ -102,6 +102,7 @@ namespace WebForms.Admin
                 Session["CurrentProduct"] = _product;
                 ProductName.Value = _product.Name;
                 ProductDescription.Value = _product.Description;
+                ProductCode.Text = _product.Code;
                 ProductBrandDDL.SelectedValue = _product.Brand.Id.ToString();
                 CategoriesDdl.SelectedValue = _product.Categories[0].Id.ToString();
                 ProductPrice.Text = _product.Price.ToString("F2");

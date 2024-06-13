@@ -6,7 +6,8 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
-    <%=""; // Evita errores de intellisense (https://stackoverflow.com/a/31886588/10302170)%>
+    <%// Evita errores de intellisense (https://stackoverflow.com/a/31886588/10302170)%>
+    <%=""%>
     <%
         if (0 < _product.Id)
         {
