@@ -40,3 +40,6 @@ const bindNumberValidation = (elementId, cssIndicator = false) => {
         return /^\d*(?:[.,]\d*)?$/.test(value); // Solo números y '.', RegExp.
     }, 'Solo se permiten números y "," o "."');
 };
+
+// Crea una nueva instancia Modal para el MasterModal
+const MasterModal = new bootstrap.Modal(document.getElementById('MasterModal'));

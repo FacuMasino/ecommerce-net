@@ -16,7 +16,8 @@
     <link rel="manifest" href="Content/Admin/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true">
-    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/Content/bootstrap.min.css" />
     <link rel="stylesheet" href="/Content/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="/CSS/Style.css" />
@@ -28,7 +29,8 @@
         <header>
             <nav class="navbar navbar-dark navbar-expand-lg position-fixed w-100 z-3 bg-black py-4">
                 <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu"
+                        aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <a class="navbar-brand" href="/">eCommerce</a>
@@ -48,7 +50,8 @@
                     <div class="d-flex custom-nav-wrapper position-fixed flex-column p-3">
                         <ul class="custom-nav nav nav-pills flex-column mb-auto">
                             <li class="nav-item">
-                                <a id="BtnNavHome" href="/admin" class="nav-link text-black" aria-current="page" runat="server">
+                                <a id="BtnNavHome" href="/admin" class="nav-link text-black" aria-current="page"
+                                    runat="server">
                                     <i class="bi bi-house me-2"></i>
                                     Inicio
                                 </a>
@@ -81,7 +84,8 @@
                         </ul>
                         <hr>
                         <div class="dropdown">
-                            <a href="#" class="d-flex align-items-center text-decoration-none text-black dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a href="#" class="d-flex align-items-center text-decoration-none text-black dropdown-toggle"
+                                id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-person me-2 rounded-circle"></i>
                                 <strong>Usuario</strong>
                             </a>
@@ -105,6 +109,32 @@
                     </asp:ContentPlaceHolder>
                 </ContentTemplate>
             </asp:UpdatePanel>
+        </div>
+        <!-- Modal Bootstrap -->
+        <div class="modal fade" id="MasterModal" tabindex="-1" aria-labelledby="MasterModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <asp:UpdatePanel ID="MasterModalUP" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="MasterModalLabel">
+                                    <asp:Label ID="MasterModalTitle" runat="server"></asp:Label>
+                                </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <asp:Label ID="MasterModalBody" runat="server"></asp:Label>
+                            </div>
+                            <div class="modal-footer">
+                                <Asp:Button ID="MasterModalCancelBtn" OnClick="MasterModalCancelBtn_Click" CssClass="btn btn-dark-outlined" data-bs-dismiss="modal" Text="Cancelar" runat="server" />
+                                <Asp:Button ID="MasterModalOkBtn" OnClick="MasterModalConfirmBtn_Click" data-bs-dismiss="modal" CssClass="btn btn-danger" runat="server" Text="Confirmar" />
+                            </div>
+                        </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
         </div>
     </form>
     <script src="/Scripts/bootstrap.bundle.min.js"></script>

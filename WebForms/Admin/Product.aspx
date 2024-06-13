@@ -155,10 +155,10 @@
             </div>
         </div>
         <div class="d-flex gap-3 justify-content-between w-100">
-            <button class="btn btn-outline-danger" type="button">Eliminar</button>
+            <Asp:Button ID="DeleteProductBtn" OnClick="DeleteProductBtn_Click" CssClass="btn btn-outline-danger" runat="server" Text="Eliminar" />
             <div>
                 <a class="btn btn-outline-secondary" href="Products.aspx">Cancelar</a>
-                <button class="btn btn-dark" type="button">Guardar Producto</button>
+                <Asp:Button CssClass="btn btn-dark" Text="Guardar Producto" runat="server" />
             </div>
         </div>
         <%

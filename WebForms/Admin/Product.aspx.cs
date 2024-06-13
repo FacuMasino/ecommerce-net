@@ -6,7 +6,7 @@ using UtilitiesLayer;
 
 namespace WebForms.Admin
 {
-    public partial class ProductAdmin : System.Web.UI.Page
+    public partial class ProductAdmin : BasePage
     {
         private BrandsManager _brandsManager;
         private CategoriesManager _categoriesManager;
@@ -190,6 +190,25 @@ namespace WebForms.Admin
                 decimal.Parse(ProductCost.Text)
             );
             ProductReturns.Text = $"{returns:#.##}%";
+        }
+
+        protected void DeleteProductBtn_Click(object sender, EventArgs e)
+        {
+            Admin adminMP = (Admin)this.Master;
+            adminMP.ShowMasterModal(
+                "Eliminar Producto",
+                "Está seguro que desea eliminar el producto?"
+            );
+        }
+
+        public override void OnModalConfirmed()
+        {
+            ProductReturns.Text = "Confirmó"; // Esto es solo para probar
+        }
+
+        public override void OnModalCancelled()
+        {
+            ProductReturns.Text = "Canceló"; // Esto es solo para probar
         }
     }
 }

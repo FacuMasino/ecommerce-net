@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using DomainModelLayer;
 
 namespace WebForms.Admin
 {
@@ -41,6 +43,32 @@ namespace WebForms.Admin
         {
             string prevClasses = BtnNavHome.Attributes["class"];
             item.Attributes["class"] = prevClasses + " active";
+        }
+
+        public void ShowMasterModal(string title, string message)
+        {
+            MasterModalTitle.Text = title;
+            MasterModalBody.Text = message;
+            ScriptManager.RegisterStartupScript(
+                Page,
+                Page.GetType(),
+                "MasterModal",
+                "MasterModal.show()",
+                true
+            );
+            MasterModalUP.Update();
+        }
+
+        protected void MasterModalConfirmBtn_Click(object sender, EventArgs e)
+        {
+            //Session["MasterModalConfirm"] = true;
+            (BodyPlaceHolder.Page as BasePage).OnModalConfirmed();
+        }
+
+        protected void MasterModalCancelBtn_Click(object sender, EventArgs e)
+        {
+            //Session["MasterModalConfirm"] = false;
+            (BodyPlaceHolder.Page as BasePage).OnModalCancelled();
         }
     }
 }
