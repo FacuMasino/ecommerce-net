@@ -6,12 +6,17 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
     <div class="d-flex flex-column">
-        <ul class="nav">
+        <div class="mt-4">
+            <h2 class="fs-4 fw-bold">Hola Nombre!</h2>
+            <p class="fs-5">Bienvenido a tu cuenta.</p>
+        </div>
+        <ul class="nav align-self-end">
             <li class="nav-item">
-                <a class="nav-link fs-5 fw-bold ps-0 text-black active" aria-current="page" href="#">Mis Datos</a>
+                <a class="nav-link fs-5 fw-bold ps-0 text-black active" aria-current="page" href="#">
+                    Mis Datos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link fs-5 ps-0 text-black" href="#">Mis Pedidos</a>
+                <a class="nav-link fs-5 ps-0 text-black" href="Orders.aspx">Mis Pedidos</a>
             </li>
         </ul>
         <div class="row g-0 border-top">

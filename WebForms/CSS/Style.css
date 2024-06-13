@@ -143,6 +143,10 @@ body {
     top: 88px;
 }
 
+.h-fit {
+    height: fit-content;
+}
+
 /* Large screen */
 @media (min-width: 992px) {
     .custom-sidebar {
