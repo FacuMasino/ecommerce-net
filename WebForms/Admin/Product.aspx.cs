@@ -129,11 +129,26 @@ namespace WebForms.Admin
             }
         }
 
+        /// <summary>
+        /// Asocia las validaciones JavaScript a los controles necesarios
+        /// </summary>
+        /// <remarks>
+        /// Agrega un atributo 'onfocus' al control para vincular la función de
+        /// validación en el navegador cuando el control recibe el foco.
+        /// </remarks>
+        private void BindControlsValidation()
+        {
+            // Valida que solo se ingresen números para los TextBox que no son TextMode="Number"
+            ProductPrice.Attributes.Add("onfocus", "bindNumberValidation(this.id)");
+            ProductCost.Attributes.Add("onfocus", "bindNumberValidation(this.id)");
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
         {
             CheckSession();
+            BindControlsValidation();
 
             if (_isEditing)
             {

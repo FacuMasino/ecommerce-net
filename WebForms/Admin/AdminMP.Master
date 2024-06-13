@@ -108,5 +108,6 @@
         </div>
     </form>
     <script src="/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="/Scripts/admin.js"></script>
 </body>
 </html>
