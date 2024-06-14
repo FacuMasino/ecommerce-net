@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Services.Description;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
@@ -64,9 +65,11 @@ namespace WebForms
         protected void FilterBySuggestedList()
         {
             Products = _productsManager.List();
-            int zise = Products.Count;
+            Products = Products.Where(p => p.Categories.Any(c => c.Id == _product.Id)).ToList();
 
-            if (zise > 5)
+            int size = Products.Count;
+
+            if (size > 5)
             {
                 SugProducts = Products.GetRange(0, 5);
                 SuggestedRepeater.DataSource = SugProducts;

@@ -88,7 +88,8 @@
                 </div>
             </div>
         </div>
-
+        <%if (Products.Count() > 0)
+            {        %>
         <div class="d-flex flex-column my-5">
             <h3 class="text-bold fs-4">Productos que pueden interesarte</h3>
             <div class="row row-cols-md-6 py-2 row-cols-2 gx-4">
@@ -99,7 +100,7 @@
                             <div class="card">
                                 <img
                                     src="<%# ((Product)Container.DataItem).Images.Count() > 0 ? Eval("Images[0].Url") : "" %>"
-                                                                        class="card-img-top" alt=""  onerror="this.src='Content/img/placeholder.jpg'">
+                                    class="card-img-top" alt="" onerror="this.src='Content/img/placeholder.jpg'">
                                 <div class="card-body d-flex flex-column">
                                     <h5 class="card-title fs-6 mb-0"><%#Eval("Name") %></h5>
                                     <p class="card-subtitle mb-0 mt-auto text-muted pe-3 fw-bold"><%#Eval("Price", "{0:C}") %></p>
@@ -113,44 +114,21 @@
             </div>
         </div>
     </div>
+    <%  
+    }
+    else
+    {
 
-    <%--   <div class="col">
-                    <div class="card">
-                        <img src="https://ik.imagekit.io/tpce16/products/S10-01-1024x1024.png?updatedAt=1717372633354"
-                            class="card-img-top" alt="Imagen de Galaxy S10" onerror="this.src='Content/img/placeholder.jpg'">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title fs-6 mb-0">Samsung - Galaxy S10</h5>
-                            <p class="card-subtitle mb-0 mt-auto text-muted pe-3 fw-bold">$69.99</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card">
-                        <img src="https://ik.imagekit.io/tpce16/products/S10-01-1024x1024.png?updatedAt=1717372633354"
-                            class="card-img-top" alt="Imagen de Galaxy S10" onerror="this.src='Content/img/placeholder.jpg'">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title fs-6 mb-0">Samsung - Galaxy S10</h5>
-                            <p class="card-subtitle mb-0 mt-auto text-muted pe-3 fw-bold">$69.99</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card">
-                        <img src="https://ik.imagekit.io/tpce16/products/S10-01-1024x1024.png?updatedAt=1717372633354"
-                            class="card-img-top" alt="Imagen de Galaxy S10" onerror="this.src='Content/img/placeholder.jpg'">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title fs-6 mb-0">Samsung - Galaxy S10</h5>
-                            <p class="card-subtitle mb-0 mt-auto text-muted pe-3 fw-bold">$69.99</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>----%>
-    <%
+    %>
+     <div class="col-6 text-center fw-bold">
+    <h5>En este momento no tenemos productos similares, pero podemos ofrecerte una amplia variedad de otros productos</h5>
+     <a href="Home.aspx" class="btn btn-primary text-center" type="button">Volver a la tienda</a>
+ </div>
+    
+    <% 
+    }
+      %>
+       <%
         }
     %>
 </asp:Content>
