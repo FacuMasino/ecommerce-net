@@ -14,6 +14,9 @@ namespace WebForms.Admin
         private Product _product;
         private bool _isEditing;
 
+        // TODO: Recordatorio, si se usa que y manipula controles usar Helper.FindControl()
+        //private static Action<MasterPage> ModalAction;
+
         public bool IsEditing
         {
             get { return _isEditing; }
@@ -144,6 +147,16 @@ namespace WebForms.Admin
             ProductCost.Attributes.Add("onfocus", "bindNumberValidation(this.id)");
         }
 
+        public override void OnModalConfirmed()
+        {
+            ProductReturns.Text = "Confirmó"; // Esto es solo para probar
+        }
+
+        public override void OnModalCancelled()
+        {
+            ProductReturns.Text = "Canceló"; // Esto es solo para probar
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
@@ -197,18 +210,9 @@ namespace WebForms.Admin
             Admin adminMP = (Admin)this.Master;
             adminMP.ShowMasterModal(
                 "Eliminar Producto",
-                "Está seguro que desea eliminar el producto?"
+                "Está seguro que desea eliminar el producto?",
+                true
             );
-        }
-
-        public override void OnModalConfirmed()
-        {
-            ProductReturns.Text = "Confirmó"; // Esto es solo para probar
-        }
-
-        public override void OnModalCancelled()
-        {
-            ProductReturns.Text = "Canceló"; // Esto es solo para probar
         }
     }
 }

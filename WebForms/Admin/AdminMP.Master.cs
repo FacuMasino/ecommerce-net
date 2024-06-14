@@ -7,10 +7,7 @@ namespace WebForms.Admin
 {
     public partial class Admin : System.Web.UI.MasterPage
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            CheckActiveItem();
-        }
+        // METHODS
 
         private void CheckActiveItem()
         {
@@ -45,10 +42,13 @@ namespace WebForms.Admin
             item.Attributes["class"] = prevClasses + " active";
         }
 
-        public void ShowMasterModal(string title, string message)
+        public void ShowMasterModal(string title, string message, bool requiresConfirm = false)
         {
+            ResetMasterModal();
             MasterModalTitle.Text = title;
             MasterModalBody.Text = message;
+            if (!requiresConfirm)
+                MasterModalFrmChk.Visible = false;
             ScriptManager.RegisterStartupScript(
                 Page,
                 Page.GetType(),
@@ -59,15 +59,42 @@ namespace WebForms.Admin
             MasterModalUP.Update();
         }
 
+        // Limpia los controles y clases css del Modal
+        private void ResetMasterModal()
+        {
+            if (MasterModalChk.Checked)
+                MasterModalChk.Checked = false; // Reset checkbox
+            MasterModalBodyWrapper.Attributes["class"] = "d-flex flex-column"; // Reset invalid
+        }
+
+        //EVENTS
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            CheckActiveItem();
+        }
+
         protected void MasterModalConfirmBtn_Click(object sender, EventArgs e)
         {
-            //Session["MasterModalConfirm"] = true;
-            (BodyPlaceHolder.Page as BasePage).OnModalConfirmed();
+            if (MasterModalFrmChk.Visible && !MasterModalChk.Checked)
+            {
+                MasterModalBodyWrapper.Attributes["class"] = "d-flex flex-column invalid";
+                return; // Si tenía que confirmar y no lo hizo, esperar confirmación
+            }
+
+            (BodyPlaceHolder.Page as BasePage).OnModalConfirmed(); // Disparar evento de confirmación
+
+            ScriptManager.RegisterStartupScript( // Ocultar modal
+                Page,
+                Page.GetType(),
+                "MasterModal",
+                "MasterModal.hide()",
+                true
+            );
         }
 
         protected void MasterModalCancelBtn_Click(object sender, EventArgs e)
         {
-            //Session["MasterModalConfirm"] = false;
             (BodyPlaceHolder.Page as BasePage).OnModalCancelled();
         }
     }

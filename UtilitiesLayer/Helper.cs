@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.UI;
 using DataAccessLayer;
 using DomainModelLayer;
 
@@ -67,6 +68,14 @@ namespace UtilitiesLayer
             }
 
             return categoriesList;
+        }
+
+        // TODO: Probablemente sea necesaria si usamos Action Functions para manipular controles
+        // Dependera de como manejemos los modalbox
+        public static Control FindControl(MasterPage masterPage, string controlId)
+        {
+            Control foundCtrl = masterPage.FindControl("BodyPlaceHolder").FindControl(controlId);
+            return foundCtrl;
         }
     }
 }

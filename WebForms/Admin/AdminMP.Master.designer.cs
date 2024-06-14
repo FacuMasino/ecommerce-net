@@ -123,6 +123,15 @@ namespace WebForms.Admin
         protected global::System.Web.UI.WebControls.Label MasterModalTitle;
 
         /// <summary>
+        /// MasterModalBodyWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl MasterModalBodyWrapper;
+
+        /// <summary>
         /// MasterModalBody control.
         /// </summary>
         /// <remarks>
@@ -130,6 +139,24 @@ namespace WebForms.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label MasterModalBody;
+
+        /// <summary>
+        /// MasterModalFrmChk control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl MasterModalFrmChk;
+
+        /// <summary>
+        /// MasterModalChk control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox MasterModalChk;
 
         /// <summary>
         /// MasterModalCancelBtn control.

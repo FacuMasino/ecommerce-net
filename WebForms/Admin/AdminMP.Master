@@ -125,11 +125,25 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <asp:Label ID="MasterModalBody" runat="server"></asp:Label>
+                                <div id="MasterModalBodyWrapper" runat="server" class="d-flex flex-column">
+                                    <asp:Label ID="MasterModalBody" runat="server"></asp:Label>
+                                    <div id="MasterModalFrmChk" class="form-check mt-3" runat="server">
+                                        <input id="MasterModalChk" type="checkbox" class="form-check-input" runat="server" />
+                                        <label class="form-check-label" for="MasterModalChk">
+                                            Confirmar acción
+                                        </label>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Por favor marque la casilla para continuar.
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
-                                <Asp:Button ID="MasterModalCancelBtn" OnClick="MasterModalCancelBtn_Click" CssClass="btn btn-dark-outlined" data-bs-dismiss="modal" Text="Cancelar" runat="server" />
-                                <Asp:Button ID="MasterModalOkBtn" OnClick="MasterModalConfirmBtn_Click" data-bs-dismiss="modal" CssClass="btn btn-danger" runat="server" Text="Confirmar" />
+                                <asp:Button ID="MasterModalCancelBtn" OnClick="MasterModalCancelBtn_Click"
+                                    CssClass="btn btn-outline-dark"
+                                    data-bs-dismiss="modal" Text="Cancelar" runat="server" />
+                                <asp:Button ID="MasterModalOkBtn" OnClick="MasterModalConfirmBtn_Click"
+                                    CssClass="btn btn-danger" runat="server" Text="Confirmar" />
                             </div>
                         </div>
                     </ContentTemplate>
