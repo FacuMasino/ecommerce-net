@@ -70,8 +70,17 @@ namespace UtilitiesLayer
             return categoriesList;
         }
 
-        // TODO: Probablemente sea necesaria si usamos Action Functions para manipular controles
-        // Dependera de como manejemos los modalbox
+        /// <summary>
+        /// Busca un control dentro de una página maestra especificada.
+        /// </summary>
+        /// <param name="masterPage">La MasterPage que contiene el control.</param>
+        /// <param name="controlId">El ID del control a buscar.</param>
+        /// <returns>
+        /// El control con el ID especificado si se encuentra; de lo contrario, null.
+        /// </returns>
+        /// <remarks>
+        /// Este método asume que el control se encuentra dentro de un ContentPlaceHolder con el ID "BodyPlaceHolder".
+        /// </remarks>
         public static Control FindControl(MasterPage masterPage, string controlId)
         {
             Control foundCtrl = masterPage.FindControl("BodyPlaceHolder").FindControl(controlId);

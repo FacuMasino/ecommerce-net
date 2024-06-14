@@ -32,6 +32,9 @@ namespace DomainModelLayer
         [DisplayName("Categorías")]
         public List<Category> Categories { get; set; }
 
+        [DisplayName("Activo")]
+        public bool IsActive { get; set; }
+
         public List<Image> Images { get; set; }
 
         public Product()

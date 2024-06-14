@@ -13,13 +13,14 @@ namespace BusinessLogicLayer
         private CategoriesManager _categoriesManager = new CategoriesManager();
         private ImagesManager _imagesManager = new ImagesManager();
 
-        public List<Product> List()
+        public List<Product> List(bool onlyActive = true)
         {
             List<Product> products = new List<Product>();
 
             try
             {
                 _dataAccess.SetProcedure("SP_List_Products");
+                _dataAccess.SetParameter("@OnlyActive", onlyActive);
                 _dataAccess.ExecuteRead();
 
                 while (_dataAccess.Reader.Read())
@@ -35,6 +36,7 @@ namespace BusinessLogicLayer
                     product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
                     product.Categories = _categoriesManager.List(product.Id);
                     product.Images = _imagesManager.List(product.Id);
+                    product.IsActive = (bool)_dataAccess.Reader["Active"];
                     products.Add(product);
                 }
             }
@@ -55,14 +57,18 @@ namespace BusinessLogicLayer
             return products;
         }
 
-        public Product Read(int productId)
+        public Product Read(int productId, bool onlyActive = true)
         {
             Product product = new Product();
 
             try
             {
+                string queryCondition = "ProductId = @ProductId And Active = 1";
+                if (!onlyActive)
+                    queryCondition = "ProductId = @ProductId";
+
                 _dataAccess.SetQuery(
-                    "select Code, ProductName, ProductDescription, Price, Cost, Stock, BrandId from Products where ProductId = @ProductId"
+                    $"select Code, ProductName, ProductDescription, Price, Cost, Stock, BrandId, Active from Products where {queryCondition}"
                 );
                 _dataAccess.SetParameter("@ProductId", productId);
                 _dataAccess.ExecuteRead();
@@ -79,6 +85,7 @@ namespace BusinessLogicLayer
                     product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
                     product.Categories = _categoriesManager.List(product.Id);
                     product.Images = _imagesManager.List(product.Id);
+                    product.IsActive = (bool)_dataAccess.Reader["Active"];
                 }
             }
             catch (Exception ex)
@@ -126,7 +133,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "update Products set Code = @Code, ProductName = @ProductName, ProductDescription = @ProductDescription, Price = @Price, Cost = @Cost, BrandId = @BrandId where ProductId = @ProductId"
+                    "update Products set Code = @Code, ProductName = @ProductName, ProductDescription = @ProductDescription, Price = @Price, Cost = @Cost, BrandId = @BrandId, Stock = @Stock, Active = @Active where ProductId = @ProductId"
                 );
                 _dataAccess.SetParameter("@ProductId", product.Id);
                 SetParameters(product);
@@ -142,11 +149,12 @@ namespace BusinessLogicLayer
             }
         }
 
+        // Importante: Es eliminación lógica
         public void Delete(Product product, bool purgeBrand = false, bool purgeCategory = false)
         {
             try
             {
-                _dataAccess.SetQuery("delete from Products where ProductId = @ProductId");
+                _dataAccess.SetProcedure("SP_Delete_Product");
                 _dataAccess.SetParameter("@ProductId", product.Id);
                 _dataAccess.ExecuteAction();
             }
@@ -213,6 +221,8 @@ namespace BusinessLogicLayer
             _dataAccess.SetParameter("@Price", product.Price);
             _dataAccess.SetParameter("@Cost", product.Cost);
             _dataAccess.SetParameter("@BrandId", product.Brand?.Id);
+            _dataAccess.SetParameter("@Stock", product.Stock);
+            _dataAccess.SetParameter("@Active", product.IsActive);
         }
 
         private void SetBrandId(Product product)

@@ -167,10 +167,10 @@
             {
         %>
         <div class="col-md-8 col align-self-center text-center">
-            <h5 class="text-align-center">Ups! El producto que intentás editar no existe
+            <h5 class="fs-4 text-align-center mb-3">Ups! El producto que intentás editar no existe<br /> o ya no está disponible.
             </h5>
+            <p class="fs-5">Intentá elegir otro desde la lista</p>
             <img src="/Content/img/Empty-cuate.svg" class="img-fluid object-fit-cover h-75" />
-            <p>Intentá elegir otro desde la lista</p>
             <a href="Products.aspx" class="btn btn-dark text-center" type="button">Ver Productos</a>
         </div>
         <div class="col-md-8 col text-center">

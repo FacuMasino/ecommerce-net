@@ -41,7 +41,8 @@ CREATE TABLE Products
 	Price money NOT NULL,
 	Cost money NOT NULL,
 	Stock int check(0 <= Stock) NOT NULL,
-	BrandId int FOREIGN KEY REFERENCES Brands (BrandId) NULL
+	BrandId int FOREIGN KEY REFERENCES Brands (BrandId) NULL,
+	Active bit NOT NULL
 )
 GO
 

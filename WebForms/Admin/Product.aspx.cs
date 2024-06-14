@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using System.Web;
+using System.Web.UI;
 using BusinessLogicLayer;
 using DomainModelLayer;
 using UtilitiesLayer;
@@ -14,8 +16,11 @@ namespace WebForms.Admin
         private Product _product;
         private bool _isEditing;
 
-        // TODO: Recordatorio, si se usa que y manipula controles usar Helper.FindControl()
-        //private static Action<MasterPage> ModalAction;
+        // Referencia a la funcion que se ejecutará luego de confirmar/cancelar un Modal
+        // Se le debe pasar la masterpage como referencia por si se necesita manipular controles
+        // En caso de manipular un control utilizar Helper.FindControl
+        private static Action<MasterPage> _modalOkAction;
+        private static Action<MasterPage> _modalCancelAction;
 
         public bool IsEditing
         {
@@ -149,12 +154,20 @@ namespace WebForms.Admin
 
         public override void OnModalConfirmed()
         {
-            ProductReturns.Text = "Confirmó"; // Esto es solo para probar
+            if (_modalOkAction != null)
+            {
+                _modalOkAction(this.Master);
+                _modalOkAction = null; // Limpiar luego de usar
+            }
         }
 
         public override void OnModalCancelled()
         {
-            ProductReturns.Text = "Canceló"; // Esto es solo para probar
+            if (_modalCancelAction != null)
+            {
+                _modalCancelAction(this.Master);
+                _modalCancelAction = null; // Limpiar luego de usar
+            }
         }
 
         // EVENTS
@@ -207,12 +220,20 @@ namespace WebForms.Admin
 
         protected void DeleteProductBtn_Click(object sender, EventArgs e)
         {
+            _modalOkAction = DeleteProduct; // Asigna la acción que se va a ejecutar si confirma
+
             Admin adminMP = (Admin)this.Master;
-            adminMP.ShowMasterModal(
+            adminMP.ShowMasterModal( // Llama y muestra el modal de la Masterpage
                 "Eliminar Producto",
                 "Está seguro que desea eliminar el producto?",
-                true
+                true // requiere confirmación
             );
+        }
+
+        private void DeleteProduct(MasterPage masterPage)
+        {
+            _productsManager.Delete(_product);
+            HttpContext.Current.Response.Redirect("Products.aspx?successDelete=true");
         }
     }
 }
