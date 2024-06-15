@@ -61,7 +61,8 @@ namespace WebForms.Admin
         {
             Product auxProduct = _productsManager.Read(_temporalProductId);
             _productsManager.Delete(auxProduct);
-            HttpContext.Current.Response.Redirect("Products.aspx?successDelete=true");
+            ((Admin)masterPage).ShowMasterToast("Producto eliminado con éxito!");
+            // TODO: Actualizar Repeater
         }
 
         public override void OnModalConfirmed()
