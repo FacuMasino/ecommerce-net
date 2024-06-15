@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
 
 namespace WebForms.Admin
 {
-    public partial class Products : System.Web.UI.Page
+    public partial class Products : BasePage
     {
         private ProductsManager _productsManager;
+
+        private static Action<MasterPage> _modalOkAction;
+
+        private int _temporalProductId;
 
         public Products()
         {
@@ -40,8 +47,29 @@ namespace WebForms.Admin
                 return;
             if (Request.QueryString["successDelete"] == "true")
             {
-                Admin adminMP = (Admin)this.Master;
-                adminMP.ShowMasterToast("Producto eliminado con éxito!");
+                Notify("Producto eliminado con éxito!");
+            }
+        }
+
+        private void Notify(string message)
+        {
+            Admin adminMP = (Admin)this.Master;
+            adminMP.ShowMasterToast(message);
+        }
+
+        private void DeleteProductAction(MasterPage masterPage)
+        {
+            Product auxProduct = _productsManager.Read(_temporalProductId);
+            _productsManager.Delete(auxProduct);
+            HttpContext.Current.Response.Redirect("Products.aspx?successDelete=true");
+        }
+
+        public override void OnModalConfirmed()
+        {
+            if (_modalOkAction != null)
+            {
+                _modalOkAction(this.Master);
+                _modalOkAction = null; // Limpiar luego de usar
             }
         }
 
@@ -57,5 +85,18 @@ namespace WebForms.Admin
         }
 
         protected void SearchBtn_Click(object sender, EventArgs e) { }
+
+        protected void DeleteProductLnkBtn_Click(object sender, EventArgs e)
+        {
+            _temporalProductId = Convert.ToInt32(((LinkButton)sender).CommandArgument);
+            _modalOkAction = DeleteProductAction;
+
+            Admin adminMP = (Admin)this.Master;
+            adminMP.ShowMasterModal( // Llama y muestra el modal de la Masterpage
+                "Eliminar Producto",
+                "Está seguro que desea eliminar el producto?",
+                true // requiere confirmación
+            );
+        }
     }
 }

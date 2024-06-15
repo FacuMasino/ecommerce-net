@@ -13,7 +13,7 @@
         <!-- BUSCADOR -->
         <asp:Panel ID="SearchPanel" runat="server" CssClass="input-group mb-3" DefaultButton="searchBtn">
             <asp:TextBox CssClass="form-control" ID="SearchTextBox" runat="server" Text="" placeholder="Buscar por nombre, marca, etc"
-                required />
+                />
             <asp:LinkButton Text='<i class="bi bi-search"></i>' ID="SearchBtn" CssClass="btn rounded-end btn-outline-secondary"
                 runat="server" OnClick="SearchBtn_Click" />
             <div class="invalid-feedback">
@@ -56,9 +56,12 @@
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                         <!-- Eliminar -->
-                                        <a href="#" class="p-0 text-black fs-5">
-                                            <i class="bi bi-trash3"></i>
-                                        </a>
+                                        <asp:LinkButton Text='<i class="bi bi-trash3"></i>' 
+                                            CssClass="p-0 text-black fs-5" 
+                                            CommandArgument='<%#Eval("Id")%>' 
+                                            ID="DeleteProductLnkBtn" 
+                                            OnClick="DeleteProductLnkBtn_Click" 
+                                            runat="server" />
                                     </div>
                                 </td>
                             </tr>
