@@ -105,6 +105,24 @@ namespace WebForms.Admin
         protected global::System.Web.UI.WebControls.ContentPlaceHolder BodyPlaceHolder;
 
         /// <summary>
+        /// MasterToastUP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel MasterToastUP;
+
+        /// <summary>
+        /// MasterToastBody control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label MasterToastBody;
+
+        /// <summary>
         /// MasterModalUP control.
         /// </summary>
         /// <remarks>

@@ -42,4 +42,8 @@ const bindNumberValidation = (elementId, cssIndicator = false) => {
 };
 
 // Crea una nueva instancia Modal para el MasterModal
-const MasterModal = new bootstrap.Modal(document.getElementById('MasterModal'));
+const masterModal = new bootstrap.Modal(document.getElementById('MasterModal'));
+
+// Crea una nueva instancia de Bootstrap Toast para las notificaciones Toast
+const masterToastElement = document.getElementById('masterToast');
+const masterToast = new bootstrap.Toast(masterToastElement);

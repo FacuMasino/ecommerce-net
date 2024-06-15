@@ -52,11 +52,24 @@ namespace WebForms.Admin
             ScriptManager.RegisterStartupScript(
                 Page,
                 Page.GetType(),
-                "MasterModal",
-                "MasterModal.show()",
+                "masterModal",
+                "masterModal.show()",
                 true
             );
             MasterModalUP.Update();
+        }
+
+        public void ShowMasterToast(string message)
+        {
+            MasterToastBody.Text = message;
+            ScriptManager.RegisterStartupScript(
+                Page,
+                Page.GetType(),
+                "masterToast",
+                "masterToast.show()",
+                true
+            );
+            MasterToastUP.Update();
         }
 
         // Limpia los controles y clases css del Modal
@@ -87,8 +100,8 @@ namespace WebForms.Admin
             ScriptManager.RegisterStartupScript( // Ocultar modal
                 Page,
                 Page.GetType(),
-                "MasterModal",
-                "MasterModal.hide()",
+                "masterModal",
+                "masterModal.hide()",
                 true
             );
         }

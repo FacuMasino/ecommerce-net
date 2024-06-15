@@ -34,12 +34,24 @@ namespace WebForms.Admin
             ProductListRepeater.DataBind();
         }
 
+        private void CheckRequest()
+        {
+            if (string.IsNullOrEmpty(Request.QueryString["successDelete"]))
+                return;
+            if (Request.QueryString["successDelete"] == "true")
+            {
+                Admin adminMP = (Admin)this.Master;
+                adminMP.ShowMasterToast("Producto eliminado con éxito!");
+            }
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                CheckRequest();
                 BindProductList();
             }
         }
