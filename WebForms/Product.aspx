@@ -52,7 +52,9 @@
             <div class="col-md-5 card mb-3">
                 <div class="card-body d-flex flex-column justify-content-between h-100">
                     <div class="mb-4">
-                        <p class="mb-0"><small class="text-body-secondary"><%:Helper.GetCategoriesList(_product.Categories)%></small></p>
+                        <p class="mb-0">
+                            <small class="text-body-secondary"><%:Helper.GetCategoriesList(_product.Categories)%></small>
+                        </p>
                         <h5 class="card-title mb-0"><%:_product.Name%></h5>
                         <p class="card-text">
                             <small class="text-body-secondary"><%:_product.Brand.ToString()%></small>
@@ -88,10 +90,11 @@
                 </div>
             </div>
         </div>
-        <%if (Products.Count() > 0)
-            {        %>
         <div class="d-flex flex-column my-5">
             <h3 class="text-bold fs-4">Productos que pueden interesarte</h3>
+            <%if (Products.Count() > 0)
+                {
+            %>
             <div class="row row-cols-md-6 py-2 row-cols-2 gx-4">
 
                 <asp:Repeater ID="SuggestedRepeater" runat="server">
@@ -103,7 +106,9 @@
                                     class="card-img-top" alt="" onerror="this.src='Content/img/placeholder.jpg'">
                                 <div class="card-body d-flex flex-column">
                                     <h5 class="card-title fs-6 mb-0"><%#Eval("Name") %></h5>
-                                    <p class="card-subtitle mb-0 mt-auto text-muted pe-3 fw-bold"><%#Eval("Price", "{0:C}") %></p>
+                                    <p class="card-subtitle mb-0 mt-auto text-muted pe-3 fw-bold">
+                                        <%#Eval("Price", "{0:C}") %>
+                                    </p>
                                     <a href="Product.aspx?id=<%#Eval("Id") %>" class="stretched-link"></a>
                                 </div>
                             </div>
@@ -112,23 +117,24 @@
                     </ItemTemplate>
                 </asp:Repeater>
             </div>
+            <%  
+                }
+                else
+                {
+
+            %>
+            <div class="col-6 align-self-center text-center mt-3">
+                <h5 class="fs-5 fw-normal">En este momento no tenemos productos similares, pero podemos ofrecerte una amplia
+                    variedad de otros productos</h5>
+                <a href="Home.aspx" class="btn btn-dark text-center" type="button">Volver a la tienda</a>
+            </div>
+
+            <% 
+                }
+            %>
         </div>
     </div>
-    <%  
-    }
-    else
-    {
-
-    %>
-     <div class="col-6 text-center fw-bold">
-    <h5>En este momento no tenemos productos similares, pero podemos ofrecerte una amplia variedad de otros productos</h5>
-     <a href="Home.aspx" class="btn btn-primary text-center" type="button">Volver a la tienda</a>
- </div>
-    
-    <% 
-    }
-      %>
-       <%
+    <%
         }
     %>
 </asp:Content>

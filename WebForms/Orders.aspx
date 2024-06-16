@@ -44,7 +44,7 @@
                             <td>
                                 <div class="d-flex gap-2">
                                     <!-- Ver detalle -->
-                                    <a href="OrderStatus.aspx?order=1111>" class="p-0 text-black">Ver detalle
+                                    <a href="OrderStatus.aspx?order=1111" class="p-0 text-black">Ver detalle
                                     </a>
                                     <!-- Cancelar -->
                                     <a href="#" class="p-0 text-black">Cancelar    
@@ -63,7 +63,7 @@
                             <td>
                                 <div class="d-flex gap-2">
                                     <!-- Ver detalle -->
-                                    <a href="OrderStatus.aspx?order=1111>" class="p-0 text-black">Ver detalle
+                                    <a href="OrderStatus.aspx?order=1111" class="p-0 text-black">Ver detalle
                                     </a>
                                     <!-- Cancelar -->
                                     <a href="#" class="p-0 text-black">Cancelar    
@@ -81,7 +81,7 @@
                             <td>
                                 <div class="d-flex gap-2">
                                     <!-- Ver detalle -->
-                                    <a href="OrderStatus.aspx?order=1111>" class="p-0 text-black">Ver detalle
+                                    <a href="OrderStatus.aspx?order=1111" class="p-0 text-black">Ver detalle
                                     </a>
                                     <!-- Cancelar -->
                                     <a href="#" class="p-0 text-black">Cancelar    

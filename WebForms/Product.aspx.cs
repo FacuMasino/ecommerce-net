@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Services.Description;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
@@ -82,6 +80,18 @@ namespace WebForms
             }
         }
 
+        public bool IsOnCart()
+        {
+            List<ProductSet> auxProductSets = (List<ProductSet>)Session["CurrentProductSets"];
+            if (auxProductSets == null)
+                return false;
+            if (auxProductSets.Find(p => p.Id == _product.Id) == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
@@ -89,10 +99,15 @@ namespace WebForms
             CheckSession();
             RequestOpenArticle();
             FilterBySuggestedList();
+
+            if (_product != null)
+                this.Title = $"{_product.Brand} - {_product.Name}";
         }
 
         protected void RemoveLnkButton_Click(object sender, EventArgs e)
         {
+            if (!IsOnCart())
+                return;
             _cartManager.Remove(_product.Id);
             Session["CurrentProductSets"] = _cartManager.List();
         }
