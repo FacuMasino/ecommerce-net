@@ -93,8 +93,6 @@
                     {
                         string imageUrl = "Content/img/placeholder.jpg";
                         string category = product.Categories[0].Name;
-                        System.Diagnostics.Debug.Print(product.Name);
-                        System.Diagnostics.Debug.Print(product.Categories[0].Name);
 
                         if (0 < product.Images.Count)
                         {
