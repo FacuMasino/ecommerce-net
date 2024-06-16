@@ -12,12 +12,12 @@
             if (0 < ProductsCart.Count())
             {
         %>
-        <div class="row gx-4 w-100 px-5 justify-content-center">
-            <div class="col-8">
+        <div class="row gx-4 w-100 px-md-5 px-0 justify-content-center">
+            <div class="col-md-8 col-12">
                 <ul class="list-group list-group-lg list-group-flush border-top mb-auto">
                     <asp:Repeater OnItemDataBound="CartRepeater_ItemDataBound" runat="server" ID="CartRepeater">
                         <ItemTemplate>
-                            <li class="list-group-item">
+                            <li class="list-group-item px-md-3 px-0">
                                 <div class="row">
                                     <div class="col-4">
                                         <a href="Product.aspx?id=<%#Eval("id")%>">
@@ -25,11 +25,11 @@
                                         </a>
                                     </div>
                                     <div class="col-8 d-flex flex-column justify-content-between py-2">
-                                        <div class="d-flex mb-2 fw-bold">
+                                        <div class="d-flex flex-md-row flex-column mb-2 fw-bold">
                                             <a class="text-body text-decoration-none" href="Product.aspx?id=<%#Eval("id")%>"><%#Eval("brand")%> - <%#Eval("name")%></a>
                                             <span class="text-muted ms-auto"><%# Eval("price", "{0:C}")%></span>
                                         </div>
-                                        <p class="text-muted mb-auto">Subtotal <%# Eval("subtotal", "{0:C}")%></p>
+                                        <p class="text-muted text-md-start text-end mb-md-auto mb-2">Subtotal <%# Eval("subtotal", "{0:C}")%></p>
                                         <div class="d-inline-flex align-items-center justify-content-between w-100">
                                             <div class="itemcount bg-body-tertiary">
                                                 <asp:LinkButton Text='<i class="bi bi-dash"></i>' CssClass="itemcount-control minus bg-body-tertiary text-decoration-none text-black fs-5 px-2" CommandArgument='<%#Eval("Id")%>' ID="removeLnkButton" OnClick="removeLnkButton_Click" runat="server" />
@@ -45,7 +45,7 @@
                     </asp:Repeater>
                 </ul>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-12">
                 <div class="p-4 mb-4 bg-body-tertiary">
                     <ul class="list-group custom-list-group list-group-sm list-group-flush bg-body-tertiary">
                         <li class="list-group-item d-flex px-0 bg-transparent">

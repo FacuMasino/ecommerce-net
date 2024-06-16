@@ -10,7 +10,7 @@
             <h2 class="fs-4 fw-bold">Hola Nombre!</h2>
             <p class="fs-5">Bienvenido a tu cuenta.</p>
         </div>
-        <ul class="nav align-self-end">
+        <ul class="nav align-self-md-end align-self-start">
             <li class="nav-item">
                 <a class="nav-link fs-5 fw-bold ps-0 text-black active" aria-current="page" href="#">
                     Mis Datos</a>
@@ -20,7 +20,7 @@
             </li>
         </ul>
         <div class="row g-0 border-top">
-            <div class="col p-4">
+            <div class="col-md col-12 p-4">
                 <h2 class="fs-5 mb-3">Información Personal</h2>
                 <div class="mb-3">
                     <input type="email" class="form-control" id="UsrEmail" placeholder="tucorreo@correo.com">
@@ -39,7 +39,7 @@
                 <h2 class="fs-5 mb-3">Seguridad</h2>
                 <button type="button" class="btn btn-dark">Cambiar Contraseña</button>
             </div>
-            <div class="col p-4 border-start">
+            <div class="col-md col-12 p-4 border-md-start">
                 <h2 class="fs-5 mb-3">Datos para tus envíos</h2>
                 <div class="mb-3">
                     <input type="text" class="form-control" id="UsrAdre" placeholder="Domicilio">
@@ -74,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end pe-4 mb-3">
             <button type="button" class="btn px-4 btn-dark">Guardar</button>
         </div>
     </div>

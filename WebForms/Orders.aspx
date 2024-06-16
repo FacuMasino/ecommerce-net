@@ -22,75 +22,77 @@
         <div class="row g-0 border-top">
             <div class="col py-4">
                 <h2 class="fs-5 mb-3">Administrá y seguí tus pedidos</h2>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Nro.</th>
-                            <th scope="col">Productos</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Importe</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Repeater -->
-                        <tr>
-                            <th scope="row">001</th>
-                            <td title="Samsung - Galaxy S10, Sony - PlayStation 5">Samsung - Galaxy S10, Sony -
-                                PlayStation 5
-                            </td>
-                            <td>2</td>
-                            <td>$ 894245.00</td>
-                            <td>
-                                <div class="d-flex gap-2">
-                                    <!-- Ver detalle -->
-                                    <a href="OrderStatus.aspx?order=1111" class="p-0 text-black">Ver detalle
-                                    </a>
-                                    <!-- Cancelar -->
-                                    <a href="#" class="p-0 text-black">Cancelar    
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- Fin Repeater -->
-                        <tr>
-                            <th scope="row">001</th>
-                            <td title="Samsung - Galaxy S10, Sony - PlayStation 5">Samsung - Galaxy S10, Sony -
-                                PlayStation 5
-                            </td>
-                            <td>2</td>
-                            <td>$ 894245.00</td>
-                            <td>
-                                <div class="d-flex gap-2">
-                                    <!-- Ver detalle -->
-                                    <a href="OrderStatus.aspx?order=1111" class="p-0 text-black">Ver detalle
-                                    </a>
-                                    <!-- Cancelar -->
-                                    <a href="#" class="p-0 text-black">Cancelar    
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">001</th>
-                            <td title="Samsung - Galaxy S10, Sony - PlayStation 5">Samsung - Galaxy S10, Sony -
-                                PlayStation 5
-                            </td>
-                            <td>2</td>
-                            <td>$ 894245.00</td>
-                            <td>
-                                <div class="d-flex gap-2">
-                                    <!-- Ver detalle -->
-                                    <a href="OrderStatus.aspx?order=1111" class="p-0 text-black">Ver detalle
-                                    </a>
-                                    <!-- Cancelar -->
-                                    <a href="#" class="p-0 text-black">Cancelar    
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nro.</th>
+                                <th scope="col">Productos</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Importe</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Repeater -->
+                            <tr>
+                                <th scope="row">001</th>
+                                <td title="Samsung - Galaxy S10, Sony - PlayStation 5">Samsung - Galaxy S10, Sony -
+                                    PlayStation 5
+                                </td>
+                                <td>2</td>
+                                <td>$ 894245.00</td>
+                                <td>
+                                    <div class="d-flex flex-md-row flex-column gap-2">
+                                        <!-- Ver detalle -->
+                                        <a href="OrderStatus.aspx?order=1111" class="p-0 text-black">Ver detalle
+                                        </a>
+                                        <!-- Cancelar -->
+                                        <a href="#" class="p-0 text-black">Cancelar    
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Fin Repeater -->
+                            <tr>
+                                <th scope="row">001</th>
+                                <td title="Samsung - Galaxy S10, Sony - PlayStation 5">Samsung - Galaxy S10, Sony -
+                                    PlayStation 5
+                                </td>
+                                <td>2</td>
+                                <td>$ 894245.00</td>
+                                <td>
+                                    <div class="d-flex flex-md-row flex-column gap-2">
+                                        <!-- Ver detalle -->
+                                        <a href="OrderStatus.aspx?order=1111" class="p-0 text-black">Ver detalle
+                                        </a>
+                                        <!-- Cancelar -->
+                                        <a href="#" class="p-0 text-black">Cancelar    
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">001</th>
+                                <td title="Samsung - Galaxy S10, Sony - PlayStation 5">Samsung - Galaxy S10, Sony -
+                                    PlayStation 5
+                                </td>
+                                <td>2</td>
+                                <td>$ 894245.00</td>
+                                <td>
+                                    <div class="d-flex flex-md-row flex-column gap-2">
+                                        <!-- Ver detalle -->
+                                        <a href="OrderStatus.aspx?order=1111" class="p-0 text-black">Ver detalle
+                                        </a>
+                                        <!-- Cancelar -->
+                                        <a href="#" class="p-0 text-black">Cancelar    
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

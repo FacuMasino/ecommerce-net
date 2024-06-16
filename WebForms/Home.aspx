@@ -7,7 +7,7 @@
     <%// Evita errores de intellisense (https://stackoverflow.com/a/31886588/10302170) %>
     <%=""%>
     <div class="row py-5">
-        <div class="col-3">
+        <div class="col-md-3 col-12">
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <asp:Panel ID="searchPanel" runat="server" CssClass="input-group mb-3" DefaultButton="searchBtn">
@@ -82,12 +82,12 @@
                 </li>
             </ul>
         </div>
-        <div class="col-9">
+        <div class="col-md-9 col-12 mt-md-0 mt-3">
             <%
                 if (Products.Count > 0)
                 {
             %>
-            <div class='row row-cols-1 row-cols-md-4 g-4'>
+            <div class='row row-cols-2 row-cols-md-4 g-4'>
                 <%
                     foreach (Product product in Products)
                     {
