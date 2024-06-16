@@ -1,12 +1,13 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"
+﻿<%@ Page Title="Realizar Pedido" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"
     CodeBehind="OrderConfirmation.aspx.cs" Inherits="WebForms.OrderConfirmation" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
+    <h2 class="fs-4 mt-4 mb-3 ps-md-4 ps-2">Completá los datos y realizá tu pedido</h2>
     <div class="row g-0 my-5">
-        <div class="col-7 px-4">
+        <div class="col-md-7 col-12 px-md-4 px-2">
             <h2 class="fs-5 mb-3">Información de contacto</h2>
             <div class="mb-3">
                 <input type="email" class="form-control" id="UsrEmail" placeholder="tucorreo@correo.com">
@@ -91,7 +92,8 @@
             </div>
             <button class="btn btn-dark w-100" type="button">Realizar pedido</button>
         </div>
-        <div class="col-5 px-4 border-start">
+        <div class="col-md-5 col-12 order-md-last order-first border-md-start border-sm-bottom px-md-4 px-2 mb-md-0 mb-3">
+            <h2 class="fs-5 mb-3">Tus productos</h2>
             <ul class="list-group list-group-lg list-group-flush mb-auto">
 
                 <li class="list-group-item border-bottom">

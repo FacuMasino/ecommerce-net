@@ -154,3 +154,15 @@ body {
         position: relative;
     }
 }
+
+@media (min-width: 768px) {
+    .border-md-start {
+        border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .border-sm-bottom {
+        border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+    }
+}
