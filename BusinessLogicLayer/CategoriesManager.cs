@@ -86,9 +86,7 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery(
-                    "insert into Categories (CategoryName) values (@CategoryName)"
-                );
+                _dataAccess.SetQuery("insert into Categories (CategoryName) values (@CategoryName)");
                 SetParameters(category);
                 _dataAccess.ExecuteAction();
             }
