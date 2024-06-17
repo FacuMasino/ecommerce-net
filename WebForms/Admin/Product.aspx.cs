@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Web;
 using System.Web.UI;
@@ -22,6 +24,8 @@ namespace WebForms.Admin
         private static Action<MasterPage> _modalOkAction;
         private static Action<MasterPage> _modalCancelAction;
 
+        private List<InputWrapper> _inputValidations;
+
         public bool IsEditing
         {
             get { return _isEditing; }
@@ -38,6 +42,7 @@ namespace WebForms.Admin
             _categoriesManager = new CategoriesManager();
             _productsManager = new ProductsManager();
             _product = new Product();
+            _inputValidations = new List<InputWrapper>();
         }
 
         // METHODS
@@ -108,8 +113,8 @@ namespace WebForms.Admin
             if (_product.Name != null)
             {
                 Session["CurrentProduct"] = _product;
-                ProductName.Value = _product.Name;
-                ProductDescription.Value = _product.Description;
+                ProductNameTxt.Text = _product.Name;
+                ProductDescriptionTxt.Text = _product.Description;
                 ProductCode.Text = _product.Code;
                 ProductBrandDDL.SelectedValue = _product.Brand.Id.ToString();
                 CategoriesDdl.SelectedValue = _product.Categories[0].Id.ToString();
@@ -139,7 +144,7 @@ namespace WebForms.Admin
         }
 
         /// <summary>
-        /// Asocia las validaciones JavaScript a los controles necesarios
+        /// Asocia las validaciones JavaScript (del lado del cliente) a los controles necesarios
         /// </summary>
         /// <remarks>
         /// Agrega un atributo 'onfocus' al control para vincular la función de
@@ -150,6 +155,26 @@ namespace WebForms.Admin
             // Valida que solo se ingresen números para los TextBox que no son TextMode="Number"
             ProductPrice.Attributes.Add("onfocus", "bindNumberValidation(this.id)");
             ProductCost.Attributes.Add("onfocus", "bindNumberValidation(this.id)");
+        }
+
+        private void LoadInputValidations()
+        {
+            _inputValidations.Add(new InputWrapper(ProductNameTxt, typeof(string), 4, 50));
+            _inputValidations.Add(new InputWrapper(ProductDescriptionTxt, typeof(string), 50, 300));
+            _inputValidations.Add(new InputWrapper(ProductCost, typeof(decimal), 1));
+            _inputValidations.Add(new InputWrapper(ProductStock, typeof(int), 1));
+            _inputValidations.Add(new InputWrapper(ProductPrice, typeof(decimal), 1));
+        }
+
+        private bool RunValidations()
+        {
+            int invalids = 0;
+            foreach (InputWrapper input in _inputValidations)
+            {
+                if (!Validator.IsGoodInput(input))
+                    invalids++;
+            }
+            return invalids == 0;
         }
 
         public override void OnModalConfirmed()
@@ -176,6 +201,7 @@ namespace WebForms.Admin
         {
             CheckSession();
             BindControlsValidation();
+            LoadInputValidations();
 
             if (_isEditing)
             {
@@ -192,6 +218,8 @@ namespace WebForms.Admin
 
         protected void AddImageBtn_Click(object sender, EventArgs e)
         {
+            if (ProductImageUrl.Text.Length < 4)
+                return;
             Image auxImg = new Image();
             auxImg.Url = ProductImageUrl.Text;
             _product.Images.Add(auxImg);
@@ -243,6 +271,12 @@ namespace WebForms.Admin
             );
             _product.Images.Remove(_product.Images.Find(im => im.Id == imgId));
             BindImagesRpt();
+        }
+
+        protected void SaveProductBtn_Click(object sender, EventArgs e)
+        {
+            if (!RunValidations())
+                Debug.Print("invalido"); // TODO: Implementación pendiente
         }
     }
 }

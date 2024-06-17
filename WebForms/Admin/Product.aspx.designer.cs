@@ -15,13 +15,13 @@ namespace WebForms.Admin
     {
 
         /// <summary>
-        /// ProductName control.
+        /// ProductNameTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText ProductName;
+        protected global::System.Web.UI.WebControls.TextBox ProductNameTxt;
 
         /// <summary>
         /// ProductBrandDDL control.
@@ -42,13 +42,13 @@ namespace WebForms.Admin
         protected global::System.Web.UI.WebControls.TextBox ProductCode;
 
         /// <summary>
-        /// ProductDescription control.
+        /// ProductDescriptionTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea ProductDescription;
+        protected global::System.Web.UI.WebControls.TextBox ProductDescriptionTxt;
 
         /// <summary>
         /// CategoriesDdl control.
@@ -148,5 +148,14 @@ namespace WebForms.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button DeleteProductBtn;
+
+        /// <summary>
+        /// SaveProductBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SaveProductBtn;
     }
 }

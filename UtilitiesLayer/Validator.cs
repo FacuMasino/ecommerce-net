@@ -87,7 +87,7 @@ namespace UtilitiesLayer
                 case "System.String":
                     if (!HasData(input.Control.Text, input.MinLength, input.MaxLength))
                     {
-                        Debug.Print($"Campo Invalido: {input.Control.Name}");
+                        Debug.Print($"Campo Invalido: {input.Control.ClientID}");
                         return false;
                     }
                     break;
@@ -99,7 +99,19 @@ namespace UtilitiesLayer
                         || !decimal.TryParse(input.Control.Text, out decimal num)
                     )
                     {
-                        Debug.Print($"Campo Invalido: {input.Control.Name}");
+                        Debug.Print($"Campo Invalido: {input.Control.ClientID}");
+                        return false;
+                    }
+                    if (input.IsPositive && decimal.Parse(input.Control.Text) <= 0)
+                        return false;
+                    break;
+                case "System.Int32":
+                    if (
+                        !HasData(input.Control.Text, input.MinLength)
+                        || !IsNumber(input.Control.Text)
+                    )
+                    {
+                        Debug.Print($"Campo Inválido:{input.Control.ClientID}");
                         return false;
                     }
                     break;

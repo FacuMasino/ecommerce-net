@@ -15,8 +15,8 @@
         <div class="d-flex flex-column border-1 border rounded p-3">
             <h2 class="fs-5">Información Básica</h2>
             <div class="mb-3">
-                <label for="ProductName" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="ProductName" runat="server" placeholder="Ingresa el nombre de tu producto">
+                <label for="ProductNameTxt" class="form-label">Nombre</label>
+                <asp:TextBox CssClass="form-control" id="ProductNameTxt" runat="server" placeholder="Ingresa el nombre de tu producto" />
             </div>
             <div class="row justify-content-between gx-4 mb-3">
                 <div class="col-md-6 col-12 mb-md-0 mb-3">
@@ -25,15 +25,15 @@
                 </div>
                 <div class="col-md-6 col-12 mb-md-0 mb-3">
                     <label for="ProductCode" class="form-label">SKU</label>
-                    <asp:TextBox class="form-control" ID="ProductCode" placeholder="AAA-BBB-100"
+                    <asp:TextBox CssClass="form-control" ID="ProductCode" placeholder="AAA-BBB-100"
                         runat="server" />
                 </div>
             </div>
             <div class="mb-3">
                 <label for="ProductDescription" class="form-label">Descripción</label>
-                <textarea class="form-control" id="ProductDescription"
+                <asp:TextBox TextMode="MultiLine" CssClass="form-control" id="ProductDescriptionTxt"
                     placeholder="Ingrese una breve descripción de hasta 300 caracteres"
-                    rows="3" maxlength="300" runat="server"></textarea>
+                    rows="3" maxlength="300" runat="server" />
             </div>
         </div>
 
@@ -103,7 +103,7 @@
                         <div class="col">
                             <div class="card h-100 border-dashed">
                                 <img src="<%#Eval("Url")%>"
-                                    class="card-img-top" alt="Imagen de Galaxy S10" onerror="this.src='Content/img/placeholder.jpg'">
+                                    class="card-img-top" alt="Imagen de Galaxy S10" onerror="this.src='/Content/img/placeholder.jpg'">
                                 <div class="card-body border-1 border-top d-flex justify-content-end align-items-center">
                                     <asp:LinkButton Text='<i class="bi bi-trash"></i>' CssClass="text-decoration-none text-black fs-5 py-0" CommandArgument='<%#Eval("Id")%>' ID="RemoveImgLnkButton" OnClick="RemoveImgLnkButton_Click" runat="server" />
                                 </div>
@@ -156,7 +156,7 @@
             <Asp:Button ID="DeleteProductBtn" OnClick="DeleteProductBtn_Click" CssClass="btn btn-outline-danger" runat="server" Text="Eliminar" />
             <div>
                 <a class="btn btn-outline-secondary" href="Products.aspx">Cancelar</a>
-                <Asp:Button CssClass="btn btn-dark" Text="Guardar Producto" runat="server" />
+                <Asp:Button ID="SaveProductBtn" OnClick="SaveProductBtn_Click" CssClass="btn btn-dark" Text="Guardar Producto" runat="server" />
             </div>
         </div>
         <%
