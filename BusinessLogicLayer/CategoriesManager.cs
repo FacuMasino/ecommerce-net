@@ -107,7 +107,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "update Categories set CategoryDescription = @CategoryDescription where CategoryId = @CategoryId"
+                    "update Categories set CategoryName = @CategoryName where CategoryId = @CategoryId"
                 );
                 _dataAccess.SetParameter("@CategoryId", category.Id);
                 SetParameters(category);
@@ -190,9 +190,9 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "select CategoryId from Categories where CategoryDescription = @CategoryDescription"
+                    "select CategoryId from Categories where CategoryName = @CategoryName"
                 );
-                _dataAccess.SetParameter("@CategoryDescription", category.Name);
+                _dataAccess.SetParameter("@CategoryName", category.Name);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
@@ -216,7 +216,7 @@ namespace BusinessLogicLayer
         {
             if (category.Name != null)
             {
-                _dataAccess.SetParameter("@CategoryDescription", category.Name);
+                _dataAccess.SetParameter("@CategoryName", category.Name);
             }
         }
 

@@ -63,7 +63,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a id="BtnNavCategories" href="#" class="nav-link text-black" runat="server">
+                                <a id="BtnNavCategories" href="Categories.aspx" class="nav-link text-black" runat="server">
                                     <i class="bi bi-bookmarks me-2"></i>
                                     Categorías
                                 </a>
