@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
@@ -85,7 +84,10 @@ namespace WebForms.Admin
             }
         }
 
-        protected void SearchBtn_Click(object sender, EventArgs e) { }
+        protected void SearchBtn_Click(object sender, EventArgs e)
+        {
+
+        }
 
         protected void DeleteProductLnkBtn_Click(object sender, EventArgs e)
         {
