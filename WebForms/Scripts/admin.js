@@ -37,8 +37,8 @@ function setInputFilter(textbox, inputFilter, errMsg, cssIndicator) {
 // CSS 'input-error' para aplicar un estilo al control
 const bindNumberValidation = (elementId, cssIndicator = false) => {
     setInputFilter(document.getElementById(elementId), function (value) {
-        return /^\d*(?:[.,]\d*)?$/.test(value); // Solo números y '.', RegExp.
-    }, 'Solo se permiten números y "," o "."');
+        return /^\d+(?:[.,]\d*)?$|^\d*$/.test(value); // Solo números decimales||enteros y '.', RegExp.
+    }, 'Solo se permiten números positivos y "," o "."');
 };
 
 // Crea una nueva instancia Modal para el MasterModal

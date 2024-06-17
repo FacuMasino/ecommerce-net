@@ -45,6 +45,8 @@ namespace UtilitiesLayer
         /// <returns>Porcentaje de ganancia</returns>
         public static decimal CalcReturns(decimal price, decimal cost)
         {
+            if (cost <= 0)
+                return 0.00m;
             return ((price / cost) - 1) * 100;
         }
 

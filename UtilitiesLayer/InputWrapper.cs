@@ -11,6 +11,7 @@ namespace UtilitiesLayer
         public int MinLength { get; set; }
         public int MaxLength { get; set; }
         public bool IsPositive { get; set; }
+        public bool IsValid { get; set; }
 
         public InputWrapper(
             TextBox textBox,
@@ -25,6 +26,7 @@ namespace UtilitiesLayer
             MinLength = minLength;
             MaxLength = maxLength;
             IsPositive = positive;
+            IsValid = true;
         }
     }
 }

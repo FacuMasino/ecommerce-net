@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace UtilitiesLayer
 {
@@ -117,6 +118,24 @@ namespace UtilitiesLayer
                     break;
             }
             return true;
+        }
+
+        public static bool RunValidations(List<InputWrapper> inputs)
+        {
+            int invalids = 0;
+            foreach (InputWrapper input in inputs)
+            {
+                if (!Validator.IsGoodInput(input))
+                {
+                    input.IsValid = false;
+                    invalids++;
+                }
+                else
+                {
+                    input.IsValid = true;
+                }
+            }
+            return invalids == 0;
         }
     }
 }

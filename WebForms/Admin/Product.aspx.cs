@@ -115,7 +115,7 @@ namespace WebForms.Admin
                 Session["CurrentProduct"] = _product;
                 ProductNameTxt.Text = _product.Name;
                 ProductDescriptionTxt.Text = _product.Description;
-                ProductCode.Text = _product.Code;
+                ProductCodeTxt.Text = _product.Code;
                 ProductBrandDDL.SelectedValue = _product.Brand.Id.ToString();
                 CategoriesDdl.SelectedValue = _product.Categories[0].Id.ToString();
                 ProductPrice.Text = _product.Price.ToString("F2");
@@ -160,21 +160,11 @@ namespace WebForms.Admin
         private void LoadInputValidations()
         {
             _inputValidations.Add(new InputWrapper(ProductNameTxt, typeof(string), 4, 50));
+            _inputValidations.Add(new InputWrapper(ProductCodeTxt, typeof(string), 3, 50));
             _inputValidations.Add(new InputWrapper(ProductDescriptionTxt, typeof(string), 50, 300));
             _inputValidations.Add(new InputWrapper(ProductCost, typeof(decimal), 1));
             _inputValidations.Add(new InputWrapper(ProductStock, typeof(int), 1));
             _inputValidations.Add(new InputWrapper(ProductPrice, typeof(decimal), 1));
-        }
-
-        private bool RunValidations()
-        {
-            int invalids = 0;
-            foreach (InputWrapper input in _inputValidations)
-            {
-                if (!Validator.IsGoodInput(input))
-                    invalids++;
-            }
-            return invalids == 0;
         }
 
         public override void OnModalConfirmed()
@@ -193,6 +183,14 @@ namespace WebForms.Admin
                 _modalCancelAction(this.Master);
                 _modalCancelAction = null; // Limpiar luego de usar
             }
+        }
+
+        public bool IsValidInput(string controlId)
+        {
+            InputWrapper auxIW = _inputValidations.Find(ctl => ctl.Control.ID == controlId);
+            if (auxIW != null && auxIW.IsValid)
+                return true;
+            return false;
         }
 
         // EVENTS
@@ -243,7 +241,7 @@ namespace WebForms.Admin
                 decimal.Parse(ProductPrice.Text),
                 decimal.Parse(ProductCost.Text)
             );
-            ProductReturns.Text = $"{returns:#.##}%";
+            ProductReturns.Text = $"{(returns != 0 ? returns.ToString("#.##") : "-")} %";
         }
 
         protected void DeleteProductBtn_Click(object sender, EventArgs e)
@@ -275,7 +273,7 @@ namespace WebForms.Admin
 
         protected void SaveProductBtn_Click(object sender, EventArgs e)
         {
-            if (!RunValidations())
+            if (!Validator.RunValidations(_inputValidations))
                 Debug.Print("invalido"); // TODO: Implementación pendiente
         }
     }

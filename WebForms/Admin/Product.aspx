@@ -14,26 +14,35 @@
         <!-- Sección Info Básica -->
         <div class="d-flex flex-column border-1 border rounded p-3">
             <h2 class="fs-5">Información Básica</h2>
-            <div class="mb-3">
+            <div class="mb-3 <%:IsValidInput("ProductNameTxt") ? "":"invalid"%>">
                 <label for="ProductNameTxt" class="form-label">Nombre</label>
-                <asp:TextBox CssClass="form-control" id="ProductNameTxt" runat="server" placeholder="Ingresa el nombre de tu producto" />
+                <asp:TextBox CssClass="form-control" ID="ProductNameTxt" runat="server" placeholder="Ingresa el nombre de tu producto" />
+                <div class="invalid-feedback">
+                    Campo Inválido, ingrese al menos 4 caracteres.
+                </div>
             </div>
             <div class="row justify-content-between gx-4 mb-3">
                 <div class="col-md-6 col-12 mb-md-0 mb-3">
                     <label for="ProductBrandDDL" class="form-label">Marca</label>
                     <asp:DropDownList ID="ProductBrandDDL" CssClass="form-select" runat="server" />
                 </div>
-                <div class="col-md-6 col-12 mb-md-0 mb-3">
-                    <label for="ProductCode" class="form-label">SKU</label>
-                    <asp:TextBox CssClass="form-control" ID="ProductCode" placeholder="AAA-BBB-100"
+                <div class="col-md-6 col-12 mb-md-0 mb-3 <%:IsValidInput("ProductCodeTxt") ? "":"invalid"%>">
+                    <label for="ProductCodeTxt" class="form-label">SKU</label>
+                    <asp:TextBox CssClass="form-control" ID="ProductCodeTxt" placeholder="AAA-BBB-100"
                         runat="server" />
+                    <div class="invalid-feedback">
+                        Campo Inválido, ingrese al menos 3 caracteres.
+                    </div>
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="ProductDescription" class="form-label">Descripción</label>
-                <asp:TextBox TextMode="MultiLine" CssClass="form-control" id="ProductDescriptionTxt"
+            <div class="mb-3 <%:IsValidInput("ProductDescriptionTxt") ? "":"invalid"%>">
+                <label for="ProductDescriptionTxt" class="form-label">Descripción</label>
+                <asp:TextBox TextMode="MultiLine" CssClass="form-control" ID="ProductDescriptionTxt"
                     placeholder="Ingrese una breve descripción de hasta 300 caracteres"
-                    rows="3" maxlength="300" runat="server" />
+                    Rows="3" MaxLength="300" runat="server" />
+                <div class="invalid-feedback">
+                    Campo Inválido, ingrese al menos 50 caracteres.
+                </div>
             </div>
         </div>
 
@@ -105,7 +114,9 @@
                                 <img src="<%#Eval("Url")%>"
                                     class="card-img-top" alt="Imagen de Galaxy S10" onerror="this.src='/Content/img/placeholder.jpg'">
                                 <div class="card-body border-1 border-top d-flex justify-content-end align-items-center">
-                                    <asp:LinkButton Text='<i class="bi bi-trash"></i>' CssClass="text-decoration-none text-black fs-5 py-0" CommandArgument='<%#Eval("Id")%>' ID="RemoveImgLnkButton" OnClick="RemoveImgLnkButton_Click" runat="server" />
+                                    <asp:LinkButton Text='<i class="bi bi-trash"></i>' CssClass="text-decoration-none text-black fs-5 py-0"
+                                        CommandArgument='<%#Eval("Id")%>' ID="RemoveImgLnkButton" OnClick="RemoveImgLnkButton_Click"
+                                        runat="server" />
                                 </div>
                             </div>
                         </div>
@@ -122,26 +133,35 @@
             <h2 class="fs-5">Precio y Stock</h2>
             <div class="mb-3">
                 <div class="d-flex justify-content-between gap-3">
-                    <div class="col">
+                    <div class="col <%:IsValidInput("ProductPrice") ? "":"invalid"%>">
                         <label for="ProductPrice" class="form-label">Precio de venta</label>
-                        <asp:TextBox pattern="-?[0-9]+[\,.]*[0-9]+" class="form-control" ID="ProductPrice"
+                        <asp:TextBox class="form-control" ID="ProductPrice"
                             placeholder="0,00"
                             OnTextChanged="CalcReturns_TextChanged" step=".01" AutoPostBack="true" runat="server" />
+                        <div class="invalid-feedback">
+                            Campo Inválido, debe ingresar un número entero o decimal positivo.
+                        </div>
                     </div>
-                    <div class="col">
+                    <div class="col <%:IsValidInput("ProductStock") ? "":"invalid"%>">
                         <label for="ProductStock" class="form-label">Cantidad disponible</label>
                         <asp:TextBox TextMode="Number" class="form-control" ID="ProductStock" placeholder="0"
                             runat="server" />
+                        <div class="invalid-feedback">
+                            Campo Inválido, debe ingresar un número entero positivo.
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="mb-3">
                 <div class="d-flex justify-content-between gap-3">
-                    <div class="col">
+                    <div class="col <%:IsValidInput("ProductCost")?"":"invalid"%>">
                         <label for="ProductCost" class="form-label">Costo</label>
-                        <asp:TextBox pattern="-?[0-9]+[\,.]*[0-9]+" CssClass="form-control" ID="ProductCost"
+                        <asp:TextBox CssClass="form-control" ID="ProductCost"
                             placeholder="0,00" OnTextChanged="CalcReturns_TextChanged" AutoPostBack="true"
-                            step="any" runat="server" />
+                            runat="server" />
+                        <div class="invalid-feedback">
+                            Campo Inválido, debe ingresar un número entero o decimal positivo.
+                        </div>
                     </div>
                     <div class="col">
                         <label for="ProductReturns" class="form-label">Ganancia por venta</label>
@@ -153,10 +173,12 @@
             </div>
         </div>
         <div class="d-flex gap-3 justify-content-between w-100">
-            <Asp:Button ID="DeleteProductBtn" OnClick="DeleteProductBtn_Click" CssClass="btn btn-outline-danger" runat="server" Text="Eliminar" />
+            <asp:Button ID="DeleteProductBtn" OnClick="DeleteProductBtn_Click" CssClass="btn btn-outline-danger"
+                runat="server" Text="Eliminar" />
             <div>
                 <a class="btn btn-outline-secondary" href="Products.aspx">Cancelar</a>
-                <Asp:Button ID="SaveProductBtn" OnClick="SaveProductBtn_Click" CssClass="btn btn-dark" Text="Guardar Producto" runat="server" />
+                <asp:Button ID="SaveProductBtn" OnClick="SaveProductBtn_Click" CssClass="btn btn-dark"
+                    Text="Guardar Producto" runat="server" />
             </div>
         </div>
         <%
@@ -165,7 +187,8 @@
             {
         %>
         <div class="col-md-8 col align-self-center text-center">
-            <h5 class="fs-4 text-align-center mb-3">Ups! El producto que intentás editar no existe<br /> o ya no está disponible.
+            <h5 class="fs-4 text-align-center mb-3">Ups! El producto que intentás editar no existe<br />
+                o ya no está disponible.
             </h5>
             <p class="fs-5">Intentá elegir otro desde la lista</p>
             <img src="/Content/img/Empty-cuate.svg" class="img-fluid object-fit-cover h-75" />
