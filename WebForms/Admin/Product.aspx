@@ -105,9 +105,7 @@
                                 <img src="<%#Eval("Url")%>"
                                     class="card-img-top" alt="Imagen de Galaxy S10" onerror="this.src='Content/img/placeholder.jpg'">
                                 <div class="card-body border-1 border-top d-flex justify-content-end align-items-center">
-                                    <button href="#" class="btn py-0 fs-5"><i class="bi bi-trash"></i></button>
-                                    <!-- hack: convertir en asp buttons -->
-                                    <button href="#" class="btn py-0 fs-5"><i class="bi bi-pencil-square"></i></button>
+                                    <asp:LinkButton Text='<i class="bi bi-trash"></i>' CssClass="text-decoration-none text-black fs-5 py-0" CommandArgument='<%#Eval("Id")%>' ID="RemoveImgLnkButton" OnClick="RemoveImgLnkButton_Click" runat="server" />
                                 </div>
                             </div>
                         </div>

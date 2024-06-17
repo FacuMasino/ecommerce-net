@@ -103,8 +103,8 @@ VALUES
 	(
 		'APL-VP-1',
 		'Vision Pro',
-		'Apple Vision Pro combina a la perfección el contenido digital con tu espacio físico.<br/>
-		 Para que pueda trabajar, mirar, revivir recuerdos y conectarse de maneras nunca antes posibles.<br/>
+		'Apple Vision Pro combina a la perfección el contenido digital con tu espacio físico.
+		 Para que pueda trabajar, mirar, revivir recuerdos y conectarse de maneras nunca antes posibles.
 		 La era de la computación espacial ya está aquí.',
 		'5600000',
 		'4050000',

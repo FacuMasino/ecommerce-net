@@ -235,5 +235,14 @@ namespace WebForms.Admin
             _productsManager.Delete(_product);
             HttpContext.Current.Response.Redirect("Products.aspx?successDelete=true");
         }
+
+        protected void RemoveImgLnkButton_Click(object sender, EventArgs e)
+        {
+            int imgId = Convert.ToInt32(
+                ((System.Web.UI.WebControls.LinkButton)sender).CommandArgument
+            );
+            _product.Images.Remove(_product.Images.Find(im => im.Id == imgId));
+            BindImagesRpt();
+        }
     }
 }
