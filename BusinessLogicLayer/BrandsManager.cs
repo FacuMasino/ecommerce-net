@@ -8,7 +8,7 @@ namespace BusinessLogicLayer
 {
     public class BrandsManager
     {
-        private readonly DataAccess _dataAccess = new DataAccess();
+        private DataAccess _dataAccess = new DataAccess();
 
         public List<Brand> List()
         {
@@ -129,6 +129,43 @@ namespace BusinessLogicLayer
             }
         }
 
+        /// <summary>
+        /// Verifica si la marca del artículo no pertenece a ningun otro y en tal caso la elimina.
+        /// </summary>
+        public void PurgeBrand(Brand brand)
+        {
+            bool brandInUse = BrandIsInUse(brand);
+            Debug.Print($"Verificando si la Marca {brand} está en uso => {brandInUse}");
+
+            if (!brandInUse)
+            {
+                Delete(brand);
+            }
+        }
+
+        private bool BrandIsInUse(Brand brand)
+        {
+            try
+            {
+                _dataAccess.SetQuery(
+                    "select count(*) as Total from Products where BrandId = @BrandId"
+                );
+                _dataAccess.SetParameter("@BrandId", brand.Id);
+                return _dataAccess.ExecuteScalar() > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    $"Ocurrió un error al verificar si la marca {brand?.Name} existe.",
+                    ex
+                );
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+        }
+
         public int GetId(Brand brand)
         {
             if (brand == null)
@@ -161,6 +198,21 @@ namespace BusinessLogicLayer
             return id;
         }
 
+        private void SetParameters(Brand brand)
+        {
+            if (brand.Name != null)
+            {
+                _dataAccess.SetParameter("@BrandName", brand.Name);
+            }
+        }
+
+        private List<int> GetBrandsIds(int productId)
+        {
+            List<int> brandsId = new List<int>();
+
+            return brandsId;
+        }
+
         public bool AlreadyExists(Brand brand)
         {
             if (brand == null)
@@ -191,51 +243,6 @@ namespace BusinessLogicLayer
             }
 
             return id != 0;
-        }
-
-        /// <summary>
-        /// Verifica si la marca del artículo no pertenece a ningun otro y en tal caso la elimina.
-        /// </summary>
-        public void PurgeBrand(Brand brand)
-        {
-            bool brandInUse = BrandIsInUse(brand);
-            Debug.Print($"Verificando si la marca {brand} está en uso => {brandInUse}");
-
-            if (!brandInUse)
-            {
-                Delete(brand);
-            }
-        }
-
-        private bool BrandIsInUse(Brand brand)
-        {
-            try
-            {
-                _dataAccess.SetQuery(
-                    "select count(*) as Total from Products where BrandId = @BrandId"
-                );
-                _dataAccess.SetParameter("@BrandId", brand.Id);
-                return _dataAccess.ExecuteScalar() > 0;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(
-                    $"Ocurrió un error al verificar si la marca {brand?.Name} existe.",
-                    ex
-                );
-            }
-            finally
-            {
-                _dataAccess.CloseConnection();
-            }
-        }
-
-        private void SetParameters(Brand brand)
-        {
-            if (brand.Name != null)
-            {
-                _dataAccess.SetParameter("@BrandName", brand.Name);
-            }
         }
     }
 }

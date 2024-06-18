@@ -64,10 +64,18 @@
                             </li>
                             <li>
                                 <a id="BtnNavCategories" href="Categories.aspx" class="nav-link text-black" runat="server">
-                                    <i class="bi bi-bookmarks me-2"></i>
+                                    <i class="bi bi-card-list me-2"></i>
                                     Categorías
                                 </a>
                             </li>
+                            <li>
+                                <a id="A1" href="Brands.aspx" class="nav-link text-black" runat="server">
+                                    <i class="bi bi-bookmarks me-2"></i>
+                                    Marcas
+                                </a>
+                            </li>
+
+
                             <li>
                                 <a id="BtnNavOrders" href="Orders.aspx" class="nav-link text-black" runat="server">
                                     <i class="bi bi-inbox me-2"></i>
