@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Web;
 using System.Web.UI;
@@ -118,9 +117,9 @@ namespace WebForms.Admin
                 ProductCodeTxt.Text = _product.Code;
                 ProductBrandDDL.SelectedValue = _product.Brand.Id.ToString();
                 CategoriesDdl.SelectedValue = _product.Categories[0].Id.ToString();
-                ProductPrice.Text = _product.Price.ToString("F2");
-                ProductCost.Text = _product.Cost.ToString("F2");
-                ProductStock.Text = _product.Stock.ToString();
+                ProductPriceTxt.Text = _product.Price.ToString("F2");
+                ProductCostTxt.Text = _product.Cost.ToString("F2");
+                ProductStockTxt.Text = _product.Stock.ToString();
                 ProductReturns.Text = Helper
                     .CalcReturns(_product.Price, _product.Cost)
                     .ToString("#.##'%'", CultureInfo.InvariantCulture);
@@ -140,6 +139,8 @@ namespace WebForms.Admin
                 // Se asigna por referencia el mismo objeto
                 // Cuando se actualice _product también se actualiza el de la Session
                 _product = (Product)Session["CurrentProduct"];
+                if (_product.Id != 0)
+                    _isEditing = true;
             }
         }
 
@@ -153,8 +154,8 @@ namespace WebForms.Admin
         private void BindControlsValidation()
         {
             // Valida que solo se ingresen números para los TextBox que no son TextMode="Number"
-            ProductPrice.Attributes.Add("onfocus", "bindNumberValidation(this.id)");
-            ProductCost.Attributes.Add("onfocus", "bindNumberValidation(this.id)");
+            ProductPriceTxt.Attributes.Add("onfocus", "bindNumberValidation(this.id)");
+            ProductCostTxt.Attributes.Add("onfocus", "bindNumberValidation(this.id)");
         }
 
         private void LoadInputValidations()
@@ -162,9 +163,9 @@ namespace WebForms.Admin
             _inputValidations.Add(new InputWrapper(ProductNameTxt, typeof(string), 4, 50));
             _inputValidations.Add(new InputWrapper(ProductCodeTxt, typeof(string), 3, 50));
             _inputValidations.Add(new InputWrapper(ProductDescriptionTxt, typeof(string), 50, 300));
-            _inputValidations.Add(new InputWrapper(ProductCost, typeof(decimal), 1));
-            _inputValidations.Add(new InputWrapper(ProductStock, typeof(int), 1));
-            _inputValidations.Add(new InputWrapper(ProductPrice, typeof(decimal), 1));
+            _inputValidations.Add(new InputWrapper(ProductCostTxt, typeof(decimal), 1));
+            _inputValidations.Add(new InputWrapper(ProductStockTxt, typeof(int), 1));
+            _inputValidations.Add(new InputWrapper(ProductPriceTxt, typeof(decimal), 1));
         }
 
         public override void OnModalConfirmed()
@@ -193,24 +194,52 @@ namespace WebForms.Admin
             return false;
         }
 
+        /// <summary>
+        /// Asocia los valores de los campos del WebForm al objeto producto.
+        /// Esta función debe llamarse después de validar los datos de entrada.
+        /// </summary>
+        private void BindFieldsToProduct()
+        {
+            // DESPUES DE VALIDAR
+            // Mapear los campos al objeto producto
+            _product.Name = ProductNameTxt.Text;
+            _product.Description = ProductDescriptionTxt.Text;
+            _product.Brand.Id = int.Parse(ProductBrandDDL.SelectedValue);
+            // Aclaración: Las categorías ya fueron agregadas desde el DDL de categorías
+            _product.Cost = Decimal.Parse(ProductCostTxt.Text);
+            _product.Price = Decimal.Parse(ProductPriceTxt.Text);
+            _product.Stock = int.Parse(ProductStockTxt.Text);
+        }
+
+        private void ClearSession()
+        {
+            if (Session["CurrentProduct"] != null)
+            {
+                Session.Remove("CurrentProduct");
+            }
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            CheckSession();
+            if (IsPostBack)
+                CheckSession();
+
             BindControlsValidation();
             LoadInputValidations();
+
+            if (!IsPostBack)
+            {
+                ClearSession();
+                CheckRequest();
+                BindBrandsDdl();
+                BindCategoriesDdl();
+            }
 
             if (_isEditing)
             {
                 this.Title = "Editar Producto";
-            }
-
-            if (!IsPostBack)
-            {
-                CheckRequest();
-                BindBrandsDdl();
-                BindCategoriesDdl();
             }
         }
 
@@ -235,11 +264,14 @@ namespace WebForms.Admin
 
         protected void CalcReturns_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(ProductPrice.Text) || string.IsNullOrEmpty(ProductCost.Text))
+            if (
+                string.IsNullOrEmpty(ProductPriceTxt.Text)
+                || string.IsNullOrEmpty(ProductCostTxt.Text)
+            )
                 return;
             decimal returns = Helper.CalcReturns(
-                decimal.Parse(ProductPrice.Text),
-                decimal.Parse(ProductCost.Text)
+                decimal.Parse(ProductPriceTxt.Text),
+                decimal.Parse(ProductCostTxt.Text)
             );
             ProductReturns.Text = $"{(returns != 0 ? returns.ToString("#.##") : "-")} %";
         }
@@ -273,8 +305,19 @@ namespace WebForms.Admin
 
         protected void SaveProductBtn_Click(object sender, EventArgs e)
         {
-            if (!Validator.RunValidations(_inputValidations))
-                Debug.Print("invalido"); // TODO: Implementación pendiente
+            if (Validator.RunValidations(_inputValidations))
+            {
+                BindFieldsToProduct();
+                if (IsEditing)
+                {
+                    _productsManager.Edit(_product);
+                }
+                else
+                {
+                    _productsManager.Add(_product);
+                }
+            }
+            //Debug.Print("Datos inválidos.");
         }
     }
 }

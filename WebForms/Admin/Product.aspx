@@ -133,18 +133,18 @@
             <h2 class="fs-5">Precio y Stock</h2>
             <div class="mb-3">
                 <div class="d-flex justify-content-between gap-3">
-                    <div class="col <%:IsValidInput("ProductPrice") ? "":"invalid"%>">
-                        <label for="ProductPrice" class="form-label">Precio de venta</label>
-                        <asp:TextBox class="form-control" ID="ProductPrice"
+                    <div class="col <%:IsValidInput("ProductPriceTxt") ? "":"invalid"%>">
+                        <label for="ProductPriceTxt" class="form-label">Precio de venta</label>
+                        <asp:TextBox class="form-control" ID="ProductPriceTxt"
                             placeholder="0,00"
                             OnTextChanged="CalcReturns_TextChanged" step=".01" AutoPostBack="true" runat="server" />
                         <div class="invalid-feedback">
                             Campo Inválido, debe ingresar un número entero o decimal positivo.
                         </div>
                     </div>
-                    <div class="col <%:IsValidInput("ProductStock") ? "":"invalid"%>">
-                        <label for="ProductStock" class="form-label">Cantidad disponible</label>
-                        <asp:TextBox TextMode="Number" class="form-control" ID="ProductStock" placeholder="0"
+                    <div class="col <%:IsValidInput("ProductStockTxt") ? "":"invalid"%>">
+                        <label for="ProductStockTxt" class="form-label">Cantidad disponible</label>
+                        <asp:TextBox TextMode="Number" class="form-control" ID="ProductStockTxt" placeholder="0"
                             runat="server" />
                         <div class="invalid-feedback">
                             Campo Inválido, debe ingresar un número entero positivo.
@@ -154,9 +154,9 @@
             </div>
             <div class="mb-3">
                 <div class="d-flex justify-content-between gap-3">
-                    <div class="col <%:IsValidInput("ProductCost")?"":"invalid"%>">
-                        <label for="ProductCost" class="form-label">Costo</label>
-                        <asp:TextBox CssClass="form-control" ID="ProductCost"
+                    <div class="col <%:IsValidInput("ProductCostTxt")?"":"invalid"%>">
+                        <label for="ProductCostTxt" class="form-label">Costo</label>
+                        <asp:TextBox CssClass="form-control" ID="ProductCostTxt"
                             placeholder="0,00" OnTextChanged="CalcReturns_TextChanged" AutoPostBack="true"
                             runat="server" />
                         <div class="invalid-feedback">

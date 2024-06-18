@@ -44,7 +44,9 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery("insert into Images (ProductId, ImageUrl) values (@ProductId, @ImageUrl)");
+                _dataAccess.SetQuery(
+                    "insert into Images (ProductId, ImageUrl) values (@ProductId, @ImageUrl)"
+                );
                 _dataAccess.SetParameter("@ProductId", productId);
                 _dataAccess.SetParameter("@ImageUrl", image.Url);
                 _dataAccess.ExecuteAction();
@@ -65,7 +67,9 @@ namespace BusinessLogicLayer
             {
                 foreach (Image image in images)
                 {
-                    _dataAccess.SetQuery("insert into Images (ProductId, ImageUrl) values (@ProductId, @ImageUrl)");
+                    _dataAccess.SetQuery(
+                        "insert into Images (ProductId, ImageUrl) values (@ProductId, @ImageUrl)"
+                    );
                     _dataAccess.SetParameter("@ProductId", productId);
                     _dataAccess.SetParameter("@ImageUrl", image.Url);
                     _dataAccess.ExecuteAction();
@@ -85,7 +89,9 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery("update Images set ImageUrl = @ImageUrl where ImageId = @ImageId");
+                _dataAccess.SetQuery(
+                    "update Images set ImageUrl = @ImageUrl where ImageId = @ImageId"
+                );
                 _dataAccess.SetParameter("@ImageId", image.Id);
                 _dataAccess.SetParameter("@ImageUrl", image.Url);
                 _dataAccess.ExecuteAction();
@@ -148,6 +154,18 @@ namespace BusinessLogicLayer
             }
 
             return id;
+        }
+
+        public void CheckDeleted(Product product)
+        {
+            List<Image> currentList = List(product.Id);
+            foreach (Image image in currentList)
+            {
+                if (product.Images.FindIndex(im => im.Url == image.Url) == -1)
+                {
+                    Delete(image);
+                }
+            }
         }
     }
 }

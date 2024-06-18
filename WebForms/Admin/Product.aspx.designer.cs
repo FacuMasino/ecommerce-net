@@ -105,31 +105,31 @@ namespace WebForms.Admin
         protected global::System.Web.UI.WebControls.Repeater ProductImagesRPT;
 
         /// <summary>
-        /// ProductPrice control.
+        /// ProductPriceTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ProductPrice;
+        protected global::System.Web.UI.WebControls.TextBox ProductPriceTxt;
 
         /// <summary>
-        /// ProductStock control.
+        /// ProductStockTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ProductStock;
+        protected global::System.Web.UI.WebControls.TextBox ProductStockTxt;
 
         /// <summary>
-        /// ProductCost control.
+        /// ProductCostTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ProductCost;
+        protected global::System.Web.UI.WebControls.TextBox ProductCostTxt;
 
         /// <summary>
         /// ProductReturns control.

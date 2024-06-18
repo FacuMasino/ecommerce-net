@@ -76,9 +76,7 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery(
-                    "insert into Brands (BrandDescription) values (@BrandDescription)"
-                );
+                _dataAccess.SetQuery("insert into Brands (BrandName) values (@BrandName)");
                 SetParameters(brand);
                 _dataAccess.ExecuteAction();
             }
@@ -97,7 +95,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "update Brands set BrandDescription = @BrandDescription where BrandId = @BrandId"
+                    "update Brands set BrandName = @BrandName where BrandId = @BrandId"
                 );
                 _dataAccess.SetParameter("@BrandId", brand.Id);
                 SetParameters(brand);
@@ -142,10 +140,8 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery(
-                    "select BrandId from Brands where BrandDescription = @BrandDescription"
-                );
-                _dataAccess.SetParameter("@BrandDescription", brand.Name);
+                _dataAccess.SetQuery("select BrandId from Brands where BrandName = @BrandName");
+                _dataAccess.SetParameter("@BrandName", brand.Name);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
@@ -163,6 +159,38 @@ namespace BusinessLogicLayer
             }
 
             return id;
+        }
+
+        public bool AlreadyExists(Brand brand)
+        {
+            if (brand == null)
+            {
+                return false;
+            }
+
+            int id = 0;
+
+            try
+            {
+                _dataAccess.SetQuery("select BrandId from Brands where BrandId = @BrandId");
+                _dataAccess.SetParameter("@BrandId", brand.Id);
+                _dataAccess.ExecuteRead();
+
+                if (_dataAccess.Reader.Read())
+                {
+                    id = (int)_dataAccess.Reader["BrandId"];
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+
+            return id != 0;
         }
 
         /// <summary>
@@ -206,7 +234,7 @@ namespace BusinessLogicLayer
         {
             if (brand.Name != null)
             {
-                _dataAccess.SetParameter("@BrandDescription", brand.Name);
+                _dataAccess.SetParameter("@BrandName", brand.Name);
             }
         }
     }

@@ -129,6 +129,7 @@ namespace BusinessLogicLayer
         {
             SetBrandId(product);
             SetImages(product);
+            _imagesManager.CheckDeleted(product); // Despues de editar y agregar las nuevas, verificar/eliminar el resto
 
             try
             {
@@ -229,7 +230,7 @@ namespace BusinessLogicLayer
         {
             if (product.Brand != null)
             {
-                int dbBrandId = _brandsManager.GetId(product.Brand);
+                int dbBrandId = _brandsManager.AlreadyExists(product.Brand) ? product.Brand.Id : 0;
 
                 if (dbBrandId == 0)
                 {
