@@ -109,11 +109,12 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "insert into Products (Code, ProductName, ProductDescription, Price, Cost, BrandId) values (@Code, @ProductName, @ProductDescription, @Price, @Cost, @BrandId)"
+                    "insert into Products (Code, ProductName, ProductDescription, Price, Cost, Stock, BrandId, Active) values (@Code, @ProductName, @ProductDescription, @Price, @Cost, @Stock, @BrandId, @Active)"
                 );
                 SetParameters(Product);
                 _dataAccess.ExecuteAction();
                 SetImages(Product); // Las imagenes se agregan luego de agregar el articulo ya que van con le id del mismo asociadas
+                SetCategories(Product);
             }
             catch (Exception ex)
             {
@@ -246,7 +247,7 @@ namespace BusinessLogicLayer
 
         private void SetImages(Product product)
         {
-            int productId = product.Id == 0 ? Helper.GetLastId("Products") : product.Id; // si es un articulo nuevo, se obtiene el id nuevo
+            int productId = product.Id == 0 ? Helper.GetLastId("Products") : product.Id; // si es un producto nuevo, se obtiene el id nuevo
 
             foreach (var image in product.Images)
             {
@@ -261,6 +262,19 @@ namespace BusinessLogicLayer
                     {
                         _imagesManager.Edit(image);
                     }
+                }
+            }
+        }
+
+        private void SetCategories(Product product)
+        {
+            int productId = product.Id == 0 ? Helper.GetLastId("Products") : product.Id; // si es un articulo nuevo, se obtiene el id nuevo
+
+            foreach (Category category in product.Categories)
+            {
+                if (category != null)
+                {
+                    _categoriesManager.AddRelation(category, productId);
                 }
             }
         }

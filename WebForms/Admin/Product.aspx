@@ -71,8 +71,9 @@
                                         <h6 class="m-0 text-center"><%#Eval("Name")%></h6>
                                     </div>
                                     <div class="card-body p-0 ms-3 d-flex justify-content-end align-items-center">
-                                        <button href="#" class="btn p-0 fs-5"><i class="bi h-fit d-flex bi-trash"></i></button>
-                                        <!-- hack: convertir en asp buttons -->
+                                        <asp:LinkButton Text='<i class="bi bi-trash"></i>' CssClass="text-decoration-none text-black fs-5 py-0"
+                                            CommandArgument='<%#Eval("Id")%>' ID="RemoveCategoryLnkBtn" OnClick="RemoveCategoryLnkBtn_Click"
+                                            runat="server" />
                                     </div>
                                 </div>
                             </div>
@@ -174,8 +175,8 @@
         </div>
         <div class="d-flex gap-3 justify-content-between w-100">
             <asp:Button ID="DeleteProductBtn" OnClick="DeleteProductBtn_Click" CssClass="btn btn-outline-danger"
-                runat="server" Text="Eliminar" />
-            <div>
+                runat="server" Text="Eliminar" Visible="false" />
+            <div class="ms-auto">
                 <a class="btn btn-outline-secondary" href="Products.aspx">Cancelar</a>
                 <asp:Button ID="SaveProductBtn" OnClick="SaveProductBtn_Click" CssClass="btn btn-dark"
                     Text="Guardar Producto" runat="server" />

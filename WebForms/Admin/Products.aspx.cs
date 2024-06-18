@@ -42,11 +42,25 @@ namespace WebForms.Admin
 
         private void CheckRequest()
         {
-            if (string.IsNullOrEmpty(Request.QueryString["successDelete"]))
-                return;
-            if (Request.QueryString["successDelete"] == "true")
+            foreach (string key in Request.QueryString.AllKeys)
             {
-                Notify("Producto eliminado con éxito!");
+                switch (key)
+                {
+                    case "successDelete":
+                        if (Request.QueryString[key] == "true")
+                        {
+                            Notify("Producto eliminado con éxito!");
+                        }
+                        break;
+                    case "successNewProduct":
+                        if (Request.QueryString[key] == "true")
+                        {
+                            Notify("Producto agregado con éxito!");
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -84,10 +98,7 @@ namespace WebForms.Admin
             }
         }
 
-        protected void SearchBtn_Click(object sender, EventArgs e)
-        {
-
-        }
+        protected void SearchBtn_Click(object sender, EventArgs e) { }
 
         protected void DeleteProductLnkBtn_Click(object sender, EventArgs e)
         {

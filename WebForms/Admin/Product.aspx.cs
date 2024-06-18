@@ -25,6 +25,8 @@ namespace WebForms.Admin
 
         private List<InputWrapper> _inputValidations;
 
+        private Admin _adminMP; // Referencia a la master page para utilizar sus métodos
+
         public bool IsEditing
         {
             get { return _isEditing; }
@@ -81,7 +83,12 @@ namespace WebForms.Admin
         private void CheckRequest()
         {
             if (string.IsNullOrEmpty(Request.QueryString["id"]))
+            {
+                // Si no hay ID entonces es nuevo producto, se asigna referencia al objeto en session
+                Session["CurrentProduct"] = _product;
                 return;
+            }
+
             try
             {
                 int articleId = Convert.ToInt32(Request.QueryString["Id"].ToString());
@@ -202,13 +209,16 @@ namespace WebForms.Admin
         {
             // DESPUES DE VALIDAR
             // Mapear los campos al objeto producto
+            // Aclaración: Las categorías ya fueron agregadas desde el DDL de categorías
+            // Lo mismo ocurre con las imágenes
             _product.Name = ProductNameTxt.Text;
             _product.Description = ProductDescriptionTxt.Text;
+            _product.Code = ProductCodeTxt.Text;
             _product.Brand.Id = int.Parse(ProductBrandDDL.SelectedValue);
-            // Aclaración: Las categorías ya fueron agregadas desde el DDL de categorías
             _product.Cost = Decimal.Parse(ProductCostTxt.Text);
             _product.Price = Decimal.Parse(ProductPriceTxt.Text);
             _product.Stock = int.Parse(ProductStockTxt.Text);
+            // No hace falta asignar IsActive porque ya nace "activo"
         }
 
         private void ClearSession()
@@ -223,6 +233,8 @@ namespace WebForms.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            _adminMP = (Admin)this.Master;
+
             if (IsPostBack)
                 CheckSession();
 
@@ -240,6 +252,7 @@ namespace WebForms.Admin
             if (_isEditing)
             {
                 this.Title = "Editar Producto";
+                DeleteProductBtn.Visible = true;
             }
         }
 
@@ -249,6 +262,11 @@ namespace WebForms.Admin
                 return;
             Image auxImg = new Image();
             auxImg.Url = ProductImageUrl.Text;
+            if (_product.Images.FindIndex(im => im.Url == auxImg.Url) != -1)
+            {
+                _adminMP.ShowMasterToast("La imagen ya existe.");
+                return;
+            }
             _product.Images.Add(auxImg);
             BindImagesRpt(); // Actualizar repeater imágenes
         }
@@ -257,6 +275,11 @@ namespace WebForms.Admin
         {
             Category category = new Category();
             category.Id = Convert.ToInt32(CategoriesDdl.SelectedValue);
+            if (_product.Categories.FindIndex(c => c.Id == category.Id) != -1)
+            {
+                _adminMP.ShowMasterToast("El producto ya tiene esa categoría.");
+                return;
+            }
             category = _categoriesManager.Read(category.Id);
             _product.Categories.Add(category);
             BindCategoriesRpt();
@@ -305,19 +328,38 @@ namespace WebForms.Admin
 
         protected void SaveProductBtn_Click(object sender, EventArgs e)
         {
-            if (Validator.RunValidations(_inputValidations))
+            try
             {
-                BindFieldsToProduct();
-                if (IsEditing)
+                // TODO: Agregar validacion de codigo de producto único
+                // TODO: Agregar validacion de url de imagen única ?
+                if (Validator.RunValidations(_inputValidations))
                 {
-                    _productsManager.Edit(_product);
-                }
-                else
-                {
-                    _productsManager.Add(_product);
+                    BindFieldsToProduct();
+                    if (IsEditing)
+                    {
+                        _productsManager.Edit(_product);
+                        _adminMP.ShowMasterToast("Producto actualizado con éxito!");
+                    }
+                    else
+                    {
+                        _productsManager.Add(_product);
+                        Response.Redirect("Products.aspx?successNewProduct=true");
+                    }
                 }
             }
-            //Debug.Print("Datos inválidos.");
+            catch (Exception ex)
+            {
+                _adminMP.ShowMasterToast($"Ocurrió un error: {ex.Message}");
+            }
+        }
+
+        protected void RemoveCategoryLnkBtn_Click(object sender, EventArgs e)
+        {
+            int catId = Convert.ToInt32(
+                ((System.Web.UI.WebControls.LinkButton)sender).CommandArgument
+            );
+            _product.Categories.Remove(_product.Categories.Find(c => c.Id == catId));
+            BindCategoriesRpt();
         }
     }
 }

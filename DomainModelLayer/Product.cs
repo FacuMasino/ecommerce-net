@@ -42,6 +42,7 @@ namespace DomainModelLayer
             Brand = new Brand();
             Categories = new List<Category>();
             Images = new List<Image>();
+            IsActive = true;
         }
     }
 }

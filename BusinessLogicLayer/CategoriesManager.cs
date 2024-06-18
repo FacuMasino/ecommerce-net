@@ -17,7 +17,8 @@ namespace BusinessLogicLayer
 
             if (0 < productId)
             {
-                query += " inner join ProductCategories PC on C.CategoryId = PC.CategoryId where PC.ProductId = @ProductId";
+                query +=
+                    " inner join ProductCategories PC on C.CategoryId = PC.CategoryId where PC.ProductId = @ProductId";
                 _dataAccess.SetParameter("@ProductId", productId);
             }
 
@@ -86,7 +87,9 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery("insert into Categories (CategoryName) values (@CategoryName)");
+                _dataAccess.SetQuery(
+                    "insert into Categories (CategoryName) values (@CategoryName)"
+                );
                 SetParameters(category);
                 _dataAccess.ExecuteAction();
             }
@@ -150,6 +153,27 @@ namespace BusinessLogicLayer
             if (!categoryInUse)
             {
                 Delete(category);
+            }
+        }
+
+        public void AddRelation(Category category, int productId)
+        {
+            try
+            {
+                _dataAccess.SetQuery(
+                    "insert into ProductCategories (ProductId, CategoryId) values (@ProductId, @CategoryId)"
+                );
+                _dataAccess.SetParameter("@ProductId", productId);
+                _dataAccess.SetParameter("@CategoryId", category.Id);
+                _dataAccess.ExecuteAction();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
             }
         }
 
