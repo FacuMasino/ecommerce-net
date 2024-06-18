@@ -10,7 +10,7 @@
 
         <div class="d-flex align-items-center justify-content-between">
             <h1 class="fs-4 m-0">Categorías</h1>
-            <a class="btn btn-dark" href="CategoryForm.aspx">Nueva categoría</a>
+            <asp:Button ID="NewCategoryBtn" runat="server" Text="Nueva categoría" OnClick="NewCategoryBtn_Click" CssClass="btn btn-dark" />
         </div>
 
         <!-- Buscador -->
@@ -52,7 +52,7 @@
                                     <!-- Nombre -->
 
                                     <asp:Label
-                                        ID="CategoryNameLabel"
+                                        ID="CategoryNameLbl"
                                         runat="server"
                                         Text='<%#Eval("Name")%>'
                                         CssClass="text-black">
