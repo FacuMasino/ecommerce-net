@@ -6,30 +6,53 @@ go
 -- LIST PRODUCTS --
 -------------------
 
-create or alter procedure SP_List_Products (@OnlyActive bit) as
+create or alter procedure SP_List_Products(
+	@OnlyActive bit
+)
+as
 begin
-	if @OnlyActive = 1 BEGIN
+	if @OnlyActive = 1
+	begin
 		select ProductId, Code, ProductName, ProductDescription, Price, Cost, Stock, BrandId, Active
 		from Products where Active = 1
-	END
-	ELSE 
-	BEGIN
+	end
+	else 
+	begin
 		select ProductId, Code, ProductName, ProductDescription, Price, Cost, Stock, BrandId, Active
 		from Products
-	END
+	end
 end
+
 go
 
-create or alter procedure SP_Delete_Product (@ProductId int) as
+--------------------
+-- DELETE PRODUCT --
+--------------------
+
+create or alter procedure SP_Delete_Product(
+	@ProductId int
+)
+as
 begin
 	update products
 	set Active = 0
-	where ProductId = @ProductId
+	where ProductId = @ProductId;
 end
+
 go
 
-/* Test */
+----------------------------------------
+-- COUNT PRODUCT CATEGORIES RELATIONS --
+----------------------------------------
 
-exec SP_List_Products 0
+create or alter procedure SP_Count_PC_Relations(
+	@CategoryId int
+)
+as
+begin
+	select count (CategoryId)
+	from ProductCategories
+	where CategoryId = @CategoryId;
+end
 
 go

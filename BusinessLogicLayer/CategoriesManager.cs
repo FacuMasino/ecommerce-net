@@ -147,10 +147,7 @@ namespace BusinessLogicLayer
         /// </summary>
         public void PurgeCategory(Category category)
         {
-            bool categoryInUse = CategoryIsInUse(category);
-            Debug.Print($"Verificando si la categoría {category} está en uso => {categoryInUse}");
-
-            if (!categoryInUse)
+            if (CountCategoryRelations(category) == 0)
             {
                 Delete(category);
             }
@@ -177,22 +174,17 @@ namespace BusinessLogicLayer
             }
         }
 
-        private bool CategoryIsInUse(Category category)
+        public int CountCategoryRelations(Category category)
         {
             try
             {
-                _dataAccess.SetQuery(
-                    "select count(*) as Total from Products where CategoryId = @CategoryId"
-                );
+                _dataAccess.SetProcedure("SP_Count_PC_Relations");
                 _dataAccess.SetParameter("@CategoryId", category.Id);
-                return _dataAccess.ExecuteScalar() > 0;
+                return _dataAccess.ExecuteScalar();
             }
             catch (Exception ex)
             {
-                throw new Exception(
-                    $"Ocurrió un error al verificar si la categoría {category?.Name} existe.",
-                    ex
-                );
+                throw ex;
             }
             finally
             {

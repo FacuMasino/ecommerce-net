@@ -107,7 +107,6 @@
                                             CommandName="Delete"
                                             CommandArgument='<%#Eval("Id")%>'
                                             ID="DeleteCategoryBtn"
-                                            OnClick="DeleteCategoryBtn_Click"
                                             runat="server" />
                                     </div>
                                 </td>

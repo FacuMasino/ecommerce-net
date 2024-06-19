@@ -82,14 +82,9 @@ namespace WebForms.Admin
             }
         }
 
-        protected void DeleteCategoryBtn_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void SearchBtn_Click(object sender, EventArgs e)
         {
-            
+            // hack
         }
 
         /// <summary>
@@ -105,9 +100,9 @@ namespace WebForms.Admin
             }
             else if (e.CommandName == "Save")
             {
-                TextBox editTextBox = (TextBox)e.Item.FindControl("EditCategoryNameTxt");
+                TextBox editTxt = (TextBox)e.Item.FindControl("EditCategoryNameTxt");
                 _category.Id = Convert.ToInt32(e.CommandArgument);
-                _category.Name = editTextBox.Text;
+                _category.Name = editTxt.Text;
 
                 if (0 < _category.Id)
                 {
@@ -128,6 +123,30 @@ namespace WebForms.Admin
                 FetchCategories();
                 BindCategoriesRpt();
             }
+            else if (e.CommandName == "Delete")
+            {
+                Label nameLbl = (Label)e.Item.FindControl("CategoryNameLbl");
+                _category.Id = Convert.ToInt32(e.CommandArgument);
+                _category.Name = nameLbl.Text;
+
+                if (_categoriesManager.CountCategoryRelations(_category) == 0)
+                {
+                    _categoriesManager.Delete(_category);
+                }
+                else
+                {
+                    Notify("La categoría está en uso y no puede ser borrada.");
+                }
+                
+                FetchCategories();
+                BindCategoriesRpt();
+            }
+        }
+
+        private void Notify(string message)
+        {
+            Admin adminMP = (Admin)this.Master;
+            adminMP.ShowMasterToast(message);
         }
     }
 }
