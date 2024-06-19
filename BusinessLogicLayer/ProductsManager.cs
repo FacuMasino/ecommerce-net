@@ -102,19 +102,19 @@ namespace BusinessLogicLayer
             return product;
         }
 
-        public void Add(Product Product)
+        public void Add(Product product)
         {
-            SetBrandId(Product);
+            SetBrandId(product);
 
             try
             {
                 _dataAccess.SetQuery(
                     "insert into Products (Code, ProductName, ProductDescription, Price, Cost, Stock, BrandId, Active) values (@Code, @ProductName, @ProductDescription, @Price, @Cost, @Stock, @BrandId, @Active)"
                 );
-                SetParameters(Product);
+                SetParameters(product);
                 _dataAccess.ExecuteAction();
-                SetImages(Product); // Las imagenes se agregan luego de agregar el articulo ya que van con le id del mismo asociadas
-                SetCategories(Product);
+                SetImages(product); // Las imagenes se agregan luego de agregar el articulo ya que van con le id del mismo asociadas
+                SetCategories(product);
             }
             catch (Exception ex)
             {
@@ -152,7 +152,7 @@ namespace BusinessLogicLayer
         }
 
         // Importante: Es eliminación lógica
-        public void Delete(Product product, bool purgeBrand = false, bool purgeCategory = false)
+        public void Delete(Product product)
         {
             try
             {
@@ -167,19 +167,6 @@ namespace BusinessLogicLayer
             finally
             {
                 _dataAccess.CloseConnection();
-            }
-
-            if (purgeBrand)
-            {
-                _brandsManager.PurgeBrand(product.Brand);
-            }
-
-            if (purgeCategory)
-            {
-                foreach (Category category in product.Categories)
-                {
-                    _categoriesManager.PurgeCategory(category);
-                }
             }
         }
 

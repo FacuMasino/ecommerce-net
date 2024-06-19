@@ -27,7 +27,7 @@ namespace DataAccessLayer
         /// </summary>
         public DataAccess()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["ana"].ToString(); // Modificar en esta línea el argumento de ConnectionString["ana ó facu ó maxi"] para elegir la base de datos.
+            _connectionString = ConfigurationManager.ConnectionStrings["maxi_mac"].ToString(); // Modificar en esta línea el argumento de ConnectionString["ana ó facu ó maxi"] para elegir la base de datos.
             _connection = new SqlConnection(_connectionString);
             _command = new SqlCommand();
         }
@@ -40,6 +40,17 @@ namespace DataAccessLayer
         {
             _command.CommandType = System.Data.CommandType.Text;
             _command.CommandText = query;
+        }
+
+        /// <summary>
+        /// <c>SetProcedure</c> Setea el procedimiento almacenado
+        /// que se desea ejecutar
+        /// </summary>
+        /// <param name="sp">Nombre del procedimiento almacenado</param>
+        public void SetProcedure(string sp)
+        {
+            _command.CommandType = System.Data.CommandType.StoredProcedure;
+            _command.CommandText = sp;
         }
 
         /// <summary>
@@ -121,17 +132,6 @@ namespace DataAccessLayer
             {
                 _command.Parameters.Clear();
             }
-        }
-
-        /// <summary>
-        /// <c>SetProcedure</c> Setea el procedimiento almacenado
-        /// que se desea ejecutar
-        /// </summary>
-        /// <param name="sp">Nombre del procedimiento almacenado</param>
-        public void SetProcedure(string sp)
-        {
-            _command.CommandType = System.Data.CommandType.StoredProcedure;
-            _command.CommandText = sp;
         }
 
         /// <summary>

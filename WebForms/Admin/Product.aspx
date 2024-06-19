@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="card-body p-0 ms-3 d-flex justify-content-end align-items-center">
                                         <asp:LinkButton Text='<i class="bi bi-trash"></i>' CssClass="text-decoration-none text-black fs-5 py-0"
-                                            CommandArgument='<%#Eval("Id")%>' ID="RemoveCategoryLnkBtn" OnClick="RemoveCategoryLnkBtn_Click"
+                                            CommandArgument='<%#Eval("Id")%>' ID="RemoveCategoryBtn" OnClick="RemoveCategoryBtn_Click"
                                             runat="server" />
                                     </div>
                                 </div>

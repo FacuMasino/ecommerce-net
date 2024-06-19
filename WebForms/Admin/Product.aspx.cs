@@ -275,14 +275,27 @@ namespace WebForms.Admin
         {
             Category category = new Category();
             category.Id = Convert.ToInt32(CategoriesDdl.SelectedValue);
+
             if (_product.Categories.FindIndex(c => c.Id == category.Id) != -1)
             {
                 _adminMP.ShowMasterToast("El producto ya tiene esa categoría.");
                 return;
             }
+
             category = _categoriesManager.Read(category.Id);
             _product.Categories.Add(category);
             BindCategoriesRpt();
+            _categoriesManager.AddRelation(category, _product.Id);
+        }
+
+        protected void RemoveCategoryBtn_Click(object sender, EventArgs e)
+        {
+            int categoryId = Convert.ToInt32(((System.Web.UI.WebControls.LinkButton)sender).CommandArgument);
+            Category category;
+            category = _product.Categories.Find(c => c.Id == categoryId);
+            _product.Categories.Remove(category);
+            BindCategoriesRpt();
+            _categoriesManager.DeleteRelation(category, _product.Id);
         }
 
         protected void CalcReturns_TextChanged(object sender, EventArgs e)
@@ -351,15 +364,6 @@ namespace WebForms.Admin
             {
                 _adminMP.ShowMasterToast($"Ocurrió un error: {ex.Message}");
             }
-        }
-
-        protected void RemoveCategoryLnkBtn_Click(object sender, EventArgs e)
-        {
-            int catId = Convert.ToInt32(
-                ((System.Web.UI.WebControls.LinkButton)sender).CommandArgument
-            );
-            _product.Categories.Remove(_product.Categories.Find(c => c.Id == catId));
-            BindCategoriesRpt();
         }
     }
 }

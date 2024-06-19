@@ -174,6 +174,25 @@ namespace BusinessLogicLayer
             }
         }
 
+        public void DeleteRelation(Category category, int productId)
+        {
+            try
+            {
+                _dataAccess.SetQuery("delete from ProductCategories where CategoryId = @CategoryId and ProductId = @ProductId");
+                _dataAccess.SetParameter("@ProductId", productId);
+                _dataAccess.SetParameter("@CategoryId", category.Id);
+                _dataAccess.ExecuteAction();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+        }
+
         public int CountCategoryRelations(Category category)
         {
             try
