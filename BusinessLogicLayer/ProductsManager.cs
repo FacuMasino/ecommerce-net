@@ -278,5 +278,35 @@ namespace BusinessLogicLayer
                 }
             }
         }
+
+        /// <summary>
+        /// Comprueba si existe un producto que ya esté usando el código proporcionado
+        /// </summary>
+        /// <param name="code">Código de producto</param>
+        private bool ProductCodeExists(string code)
+        {
+            try
+            {
+                _dataAccess.SetQuery("select ProductId from Products where Code = @Code");
+                _dataAccess.SetParameter("@Code", code);
+                _dataAccess.ExecuteRead();
+
+                if (_dataAccess.Reader.Read())
+                {
+                    if (Convert.IsDBNull(_dataAccess.Reader["ProductId"]))
+                        return false;
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+            return false;
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
+using UtilitiesLayer;
 
 namespace WebForms.Admin
 {
@@ -38,6 +39,16 @@ namespace WebForms.Admin
         {
             ProductListRepeater.DataSource = _productsManager.List();
             ProductListRepeater.DataBind();
+        }
+
+        /// <summary>
+        /// Esta funcion se utiliza solo cuándo es llamada desde otra del tipo Action
+        /// </summary>
+        private void BindProductList(MasterPage masterPage)
+        {
+            Repeater auxRpt = ((Repeater)Helper.FindControl(masterPage, "ProductListRepeater"));
+            auxRpt.DataSource = _productsManager.List();
+            auxRpt.DataBind();
         }
 
         private void CheckRequest()
@@ -75,7 +86,7 @@ namespace WebForms.Admin
             Product auxProduct = _productsManager.Read(_temporalProductId);
             _productsManager.Delete(auxProduct);
             ((Admin)masterPage).ShowMasterToast("Producto eliminado con éxito!");
-            // TODO: Actualizar Repeater
+            BindProductList(masterPage); // Actualizar lista
         }
 
         public override void OnModalConfirmed()
