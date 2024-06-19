@@ -105,8 +105,7 @@
                                          CssClass="p-0 text-black fs-5"
                                          CommandName="Delete"
                                          CommandArgument='<%#Eval("Id")%>'
-                                         ID="DeleteBrandBtn"
-                                         OnClick="DeleteBrandBtn_Click"
+                                         ID="DeleteBrandBtn"   
                                          runat="server" />
                                  </div>
                              </td>

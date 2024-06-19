@@ -56,3 +56,20 @@ begin
 end
 
 go
+
+
+----------------------------------------
+-- COUNT PRODUCT CATEGORIES RELATIONS --
+----------------------------------------
+
+create or alter procedure SP_Count_B_Relations(
+	@BrandId int
+)
+as
+begin
+	select count (BrandId)
+	from Products
+	where BrandId = @BrandId;
+end
+
+go

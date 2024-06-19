@@ -134,31 +134,23 @@ namespace BusinessLogicLayer
         /// </summary>
         public void PurgeBrand(Brand brand)
         {
-            bool brandInUse = BrandIsInUse(brand);
-            Debug.Print($"Verificando si la Marca {brand} está en uso => {brandInUse}");
-
-            if (!brandInUse)
+            if (CountBrandRelations(brand) == 0)
             {
                 Delete(brand);
             }
         }
 
-        private bool BrandIsInUse(Brand brand)
+        public int CountBrandRelations(Brand brand)
         {
             try
             {
-                _dataAccess.SetQuery(
-                    "select count(*) as Total from Products where BrandId = @BrandId"
-                );
+                _dataAccess.SetProcedure("SP_Count_B_Relations");
                 _dataAccess.SetParameter("@BrandId", brand.Id);
-                return _dataAccess.ExecuteScalar() > 0;
+                return _dataAccess.ExecuteScalar();
             }
             catch (Exception ex)
             {
-                throw new Exception(
-                    $"Ocurrió un error al verificar si la marca {brand?.Name} existe.",
-                    ex
-                );
+                throw ex;
             }
             finally
             {

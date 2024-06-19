@@ -9,20 +9,13 @@ using DomainModelLayer;
 
 namespace WebForms.Admin
 {
-    public partial class Brands : BasePage
+    public partial class Brands : System.Web.UI.Page
     {
         // ATTRIBUTES
 
         private Brand _brand;
         private List<Brand> _brands;
         private BrandsManager _brandsManager;
-        private int _temporalBrandId;
-
-        // Referencia a la funcion que se ejecutará luego de confirmar/cancelar un Modal
-        // Se le debe pasar la masterpage como referencia por si se necesita manipular controles
-        // En caso de manipular un control utilizar Helper.FindControl
-        private static Action<MasterPage> _modalOkAction;
-        private static Action<MasterPage> _modalCancelAction;
 
         //CONSTRUCT
         public Brands()
@@ -91,45 +84,6 @@ namespace WebForms.Admin
             }
         }
 
-        private void DeleteBrandAction(MasterPage masterPage)
-        {
-            Brand auxBrand = _brandsManager.Read(_temporalBrandId);
-            _brandsManager.Delete(auxBrand);
-
-            FetchBrands();
-            BindBrandsRpt();
-            ((Admin)masterPage).ShowMasterToast("Marca eliminada con éxito!");
-
-            // TODO: Actualizar Repeater
-        }
-
-        public override void OnModalConfirmed()
-        {
-            if (_modalOkAction != null)
-            {
-                _modalOkAction(this.Master);
-                _modalOkAction = null; // Limpiar luego de usar
-            }
-        }
-
-        protected void DeleteBrandBtn_Click(object sender, EventArgs e)
-        {
-            _temporalBrandId = Convert.ToInt32(((LinkButton)sender).CommandArgument);
-            _modalOkAction = DeleteBrandAction;
-
-            Admin adminMP = (Admin)this.Master;
-            adminMP.ShowMasterModal( // Llama y muestra el modal de la Masterpage
-                "Eliminar Marca",
-                "Está seguro que desea eliminar la Marca?",
-                true // requiere confirmación
-            );
-        }
-
-        private void DeleteBrand(MasterPage masterPage)
-        {
-            _brandsManager.Delete(_brand);
-        }
-
         protected void SearchBtn_Click(object sender, EventArgs e) { }
 
         /// <summary>
@@ -168,6 +122,30 @@ namespace WebForms.Admin
                 FetchBrands();
                 BindBrandsRpt();
             }
+            else if (e.CommandName == "Delete")
+            {
+                Label nameLbl = (Label)e.Item.FindControl("BrandNameLbl");
+                _brand.Id = Convert.ToInt32(e.CommandArgument);
+                _brand.Name = nameLbl.Text;
+
+                if (_brandsManager.CountBrandRelations(_brand) == 0)
+                {
+                    _brandsManager.Delete(_brand);
+                }
+                else
+                {
+                    Notify("La Marca está en uso y no puede ser borrada.");
+                }
+
+                FetchBrands();
+                BindBrandsRpt();
+            }
+        }
+
+        private void Notify(string message)
+        {
+            Admin adminMP = (Admin)this.Master;
+            adminMP.ShowMasterToast(message);
         }
     }
 }
