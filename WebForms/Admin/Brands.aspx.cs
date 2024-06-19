@@ -9,13 +9,19 @@ using DomainModelLayer;
 
 namespace WebForms.Admin
 {
-    public partial class Brands : System.Web.UI.Page
+    public partial class Brands : BasePage
     {
         // ATTRIBUTES
 
         private Brand _brand;
         private List<Brand> _brands;
         private BrandsManager _brandsManager;
+
+        // Referencia a la funcion que se ejecutará luego de confirmar/cancelar un Modal
+        // Se le debe pasar la masterpage como referencia por si se necesita manipular controles
+        // En caso de manipular un control utilizar Helper.FindControl
+        private static Action<MasterPage> _modalOkAction;
+        private static Action<MasterPage> _modalCancelAction;
 
         //CONSTRUCT
         public Brands()
@@ -130,7 +136,13 @@ namespace WebForms.Admin
 
                 if (_brandsManager.CountBrandRelations(_brand) == 0)
                 {
-                    _brandsManager.Delete(_brand);
+                    _modalOkAction = DeleteBrand;
+                    Admin adminMP = (Admin)this.Master;
+                    adminMP.ShowMasterModal( // Llama y muestra el modal de la Masterpage
+                        "Eliminar Marca",
+                        "Está seguro que desea eliminar la marca?",
+                        true // requiere confirmación
+                    ); // requiere confirmación
                 }
                 else
                 {
@@ -142,10 +154,25 @@ namespace WebForms.Admin
             }
         }
 
+        private void DeleteBrand(MasterPage masterPage)
+        {
+            _brandsManager.Delete(_brand);
+            HttpContext.Current.Response.Redirect("Brands.aspx?successDelete=true");
+        }
+
         private void Notify(string message)
         {
             Admin adminMP = (Admin)this.Master;
             adminMP.ShowMasterToast(message);
+        }
+
+        public override void OnModalConfirmed()
+        {
+            if (_modalOkAction != null)
+            {
+                _modalOkAction(this.Master);
+                _modalOkAction = null; // Limpiar luego de usar
+            }
         }
     }
 }
