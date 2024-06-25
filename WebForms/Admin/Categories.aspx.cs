@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Web.UI.WebControls;
 using System.Collections.Generic;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
+using UtilitiesLayer;
 
 namespace WebForms.Admin
 {
-    public partial class Categories : System.Web.UI.Page
+    public partial class Categories : BasePage
     {
         // ATTRIBUTES
 
@@ -36,6 +38,14 @@ namespace WebForms.Admin
             CategoriesListRpt.DataBind();
         }
 
+        private void BindCategoriesRpt(MasterPage masterPage)
+        {
+            _categories = _categoriesManager.List();
+            Repeater auxRpt = ((Repeater)Helper.FindControl(masterPage, "CategoriesListRpt"));
+            auxRpt.DataSource = _categories;
+            auxRpt.DataBind();
+        }
+
         private void ToggleEditMode(RepeaterItem item, bool isEditMode)
         {
             Label nameLbl = (Label)item.FindControl("CategoryNameLbl");
@@ -49,6 +59,28 @@ namespace WebForms.Admin
             editBtn.Visible = !isEditMode;
             saveBtn.CssClass = isEditMode ? "p-0 text-black fs-5" : "p-0 text-black fs-5 d-none";
             cancelBtn.CssClass = isEditMode ? "p-0 text-black fs-5" : "p-0 text-black fs-5 d-none";
+        }
+
+        private void Notify(string message)
+        {
+            Admin adminMP = (Admin)this.Master;
+            adminMP.ShowMasterToast(message);
+        }
+
+        private void DeleteCategoryAction(MasterPage masterPage)
+        {
+            if (_categoriesManager.CountCategoryRelations(_category) == 0)
+            {
+                _categoriesManager.Delete(_category);
+                ((Admin)masterPage).ShowMasterToast("La categoría fue eliminada con éxito!");
+                BindCategoriesRpt(masterPage);
+            }
+            else
+            {
+                ((Admin)masterPage).ShowMasterToast(
+                    "La categoría está en uso y no puede ser borrada."
+                );
+            }
         }
 
         // EVENTS
@@ -129,24 +161,14 @@ namespace WebForms.Admin
                 _category.Id = Convert.ToInt32(e.CommandArgument);
                 _category.Name = nameLbl.Text;
 
-                if (_categoriesManager.CountCategoryRelations(_category) == 0)
-                {
-                    _categoriesManager.Delete(_category);
-                }
-                else
-                {
-                    Notify("La categoría está en uso y no puede ser borrada.");
-                }
-                
-                FetchCategories();
-                BindCategoriesRpt();
-            }
-        }
+                ModalOkAction = DeleteCategoryAction;
 
-        private void Notify(string message)
-        {
-            Admin adminMP = (Admin)this.Master;
-            adminMP.ShowMasterToast(message);
+                ((Admin)this.Master).ShowMasterModal(
+                    "Eliminar",
+                    "Está seguro que desea eliminar la categoría?",
+                    true
+                );
+            }
         }
     }
 }

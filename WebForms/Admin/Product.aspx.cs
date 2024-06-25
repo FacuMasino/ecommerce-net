@@ -17,12 +17,6 @@ namespace WebForms.Admin
         private Product _product;
         private bool _isEditing;
 
-        // Referencia a la funcion que se ejecutará luego de confirmar/cancelar un Modal
-        // Se le debe pasar la masterpage como referencia por si se necesita manipular controles
-        // En caso de manipular un control utilizar Helper.FindControl
-        private static Action<MasterPage> _modalOkAction;
-        private static Action<MasterPage> _modalCancelAction;
-
         private List<InputWrapper> _inputValidations;
 
         private Admin _adminMP; // Referencia a la master page para utilizar sus métodos
@@ -175,24 +169,6 @@ namespace WebForms.Admin
             _inputValidations.Add(new InputWrapper(ProductPriceTxt, typeof(decimal), 1));
         }
 
-        public override void OnModalConfirmed()
-        {
-            if (_modalOkAction != null)
-            {
-                _modalOkAction(this.Master);
-                _modalOkAction = null; // Limpiar luego de usar
-            }
-        }
-
-        public override void OnModalCancelled()
-        {
-            if (_modalCancelAction != null)
-            {
-                _modalCancelAction(this.Master);
-                _modalCancelAction = null; // Limpiar luego de usar
-            }
-        }
-
         public bool IsValidInput(string controlId)
         {
             InputWrapper auxIW = _inputValidations.Find(ctl => ctl.Control.ID == controlId);
@@ -290,7 +266,9 @@ namespace WebForms.Admin
 
         protected void RemoveCategoryBtn_Click(object sender, EventArgs e)
         {
-            int categoryId = Convert.ToInt32(((System.Web.UI.WebControls.LinkButton)sender).CommandArgument);
+            int categoryId = Convert.ToInt32(
+                ((System.Web.UI.WebControls.LinkButton)sender).CommandArgument
+            );
             Category category;
             category = _product.Categories.Find(c => c.Id == categoryId);
             _product.Categories.Remove(category);
@@ -314,7 +292,7 @@ namespace WebForms.Admin
 
         protected void DeleteProductBtn_Click(object sender, EventArgs e)
         {
-            _modalOkAction = DeleteProduct; // Asigna la acción que se va a ejecutar si confirma
+            ModalOkAction = DeleteProduct; // Asigna la acción que se va a ejecutar si confirma
 
             Admin adminMP = (Admin)this.Master;
             adminMP.ShowMasterModal( // Llama y muestra el modal de la Masterpage

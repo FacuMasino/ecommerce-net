@@ -12,8 +12,6 @@ namespace WebForms.Admin
     {
         private ProductsManager _productsManager;
 
-        private static Action<MasterPage> _modalOkAction;
-
         private int _temporalProductId;
 
         public Products()
@@ -86,16 +84,8 @@ namespace WebForms.Admin
             Product auxProduct = _productsManager.Read(_temporalProductId);
             _productsManager.Delete(auxProduct);
             ((Admin)masterPage).ShowMasterToast("Producto eliminado con éxito!");
-            BindProductList(masterPage); // Actualizar lista
-        }
-
-        public override void OnModalConfirmed()
-        {
-            if (_modalOkAction != null)
-            {
-                _modalOkAction(this.Master);
-                _modalOkAction = null; // Limpiar luego de usar
-            }
+            //HttpContext.Current.Response.Redirect("Products.aspx?successDelete=true");
+            BindProductList(masterPage); // Actualizar lista sin Redirect
         }
 
         // EVENTS
@@ -114,7 +104,7 @@ namespace WebForms.Admin
         protected void DeleteProductLnkBtn_Click(object sender, EventArgs e)
         {
             _temporalProductId = Convert.ToInt32(((LinkButton)sender).CommandArgument);
-            _modalOkAction = DeleteProductAction;
+            ModalOkAction = DeleteProductAction;
 
             Admin adminMP = (Admin)this.Master;
             adminMP.ShowMasterModal( // Llama y muestra el modal de la Masterpage
