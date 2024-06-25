@@ -61,12 +61,6 @@ namespace WebForms.Admin
             cancelBtn.CssClass = isEditMode ? "p-0 text-black fs-5" : "p-0 text-black fs-5 d-none";
         }
 
-        private void Notify(string message)
-        {
-            Admin adminMP = (Admin)this.Master;
-            adminMP.ShowMasterToast(message);
-        }
-
         private void DeleteCategoryAction(MasterPage masterPage)
         {
             if (_categoriesManager.CountCategoryRelations(_category) == 0)

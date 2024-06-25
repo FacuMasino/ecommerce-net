@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -16,12 +15,6 @@ namespace WebForms.Admin
         private Brand _brand;
         private List<Brand> _brands;
         private BrandsManager _brandsManager;
-
-        // Referencia a la funcion que se ejecutará luego de confirmar/cancelar un Modal
-        // Se le debe pasar la masterpage como referencia por si se necesita manipular controles
-        // En caso de manipular un control utilizar Helper.FindControl
-        private static Action<MasterPage> _modalOkAction;
-        private static Action<MasterPage> _modalCancelAction;
 
         //CONSTRUCT
         public Brands()
@@ -59,12 +52,31 @@ namespace WebForms.Admin
             cancelBtn.CssClass = isEditMode ? "p-0 text-black fs-5" : "p-0 text-black fs-5 d-none";
         }
 
+        private void CheckRequest()
+        {
+            foreach (string key in Request.QueryString.AllKeys)
+            {
+                switch (key)
+                {
+                    case "successDelete":
+                        if (Request.QueryString[key] == "true")
+                        {
+                            Notify("Marca eliminada con éxito!");
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                CheckRequest();
                 FetchBrands();
                 BindBrandsRpt();
             }
@@ -134,30 +146,27 @@ namespace WebForms.Admin
                 _brand.Id = Convert.ToInt32(e.CommandArgument);
                 _brand.Name = nameLbl.Text;
 
-                if (_brandsManager.CountBrandRelations(_brand) == 0)
-                {
-                    _modalOkAction = DeleteBrand;
-                    Admin adminMP = (Admin)this.Master;
-                    adminMP.ShowMasterModal( // Llama y muestra el modal de la Masterpage
-                        "Eliminar Marca",
-                        "Está seguro que desea eliminar la marca?",
-                        true // requiere confirmación
-                    ); // requiere confirmación
-                }
-                else
-                {
-                    Notify("La Marca está en uso y no puede ser borrada.");
-                }
-
-                FetchBrands();
-                BindBrandsRpt();
+                ModalOkAction = DeleteBrandAction;
+                Admin adminMP = (Admin)this.Master;
+                adminMP.ShowMasterModal( // Llama y muestra el modal de la Masterpage
+                    "Eliminar Marca",
+                    "Está seguro que desea eliminar la marca?",
+                    true // requiere confirmación
+                );
             }
         }
 
-        private void DeleteBrand(MasterPage masterPage)
+        private void DeleteBrandAction(MasterPage masterPage)
         {
-            _brandsManager.Delete(_brand);
-            HttpContext.Current.Response.Redirect("Brands.aspx?successDelete=true");
+            if (_brandsManager.CountBrandRelations(_brand) == 0)
+            {
+                _brandsManager.Delete(_brand);
+                HttpContext.Current.Response.Redirect("Brands.aspx?successDelete=true");
+            }
+            else
+            {
+                Notify("La Marca está en uso y no puede ser borrada.", masterPage);
+            }
         }
 
         private void Notify(string message)
@@ -166,13 +175,12 @@ namespace WebForms.Admin
             adminMP.ShowMasterToast(message);
         }
 
-        public override void OnModalConfirmed()
+        /// <summary>
+        /// Notificar desde una funcion invocada por un Modal
+        /// </summary>
+        private void Notify(string message, MasterPage masterPage)
         {
-            if (_modalOkAction != null)
-            {
-                _modalOkAction(this.Master);
-                _modalOkAction = null; // Limpiar luego de usar
-            }
+            ((Admin)masterPage).ShowMasterToast(message);
         }
     }
 }
