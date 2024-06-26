@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using DataAccessLayer;
 using DomainModelLayer;
 
@@ -174,11 +174,44 @@ namespace BusinessLogicLayer
             }
         }
 
+        /// <summary>
+        /// Actualiza las relaciones entre un producto y sus categorías.
+        /// </summary>
+        /// <param name="product">Producto con la nueva lista de categorías</param>
+        public void UpdateRelations(Product product)
+        {
+            List<Category> currentCategories = List(product.Id); // Lista actual en la db
+            List<Category> newCategories = product.Categories; // Lista nueva en el producto
+
+            // Se queda con la diferencia entre las actuales - las nuevas (Dif. de conjuntos)
+            List<Category> categoriesToRemove = currentCategories.Except(newCategories).ToList();
+
+            foreach (Category cat in categoriesToRemove)
+            {
+                DeleteRelation(cat, product.Id); // Se elimina de la tabla
+                currentCategories.Remove(cat); // Se elimina de la lista actual
+            }
+
+            // Si ambas tienen la misma cantidad, no hay nuevas, salir
+            if (currentCategories.Count == newCategories.Count)
+                return;
+
+            // Se queda con la diferencia de las nuevas - las actuales
+            List<Category> categoriesToAdd = newCategories.Except(currentCategories).ToList();
+
+            foreach (Category cat in categoriesToAdd)
+            {
+                AddRelation(cat, product.Id); // Se agrega la nueva a la tabla
+            }
+        }
+
         public void DeleteRelation(Category category, int productId)
         {
             try
             {
-                _dataAccess.SetQuery("delete from ProductCategories where CategoryId = @CategoryId and ProductId = @ProductId");
+                _dataAccess.SetQuery(
+                    "delete from ProductCategories where CategoryId = @CategoryId and ProductId = @ProductId"
+                );
                 _dataAccess.SetParameter("@ProductId", productId);
                 _dataAccess.SetParameter("@CategoryId", category.Id);
                 _dataAccess.ExecuteAction();

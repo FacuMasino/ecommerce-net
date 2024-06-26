@@ -131,6 +131,7 @@ namespace BusinessLogicLayer
             SetBrandId(product);
             SetImages(product);
             _imagesManager.CheckDeleted(product); // Despues de editar y agregar las nuevas, verificar/eliminar el resto
+            _categoriesManager.UpdateRelations(product); // Se revisan y actualizan las relaciones de categorias
 
             try
             {
@@ -253,6 +254,9 @@ namespace BusinessLogicLayer
             }
         }
 
+        /// <summary>
+        /// Agrega las relaciones Producto-Categoria en la tabla correspondiente
+        /// </summary>
         private void SetCategories(Product product)
         {
             int productId = product.Id == 0 ? Helper.GetLastId("Products") : product.Id; // si es un articulo nuevo, se obtiene el id nuevo

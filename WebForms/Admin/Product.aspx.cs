@@ -261,7 +261,6 @@ namespace WebForms.Admin
             category = _categoriesManager.Read(category.Id);
             _product.Categories.Add(category);
             BindCategoriesRpt();
-            _categoriesManager.AddRelation(category, _product.Id);
         }
 
         protected void RemoveCategoryBtn_Click(object sender, EventArgs e)
@@ -273,7 +272,6 @@ namespace WebForms.Admin
             category = _product.Categories.Find(c => c.Id == categoryId);
             _product.Categories.Remove(category);
             BindCategoriesRpt();
-            _categoriesManager.DeleteRelation(category, _product.Id);
         }
 
         protected void CalcReturns_TextChanged(object sender, EventArgs e)
