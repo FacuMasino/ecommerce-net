@@ -137,5 +137,10 @@ namespace UtilitiesLayer
             }
             return invalids == 0;
         }
+
+        public static InputWrapper FindInputWrapper(List<InputWrapper> inputList, string controlId)
+        {
+            return inputList.Find(ctl => ctl.Control.ID == controlId);
+        }
     }
 }

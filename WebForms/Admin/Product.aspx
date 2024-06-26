@@ -31,7 +31,7 @@
                     <asp:TextBox CssClass="form-control" ID="ProductCodeTxt" placeholder="AAA-BBB-100"
                         runat="server" />
                     <div class="invalid-feedback">
-                        Campo Inválido, ingrese al menos 3 caracteres.
+                        Campo Inválido, ingrese un código único de al menos 3 caracteres. 
                     </div>
                 </div>
             </div>

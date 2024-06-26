@@ -274,7 +274,7 @@ namespace BusinessLogicLayer
         /// Comprueba si existe un producto que ya esté usando el código proporcionado
         /// </summary>
         /// <param name="code">Código de producto</param>
-        private bool ProductCodeExists(string code)
+        public bool ProductCodeExists(string code)
         {
             try
             {

@@ -169,6 +169,13 @@ namespace WebForms.Admin
             _inputValidations.Add(new InputWrapper(ProductPriceTxt, typeof(decimal), 1));
         }
 
+        /// <summary>
+        /// Esta funcion busca en la lista de controles a validar el que se corresponda con
+        /// el id pasado por parámetro.
+        /// Es utilizado desde el código Aspx para la clase CSS "invalid"
+        /// </summary>
+        /// <param name="controlId">Id (Tag ID) del control a buscar</param>
+        /// <returns>Devuelve true/false segun la propiedad IsValid del control.</returns>
         public bool IsValidInput(string controlId)
         {
             InputWrapper auxIW = _inputValidations.Find(ctl => ctl.Control.ID == controlId);
@@ -203,6 +210,39 @@ namespace WebForms.Admin
             {
                 Session.Remove("CurrentProduct");
             }
+        }
+
+        private bool ValidateProduct()
+        {
+            if (_product.Categories.Count == 0)
+            {
+                _adminMP.ShowMasterToast("Por favor agregue al menos 1 categoría de producto.");
+                return false;
+            }
+            if (!IsProductCodeAvailable())
+            {
+                Validator.FindInputWrapper(_inputValidations, "ProductCodeTxt").IsValid = false;
+                _adminMP.ShowMasterToast(
+                    "El codigo de producto (SKU) ya existe, por favor elija otro."
+                );
+                return false;
+            }
+            return true;
+        }
+
+        private bool IsProductCodeAvailable()
+        {
+            if (IsEditing)
+            {
+                // Si esta editando y el codigo ingresado es igual al actual, no hay cambios, está disponible
+                if (_product.Code == _productsManager.Read(_product.Id).Code)
+                    return true;
+            }
+            // Si no esta editando, verificar que no este en uso
+            if (!_productsManager.ProductCodeExists(_product.Code))
+                return true;
+
+            return false;
         }
 
         // EVENTS
@@ -321,9 +361,14 @@ namespace WebForms.Admin
             {
                 // TODO: Agregar validacion de codigo de producto único
                 // TODO: Agregar validacion de url de imagen única ?
-                if (Validator.RunValidations(_inputValidations))
+                if (Validator.RunValidations(_inputValidations)) // Validaciones basicas
                 {
-                    BindFieldsToProduct();
+                    BindFieldsToProduct(); // Se leen y asignan los campos a _product
+                    if (!ValidateProduct()) // Validar reglas de negocio
+                    {
+                        return; // Si no se cumple abandona la funcion
+                    }
+
                     if (IsEditing)
                     {
                         _productsManager.Edit(_product);
@@ -334,6 +379,12 @@ namespace WebForms.Admin
                         _productsManager.Add(_product);
                         Response.Redirect("Products.aspx?successNewProduct=true");
                     }
+                }
+                else
+                {
+                    _adminMP.ShowMasterToast(
+                        "Por favor verifique haber completado todos los campos correctamente."
+                    );
                 }
             }
             catch (Exception ex)
