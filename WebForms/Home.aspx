@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="WebForms.Home" %>
+﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"
+    CodeBehind="Home.aspx.cs" Inherits="WebForms.Home" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
 </asp:Content>
@@ -11,8 +12,10 @@
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <asp:Panel ID="searchPanel" runat="server" CssClass="input-group mb-3" DefaultButton="searchBtn">
-                        <asp:TextBox CssClass="form-control" ID="searchTextBox" runat="server" Text="" placeholder="Buscar producto" required />
-                        <asp:LinkButton Text='<i class="bi bi-search"></i>' ID="searchBtn" CssClass="btn btn-outline-secondary rounded-end" runat="server" OnClick="searchBtn_Click" />
+                        <asp:TextBox CssClass="form-control" ID="searchTextBox" runat="server" Text="" placeholder="Buscar producto"
+                            required />
+                        <asp:LinkButton Text='<i class="bi bi-search"></i>' ID="searchBtn" CssClass="btn btn-outline-primary rounded-end"
+                            runat="server" OnClick="searchBtn_Click" />
                         <div class="invalid-feedback">
                             Ingrese al menos 2 caracteres.    
                         </div>
@@ -20,7 +23,8 @@
                 </li>
                 <!-- Filtro de categorías -->
                 <li class="nav-item">
-                    <a class="nav-link fs-lg text-reset border-bottom mb-6 px-2 fw-500 bg-body-tertiary" data-bs-toggle="collapse" href="#categoriesCollapse" aria-expanded="true">Categorias
+                    <a class="nav-link fs-lg text-reset border-primary rounded-top border-2 border-bottom mb-6 px-2 fw-500 bg-body-tertiary"
+                        data-bs-toggle="collapse" href="#categoriesCollapse" aria-expanded="true">Categorias
                     </a>
                     <div class="collapse show" id="categoriesCollapse">
                         <ul class="list-group py-1 list-group-flush">
@@ -51,7 +55,8 @@
                 </li>
                 <!-- Filtro de Marcas -->
                 <li class="nav-item">
-                    <a class="nav-link fs-lg text-reset border-bottom mb-6 px-2 fw-500 bg-body-tertiary" data-bs-toggle="collapse" href="#brandsCollapse" aria-expanded="true">Marcas
+                    <a class="nav-link fs-lg text-reset border-primary rounded-top border-2 border-bottom mb-6 px-2 fw-500 bg-body-tertiary"
+                        data-bs-toggle="collapse" href="#brandsCollapse" aria-expanded="true">Marcas
                     </a>
                     <div class="collapse" id="brandsCollapse">
                         <ul class="list-group py-1 list-group-flush">
@@ -101,17 +106,21 @@
                 %>
 
                 <div class='col'>
-                    <div class="card h-100">
-                        <img src="<%:imageUrl%>" class="card-img-top" alt="Imagen de <%:product.Name%>" onerror="this.src='Content/img/placeholder.jpg'">
+                    <div class="card shadow-sm shadow-hover h-100">
+                        <img onclick="location.href='Product.aspx?id=<%:product.Id%>'" src="<%:imageUrl%>" class="card-img-top cursor-pointer" alt="Imagen de <%:product.Name%>" onerror="this.src='Content/img/placeholder.jpg'">
                         <div class="card-body d-flex flex-column">
                             <span class="mb-2 text-muted"><%:category.Length == 0 ? "Sin Categoría" : category%></span>
                             <h5 class="card-title fs-6 mb-0"><%:product.Name%></h5>
                             <small class="text-body-secondary mb-2"><%:product.Brand.ToString() %></small>
-                            <p class="card-subtitle mb-0 mt-auto text-muted pe-3 fw-bold">$<%:product.Price.ToString("0.00")%></p>
-                            <div class='d-flex justify-content-end mt-auto'>
-                                <a href='<%= "Cart.aspx?id=" + product.Id %>' class="btn py-0 fs-5"><i class="bi bi-cart-plus"></i></a>
-                                <a href="Product.aspx?id=<%:product.Id%>" class="btn py-0 fs-5"><i class="bi bi-eye"></i></a>
-                            </div>
+                            <p class="card-subtitle mb-0 mt-auto text-muted pe-3 fw-bold">
+                                $<%:product.Price.ToString("0.00")%>
+                            </p>
+                        </div>
+                        <div class="text-center p-2 bg-primary rounded-bottom">
+                            <a href='<%= "Cart.aspx?id=" + product.Id %>' class="py-0 text-white fw-bold text-decoration-none">
+                                <i class="bi fs-5 bi-cart-plus"></i>
+                                Agregar al carrito
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -133,7 +142,8 @@
             <div class="col">
                 <div class="d-flex flex-column align-items-center">
                     <div class="col-6 w-50">
-                        <h5 class="text-align-center">Ups! Parece que el producto que buscas no existe...</h5>
+                        <h5 class="text-align-center">Ups! Parece que el producto que buscas no existe...
+                        </h5>
                         <img src="Content/img/Empty-Pana.svg" class="img-fluid object-fit-cover h-50">
                     </div>
                     <div class="col-6 text-center">
