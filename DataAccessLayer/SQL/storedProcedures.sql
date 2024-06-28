@@ -41,11 +41,11 @@ end
 
 go
 
-----------------------------------------
--- COUNT PRODUCT CATEGORIES RELATIONS --
-----------------------------------------
+------------------------------
+-- COUNT CATEGORY RELATIONS --
+------------------------------
 
-create or alter procedure SP_Count_PC_Relations(
+create or alter procedure SP_Count_Category_Relations(
 	@CategoryId int
 )
 as
@@ -58,17 +58,49 @@ end
 go
 
 
-----------------------------------------
--- COUNT PRODUCT CATEGORIES RELATIONS --
-----------------------------------------
+---------------------------
+-- COUNT BRAND RELATIONS --
+---------------------------
 
-create or alter procedure SP_Count_B_Relations(
+create or alter procedure SP_Count_Brand_Relations(
 	@BrandId int
 )
 as
 begin
 	select count (BrandId)
 	from Products
+	where BrandId = @BrandId;
+end
+
+go
+
+-------------------------------
+-- DELETE CATEGORY LOGICALLY --
+-------------------------------
+
+create or alter procedure SP_Delete_Category_Logically(
+	@CategoryId int
+)
+as
+begin
+	update Categories
+	set Active = 0
+	where CategoryId = @CategoryId;
+end
+
+go
+
+----------------------------
+-- DELETE BRAND LOGICALLY --
+----------------------------
+
+create or alter procedure SP_Delete_Brand_Logically(
+	@BrandId int
+)
+as
+begin
+	update Brands
+	set Active = 0
 	where BrandId = @BrandId;
 end
 

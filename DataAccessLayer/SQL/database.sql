@@ -13,7 +13,8 @@ GO
 CREATE TABLE Brands
 (
 	BrandId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	BrandName varchar(30) UNIQUE NOT NULL
+	BrandName varchar(30) UNIQUE NOT NULL,
+	Active bit default(1) NOT NULL
 ) 
 GO
 
@@ -24,7 +25,8 @@ GO
 CREATE TABLE Categories
 (
 	CategoryId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	CategoryName varchar(30) UNIQUE NOT NULL
+	CategoryName varchar(30) UNIQUE NOT NULL,
+	Active bit default(1) NOT NULL
 ) 
 GO
 
@@ -42,7 +44,7 @@ CREATE TABLE Products
 	Cost money NOT NULL,
 	Stock int check(0 <= Stock) NOT NULL,
 	BrandId int FOREIGN KEY REFERENCES Brands (BrandId) NULL,
-	Active bit NOT NULL
+	Active bit default(1) NOT NULL
 )
 GO
 

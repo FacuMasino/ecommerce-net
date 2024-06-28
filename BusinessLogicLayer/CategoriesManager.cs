@@ -124,8 +124,31 @@ namespace BusinessLogicLayer
             }
         }
 
-        public void Delete(Category category)
+        public void DeleteLogically(Category category)
         {
+            try
+            {
+                _dataAccess.SetProcedure("SP_Delete_Category_Logically");
+                _dataAccess.SetParameter("@CategoryId", category.Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+        }
+
+        public void Delete(Category category, bool isLogicalDeletion = true)
+        {
+            if (isLogicalDeletion == true)
+            {
+                DeleteLogically(category);
+                return;
+            }
+
             try
             {
                 _dataAccess.SetQuery("delete from Categories where CategoryId = @CategoryId");
@@ -139,17 +162,6 @@ namespace BusinessLogicLayer
             finally
             {
                 _dataAccess.CloseConnection();
-            }
-        }
-
-        /// <summary>
-        /// Verifica si la categoria del artículo no pertenece a ningun otro y en tal caso la elimina.
-        /// </summary>
-        public void PurgeCategory(Category category)
-        {
-            if (CountCategoryRelations(category) == 0)
-            {
-                Delete(category);
             }
         }
 
@@ -230,7 +242,7 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetProcedure("SP_Count_PC_Relations");
+                _dataAccess.SetProcedure("SP_Count_Category_Relations");
                 _dataAccess.SetParameter("@CategoryId", category.Id);
                 return _dataAccess.ExecuteScalar();
             }

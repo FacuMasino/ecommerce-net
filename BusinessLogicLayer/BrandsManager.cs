@@ -111,8 +111,31 @@ namespace BusinessLogicLayer
             }
         }
 
-        public void Delete(Brand brand)
+        public void DeleteLogically(Brand brand)
         {
+            try
+            {
+                _dataAccess.SetProcedure("SP_Delete_Brand_Logically");
+                _dataAccess.SetParameter("@BrandId", brand.Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+        }
+
+        public void Delete(Brand brand, bool isLogicalDeletion = true)
+        {
+            if (isLogicalDeletion == true)
+            {
+                DeleteLogically(brand);
+                return;
+            }
+
             try
             {
                 _dataAccess.SetQuery("delete from Brands where BrandId = @BrandId");
@@ -144,7 +167,7 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetProcedure("SP_Count_B_Relations");
+                _dataAccess.SetProcedure("SP_Count_Brand_Relations");
                 _dataAccess.SetParameter("@BrandId", brand.Id);
                 return _dataAccess.ExecuteScalar();
             }
