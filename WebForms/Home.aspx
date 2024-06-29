@@ -9,80 +9,56 @@
     <%=""%>
 
     <div class="container-fluid bg-body-tertiary">
-        <div id="carouselExampleCaptions" class="carousel container-xxl slide hero-row-bg">
+        <div id="carouselFeaturedProducts" class="carousel container-xxl slide hero-row-bg">
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
-                    class="active" aria-current="true" aria-label="Slide 1">
+                <%
+                    for (int i = 0; i < FeaturedProducts.Count; i++)
+                    {
+                %>
+                <button type="button" data-bs-target="#carouselFeaturedProducts" data-bs-slide-to="<%:i%>"
+                    class="<%: (i == 0 ?"active":"") %>" <%:(i == 0 ? "aria-current=\"true\"":"") %>
+                    aria-label="Deslizar a <%:i%>">
                 </button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                    aria-label="Slide 2">
-                </button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                    aria-label="Slide 3">
-                </button>
+                <%
+                    }
+                %>
             </div>
             <div class="carousel-inner">
-                <div class="carousel-item active">
+                <%
+                    int featuredIndex = 0;
+                    foreach (Product product in FeaturedProducts)
+                    {
+                        featuredIndex++;
+                %>
+                <div class="carousel-item <%:(featuredIndex == 1 ? "active":"")%>">
                     <div class="row row-carousel">
                         <div class="col-5">
                             <div class="d-flex align-items-center justify-content-center position-relative">
                                 <span class="featured-badge fw-500">DESTACADO</span>
-                                <img src="https://ik.imagekit.io/tpce16/products/S10-01-1024x1024.png?updatedAt=1717372633354"
-                                    class="d-block w-100 img-hero-carousel" alt="..." />
+                                <img src="<%:product.Images[0].Url%>"
+                                    class="d-block w-100 img-hero-carousel" alt="<%:product.Name%>" />
                             </div>
                         </div>
                         <div class="col-7 d-flex ps-3 py-3 flex-column justify-content-center hero-column-bg text-white">
-                            <h3 class="fs-5 mb-auto text-center">Producto destacado en Celulares</h3>
+                            <h3 class="fs-5 mb-auto text-center">Producto destacado en <%:product.Categories[0].ToString()%>
+                            </h3>
                             <div class="d-flex flex-column justify-content-center h-100">
-                                <h5 class="fw-bold fs-2 mb-3">Samsung Galaxy S 10</h5>
-                                <span class="featured-price fs-4">$ 399999.99</span>
+                                <h5 class="fw-bold fs-2 mb-3"><%:$"{product.Brand} {product.Name}" %></h5>
+                                <span class="featured-price fs-4">$ <%:product.Price.ToString("F2")%></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <div class="row row-carousel">
-                        <div class="col-5">
-                            <div class="d-flex align-items-center justify-content-center position-relative">
-                                <span class="featured-badge fw-500">DESTACADO</span>
-                                <img src="https://ik.imagekit.io/tpce16/products/Playstation-5.webp?updatedAt=1717373430693"
-                                    class="d-block w-100 img-hero-carousel" alt="..." />
-                            </div>
-                        </div>
-                        <div class="col-7 d-flex ps-3 py-3 flex-column justify-content-center hero-column-bg text-white">
-                            <h3 class="fs-5 mb-auto text-center">Producto destacado en Entretenimiento</h3>
-                            <div class="d-flex flex-column justify-content-center h-100">
-                                <h5 class="fw-bold fs-2 mb-3">Sony Play Station 5</h5>
-                                <span class="featured-price fs-4">$ 1350000.00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row row-carousel">
-                        <div class="col-5">
-                            <div class="d-flex align-items-center justify-content-center position-relative">
-                                <span class="featured-badge fw-500">DESTACADO</span>
-                                <img src="https://ik.imagekit.io/tpce16/products/Sonyx80j_4S._SL1500_1024x.webp?updatedAt=1717373650982"
-                                    class="d-block w-100 img-hero-carousel" alt="..." />
-                            </div>
-                        </div>
-                        <div class="col-7 d-flex ps-3 py-3 flex-column justify-content-center hero-column-bg text-white">
-                            <h3 class="fs-5 mb-auto text-center">Producto destacado en Televisores</h3>
-                            <div class="d-flex flex-column justify-content-center h-100">
-                                <h5 class="fw-bold fs-2 mb-3">Sony X80J Curvo 3D 4k</h5>
-                                <span class="featured-price fs-4">$1899999.00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%
+                    }
+                %>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselFeaturedProducts"
                 data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselFeaturedProducts"
                 data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
@@ -23,6 +21,7 @@ namespace WebForms
         public List<Product> Products { get; set; }
         public List<Category> Categories { get; }
         public List<Brand> Brands { get; }
+        public List<Product> FeaturedProducts { get; set; }
 
         // CONSTRUCT
 
@@ -76,10 +75,22 @@ namespace WebForms
             }
         }
 
+        private void GetFeaturedProducts()
+        {
+            // Aca se deberia obtener la lista de productos destacados
+            // Si tuviera 0 productos entonces podrian usarse los ultimos agregados
+            // y mostrarlos como "nuevos ingresos"
+
+            // Por ahora solo se van a usar los 4 primeros de la lista normal
+            FeaturedProducts = new List<Product>();
+            FeaturedProducts = Products.Take(4).ToList();
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            GetFeaturedProducts();
             CheckRequest(); // Verificar si se pasaron parámetros
         }
 
@@ -90,12 +101,13 @@ namespace WebForms
             if (2 < filter.Length)
             {
                 searchPanel.CssClass = "input-group mb-3";
-                Products = Products.FindAll(x =>
-                    x.Name.ToUpper().Contains(filter.ToUpper())
-                    || x.Brand.ToString().ToUpper().Contains(filter.ToUpper())
-                    || x.Code.ToUpper().Contains(filter.ToUpper())
-                    || x.Description.ToUpper().Contains(filter.ToUpper())
-                    || x.Categories.Any(c => c.Name.ToUpper().Contains(filter.ToUpper()))
+                Products = Products.FindAll(
+                    x =>
+                        x.Name.ToUpper().Contains(filter.ToUpper())
+                        || x.Brand.ToString().ToUpper().Contains(filter.ToUpper())
+                        || x.Code.ToUpper().Contains(filter.ToUpper())
+                        || x.Description.ToUpper().Contains(filter.ToUpper())
+                        || x.Categories.Any(c => c.Name.ToUpper().Contains(filter.ToUpper()))
                 );
             }
             else
