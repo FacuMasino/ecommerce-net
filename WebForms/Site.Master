@@ -26,11 +26,11 @@
 
 <body>
     <form id="form1" runat="server" class="d-flex flex-column min-vh-100">
-
+    <%=""%>
         <%--MENU--%>
 
         <header>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary py-4">
+            <nav class="navbar navbar-expand-lg border-bottom py-4">
                 <div class="container">
                     <a class="navbar-brand" href="/">TPC Equipo 16</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,9 +94,7 @@
 
         <%--BODY--%>
 
-        <div class="container m-auto">
-            <asp:ContentPlaceHolder ID="BodyPlaceHolder" runat="server"></asp:ContentPlaceHolder>
-        </div>
+        <asp:ContentPlaceHolder ID="BodyPlaceHolder" runat="server"></asp:ContentPlaceHolder>
 
         <%--CART--%>
 
