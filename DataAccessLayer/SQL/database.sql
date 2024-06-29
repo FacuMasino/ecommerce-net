@@ -60,6 +60,19 @@ CREATE TABLE ProductCategories
 )
 GO
 
+-----------------------
+-- FEATURED PRODUCTS --
+-----------------------
+
+CREATE TABLE FeaturedProducts
+(
+    FeaturedProductId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+    ProductId int FOREIGN KEY REFERENCES Products(ProductId) NOT NULL UNIQUE,
+    DisplayOrder int NOT NULL,
+	ShowAsNew bit NOT NULL DEFAULT 0
+)
+GO
+
 ------------
 -- IMAGES --
 ------------

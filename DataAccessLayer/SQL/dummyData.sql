@@ -148,6 +148,17 @@ VALUES
 
 GO
 
+-----------------------
+-- FEATURED PRODUCTS --
+-----------------------
+INSERT INTO
+	FeaturedProducts
+	(ProductId, DisplayOrder, ShowAsNew)
+VALUES
+	(3,2,0),
+	(1,3,0),
+	(6,1,0)
+
 ------------
 -- IMAGES --
 ------------

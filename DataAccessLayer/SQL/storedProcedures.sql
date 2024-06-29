@@ -105,3 +105,13 @@ begin
 end
 
 go
+
+----------------------------
+-- LIST FEATURED PRODUCTS --
+----------------------------
+
+create or alter procedure SP_List_Featured_Products
+AS
+BEGIN
+	Select * from FeaturedProducts
+END

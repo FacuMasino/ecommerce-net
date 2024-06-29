@@ -14,6 +14,7 @@ namespace WebForms
         private ProductsManager _productsManager;
         private CategoriesManager _categoriesManager;
         private BrandsManager _brandsManager;
+        private FeaturedsManager _featuredsManager;
 
         // PROPERTIES
 
@@ -21,7 +22,7 @@ namespace WebForms
         public List<Product> Products { get; set; }
         public List<Category> Categories { get; }
         public List<Brand> Brands { get; }
-        public List<Product> FeaturedProducts { get; set; }
+        public List<FeaturedProduct> Featureds { get; set; }
 
         // CONSTRUCT
 
@@ -30,6 +31,7 @@ namespace WebForms
             _productsManager = new ProductsManager();
             _categoriesManager = new CategoriesManager();
             _brandsManager = new BrandsManager();
+            _featuredsManager = new FeaturedsManager();
             Products = _productsManager.List();
             Categories = _categoriesManager.List();
             Brands = _brandsManager.List();
@@ -82,8 +84,9 @@ namespace WebForms
             // y mostrarlos como "nuevos ingresos"
 
             // Por ahora solo se van a usar los 4 primeros de la lista normal
-            FeaturedProducts = new List<Product>();
-            FeaturedProducts = Products.Take(4).ToList();
+            //FeaturedProducts = new List<Product>();
+            //FeaturedProducts = Products.Take(4).ToList();
+            Featureds = _featuredsManager.List(); // PRUEBA
         }
 
         // EVENTS

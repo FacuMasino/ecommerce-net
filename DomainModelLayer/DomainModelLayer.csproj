@@ -48,6 +48,7 @@
     </Compile>
     <Compile Include="City.cs" />
     <Compile Include="Country.cs" />
+    <Compile Include="FeaturedProduct.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderStatus.cs" />
     <Compile Include="Person.cs" />

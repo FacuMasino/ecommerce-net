@@ -12,7 +12,7 @@
         <div id="carouselFeaturedProducts" class="carousel container-xxl slide hero-row-bg">
             <div class="carousel-indicators">
                 <%
-                    for (int i = 0; i < FeaturedProducts.Count; i++)
+                    for (int i = 0; i < Featureds.Count; i++)
                     {
                 %>
                 <button type="button" data-bs-target="#carouselFeaturedProducts" data-bs-slide-to="<%:i%>"
@@ -26,7 +26,7 @@
             <div class="carousel-inner">
                 <%
                     int featuredIndex = 0;
-                    foreach (Product product in FeaturedProducts)
+                    foreach (FeaturedProduct product in Featureds)
                     {
                         featuredIndex++;
                 %>

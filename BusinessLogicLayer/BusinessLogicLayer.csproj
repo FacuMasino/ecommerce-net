@@ -44,6 +44,7 @@
     <Compile Include="AddressesManager.cs" />
     <Compile Include="CitiesManager.cs" />
     <Compile Include="CountriesManager.cs" />
+    <Compile Include="FeaturedsManager.cs" />
     <Compile Include="OrdersManager.cs" />
     <Compile Include="ProductsManager.cs" />
     <Compile Include="BrandsManager.cs" />
