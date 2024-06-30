@@ -63,6 +63,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a id="BtnNavFeatureds" href="Products.aspx" class="nav-link text-black" runat="server">
+                                    <i class="bi bi-star me-2"></i>
+                                    Destacados
+                                </a>
+                            </li>
+                            <li>
                                 <a id="BtnNavCategories" href="Categories.aspx" class="nav-link text-black" runat="server">
                                     <i class="bi bi-card-list me-2"></i>
                                     Categorías

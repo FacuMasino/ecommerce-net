@@ -157,6 +157,10 @@ body {
     height: fit-content;
 }
 
+.img-table {
+    width: 80px;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }

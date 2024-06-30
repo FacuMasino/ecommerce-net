@@ -32,7 +32,7 @@ namespace WebForms
             _categoriesManager = new CategoriesManager();
             _brandsManager = new BrandsManager();
             _featuredsManager = new FeaturedsManager();
-            Products = _productsManager.List();
+            Products = _productsManager.List(true, true); // Solo activos y en stock
             Categories = _categoriesManager.List();
             Brands = _brandsManager.List();
             TotalProducts = Products.Count; // Total de productos que permanece original

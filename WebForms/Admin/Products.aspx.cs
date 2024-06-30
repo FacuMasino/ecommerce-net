@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
@@ -20,18 +19,6 @@ namespace WebForms.Admin
         }
 
         // METHODS
-
-        protected string PrintCategoriesCount(object categoriesList)
-        {
-            var categories = categoriesList as List<Category>;
-
-            if (categories == null || categories.Count < 2)
-            {
-                return "";
-            }
-
-            return $" (+{categories.Count - 1})";
-        }
 
         private void BindProductList()
         {

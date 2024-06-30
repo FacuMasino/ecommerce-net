@@ -45,7 +45,7 @@
                                 </th>
                                 <td title="<%#Helper.GetCategoriesList((List<Category>)Eval("Categories"))%>">
                                     <%#Eval("Categories[0]")%>
-                                    <%#PrintCategoriesCount(Eval("Categories"))%>
+                                    <%#Helper.PrintCategoriesCount(Eval("Categories"))%>
                                 </td>
                                 <td>$ <%#Eval("Price")%></td>
                                 <td><%#Eval("Stock")%></td>

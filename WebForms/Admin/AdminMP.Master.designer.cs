@@ -51,6 +51,15 @@ namespace WebForms.Admin
         protected global::System.Web.UI.HtmlControls.HtmlAnchor BtnNavProducts;
 
         /// <summary>
+        /// BtnNavFeatureds control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor BtnNavFeatureds;
+
+        /// <summary>
         /// BtnNavCategories control.
         /// </summary>
         /// <remarks>

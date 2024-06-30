@@ -13,7 +13,7 @@ namespace BusinessLogicLayer
         private CategoriesManager _categoriesManager = new CategoriesManager();
         private ImagesManager _imagesManager = new ImagesManager();
 
-        public List<Product> List(bool onlyActive = true)
+        public List<Product> List(bool onlyActive = true, bool onlyAvailable = false)
         {
             List<Product> products = new List<Product>();
 
@@ -37,6 +37,11 @@ namespace BusinessLogicLayer
                     product.Categories = _categoriesManager.List(product.Id);
                     product.Images = _imagesManager.List(product.Id);
                     product.IsActive = (bool)_dataAccess.Reader["Active"];
+
+                    if (onlyAvailable & product.Stock == 0)
+                    {
+                        continue; // No agregar si no tiene stock
+                    }
                     products.Add(product);
                 }
             }

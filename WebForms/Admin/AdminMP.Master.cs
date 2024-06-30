@@ -31,6 +31,9 @@ namespace WebForms.Admin
                 case "/admin/Users.aspx":
                     SetActiveItem(BtnNavUsers);
                     break;
+                case "/admin/Featureds.aspx":
+                    SetActiveItem(BtnNavFeatureds);
+                    break;
                 default:
                     break;
             }

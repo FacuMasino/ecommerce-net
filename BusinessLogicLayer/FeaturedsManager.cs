@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DataAccessLayer;
 using DomainModelLayer;
 
@@ -44,6 +45,8 @@ namespace BusinessLogicLayer
                 _dataAccess.CloseConnection();
             }
 
+            featuredProducts = featuredProducts.OrderBy(f => f.DisplayOrder).ToList();
+
             return featuredProducts;
         }
 
@@ -71,12 +74,12 @@ namespace BusinessLogicLayer
         }
 
         // Es eliminacion fisica
-        public void Delete(FeaturedProduct featuredProduct)
+        public void Delete(int productId)
         {
             try
             {
                 _dataAccess.SetQuery("Delete from FeaturedProducts Where ProductId = @ProductId");
-                _dataAccess.SetParameter("@ProductId", featuredProduct.Id);
+                _dataAccess.SetParameter("@ProductId", productId);
                 _dataAccess.ExecuteAction();
             }
             catch (Exception ex)

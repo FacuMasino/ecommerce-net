@@ -88,5 +88,17 @@ namespace UtilitiesLayer
             Control foundCtrl = masterPage.FindControl("BodyPlaceHolder").FindControl(controlId);
             return foundCtrl;
         }
+
+        public static string PrintCategoriesCount(object categoriesList)
+        {
+            var categories = categoriesList as List<Category>;
+
+            if (categories == null || categories.Count < 2)
+            {
+                return "";
+            }
+
+            return $" (+{categories.Count - 1})";
+        }
     }
 }
