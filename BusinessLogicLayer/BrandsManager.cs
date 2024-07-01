@@ -96,9 +96,7 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery(
-                    "update Brands set BrandName = @BrandName where BrandId = @BrandId"
-                );
+                _dataAccess.SetProcedure("SP_Edit_Brand");
                 _dataAccess.SetParameter("@BrandId", brand.Id);
                 SetParameters(brand);
                 _dataAccess.ExecuteAction();
@@ -152,17 +150,6 @@ namespace BusinessLogicLayer
             finally
             {
                 _dataAccess.CloseConnection();
-            }
-        }
-
-        /// <summary>
-        /// Verifica si la marca del artículo no pertenece a ningun otro y en tal caso la elimina.
-        /// </summary>
-        public void PurgeBrand(Brand brand)
-        {
-            if (CountBrandRelations(brand) == 0)
-            {
-                Delete(brand);
             }
         }
 

@@ -154,6 +154,20 @@ end
 
 go
 
+create or alter procedure SP_Edit_Brand(
+	@BrandId int,
+	@IsActive bit,
+	@BrandName varchar(30)
+)
+as
+begin
+	update Brands set
+	IsActive = @IsActive, BrandName = @BrandName
+	where BrandId = @BrandId
+end
+
+go
+
 create or alter procedure SP_Delete_Brand_Logically(
 	@BrandId int
 )
