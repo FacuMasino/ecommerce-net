@@ -2,9 +2,9 @@ use ecommerce
 
 go
 
--------------------
--- LIST PRODUCTS --
--------------------
+--------------
+-- PRODUCTS --
+--------------
 
 create or alter procedure SP_List_Products(
 	@OnlyActive bit
@@ -25,11 +25,15 @@ end
 
 go
 
---------------------
--- DELETE PRODUCT --
---------------------
+create or alter procedure SP_List_Featured_Products
+as
+begin
+	Select * from FeaturedProducts
+end
 
-create or alter procedure SP_Delete_Product(
+go
+
+create or alter procedure SP_Delete_Product_Logically(
 	@ProductId int
 )
 as
@@ -41,9 +45,61 @@ end
 
 go
 
-------------------------------
--- COUNT CATEGORY RELATIONS --
-------------------------------
+----------------
+-- CATEGORIES --
+----------------
+
+create or alter procedure SP_List_Categories(
+	@OnlyActive bit,
+	@ProductId int
+)
+as
+begin
+	if (@OnlyActive = 1 and @ProductId = 0)
+	begin
+		select C.CategoryId, C.CategoryName
+		from Categories C
+		where C.Active = 1
+		return
+	end
+
+	if (@OnlyActive = 0 and @ProductId = 0) 
+	begin
+		select C.CategoryId, C.CategoryName
+		from Categories C
+		return
+	end
+
+	if (@OnlyActive = 1 and 0 < @ProductId)
+	begin
+		select C.CategoryId, C.CategoryName
+		from Categories C
+		inner join ProductCategories PC on C.CategoryId = PC.CategoryId
+		where C.Active = 1 and PC.ProductId = @ProductId
+		return
+	end
+	-- if (@OnlyActive = 0 and 0 < @ProductId)
+	begin
+		select C.CategoryId, C.CategoryName
+		from Categories C
+		inner join ProductCategories PC on C.CategoryId = PC.CategoryId
+		where PC.ProductId = @ProductId
+	end
+end
+
+go
+
+create or alter procedure SP_Delete_Category_Logically(
+	@CategoryId int
+)
+as
+begin
+	update Categories
+	set Active = 0
+	where CategoryId = @CategoryId;
+end
+
+go
 
 create or alter procedure SP_Count_Category_Relations(
 	@CategoryId int
@@ -58,41 +114,9 @@ end
 go
 
 
----------------------------
--- COUNT BRAND RELATIONS --
----------------------------
-
-create or alter procedure SP_Count_Brand_Relations(
-	@BrandId int
-)
-as
-begin
-	select count (BrandId)
-	from Products
-	where BrandId = @BrandId;
-end
-
-go
-
--------------------------------
--- DELETE CATEGORY LOGICALLY --
--------------------------------
-
-create or alter procedure SP_Delete_Category_Logically(
-	@CategoryId int
-)
-as
-begin
-	update Categories
-	set Active = 0
-	where CategoryId = @CategoryId;
-end
-
-go
-
-----------------------------
--- DELETE BRAND LOGICALLY --
-----------------------------
+------------
+-- BRANDS --
+------------
 
 create or alter procedure SP_Delete_Brand_Logically(
 	@BrandId int
@@ -106,12 +130,14 @@ end
 
 go
 
-----------------------------
--- LIST FEATURED PRODUCTS --
-----------------------------
+create or alter procedure SP_Count_Brand_Relations(
+	@BrandId int
+)
+as
+begin
+	select count (BrandId)
+	from Products
+	where BrandId = @BrandId;
+end
 
-create or alter procedure SP_List_Featured_Products
-AS
-BEGIN
-	Select * from FeaturedProducts
-END
+go

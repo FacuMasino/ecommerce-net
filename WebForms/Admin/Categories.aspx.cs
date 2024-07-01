@@ -40,7 +40,6 @@ namespace WebForms.Admin
 
         private void BindCategoriesRpt(MasterPage masterPage)
         {
-            _categories = _categoriesManager.List();
             Repeater auxRpt = ((Repeater)Helper.FindControl(masterPage, "CategoriesListRpt"));
             auxRpt.DataSource = _categories;
             auxRpt.DataBind();
@@ -67,6 +66,7 @@ namespace WebForms.Admin
             {
                 _categoriesManager.Delete(_category);
                 ((Admin)masterPage).ShowMasterToast("La categoría fue eliminada con éxito!");
+                FetchCategories();
                 BindCategoriesRpt(masterPage);
             }
             else

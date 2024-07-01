@@ -80,7 +80,7 @@ GO
 CREATE TABLE Images
 (
 	ImageId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	ImageUrl varchar(300) UNIQUE NOT NULL,
+	ImageUrl varchar(300) NOT NULL,
 	ProductId int FOREIGN KEY REFERENCES Products (ProductId) NOT NULL
 ) 
 GO

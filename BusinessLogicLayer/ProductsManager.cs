@@ -34,7 +34,7 @@ namespace BusinessLogicLayer
                     product.Cost = _dataAccess.Reader["Cost"] as decimal? ?? product.Cost;
                     product.Stock = (int)_dataAccess.Reader["Stock"] as int? ?? product.Stock;
                     product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
-                    product.Categories = _categoriesManager.List(product.Id);
+                    product.Categories = _categoriesManager.List(true, product.Id);
                     product.Images = _imagesManager.List(product.Id);
                     product.IsActive = (bool)_dataAccess.Reader["Active"];
 
@@ -88,7 +88,7 @@ namespace BusinessLogicLayer
                     product.Cost = _dataAccess.Reader["Cost"] as decimal? ?? product.Cost;
                     product.Stock = (int)_dataAccess.Reader["Stock"] as int? ?? product.Stock;
                     product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
-                    product.Categories = _categoriesManager.List(product.Id);
+                    product.Categories = _categoriesManager.List(true, product.Id);
                     product.Images = _imagesManager.List(product.Id);
                     product.IsActive = (bool)_dataAccess.Reader["Active"];
                 }
@@ -157,12 +157,11 @@ namespace BusinessLogicLayer
             }
         }
 
-        // Importante: Es eliminación lógica
         public void Delete(Product product)
         {
             try
             {
-                _dataAccess.SetProcedure("SP_Delete_Product");
+                _dataAccess.SetProcedure("SP_Delete_Product_Logically");
                 _dataAccess.SetParameter("@ProductId", product.Id);
                 _dataAccess.ExecuteAction();
             }

@@ -10,21 +10,15 @@ namespace BusinessLogicLayer
     {
         private DataAccess _dataAccess = new DataAccess();
 
-        public List<Category> List(int productId = 0)
+        public List<Category> List(bool onlyActive = true, int productId = 0)
         {
             List<Category> categories = new List<Category>();
-            string query = "select C.CategoryId, C.CategoryName from Categories C";
-
-            if (0 < productId)
-            {
-                query +=
-                    " inner join ProductCategories PC on C.CategoryId = PC.CategoryId where PC.ProductId = @ProductId";
-                _dataAccess.SetParameter("@ProductId", productId);
-            }
 
             try
             {
-                _dataAccess.SetQuery(query);
+                _dataAccess.SetProcedure("SP_List_Categories");
+                _dataAccess.SetParameter("@OnlyActive", onlyActive);
+                _dataAccess.SetParameter("@ProductId", productId);
                 _dataAccess.ExecuteRead();
 
                 while (_dataAccess.Reader.Read())
@@ -130,6 +124,7 @@ namespace BusinessLogicLayer
             {
                 _dataAccess.SetProcedure("SP_Delete_Category_Logically");
                 _dataAccess.SetParameter("@CategoryId", category.Id);
+                _dataAccess.ExecuteAction();
             }
             catch (Exception ex)
             {
@@ -192,7 +187,7 @@ namespace BusinessLogicLayer
         /// <param name="product">Producto con la nueva lista de categorías</param>
         public void UpdateRelations(Product product)
         {
-            List<Category> currentCategories = List(product.Id); // Lista actual en la db
+            List<Category> currentCategories = List(true, product.Id); // Lista actual en la db
             List<Category> newCategories = product.Categories; // Lista nueva en el producto
 
             // Se queda con la diferencia entre las actuales - las nuevas (Dif. de conjuntos)

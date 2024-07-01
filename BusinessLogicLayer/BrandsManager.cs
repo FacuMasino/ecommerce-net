@@ -117,6 +117,7 @@ namespace BusinessLogicLayer
             {
                 _dataAccess.SetProcedure("SP_Delete_Brand_Logically");
                 _dataAccess.SetParameter("@BrandId", brand.Id);
+                _dataAccess.ExecuteAction();
             }
             catch (Exception ex)
             {
