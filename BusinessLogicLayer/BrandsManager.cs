@@ -10,13 +10,14 @@ namespace BusinessLogicLayer
     {
         private DataAccess _dataAccess = new DataAccess();
 
-        public List<Brand> List()
+        public List<Brand> List(bool onlyActive = true)
         {
             List<Brand> brands = new List<Brand>();
 
             try
             {
-                _dataAccess.SetQuery("select BrandId, BrandName from Brands");
+                _dataAccess.SetProcedure("SP_List_Brands");
+                _dataAccess.SetParameter("@OnlyActive", onlyActive);
                 _dataAccess.ExecuteRead();
 
                 while (_dataAccess.Reader.Read())
@@ -24,6 +25,7 @@ namespace BusinessLogicLayer
                     Brand brand = new Brand();
 
                     brand.Id = (int)_dataAccess.Reader["BrandId"];
+                    brand.IsActive = (bool)_dataAccess.Reader["IsActive"];
                     brand.Name = _dataAccess.Reader["BrandName"]?.ToString();
                     brand.Name = brand.Name ?? "";
 
@@ -48,14 +50,14 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select BrandName from Brands where BrandId = @BrandId");
+                _dataAccess.SetQuery("select IsActive, BrandName from Brands where BrandId = @BrandId");
                 _dataAccess.SetParameter("@BrandId", brandId);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
                 {
                     brand.Id = brandId;
-
+                    brand.IsActive = (bool)_dataAccess.Reader["IsActive"];
                     brand.Name = _dataAccess.Reader["BrandName"]?.ToString();
                     brand.Name = brand.Name ?? "";
                 }
@@ -216,6 +218,8 @@ namespace BusinessLogicLayer
 
         private void SetParameters(Brand brand)
         {
+            _dataAccess.SetParameter("@IsActive", brand.IsActive);
+
             if (brand.Name != null)
             {
                 _dataAccess.SetParameter("@BrandName", brand.Name);

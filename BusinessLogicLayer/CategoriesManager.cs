@@ -26,7 +26,7 @@ namespace BusinessLogicLayer
                     Category category = new Category();
 
                     category.Id = (int)_dataAccess.Reader["CategoryId"];
-
+                    category.IsActive = (bool)_dataAccess.Reader["IsActive"];
                     category.Name = _dataAccess.Reader["CategoryName"]?.ToString();
                     category.Name = category.Name ?? "";
 
@@ -52,7 +52,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "select CategoryName from Categories where CategoryId = @CategoryId"
+                    "select IsActive, CategoryName from Categories where CategoryId = @CategoryId"
                 );
                 _dataAccess.SetParameter("@CategoryId", categoryId);
                 _dataAccess.ExecuteRead();
@@ -60,7 +60,7 @@ namespace BusinessLogicLayer
                 if (_dataAccess.Reader.Read())
                 {
                     category.Id = categoryId;
-
+                    category.IsActive = (bool)_dataAccess.Reader["IsActive"];
                     category.Name = _dataAccess.Reader["CategoryName"]?.ToString();
                     category.Name = category.Name ?? "";
                 }
@@ -101,9 +101,7 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery(
-                    "update Categories set CategoryName = @CategoryName where CategoryId = @CategoryId"
-                );
+                _dataAccess.SetProcedure("SP_Edit_Category");
                 _dataAccess.SetParameter("@CategoryId", category.Id);
                 SetParameters(category);
                 _dataAccess.ExecuteAction();
@@ -287,6 +285,8 @@ namespace BusinessLogicLayer
 
         private void SetParameters(Category category)
         {
+            _dataAccess.SetParameter("@IsActive", category.IsActive);
+
             if (category.Name != null)
             {
                 _dataAccess.SetParameter("@CategoryName", category.Name);

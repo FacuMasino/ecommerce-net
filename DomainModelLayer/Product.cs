@@ -8,6 +8,9 @@ namespace DomainModelLayer
         [DisplayName("ID")]
         public int Id { get; set; }
 
+        [DisplayName("Activo")]
+        public bool IsActive { get; set; }
+
         [DisplayName("Código")]
         public string Code { get; set; }
 
@@ -31,9 +34,6 @@ namespace DomainModelLayer
 
         [DisplayName("Categorías")]
         public List<Category> Categories { get; set; }
-
-        [DisplayName("Activo")]
-        public bool IsActive { get; set; }
 
         public List<Image> Images { get; set; }
 

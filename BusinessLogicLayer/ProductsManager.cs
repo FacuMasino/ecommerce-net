@@ -26,7 +26,9 @@ namespace BusinessLogicLayer
                 while (_dataAccess.Reader.Read())
                 {
                     Product product = new Product();
+
                     product.Id = (int)_dataAccess.Reader["ProductId"];
+                    product.IsActive = (bool)_dataAccess.Reader["IsActive"];
                     product.Code = _dataAccess.Reader["Code"]?.ToString();
                     product.Name = _dataAccess.Reader["ProductName"]?.ToString();
                     product.Description = _dataAccess.Reader["ProductDescription"]?.ToString();
@@ -36,12 +38,12 @@ namespace BusinessLogicLayer
                     product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
                     product.Categories = _categoriesManager.List(true, product.Id);
                     product.Images = _imagesManager.List(product.Id);
-                    product.IsActive = (bool)_dataAccess.Reader["Active"];
 
                     if (onlyAvailable & product.Stock == 0)
                     {
                         continue; // No agregar si no tiene stock
                     }
+
                     products.Add(product);
                 }
             }
@@ -68,12 +70,12 @@ namespace BusinessLogicLayer
 
             try
             {
-                string queryCondition = "ProductId = @ProductId And Active = 1";
+                string queryCondition = "ProductId = @ProductId And IsActive = 1";
                 if (!onlyActive)
                     queryCondition = "ProductId = @ProductId";
 
                 _dataAccess.SetQuery(
-                    $"select Code, ProductName, ProductDescription, Price, Cost, Stock, BrandId, Active from Products where {queryCondition}"
+                    $"select Code, ProductName, ProductDescription, Price, Cost, Stock, BrandId, IsActive from Products where {queryCondition}"
                 );
                 _dataAccess.SetParameter("@ProductId", productId);
                 _dataAccess.ExecuteRead();
@@ -90,7 +92,7 @@ namespace BusinessLogicLayer
                     product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
                     product.Categories = _categoriesManager.List(true, product.Id);
                     product.Images = _imagesManager.List(product.Id);
-                    product.IsActive = (bool)_dataAccess.Reader["Active"];
+                    product.IsActive = (bool)_dataAccess.Reader["IsActive"];
                 }
             }
             catch (Exception ex)
@@ -114,7 +116,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "insert into Products (Code, ProductName, ProductDescription, Price, Cost, Stock, BrandId, Active) values (@Code, @ProductName, @ProductDescription, @Price, @Cost, @Stock, @BrandId, @Active)"
+                    "insert into Products (Code, ProductName, ProductDescription, Price, Cost, Stock, BrandId, IsActive) values (@Code, @ProductName, @ProductDescription, @Price, @Cost, @Stock, @BrandId, @IsActive)"
                 );
                 SetParameters(product);
                 _dataAccess.ExecuteAction();
@@ -141,7 +143,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "update Products set Code = @Code, ProductName = @ProductName, ProductDescription = @ProductDescription, Price = @Price, Cost = @Cost, BrandId = @BrandId, Stock = @Stock, Active = @Active where ProductId = @ProductId"
+                    "update Products set Code = @Code, ProductName = @ProductName, ProductDescription = @ProductDescription, Price = @Price, Cost = @Cost, BrandId = @BrandId, Stock = @Stock, IsActive = @IsActive where ProductId = @ProductId"
                 );
                 _dataAccess.SetParameter("@ProductId", product.Id);
                 SetParameters(product);
@@ -216,7 +218,7 @@ namespace BusinessLogicLayer
             _dataAccess.SetParameter("@Cost", product.Cost);
             _dataAccess.SetParameter("@BrandId", product.Brand?.Id);
             _dataAccess.SetParameter("@Stock", product.Stock);
-            _dataAccess.SetParameter("@Active", product.IsActive);
+            _dataAccess.SetParameter("@IsActive", product.IsActive);
         }
 
         private void SetBrandId(Product product)

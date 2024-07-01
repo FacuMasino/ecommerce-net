@@ -1,8 +1,12 @@
-﻿namespace DomainModelLayer
+﻿using System.ComponentModel;
+
+namespace DomainModelLayer
 {
     public class Category
     {
         public int Id { get; set; }
+
+        public bool IsActive { get; set; }
 
         public string Name { get; set; }
 

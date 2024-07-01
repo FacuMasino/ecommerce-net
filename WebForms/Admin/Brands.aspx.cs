@@ -121,6 +121,14 @@ namespace WebForms.Admin
                 _brand.Id = Convert.ToInt32(e.CommandArgument);
                 _brand.Name = editTextBox.Text;
 
+                int databaseId = _brandsManager.GetId(_brand);
+
+                if (0 < databaseId)
+                {
+                    _brand.Id = databaseId;
+                    _brand.IsActive = true;
+                }
+
                 if (0 < _brand.Id)
                 {
                     _brandsManager.Edit(_brand);

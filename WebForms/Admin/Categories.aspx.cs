@@ -130,6 +130,14 @@ namespace WebForms.Admin
                 _category.Id = Convert.ToInt32(e.CommandArgument);
                 _category.Name = editTxt.Text;
 
+                int databaseId = _categoriesManager.GetId(_category);
+
+                if (0 < databaseId)
+                {
+                    _category.Id = databaseId;
+                    _category.IsActive = true;
+                }
+
                 if (0 < _category.Id)
                 {
                     _categoriesManager.Edit(_category);
