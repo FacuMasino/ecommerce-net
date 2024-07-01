@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace DomainModelLayer
 {
-    internal class Person
+    public class Person
     {
         [DisplayName("ID")]
         public int Id { get; set; }

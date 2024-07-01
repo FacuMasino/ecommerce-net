@@ -2,7 +2,7 @@
 
 namespace DomainModelLayer
 {
-    internal class Role
+    public class Role
     {
         [DisplayName("ID")]
         public int Id { get; set; }
