@@ -5,7 +5,7 @@ using UtilitiesLayer;
 
 namespace BusinessLogicLayer
 {
-    internal class UsersManager
+    public class UsersManager
     {
         private DataAccess _dataAccess = new DataAccess();
         private Person _person;

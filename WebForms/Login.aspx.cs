@@ -4,15 +4,49 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BusinessLogicLayer;
+using DomainModelLayer;
 
 namespace WebForms
 {
     public partial class Login : System.Web.UI.Page
     {
+        private User _user;
+        private UsersManager _userManager = new UsersManager();
+
         protected void Page_Load(object sender, EventArgs e) { }
 
-        protected void Unnamed_Click(object sender, EventArgs e) { }
+        protected void LoginButton_Click(object sender, EventArgs e)
+        {
+            _user = new User();
+            /*
+            try
+            {
 
-        protected void LoginButton_Click(object sender, EventArgs e) { }
+                _user.Email = UsrEmail.Text;
+                _user.Password = UsrPass.Text;
+
+                if (_userManager.Login(_user))
+                {
+                    Session.Add("user", _user);
+                    Response.Redirect("Home.aspx");
+                }
+                else
+                {
+                    Session.Add("error", "User o Pass incorrectos");
+                    Response.Redirect("Login.aspx", false);
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Login.aspx", false);
+            }
+        }
+    }
+*/
+        }
     }
 }
