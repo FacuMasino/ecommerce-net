@@ -203,13 +203,13 @@ as
 begin
 	if (0 < @PersonId)
 	begin
-		select OrderId, CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId
+		select OrderId, CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId
 		from Orders
 		where PersonId = @PersonId
 	end
 	else
 	begin
-		select OrderId, CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId
+		select OrderId, CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId
 		from Orders
 	end
 end
@@ -225,9 +225,9 @@ create or alter procedure SP_Get_User_Id(
 )
 as
 begin
-	select U.UserId
+	select isNull(U.UserId, 0) as UserId
 	from Users U
-	inner join People P on P.PersonId = U.PersonId
+	right join People P on P.PersonId = U.PersonId
 	where P.PersonId = @PersonId
 end
 

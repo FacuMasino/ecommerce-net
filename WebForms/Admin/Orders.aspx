@@ -38,16 +38,27 @@
             <table class="table table-hover">
                 <thead class="table-light">
                     <tr>
+                        <th scope="col">Fecha</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">Fecha</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <asp:Repeater runat="server" ID="OrdersListRpt">
+                    <asp:Repeater runat="server" ID="OrdersListRpt" OnItemCommand="OrdersListRpt_ItemCommand">
                         <ItemTemplate>
                             <tr>
+                                <td>
+
+                                    <!-- Fecha -->
+
+                                    <asp:Label
+                                        ID="DateLbl"
+                                        runat="server"
+                                        Text='<%#Eval("CreationDate", "{0:dd/MM/yyyy}")%>'
+                                        CssClass="text-black">
+                                    </asp:Label>
+                                </td>
                                 <td scope="row">
 
                                     <!-- Cliente -->
@@ -67,17 +78,6 @@
                                         ID="StatusLbl"
                                         runat="server"
                                         Text='<%#Eval("OrderStatus")%>'
-                                        CssClass="text-black">
-                                    </asp:Label>
-                                </td>
-                                <td>
-
-                                    <!-- Fecha -->
-
-                                    <asp:Label
-                                        ID="DateLbl"
-                                        runat="server"
-                                        Text='<%#Eval("CreationDate", "{0:dd/MM/yyyy}")%>'
                                         CssClass="text-black">
                                     </asp:Label>
                                 </td>

@@ -31,7 +31,7 @@ namespace BusinessLogicLayer
                     order.Id = (int)_dataAccess.Reader["OrderId"];
                     order.CreationDate = (DateTime)_dataAccess.Reader["CreationDate"];
 
-                    if (_dataAccess.Reader.IsDBNull(_dataAccess.Reader.GetOrdinal("DeliveryDate")))
+                    if (_dataAccess.Reader.IsDBNull(_dataAccess.Reader.GetOrdinal("DeliveryDate"))) // hack
                     {
                         order.DeliveryDate = DateTime.MinValue;
                     }
@@ -59,7 +59,7 @@ namespace BusinessLogicLayer
             foreach (Order order in orders)
             {
                 order.DeliveryAddress = _addressesManager.Read(order.DeliveryAddress.Id);
-                order.OrderStatus = ReadOrderStatus(order.User.PersonId);
+                order.OrderStatus = ReadOrderStatus(order.OrderStatus.Id);
 
                 order.User.UserId = _usersManager.GetUserId(order.User.PersonId);
 

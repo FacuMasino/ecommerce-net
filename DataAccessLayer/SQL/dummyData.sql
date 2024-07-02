@@ -301,15 +301,8 @@ INSERT INTO
 VALUES
 	('Ana', 'Bertello', NULL, NULL, NULL, NULL, 1),
 	('Facundo', 'Masino', NULL, NULL, NULL, NULL, 2),
-	(
-		'Maximiliano',
-		'Malvicino',
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		3
-	);
+	('Maximiliano', 'Malvicino', NULL, NULL, NULL, NULL, 3),
+	('Carlos', 'Paz', NULL, NULL, NULL, NULL, NULL);
 
 GO
 
@@ -349,18 +342,56 @@ INSERT INTO
 	OrderStatuses
 	(OrderStatusName)
 VALUES
-	('Orden generada'),
-	('Pago pendiente'),
-	('Procesando pago'),
-	('Envío pendiente'),
-	('Pedido enviado'),
-	('Pedido entregado'),
-	('Orden completada'),
-	('Devolución pendiente'),
-	('Compra devuelta'),
-	('Compra cancelada'),
-	('Pago y retiro pendiente'),
-	('Retiro pendiente');
+	('Pago pendiente o en proceso'), -- ID 1 Hardcoded
+	('Envío pendiente'), -- ID 2 Hardcoded
+	('Pedido enviado'), -- ID 3 Hardcoded
+	('Pedido entregado'), -- ID 4 Hardcoded
+	('Orden completada'), -- ID 5 Hardcoded
+	('Pago y retiro pendientes'), -- ID 6 Hardcoded
+	('Retiro pendiente'), -- ID 7 Hardcoded
+	('Devolución pendiente'), -- ID 8 Hardcoded
+	('Orden cancelada'); -- ID 9 Hardcoded
+
+GO
+
+---------------------------
+-- DISTRIBUTION CHANNELS --
+---------------------------
+
+INSERT INTO
+	DistributionChannels
+	(DistributionChannelName)
+VALUES
+	('Pago virtual y envío'),
+	('Pago virtual y retiro'),
+	('Pago personal y retiro');
+
+GO
+
+---------------------
+-- CHANNELSTATUSES --
+---------------------
+
+INSERT INTO
+	ChannelStatuses
+	(DistributionChannelId, OrderStatusId, OrderStatusIndex) -- OrderStatusIndex Hardcoded
+VALUES
+	(1, 1, 0),
+	(1, 2, 1),
+	(1, 3, 2),
+	(1, 4, 3),
+	(1, 5, 4),
+	(1, 8, 5),
+	(1, 9, 6),
+	(2, 1, 0),
+	(2, 7, 1),
+	(2, 5, 2),
+	(2, 8, 3),
+	(2, 9, 4),
+	(3, 6, 0),
+	(3, 5, 1),
+	(3, 8, 2),
+	(3, 9, 3);
 
 GO
 
@@ -370,10 +401,11 @@ GO
 
 INSERT INTO
 	Orders
-	(CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId)
+	(CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId)
 VALUES
-	('2024-02-20', NULL, '4', '1', '2'),
-	('2024-03-30', NULL, NULL, '1', '3');
+	('2024-02-20', NULL, 4, 1, 2, 1),
+	('2024-03-30', NULL, NULL, 1, 3, 2),
+	('2024-07-02', NULL, NULL, 2, 4, 3);
 
 GO
 
