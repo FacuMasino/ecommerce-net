@@ -14,19 +14,31 @@ namespace WebForms.Admin
         private ProductsManager _productsManager;
         private FeaturedsManager _featuredsManager;
         private List<FeaturedProduct> _featuredsList;
-        private List<Product> _productList;
+        private List<Product> _productsList;
         private Admin _adminMP; // Referencia a la instancia de la Admin Master Page
         private int _currentProductId;
 
         public int TotalFeatureds
         {
-            get { return ((List<FeaturedProduct>)Session["FeaturedsProducts"]).Count; }
+            get
+            {
+                if (Session["FeaturedsProducts"] != null)
+                {
+                    return ((List<FeaturedProduct>)Session["FeaturedsProducts"]).Count;
+                }
+                else
+                {
+                    return _featuredsList.Count;
+                }
+            }
         }
 
         public Featureds()
         {
             _productsManager = new ProductsManager();
             _featuredsManager = new FeaturedsManager();
+            _featuredsList = new List<FeaturedProduct>();
+            _productsList = new List<Product>();
         }
 
         /// <summary>
@@ -41,16 +53,21 @@ namespace WebForms.Admin
             return productsList;
         }
 
-        private void UpdateProductsList()
+        private void UpdateProductsList(bool isSearching = false)
         {
-            ProductListRepeater.DataSource = FilterProductsList(_productsManager.List(true, true)); // Activos y con stock
+            if (!isSearching)
+            {
+                GetProductsList();
+            }
+            ProductListRepeater.DataSource = FilterProductsList(_productsList); // Activos y con stock
             ProductListRepeater.DataBind();
         }
 
         private void UpdateProductsList(MasterPage master)
         {
+            GetProductsList();
             Repeater auxRpt = (Repeater)Helper.FindControl(master, "ProductListRepeater");
-            auxRpt.DataSource = FilterProductsList(_productsManager.List(true, true));
+            auxRpt.DataSource = FilterProductsList(_productsList);
             auxRpt.DataBind();
         }
 
@@ -59,6 +76,13 @@ namespace WebForms.Admin
             Session.Remove("FeaturedsProducts"); // Limpiar sesion
             _featuredsList = _featuredsManager.List();
             Session["FeaturedsProducts"] = _featuredsList;
+        }
+
+        private void GetProductsList()
+        {
+            Session.Remove("Products");
+            _productsList = _productsManager.List(true, true);
+            Session["Products"] = _productsList;
         }
 
         private void UpdateFeaturedsList()
@@ -82,11 +106,21 @@ namespace WebForms.Admin
             {
                 _featuredsList = (List<FeaturedProduct>)Session["FeaturedsProducts"];
             }
+            if (Session["Products"] != null)
+            {
+                _productsList = (List<Product>)Session["Products"];
+            }
         }
 
         private void Notify(string message, MasterPage master)
         {
             Admin adminMP = (Admin)master;
+            adminMP.ShowMasterToast(message);
+        }
+
+        private void Notify(string message)
+        {
+            Admin adminMP = (Admin)this.Master;
             adminMP.ShowMasterToast(message);
         }
 
@@ -117,6 +151,13 @@ namespace WebForms.Admin
 
         protected void AddProductLnkBtn_Click(object sender, EventArgs e)
         {
+            if (_featuredsList.Count == 6)
+            {
+                Notify(
+                    "Solo es posible agregar hasta 6 destacados. Quite alguno de la lista para añadir otro."
+                );
+                return;
+            }
             int productId = Convert.ToInt32(((LinkButton)sender).CommandArgument);
 
             Product auxProduct = _productsManager.Read(productId);
@@ -129,9 +170,33 @@ namespace WebForms.Admin
             _featuredsManager.Add(auxFeatured);
             UpdateFeaturedsList();
             UpdateProductsList();
+            SearchTextBox.Text = ""; // Si estaba buscando, se resetea el campo
         }
 
-        protected void SearchBtn_Click(object sender, EventArgs e) { }
+        protected void SearchBtn_Click(object sender, EventArgs e)
+        {
+            string filter = SearchTextBox.Text;
+
+            if (2 < filter.Length)
+            {
+                SearchPanel.CssClass = "input-group mb-3";
+                _productsList = _productsList.FindAll(
+                    x =>
+                        x.Name.ToUpper().Contains(filter.ToUpper())
+                        || x.Brand.ToString().ToUpper().Contains(filter.ToUpper())
+                        || x.Code.ToUpper().Contains(filter.ToUpper())
+                        || x.Description.ToUpper().Contains(filter.ToUpper())
+                        || x.Categories.Any(c => c.Name.ToUpper().Contains(filter.ToUpper()))
+                );
+            }
+            else
+            {
+                SearchPanel.CssClass = "input-group mb-3 invalid";
+            }
+
+            UpdateProductsList(true);
+            ProductsCollapse.CssClass = "collapse border rounded-bottom p-3 show";
+        }
 
         protected void LevelUpLnkBtn_Click(object sender, EventArgs e)
         {

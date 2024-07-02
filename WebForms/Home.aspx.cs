@@ -79,14 +79,32 @@ namespace WebForms
 
         private void GetFeaturedProducts()
         {
-            // Aca se deberia obtener la lista de productos destacados
-            // Si tuviera 0 productos entonces podrian usarse los ultimos agregados
-            // y mostrarlos como "nuevos ingresos"
+            Featureds = _featuredsManager.List();
+            if (Featureds.Count == 0)
+            {
+                GenerateFeaturedProducts();
+            }
+        }
 
-            // Por ahora solo se van a usar los 4 primeros de la lista normal
-            //FeaturedProducts = new List<Product>();
-            //FeaturedProducts = Products.Take(4).ToList();
-            Featureds = _featuredsManager.List(); // PRUEBA
+        /// <summary>
+        /// Genera una lista con los ultimos 3 productos agregados
+        ///  mostrandolos como Nuevos Ingresos
+        /// </summary>
+        private void GenerateFeaturedProducts()
+        {
+            if (Products.Count <= 3)
+                return;
+
+            for (int i = 0; i < 3; i++)
+            {
+                Featureds.Add(
+                    new FeaturedProduct(Products[Products.Count - (i + 1)])
+                    {
+                        ShowAsNew = true,
+                        DisplayOrder = i
+                    }
+                );
+            }
         }
 
         // EVENTS

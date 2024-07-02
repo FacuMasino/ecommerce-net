@@ -99,11 +99,11 @@
         <!-- Lista de productos -->
         <div>
             <a class="px-2 py-2 nav-link fw-500 text-reset rounded-top border-bottom d-flex justify-content-between bg-body-secondary"
-                data-bs-toggle="collapse" href="#productsCollapse" aria-expanded="true">Agregar
+                data-bs-toggle="collapse" href="#ProductsCollapse" aria-expanded="true">Agregar
                 Producto
             <i class="bi bi-caret-down-fill"></i>
             </a>
-            <div class="collapse border rounded-bottom p-3" id="productsCollapse">
+            <asp:Panel CssClass="collapse border rounded-bottom p-3" id="ProductsCollapse" ClientIDMode="Static" runat="server">
                 <!-- BUSCADOR -->
                 <asp:Panel ID="SearchPanel" runat="server" CssClass="input-group mb-3" DefaultButton="searchBtn">
                     <asp:TextBox CssClass="form-control" ID="SearchTextBox" runat="server" Text="" placeholder="Buscar por nombre, marca, etc" />
@@ -160,7 +160,7 @@
 
                     </table>
                 </div>
-            </div>
+            </asp:Panel>
         </div>
 
     </div>
