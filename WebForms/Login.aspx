@@ -13,17 +13,14 @@
                 </div>
                 <div class="mb-3">
                     <label for="UsrEmail" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="UsrEmail" placeholder="tucorreo@correo.com">
+                    <asp:TextBox runat="server" TextBoxMode="email" class="form-control" ID="UsrEmail" placeholder="Ingresa el mail con el que te registraste" />
                 </div>
                 <div class="mb-3">
                     <label for="UsrPass" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="UsrPass" placeholder="Contraseña">
+                    <asp:TextBox runat="server" TextBoxMode="Password" class="form-control" ID="UsrPass" placeholder="Contraseña" />
                 </div>
                 <div class="mb-3">
-                    <button type="button" class="btn btn-primary w-100">
-                        Ingresar
-                    </button>
-
+                    <asp:Button Text="Ingresar" class="btn btn-primary w-100" ID="LoginButton" OnClick="LoginButton_Click" runat="server" />
                     <a href="AccountRecovery.aspx" class="nav-link px-2 text-body-secondary">¿Olvidaste
                         tus datos de inicio?</a>
 

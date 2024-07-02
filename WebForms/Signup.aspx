@@ -7,19 +7,27 @@
     <div class="row justify-content-center my-md-5 my-3">
         <div class="col-md-4 col-12 p-md-0 px-4">
             <div class="mb-4 text-center">
-               <h2 class="fs-3">Crear una cuenta</h2>
+                <h2 class="fs-3">Crear una cuenta</h2>
             </div>
             <div class="mb-3">
                 <label for="UsrEmail" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="UsrEmail" placeholder="tucorreo@correo.com">
+                <asp:TextBox runat="server" TextBoxMode="email" class="form-control" ID="UsrEmail" placeholder="tucorreo@correo.com" />
+            </div>
+            <div class="mb-3">
+                <label for="UsrName" class="form-label">Nombre</label>
+                <asp:TextBox runat="server" class="form-control" ID="UsrName" placeholder="Nombre" />
+            </div>
+            <div class="mb-3">
+                <label for="UsrSurNm" class="form-label">Apellido</label>
+                <asp:TextBox runat="server" class="form-control" ID="UsrSurNm" placeholder="Apellido" />
             </div>
             <div class="mb-3">
                 <label for="UsrPass" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="UsrPass" placeholder="Contraseña">
+                <asp:TextBox runat="server" TextBoxMode="Password" class="form-control" ID="UsrPass" placeholder="Contraseña" />
             </div>
             <div class="mb-3">
                 <label for="UsrPassCheck" class="form-label">Confirmar Contraseña</label>
-                <input type="password" class="form-control" id="UsrPassCheck" placeholder="Repite tu contarseña">
+                <asp:TextBox runat="server" TextBoxMode="Password" class="form-control" ID="UsrPassCheck" placeholder="Repite tu contarseña" />
                 <div class="d-flex flex-column px-2">
                     <span id="passwordHelp" class="form-text fw-bold">Requisitos
                     </span>
@@ -39,3 +47,4 @@
         </div>
     </div>
 </asp:Content>
+
