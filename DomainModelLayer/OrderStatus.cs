@@ -2,7 +2,7 @@
 
 namespace DomainModelLayer
 {
-    internal class OrderStatus
+    public class OrderStatus
     {
         [DisplayName("ID")]
         public int Id { get; set; }

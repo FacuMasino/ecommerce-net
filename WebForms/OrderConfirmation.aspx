@@ -91,7 +91,7 @@
                         </label>
                     </div>
                 </div>
-                <button class="btn btn-dark w-100" type="button">Realizar pedido</button>
+                <asp:Button ID="SubmitOrder" runat="server" Text="Realizar pedido" CssClass="btn btn-dark w-100" />
             </div>
             <div class="col-md-5 col-12 order-md-last order-first border-md-start border-sm-bottom px-md-4 px-2 mb-md-0 mb-3">
                 <h2 class="fs-5 mb-3">Tus productos</h2>

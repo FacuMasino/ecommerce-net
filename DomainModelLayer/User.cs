@@ -2,7 +2,7 @@
 
 namespace DomainModelLayer
 {
-    internal class User : Person
+    public class User : Person
     {
         [DisplayName("Nombre de usuario")]
         public string Username { get; set; }
