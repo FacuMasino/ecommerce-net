@@ -1,4 +1,7 @@
 ﻿using System;
+using BusinessLogicLayer;
+using DomainModelLayer;
+using UtilitiesLayer;
 
 namespace WebForms
 {
@@ -6,9 +9,16 @@ namespace WebForms
     {
         // ATTRIBUTES
 
+        private Order _order;
+
         // PROPERTIES
 
         // CONSTRUCT
+
+        public OrderConfirmation()
+        { 
+            _order = new Order();
+        }
 
         // METHODS
 

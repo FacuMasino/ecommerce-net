@@ -16,54 +16,54 @@ namespace BusinessLogicLayer
 
         // METHODS
 
-        public Address Read(int adressId)
+        public Address Read(int addressId)
         {
-            Address adress = new Address();
+            Address address = new Address();
 
             try
             {
                 _dataAccess.SetQuery(
                     "select "
-                        + "A.AdressId, A.StreetName, A.StreetNumber, A.Flat, A.Details, A.CityId, "
+                        + "A.AddressId, A.StreetName, A.StreetNumber, A.Flat, A.Details, A.CityId, "
                         + "CI.CityName, CI.ZipCode, CI.ProvinceId, "
                         + "P.ProvinceName, P.CountryId, CO.CountryName "
-                        + "from Adresses A "
+                        + "from Addresses A "
                         + "inner join Cities CI on A.CityId = CI.CityId "
                         + "inner join Provinces P on CI.ProvinceId = P.ProvinceId "
                         + "inner join Countries CO on P.CountryId = CO.CountryId "
-                        + "where AdressId = @AdressId"
+                        + "where AddressId = @AddressId"
                 );
-                _dataAccess.SetParameter("@AdressId", adressId);
+                _dataAccess.SetParameter("@AddressId", addressId);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
                 {
-                    adress.Id = (int)_dataAccess.Reader["AdressId"];
-                    adress.StreetName = (string)_dataAccess.Reader["StreetName"];
-                    adress.StreetNumber = (string)_dataAccess.Reader["StreetNumber"];
+                    address.Id = (int)_dataAccess.Reader["AddressId"];
+                    address.StreetName = (string)_dataAccess.Reader["StreetName"];
+                    address.StreetNumber = (string)_dataAccess.Reader["StreetNumber"];
 
                     if (!(_dataAccess.Reader["Flat"] is DBNull))
                     {
-                        adress.Flat = (string)_dataAccess.Reader["Flat"];
+                        address.Flat = (string)_dataAccess.Reader["Flat"];
                     }
 
                     if (!(_dataAccess.Reader["Details"] is DBNull))
                     {
-                        adress.Details = (string)_dataAccess.Reader["Details"];
+                        address.Details = (string)_dataAccess.Reader["Details"];
                     }
 
-                    adress.City.Id = Convert.ToInt32(_dataAccess.Reader["CityId"]);
-                    adress.City.Name = (string)_dataAccess.Reader["CityName"];
+                    address.City.Id = Convert.ToInt32(_dataAccess.Reader["CityId"]);
+                    address.City.Name = (string)_dataAccess.Reader["CityName"];
 
                     if (!(_dataAccess.Reader["ZipCode"] is DBNull))
                     {
-                        adress.City.ZipCode = (string)_dataAccess.Reader["ZipCode"];
+                        address.City.ZipCode = (string)_dataAccess.Reader["ZipCode"];
                     }
 
-                    adress.Province.Id = Convert.ToInt32(_dataAccess.Reader["ProvinceId"]);
-                    adress.Province.Name = (string)_dataAccess.Reader["ProvinceName"];
-                    adress.Country.Id = Convert.ToInt32(_dataAccess.Reader["CountryId"]);
-                    adress.Country.Name = (string)_dataAccess.Reader["CountryName"];
+                    address.Province.Id = Convert.ToInt32(_dataAccess.Reader["ProvinceId"]);
+                    address.Province.Name = (string)_dataAccess.Reader["ProvinceName"];
+                    address.Country.Id = Convert.ToInt32(_dataAccess.Reader["CountryId"]);
+                    address.Country.Name = (string)_dataAccess.Reader["CountryName"];
                 }
             }
             catch (Exception ex)
@@ -75,53 +75,53 @@ namespace BusinessLogicLayer
                 _dataAccess.CloseConnection();
             }
 
-            return adress;
+            return address;
         }
 
-        public void Add(Address adress)
+        public void Add(Address address)
         {
-            int dbCountryId = _countriesManager.GetId(adress.Country);
+            int dbCountryId = _countriesManager.GetId(address.Country);
 
             if (dbCountryId == 0)
             {
-                _countriesManager.Add(adress.Country);
-                adress.Country.Id = Helper.GetLastId("Countries");
+                _countriesManager.Add(address.Country);
+                address.Country.Id = Helper.GetLastId("Countries");
             }
             else
             {
-                adress.Country.Id = dbCountryId;
+                address.Country.Id = dbCountryId;
             }
 
-            int dbProvinceId = _provincesManager.GetId(adress.Province);
+            int dbProvinceId = _provincesManager.GetId(address.Province);
 
             if (dbProvinceId == 0)
             {
-                _provincesManager.Add(adress.Province, adress.Country.Id);
-                adress.Province.Id = Helper.GetLastId("Provinces");
+                _provincesManager.Add(address.Province, address.Country.Id);
+                address.Province.Id = Helper.GetLastId("Provinces");
             }
             else
             {
-                adress.Province.Id = dbProvinceId;
+                address.Province.Id = dbProvinceId;
             }
 
-            int dbCityId = _citiesManager.GetId(adress.City);
+            int dbCityId = _citiesManager.GetId(address.City);
 
             if (dbCityId == 0)
             {
-                _citiesManager.Add(adress.City, adress.Province.Id);
-                adress.City.Id = Helper.GetLastId("Cities");
+                _citiesManager.Add(address.City, address.Province.Id);
+                address.City.Id = Helper.GetLastId("Cities");
             }
             else
             {
-                adress.City.Id = dbCityId;
+                address.City.Id = dbCityId;
             }
 
             try
             {
                 _dataAccess.SetQuery(
-                    "insert into Adresses (StreetName, StreetNumber, Flat, Details, CityId) values (@StreetName, @StreetNumber, @Flat, @Details, @CityId)"
+                    "insert into Addresses (StreetName, StreetNumber, Flat, Details, CityId) values (@StreetName, @StreetNumber, @Flat, @Details, @CityId)"
                 );
-                SetParameters(adress);
+                SetParameters(address);
                 _dataAccess.ExecuteAction();
             }
             catch (Exception ex)
@@ -134,63 +134,63 @@ namespace BusinessLogicLayer
             }
         }
 
-        public void Edit(Address adress)
+        public void Edit(Address address)
         {
-            int dbCountryId = _countriesManager.GetId(adress.Country);
+            int dbCountryId = _countriesManager.GetId(address.Country);
 
             if (dbCountryId == 0)
             {
-                _countriesManager.Add(adress.Country);
-                adress.Country.Id = Helper.GetLastId("Countries");
+                _countriesManager.Add(address.Country);
+                address.Country.Id = Helper.GetLastId("Countries");
             }
-            else if (dbCountryId == adress.Country.Id)
+            else if (dbCountryId == address.Country.Id)
             {
-                _countriesManager.Edit(adress.Country);
+                _countriesManager.Edit(address.Country);
             }
             else
             {
-                adress.Country.Id = dbCountryId;
+                address.Country.Id = dbCountryId;
             }
 
-            int dbProvinceId = _provincesManager.GetId(adress.Province);
+            int dbProvinceId = _provincesManager.GetId(address.Province);
 
             if (dbProvinceId == 0)
             {
-                _provincesManager.Add(adress.Province, adress.Country.Id);
-                adress.Province.Id = Helper.GetLastId("Provinces");
+                _provincesManager.Add(address.Province, address.Country.Id);
+                address.Province.Id = Helper.GetLastId("Provinces");
             }
-            else if (dbProvinceId == adress.Province.Id)
+            else if (dbProvinceId == address.Province.Id)
             {
-                _provincesManager.Edit(adress.Province, adress.Country.Id);
+                _provincesManager.Edit(address.Province, address.Country.Id);
             }
             else
             {
-                adress.Province.Id = dbProvinceId;
+                address.Province.Id = dbProvinceId;
             }
 
-            int dbCityId = _citiesManager.GetId(adress.City);
+            int dbCityId = _citiesManager.GetId(address.City);
 
             if (dbCityId == 0)
             {
-                _citiesManager.Add(adress.City, adress.Province.Id);
-                adress.City.Id = Helper.GetLastId("Cities");
+                _citiesManager.Add(address.City, address.Province.Id);
+                address.City.Id = Helper.GetLastId("Cities");
             }
-            else if (dbCityId == adress.City.Id)
+            else if (dbCityId == address.City.Id)
             {
-                _citiesManager.Edit(adress.City, adress.Province.Id);
+                _citiesManager.Edit(address.City, address.Province.Id);
             }
             else
             {
-                adress.City.Id = dbCityId;
+                address.City.Id = dbCityId;
             }
 
             try
             {
                 _dataAccess.SetQuery(
-                    "update Adresses set StreetName = @StreetName, StreetNumber = @StreetNumber, Flat = @Flat, Details = @Details, CityId = @CityId where AdressId = @AdressId"
+                    "update Addresses set StreetName = @StreetName, StreetNumber = @StreetNumber, Flat = @Flat, Details = @Details, CityId = @CityId where AddressId = @AddressId"
                 );
-                _dataAccess.SetParameter("@AdressId", adress.Id);
-                SetParameters(adress);
+                _dataAccess.SetParameter("@AddressId", address.Id);
+                SetParameters(address);
                 _dataAccess.ExecuteAction();
             }
             catch (Exception ex)
@@ -203,28 +203,28 @@ namespace BusinessLogicLayer
             }
         }
 
-        public int GetId(Address adress)
+        public int GetId(Address address)
         {
-            if (adress == null)
+            if (address == null)
             {
                 return 0;
             }
 
-            int adressId = 0;
+            int addressId = 0;
 
             try
             {
                 _dataAccess.SetQuery(
-                    "select AdressId from Adresses where StreetName = @StreetName and StreetNumber = @StreetNumber and CityId = @CityId"
+                    "select AddressId from Addresses where StreetName = @StreetName and StreetNumber = @StreetNumber and CityId = @CityId"
                 );
-                _dataAccess.SetParameter("@StreetName", adress.StreetName);
-                _dataAccess.SetParameter("@StreetNumber", adress.StreetNumber);
-                _dataAccess.SetParameter("@CityId", adress.City.Id);
+                _dataAccess.SetParameter("@StreetName", address.StreetName);
+                _dataAccess.SetParameter("@StreetNumber", address.StreetNumber);
+                _dataAccess.SetParameter("@CityId", address.City.Id);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
                 {
-                    adressId = (int)_dataAccess.Reader["AdressId"];
+                    addressId = (int)_dataAccess.Reader["AddressId"];
                 }
             }
             catch (Exception ex)
@@ -236,16 +236,16 @@ namespace BusinessLogicLayer
                 _dataAccess.CloseConnection();
             }
 
-            return adressId;
+            return addressId;
         }
 
-        private void SetParameters(Address adress)
+        private void SetParameters(Address address)
         {
-            _dataAccess.SetParameter("@StreetName", adress.StreetName);
-            _dataAccess.SetParameter("@StreetNumber", adress.StreetNumber);
-            _dataAccess.SetParameter("@Flat", adress.Flat);
-            _dataAccess.SetParameter("@Details", adress.Details);
-            _dataAccess.SetParameter("@CityId", adress.City.Id);
+            _dataAccess.SetParameter("@StreetName", address.StreetName);
+            _dataAccess.SetParameter("@StreetNumber", address.StreetNumber);
+            _dataAccess.SetParameter("@Flat", address.Flat);
+            _dataAccess.SetParameter("@Details", address.Details);
+            _dataAccess.SetParameter("@CityId", address.City.Id);
         }
     }
 }

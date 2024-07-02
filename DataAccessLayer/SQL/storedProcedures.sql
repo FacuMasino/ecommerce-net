@@ -191,3 +191,61 @@ begin
 end
 
 go
+
+------------
+-- ORDERS --
+------------
+
+create or alter procedure SP_List_Orders
+as
+begin
+	select O.OrderId, O.CreationDate, O.DeliveryDate, O.DeliveryAddressId, O.OrderStatusId, o.PersonId
+	from Orders O
+end
+
+go
+
+-----------
+-- USERS --
+-----------
+
+create or alter procedure SP_Get_User_Id(
+	@PersonId int
+)
+as
+begin
+	select U.UserId
+	from Users U
+	inner join People P on P.PersonId = U.PersonId
+	where P.PersonId = @PersonId
+end
+
+go
+
+create or alter procedure SP_Read_User(
+	@UserId int
+)
+as
+begin
+	select Username, UserPassword, RoleId, PersonId
+	from Users
+	where UserId = @UserId
+end
+
+go
+
+------------
+-- PEOPLE --
+------------
+
+create or alter procedure SP_Read_Person(
+	@PersonId int
+)
+as
+begin
+	select IsActive, FirstName, LastName, TaxCode, Phone, Email, Birth, AddressId
+	from People
+	where PersonId = @PersonId
+end
+
+go

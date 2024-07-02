@@ -123,19 +123,19 @@ CREATE TABLE Cities
 ) 
 GO
 
---------------
--- ADRESSES --
---------------
+---------------
+-- ADDRESSES --
+---------------
 
-CREATE TABLE Adresses
+CREATE TABLE Addresses
 (
-	AdressId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+	AddressId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
 	StreetName varchar(30) NOT NULL,
 	StreetNumber varchar(10) NOT NULL,
 	Flat varchar(30) NULL,
 	Details varchar(300) NULL,
 	CityId smallint FOREIGN KEY REFERENCES Cities (CityId) NOT NULL,
-	CONSTRAINT UC_Adress UNIQUE (StreetName, StreetNumber, CityId)
+	CONSTRAINT UC_Address UNIQUE (StreetName, StreetNumber, CityId)
 ) 
 GO
 
@@ -146,14 +146,14 @@ GO
 CREATE TABLE People
 (
 	PersonId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	PersonStatus bit NOT NULL DEFAULT (1),
-	PersonFirstName varchar(30) NOT NULL,
-	PersonLastName varchar(30) NOT NULL,
+	IsActive bit NOT NULL DEFAULT (1),
+	FirstName varchar(30) NOT NULL,
+	LastName varchar(30) NOT NULL,
 	TaxCode varchar(30) NULL,
 	Phone varchar(30) NULL,
 	Email varchar(30) NULL,
 	Birth date NULL,
-	AdressId int FOREIGN KEY REFERENCES Adresses (AdressId) NULL,
+	AddressId int FOREIGN KEY REFERENCES Addresses (AddressId) NULL,
 ) 
 GO
 
@@ -175,7 +175,7 @@ GO
 CREATE TABLE Users
 (
 	UserId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	UserName varchar(30) NOT NULL,
+	Username varchar(30) NOT NULL,
 	UserPassword varchar(30) NOT NULL,
 	RoleId tinyint FOREIGN KEY REFERENCES Roles (RoleId) NOT NULL,
 	PersonId int FOREIGN KEY REFERENCES People (PersonId) NOT NULL
@@ -200,11 +200,12 @@ GO
 CREATE TABLE Orders
 (
 	OrderId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	OrderDate datetime DEFAULT (getdate()) NOT NULL,
-	AdressId int FOREIGN KEY REFERENCES Adresses (AdressId) NULL,
+	CreationDate datetime DEFAULT (getdate()) NOT NULL,
+	DeliveryDate datetime NULL,
+	DeliveryAddressId int FOREIGN KEY REFERENCES Addresses (AddressId) NULL,
 	OrderStatusId int FOREIGN KEY REFERENCES OrderStatuses (OrderStatusId) NOT NULL,
-	UserId int FOREIGN KEY REFERENCES Users (UserId) NOT NULL
-) 
+	PersonId int FOREIGN KEY REFERENCES People (PersonId) NOT NULL
+)
 GO
 
 --------------------

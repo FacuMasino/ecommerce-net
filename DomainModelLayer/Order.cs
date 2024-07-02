@@ -8,9 +8,6 @@ namespace DomainModelLayer
         [DisplayName("ID")]
         public int Id { get; set; }
 
-        [DisplayName("Usuario")]
-        public User User { get; set; }
-
         [DisplayName("Fecha de creación")]
         public DateTime CreationDate { get; set; }
 
@@ -21,6 +18,9 @@ namespace DomainModelLayer
         public Address DeliveryAddress { get; set; }
 
         [DisplayName("Estado")]
-        public OrderStatus Status { get; set; }
+        public OrderStatus OrderStatus { get; set; }
+
+        [DisplayName("Usuario")]
+        public User User { get; set; }
     }
 }

@@ -4,6 +4,9 @@ namespace DomainModelLayer
 {
     public class User : Person
     {
+        [DisplayName("ID")]
+        public int UserId { get; set; }
+
         [DisplayName("Nombre de usuario")]
         public string Username { get; set; }
 

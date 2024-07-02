@@ -100,5 +100,28 @@ namespace UtilitiesLayer
 
             return $" (+{categories.Count - 1})";
         }
+
+        public static void AssignPerson<DestinyClass, OriginClass>(DestinyClass destinyObject, OriginClass originObject)
+            where DestinyClass : Person, new()
+            where OriginClass : Person, new()
+        {
+            destinyObject.PersonId = originObject.PersonId;
+            destinyObject.IsActive = originObject.IsActive;
+            destinyObject.FirstName = originObject.FirstName;
+            destinyObject.LastName = originObject.LastName;
+            destinyObject.TaxCode = originObject.TaxCode;
+            destinyObject.Phone = originObject.Phone;
+            destinyObject.Email = originObject.Email;
+            destinyObject.Birth = originObject.Birth;
+            destinyObject.Address = originObject.Address;
+
+            if (originObject is User && destinyObject is User)
+            {
+                (destinyObject as User).UserId = (originObject as User).UserId;
+                (destinyObject as User).Username = (originObject as User).Username;
+                (destinyObject as User).Password = (originObject as User).Password;
+                (destinyObject as User).Role = (originObject as User).Role;
+            }
+        }
     }
 }

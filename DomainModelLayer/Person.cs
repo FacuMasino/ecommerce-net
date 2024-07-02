@@ -6,10 +6,10 @@ namespace DomainModelLayer
     public class Person
     {
         [DisplayName("ID")]
-        public int Id { get; set; }
+        public int PersonId { get; set; }
 
-        [DisplayName("Estado")]
-        public bool Status { get; set; }
+        [DisplayName("Activo")]
+        public bool IsActive { get; set; }
 
         [DisplayName("Nombre")]
         public string FirstName { get; set; }

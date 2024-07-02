@@ -254,12 +254,12 @@ VALUES
 
 GO
 
---------------
--- ADRESSES --
---------------
+---------------
+-- ADDRESSES --
+---------------
 
 INSERT INTO
-	Adresses
+	Addresses
 	(StreetName, StreetNumber, Flat, Details, CityId)
 VALUES
 	(
@@ -290,13 +290,13 @@ GO
 INSERT INTO
 	People
 	(
-	PersonFirstName,
-	PersonLastName,
+	FirstName,
+	LastName,
 	TaxCode,
 	Phone,
 	Email,
 	Birth,
-	AdressId
+	AddressId
 	)
 VALUES
 	('Ana', 'Bertello', NULL, NULL, NULL, NULL, 1),
@@ -333,7 +333,7 @@ GO
 
 INSERT INTO
 	Users
-	(UserName, UserPassword, RoleId, PersonId)
+	(Username, UserPassword, RoleId, PersonId)
 VALUES
 	('Ani77aa', 'restrepo', '1', '1'),
 	('FacuMasino', 'donpablo', '2', '2'),
@@ -370,10 +370,10 @@ GO
 
 INSERT INTO
 	Orders
-	(OrderDate, AdressId, OrderStatusId, UserId)
+	(CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId)
 VALUES
-	('2024-02-20', '4', '1', '2'),
-	('2024-03-30', NULL, '1', '3');
+	('2024-02-20', NULL, '4', '1', '2'),
+	('2024-03-30', NULL, NULL, '1', '3');
 
 GO
 

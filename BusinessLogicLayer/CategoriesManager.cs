@@ -292,12 +292,5 @@ namespace BusinessLogicLayer
                 _dataAccess.SetParameter("@CategoryName", category.Name);
             }
         }
-
-        private List<int> GetCategoriesIds(int productId)
-        {
-            List<int> categoriesId = new List<int>();
-
-            return categoriesId;
-        }
     }
 }

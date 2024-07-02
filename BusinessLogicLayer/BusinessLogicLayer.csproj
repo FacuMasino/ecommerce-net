@@ -46,6 +46,7 @@
     <Compile Include="CountriesManager.cs" />
     <Compile Include="FeaturedsManager.cs" />
     <Compile Include="OrdersManager.cs" />
+    <Compile Include="PeopleManager.cs" />
     <Compile Include="ProductsManager.cs" />
     <Compile Include="BrandsManager.cs" />
     <Compile Include="CartManager.cs" />
