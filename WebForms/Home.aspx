@@ -34,7 +34,7 @@
                     <div class="row row-carousel">
                         <div class="col-5">
                             <div class="d-flex align-items-center justify-content-center position-relative">
-                                <span class="featured-badge fw-500">DESTACADO</span>
+                                <span class="featured-badge fw-500"><%:product.ShowAsNew ? "NUEVO":"DESTACADO"%></span>
                                 <img src="<%:product.Images[0].Url%>"
                                     class="d-block w-100 img-hero-carousel" alt="<%:product.Name%>" />
                             </div>

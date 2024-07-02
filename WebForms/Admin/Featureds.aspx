@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Productos Destacados" Language="C#" MasterPageFile="~/Admin/AdminMP.Master"
     AutoEventWireup="true" CodeBehind="Featureds.aspx.cs" Inherits="WebForms.Admin.Featureds" %>
 
-<asp:Content ID="FeaturedsContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
+<asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
     <div class="d-flex flex-column container-800 mx-auto gap-3">
         <div>
             <h1 class="fs-4">Destacados</h1>
@@ -22,6 +22,19 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <% if (TotalFeatureds == 0)
+                        {
+                    %>
+                    <tr>
+                        <th scope="row" class="text-center fs-5 p-4" colspan="4">
+                            Ops! Parece que aún no tienes productos destacados.<br />
+                            Intenta agregar uno desde el panel "Agregar Producto" !
+                        </th>
+                    </tr>
+                    <%}
+                        else
+                        {
+                    %>
                     <asp:Repeater runat="server" ID="FeaturedsListRepeater">
                         <ItemTemplate>
                             <tr>
@@ -39,7 +52,12 @@
                                 </td>
                                 <td class="align-middle">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="newProductChk">
+                                        <asp:CheckBox cssClas="form-check-input"
+                                            ID="newProductChk" Checked='<%#Eval("ShowAsNew")%>'
+                                            OnCheckedChanged="newProductChk_CheckedChanged"
+                                            AutoPostBack="true"
+                                            CommandName='<%#Eval("Id")%>'
+                                            runat="server" />
                                     </div>
                                 </td>
                                 <td class="align-middle">
@@ -51,7 +69,7 @@
                                             ID="LevelUpLnkBtn"
                                             OnClick="LevelUpLnkBtn_Click"
                                             runat="server"
-                                            title="Subir" />
+                                            title="Subir" Visible='<%#(((int)Eval("DisplayOrder") == 0) ? false : true)%>' />
                                         <!-- Bajar orden -->
                                         <asp:LinkButton Text='<i class="bi bi-caret-down-fill"></i>'
                                             CssClass="p-0 text-black fs-5"
@@ -59,13 +77,13 @@
                                             ID="LevelDownLnkBtn"
                                             OnClick="LevelDownLnkBtn_Click"
                                             runat="server"
-                                            title="Bajar" />
+                                            title="Bajar" Visible='<%#(((int)Eval("DisplayOrder") == TotalFeatureds-1) ? false:true)%>' />
                                         <!-- Quitar-->
                                         <asp:LinkButton Text='<i class="bi bi-trash3"></i>'
                                             CssClass="p-0 text-black fs-5"
                                             CommandArgument='<%#Eval("Id")%>'
-                                            ID="deleteFeaturedLnkBtn"
-                                            OnClick="deleteFeaturedLnkBtn_Click"
+                                            ID="removeFeaturedLnkBtn"
+                                            OnClick="removeFeaturedLnkBtn_Click"
                                             runat="server"
                                             title="Quitar" />
                                     </div>
@@ -73,8 +91,8 @@
                             </tr>
                         </ItemTemplate>
                     </asp:Repeater>
+                    <%}%>
                 </tbody>
-
             </table>
         </div>
 

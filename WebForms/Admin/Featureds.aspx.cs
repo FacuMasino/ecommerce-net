@@ -1,19 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
+using UtilitiesLayer;
 
 namespace WebForms.Admin
 {
-    public partial class Featureds : System.Web.UI.Page
+    public partial class Featureds : BasePage
     {
         private ProductsManager _productsManager;
         private FeaturedsManager _featuredsManager;
-
         private List<FeaturedProduct> _featuredsList;
+        private List<Product> _productList;
+        private Admin _adminMP; // Referencia a la instancia de la Admin Master Page
+        private int _currentProductId;
 
-        int TotalFeatureds = 0;
+        public int TotalFeatureds
+        {
+            get { return ((List<FeaturedProduct>)Session["FeaturedsProducts"]).Count; }
+        }
 
         public Featureds()
         {
@@ -21,29 +29,89 @@ namespace WebForms.Admin
             _featuredsManager = new FeaturedsManager();
         }
 
-        private void BindProductsList()
+        /// <summary>
+        /// Excluye de la lista los que ya estan en destacados
+        /// </summary>
+        /// <param name="productsList">Lista de productos</param>
+        /// <returns>Lista filtrada</returns>
+        private List<Product> FilterProductsList(List<Product> productsList)
         {
-            ProductListRepeater.DataSource = _productsManager.List(true, true); // Activos y con stock
+            productsList = productsList.Where(p => !_featuredsList.Any(f => f.Id == p.Id)).ToList();
+
+            return productsList;
+        }
+
+        private void UpdateProductsList()
+        {
+            ProductListRepeater.DataSource = FilterProductsList(_productsManager.List(true, true)); // Activos y con stock
             ProductListRepeater.DataBind();
         }
 
-        private void BindFeaturedsList()
+        private void UpdateProductsList(MasterPage master)
         {
-            _featuredsList = new List<FeaturedProduct>();
+            Repeater auxRpt = (Repeater)Helper.FindControl(master, "ProductListRepeater");
+            auxRpt.DataSource = FilterProductsList(_productsManager.List(true, true));
+            auxRpt.DataBind();
+        }
+
+        private void GetFeaturedsList()
+        {
+            Session.Remove("FeaturedsProducts"); // Limpiar sesion
             _featuredsList = _featuredsManager.List();
-
             Session["FeaturedsProducts"] = _featuredsList;
+        }
 
+        private void UpdateFeaturedsList()
+        {
+            GetFeaturedsList();
             FeaturedsListRepeater.DataSource = _featuredsList;
             FeaturedsListRepeater.DataBind();
         }
 
+        private void UpdateFeaturedsList(MasterPage master)
+        {
+            GetFeaturedsList();
+            Repeater auxRpt = (Repeater)Helper.FindControl(master, "FeaturedsListRepeater");
+            auxRpt.DataSource = _featuredsList;
+            auxRpt.DataBind();
+        }
+
+        private void CheckSession()
+        {
+            if (Session["FeaturedsProducts"] != null)
+            {
+                _featuredsList = (List<FeaturedProduct>)Session["FeaturedsProducts"];
+            }
+        }
+
+        private void Notify(string message, MasterPage master)
+        {
+            Admin adminMP = (Admin)master;
+            adminMP.ShowMasterToast(message);
+        }
+
+        private void RemoveFeaturedAction(MasterPage master)
+        {
+            _featuredsManager.Delete(_currentProductId);
+            Notify("El producto se quitó de la lista de destacados.", master);
+            UpdateFeaturedsList(master);
+            UpdateProductsList(master);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            _adminMP = (Admin)this.Master; // Se asigna la instancia de la Admin Master Page
+            // Para luego poder acceder a sus metodos
+
+            if (IsPostBack)
+            {
+                CheckSession();
+            }
+
             if (!IsPostBack)
             {
-                BindProductsList();
-                BindFeaturedsList();
+                UpdateFeaturedsList();
+                UpdateProductsList();
             }
         }
 
@@ -54,26 +122,65 @@ namespace WebForms.Admin
             Product auxProduct = _productsManager.Read(productId);
             FeaturedProduct auxFeatured = new FeaturedProduct(auxProduct)
             {
-                DisplayOrder = ((List<FeaturedProduct>)Session["FeaturedsProducts"]).Count + 1,
-                ShowAsNew = false // TODO: Tomar del checkbox
+                DisplayOrder = _featuredsList.Count,
+                ShowAsNew = false
             };
 
             _featuredsManager.Add(auxFeatured);
+            UpdateFeaturedsList();
+            UpdateProductsList();
         }
 
         protected void SearchBtn_Click(object sender, EventArgs e) { }
 
-        protected void LevelUpLnkBtn_Click(object sender, EventArgs e) { }
-
-        protected void LevelDownLnkBtn_Click(object sender, EventArgs e) { }
-
-        protected void deleteFeaturedLnkBtn_Click(object sender, EventArgs e)
+        protected void LevelUpLnkBtn_Click(object sender, EventArgs e)
         {
-            // TODO: Agregar confirmacion
-
             int productId = Convert.ToInt32(((LinkButton)sender).CommandArgument);
+            FeaturedProduct product = _featuredsList.Find(p => p.Id == productId);
 
-            _featuredsManager.Delete(productId);
+            // Con el indice del producto que se quiere subir de nivel
+            // se busca al producto anterior para poder pasar el Id a la funcion
+            // del manager y modificarlo
+            int currentProductIndex = _featuredsList.IndexOf(product);
+            int previousProductId = _featuredsList[currentProductIndex - 1].Id;
+            _featuredsManager.LevelUpProduct(product, previousProductId);
+            UpdateFeaturedsList();
+        }
+
+        protected void LevelDownLnkBtn_Click(object sender, EventArgs e)
+        {
+            int productId = Convert.ToInt32(((LinkButton)sender).CommandArgument);
+            FeaturedProduct product = _featuredsList.Find(p => p.Id == productId);
+
+            // Con el indice del producto que se quiere bajar de nivel
+            // se busca al producto siguiente para poder pasar el Id a la funcion
+            // del manager y modificarlo
+            int currentProductIndex = _featuredsList.IndexOf(product);
+            int nextProductId = _featuredsList[currentProductIndex + 1].Id;
+            _featuredsManager.LevelDownProduct(product, nextProductId);
+            UpdateFeaturedsList();
+        }
+
+        protected void removeFeaturedLnkBtn_Click(object sender, EventArgs e)
+        {
+            ModalOkAction = RemoveFeaturedAction; // Si luego confirma se llama a esta función
+
+            _currentProductId = Convert.ToInt32(((LinkButton)sender).CommandArgument);
+
+            _adminMP.ShowMasterModal(
+                "Quitar Destacado",
+                "Está seguro que desea quitar el producto de Destacados?",
+                true
+            );
+        }
+
+        protected void newProductChk_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox chkAux = (CheckBox)sender;
+            int productId = Convert.ToInt32(chkAux.Attributes["CommandName"]);
+            FeaturedProduct product = _featuredsList.Find(p => p.Id == productId);
+            _featuredsManager.SetShowAsNew(productId, !product.ShowAsNew);
+            UpdateFeaturedsList();
         }
     }
 }

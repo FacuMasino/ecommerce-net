@@ -63,7 +63,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a id="BtnNavFeatureds" href="Products.aspx" class="nav-link text-black" runat="server">
+                                <a id="BtnNavFeatureds" href="Featureds.aspx" class="nav-link text-black" runat="server">
                                     <i class="bi bi-star me-2"></i>
                                     Destacados
                                 </a>

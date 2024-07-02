@@ -90,6 +90,88 @@ namespace BusinessLogicLayer
             {
                 _dataAccess.CloseConnection();
             }
+
+            ResetDisplayOrder(); // Actualizar los valores de DisplayOrder luego de eliminar
+        }
+
+        private void SetDisplayOrder(int productId, int displayOrder)
+        {
+            try
+            {
+                _dataAccess.SetQuery(
+                    "Update FeaturedProducts Set DisplayOrder = @DisplayOrder Where ProductId = @ProductId"
+                );
+                _dataAccess.SetParameter("@DisplayOrder", displayOrder);
+                _dataAccess.SetParameter("@ProductId", productId);
+                _dataAccess.ExecuteAction();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+        }
+
+        public void SetShowAsNew(int productId, bool showAsNew)
+        {
+            try
+            {
+                _dataAccess.SetQuery(
+                    "Update FeaturedProducts Set ShowAsNew = @ShowAsNew Where ProductId = @ProductId"
+                );
+                _dataAccess.SetParameter("@ShowAsNew", showAsNew);
+                _dataAccess.SetParameter("@ProductId", productId);
+                _dataAccess.ExecuteAction();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+        }
+
+        public void LevelUpProduct(FeaturedProduct product, int previousProductId)
+        {
+            try
+            {
+                SetDisplayOrder(product.Id, product.DisplayOrder - 1);
+                SetDisplayOrder(previousProductId, product.DisplayOrder);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void LevelDownProduct(FeaturedProduct product, int nextProductId)
+        {
+            try
+            {
+                SetDisplayOrder(product.Id, product.DisplayOrder + 1);
+                SetDisplayOrder(nextProductId, product.DisplayOrder);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void ResetDisplayOrder()
+        {
+            List<FeaturedProduct> products = List();
+
+            int counter = 0;
+            foreach (FeaturedProduct product in products)
+            {
+                SetDisplayOrder(product.Id, counter);
+                counter++;
+            }
         }
     }
 }
