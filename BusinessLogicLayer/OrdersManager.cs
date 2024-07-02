@@ -6,7 +6,7 @@ using UtilitiesLayer;
 
 namespace BusinessLogicLayer
 {
-    internal class OrdersManager
+    public class OrdersManager
     {
         private DataAccess _dataAccess = new DataAccess();
         private Person _person;
@@ -14,13 +14,14 @@ namespace BusinessLogicLayer
         private UsersManager _usersManager = new UsersManager();
         private AddressesManager _addressesManager = new AddressesManager();
 
-        public List<Order> List()
+        public List<Order> List(int personId = 0)
         {
             List<Order> orders = new List<Order>();
 
             try
             {
                 _dataAccess.SetProcedure("SP_List_Orders");
+                _dataAccess.SetParameter("@PersonId", personId);
                 _dataAccess.ExecuteRead();
 
                 while (_dataAccess.Reader.Read())
@@ -29,8 +30,17 @@ namespace BusinessLogicLayer
 
                     order.Id = (int)_dataAccess.Reader["OrderId"];
                     order.CreationDate = (DateTime)_dataAccess.Reader["CreationDate"];
-                    order.DeliveryDate = (DateTime)_dataAccess.Reader["DeliveryDate"];
-                    order.DeliveryAddress.Id = (int)_dataAccess.Reader["DeliveryAdressId"];
+
+                    if (_dataAccess.Reader.IsDBNull(_dataAccess.Reader.GetOrdinal("DeliveryDate")))
+                    {
+                        order.DeliveryDate = DateTime.MinValue;
+                    }
+                    else
+                    {
+                        order.DeliveryDate = _dataAccess.Reader.GetDateTime(_dataAccess.Reader.GetOrdinal("DeliveryDate"));
+                    }
+
+                    order.DeliveryAddress.Id = _dataAccess.Reader["DeliveryAddressId"] as int? ?? order.DeliveryAddress.Id;
                     order.OrderStatus.Id = (int)_dataAccess.Reader["OrderStatusId"];
                     order.User.PersonId = (int)_dataAccess.Reader["PersonId"];
 

@@ -31,5 +31,10 @@ namespace DomainModelLayer
 
         [DisplayName("Domicilio")]
         public Address Address { get; set; }
+
+        public Person()
+        {
+            Address = new Address();
+        }
     }
 }

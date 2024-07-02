@@ -22,5 +22,12 @@ namespace DomainModelLayer
 
         [DisplayName("Usuario")]
         public User User { get; set; }
+
+        public Order()
+        {
+            DeliveryAddress = new Address();
+            OrderStatus = new OrderStatus();
+            User = new User();
+        }
     }
 }

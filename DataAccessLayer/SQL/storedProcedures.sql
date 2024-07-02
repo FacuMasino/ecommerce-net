@@ -196,11 +196,22 @@ go
 -- ORDERS --
 ------------
 
-create or alter procedure SP_List_Orders
+create or alter procedure SP_List_Orders(
+	@PersonId int
+)
 as
 begin
-	select O.OrderId, O.CreationDate, O.DeliveryDate, O.DeliveryAddressId, O.OrderStatusId, o.PersonId
-	from Orders O
+	if (0 < @PersonId)
+	begin
+		select OrderId, CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId
+		from Orders
+		where PersonId = @PersonId
+	end
+	else
+	begin
+		select OrderId, CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId
+		from Orders
+	end
 end
 
 go

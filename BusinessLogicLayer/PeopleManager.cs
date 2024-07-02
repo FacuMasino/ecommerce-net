@@ -17,7 +17,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetProcedure("SP_Read_Person");
-                _dataAccess.SetParameter("@RoleId", personId);
+                _dataAccess.SetParameter("@PersonId", personId);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
@@ -34,8 +34,17 @@ namespace BusinessLogicLayer
                     person.Phone = person.Phone ?? "";
                     person.Email = _dataAccess.Reader["Email"]?.ToString();
                     person.Email = person.Email ?? "";
-                    person.Birth = (DateTime)_dataAccess.Reader["Birth"];
-                    person.Address.Id = (int)_dataAccess.Reader["AddressId"];
+
+                    if (_dataAccess.Reader.IsDBNull(_dataAccess.Reader.GetOrdinal("Birth")))
+                    {
+                        person.Birth = DateTime.MinValue;
+                    }
+                    else
+                    {
+                        person.Birth = _dataAccess.Reader.GetDateTime(_dataAccess.Reader.GetOrdinal("Birth"));
+                    }
+
+                    person.Address.Id = _dataAccess.Reader["AddressId"] as int? ?? person.Address.Id;
                 }
             }
             catch (Exception ex)

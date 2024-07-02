@@ -26,9 +26,8 @@ namespace BusinessLogicLayer
                     user.UserId = userId;
                     user.Username = _dataAccess.Reader["Username"]?.ToString();
                     user.Username = user.Username ?? "";
-                    user.Password = _dataAccess.Reader["UserPassword"]?.ToString();
-                    user.Password = user.Password ?? "";
-                    user.Role.Id = (int)_dataAccess.Reader["RoleId"];
+                    user.Password = (string)_dataAccess.Reader["UserPassword"];
+                    user.Role.Id = Convert.ToInt32(_dataAccess.Reader["RoleId"]);
                     user.PersonId = (int)_dataAccess.Reader["PersonId"];
                 }
             }
