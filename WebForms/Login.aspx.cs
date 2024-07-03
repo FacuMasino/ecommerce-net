@@ -12,17 +12,16 @@ namespace WebForms
     public partial class Login : System.Web.UI.Page
     {
         private User _user;
+        private Person _person;
         private UsersManager _userManager = new UsersManager();
 
         protected void Page_Load(object sender, EventArgs e) { }
 
         protected void LoginButton_Click(object sender, EventArgs e)
         {
-            _user = new User();
-            /*
             try
             {
-
+                _user = new User();
                 _user.Email = UsrEmail.Text;
                 _user.Password = UsrPass.Text;
 
@@ -35,18 +34,13 @@ namespace WebForms
                 {
                     Session.Add("error", "User o Pass incorrectos");
                     Response.Redirect("Login.aspx", false);
-
                 }
             }
             catch (Exception ex)
             {
-
                 Session.Add("error", ex.ToString());
                 Response.Redirect("Login.aspx", false);
             }
-        }
-    }
-*/
         }
     }
 }
