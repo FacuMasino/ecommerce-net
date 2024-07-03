@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
+using UtilitiesLayer;
 
 namespace WebForms
 {
@@ -15,6 +16,7 @@ namespace WebForms
         private CategoriesManager _categoriesManager;
         private BrandsManager _brandsManager;
         private FeaturedsManager _featuredsManager;
+        private EmailManager _emailManager;
 
         // PROPERTIES
 
@@ -36,6 +38,25 @@ namespace WebForms
             Categories = _categoriesManager.List();
             Brands = _brandsManager.List();
             TotalProducts = Products.Count; // Total de productos que permanece original
+            _emailManager = new EmailManager();
+            EmailTest();
+        }
+
+        private void EmailTest()
+        {
+            DomainModelLayer.User user = new DomainModelLayer.User()
+            {
+                FirstName = "Facundo",
+                Email = "joaqfm@gmail.com"
+            };
+
+            EmailMessage<WelcomeEmail> test = Helper.ComposeWelcomeEmail(
+                user,
+                Helper.EcommerceName,
+                Helper.EcommerceUrl
+            );
+
+            _emailManager.SendEmail(test);
         }
 
         // METHODS
