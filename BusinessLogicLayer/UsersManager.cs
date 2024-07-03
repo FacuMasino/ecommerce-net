@@ -10,6 +10,7 @@ namespace BusinessLogicLayer
         private DataAccess _dataAccess = new DataAccess();
         private Person _person;
         private PeopleManager _peopleManager = new PeopleManager();
+        private User _user;
 
         public User Read(int userId)
         {
@@ -97,6 +98,37 @@ namespace BusinessLogicLayer
             }
 
             return role;
+        }
+
+        public bool Login(User user)
+        {
+            try
+            {
+                _dataAccess.SetQuery(
+                    "select UserId,UserName, UserPassword,RoleId, P.Email from Users U Inner join Person P"
+                        + "  on U.PersonID = P.PersonId P. where P.Email = @Email"
+                );
+                _dataAccess.SetParameter("@Email", user.Email);
+                _dataAccess.SetParameter("@Pass", user.Password);
+
+                _dataAccess.ExecuteRead();
+
+                while (_dataAccess.Reader.Read())
+                {
+                    user.UserId = (int)_dataAccess.Reader["UserId"];
+                    user.Role.Id = (int)_dataAccess.Reader["RoleId"];
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
         }
     }
 }

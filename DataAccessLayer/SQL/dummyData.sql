@@ -147,9 +147,9 @@ INSERT INTO
 	FeaturedProducts
 	(ProductId, DisplayOrder, ShowAsNew)
 VALUES
-	(3,2,0),
-	(1,3,0),
-	(6,1,0)
+	(3,0,0),
+	(1,1,0),
+	(6,2,0)
 
 ------------
 -- IMAGES --

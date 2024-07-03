@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Configuration;
 using System.Web.UI;
 using DataAccessLayer;
 using DomainModelLayer;
@@ -8,6 +9,16 @@ namespace UtilitiesLayer
 {
     public static class Helper
     {
+        // TODO: Estos datos podrian estar en una tabla de configuraciones de la DB
+        public static string EcommerceName
+        {
+            get { return WebConfigurationManager.AppSettings["ecommerce_name"]; }
+        }
+        public static string EcommerceUrl
+        {
+            get { return WebConfigurationManager.AppSettings["ecommerce_url"]; }
+        }
+
         // hack: reemplazar GetLastId() implementando el comando output en las consultas de los métodos Add() de todos los managers.
         public static int GetLastId(string table)
         {
@@ -101,7 +112,10 @@ namespace UtilitiesLayer
             return $" (+{categories.Count - 1})";
         }
 
-        public static void AssignPerson<DestinyClass, OriginClass>(DestinyClass destinyObject, OriginClass originObject)
+        public static void AssignPerson<DestinyClass, OriginClass>(
+            DestinyClass destinyObject,
+            OriginClass originObject
+        )
             where DestinyClass : Person, new()
             where OriginClass : Person, new()
         {
@@ -122,6 +136,26 @@ namespace UtilitiesLayer
                 (destinyObject as User).Password = (originObject as User).Password;
                 (destinyObject as User).Role = (originObject as User).Role;
             }
+        }
+
+        public static EmailMessage<WelcomeEmail> ComposeWelcomeEmail(
+            User user,
+            string ecommerceName,
+            string ecommerceUrl
+        )
+        {
+            EmailMessage<WelcomeEmail> welcomeEmail = new EmailMessage<WelcomeEmail>
+            {
+                To = new List<EmailAddress> { new EmailAddress { Email = user.Email } },
+                TemplateVariables = new WelcomeEmail
+                {
+                    FirstName = user.FirstName,
+                    EcommerceName = ecommerceName,
+                    EcommerceLink = ecommerceUrl
+                }
+            };
+
+            return welcomeEmail;
         }
     }
 }
