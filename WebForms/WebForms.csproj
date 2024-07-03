@@ -69,6 +69,7 @@
     <Content Include="Admin\Brands.aspx" />
     <Content Include="Admin\Categories.aspx" />
     <Content Include="Admin\Dashboard.aspx" />
+    <Content Include="Admin\Order.aspx" />
     <Content Include="Admin\Orders.aspx" />
     <Content Include="Admin\Product.aspx" />
     <Content Include="Admin\Products.aspx" />
@@ -165,6 +166,13 @@
     </Compile>
     <Compile Include="Admin\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Order.aspx.cs">
+      <DependentUpon>Order.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Order.aspx.designer.cs">
+      <DependentUpon>Order.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Orders.aspx.cs">
       <DependentUpon>Orders.aspx</DependentUpon>

@@ -145,6 +145,10 @@ body {
     max-width: 800px;
 }
 
+.container-1200 {
+    max-width: 1200px;
+}
+
 .border-dashed {
     border-style: dashed;
 }
@@ -246,6 +250,10 @@ body {
 .hero-row-bg {
     background: rgb(148,187,233);
     background: linear-gradient(90deg, rgba(148,187,233,1) 0%, rgba(109,40,217,1) 30%, rgba(113,55,219,1) 70%, rgba(148,187,233,1) 100%);
+}
+
+.text-small {
+    font-size: .75rem;
 }
 
 /* Large screen */

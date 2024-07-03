@@ -41,7 +41,7 @@ namespace DomainModelLayer
 
         public EmailMessage(string from, string nameFrom)
         {
-            From = new EmailAddress { Email = from };
+            From = new EmailAddress { Email = from, Name = nameFrom };
             To = new List<EmailAddress>();
             TemplateVariables = new T();
         }

@@ -52,7 +52,7 @@
 
                                 <!-- Fecha (de creación) -->
 
-                                <td>
+                                <td scope="row">
                                     <asp:Label
                                         ID="DateLbl"
                                         runat="server"
@@ -63,7 +63,7 @@
 
                                 <!-- Cliente -->
 
-                                <td scope="row">
+                                <td>
                                     <asp:Label
                                         ID="CategoryNameLbl"
                                         runat="server"
@@ -74,7 +74,7 @@
 
                                 <!-- Canal de distribución -->
 
-                                <td scope="row">
+                                <td>
                                     <asp:Label
                                         ID="DistributionChannelLbl"
                                         runat="server"
@@ -91,7 +91,7 @@
                                         runat="server"
                                         OnSelectedIndexChanged="OrderStatusesDDL_SelectedIndexChanged"
                                         AutoPostBack="true"
-                                        CssClass="dropdown btn btn-secondary dropdown-toggle">
+                                        CssClass="dropdown btn btn-secondary dropdown-toggle w-100">
                                     </asp:DropDownList>
                                 </td>
 

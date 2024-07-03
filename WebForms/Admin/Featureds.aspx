@@ -39,7 +39,7 @@
                         <ItemTemplate>
                             <tr>
                                 <th scope="row">
-                                    <img src="<%#Eval("Images[0].Url")%>" class="img-table" />
+                                    <img src="<%#Eval("Images[0].Url")%>" class="img-table rounded" />
                                     <a class="text-black"
                                         href="/Product.aspx?id=<%#Eval("Id")%>"
                                         target="_blank">

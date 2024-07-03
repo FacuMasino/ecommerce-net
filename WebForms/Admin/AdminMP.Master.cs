@@ -28,6 +28,9 @@ namespace WebForms.Admin
                 case "/admin/Orders.aspx":
                     SetActiveItem(BtnNavOrders);
                     break;
+                case "/admin/Order.aspx":
+                    SetActiveItem(BtnNavOrders);
+                    break;
                 case "/admin/Users.aspx":
                     SetActiveItem(BtnNavUsers);
                     break;
