@@ -193,6 +193,30 @@ CREATE TABLE OrderStatuses
 ) 
 GO
 
+---------------------------
+-- DISTRIBUTION CHANNELS --
+---------------------------
+
+CREATE TABLE DistributionChannels
+(
+	DistributionChannelId int PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	DistributionChannelName varchar(50) NOT NULL
+)
+GO
+
+---------------------
+-- CHANNELSTATUSES --
+---------------------
+
+CREATE TABLE ChannelStatuses
+(
+	DistributionChannelId int FOREIGN KEY REFERENCES DistributionChannels(DistributionChannelId) NOT NULL,
+	OrderStatusId int FOREIGN KEY REFERENCES OrderStatuses(OrderStatusId) NOT NULL,
+	OrderStatusIndex int NOT NULL,
+	PRIMARY KEY (DistributionChannelId, OrderStatusId)
+)
+GO
+
 ------------
 -- ORDERS --
 ------------
@@ -204,7 +228,8 @@ CREATE TABLE Orders
 	DeliveryDate datetime NULL,
 	DeliveryAddressId int FOREIGN KEY REFERENCES Addresses (AddressId) NULL,
 	OrderStatusId int FOREIGN KEY REFERENCES OrderStatuses (OrderStatusId) NOT NULL,
-	PersonId int FOREIGN KEY REFERENCES People (PersonId) NOT NULL
+	PersonId int FOREIGN KEY REFERENCES People (PersonId) NOT NULL,
+	DistributionChannelId int FOREIGN KEY REFERENCES DistributionChannels (DistributionChannelId) NOT NULL
 )
 GO
 

@@ -23,11 +23,15 @@ namespace DomainModelLayer
         [DisplayName("Usuario")]
         public User User { get; set; }
 
+        [DisplayName("Canal de distribución")]
+        public DistributionChannel DistributionChannel { get; set; }
+
         public Order()
         {
             DeliveryAddress = new Address();
             OrderStatus = new OrderStatus();
             User = new User();
+            DistributionChannel = new DistributionChannel();
         }
     }
 }

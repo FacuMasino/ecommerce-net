@@ -35,7 +35,7 @@ namespace BusinessLogicLayer
                     person.Email = _dataAccess.Reader["Email"]?.ToString();
                     person.Email = person.Email ?? "";
 
-                    if (_dataAccess.Reader.IsDBNull(_dataAccess.Reader.GetOrdinal("Birth")))
+                    if (_dataAccess.Reader.IsDBNull(_dataAccess.Reader.GetOrdinal("Birth"))) // hack
                     {
                         person.Birth = DateTime.MinValue;
                     }

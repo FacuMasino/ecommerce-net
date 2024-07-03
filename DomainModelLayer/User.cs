@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Xml.Linq;
 
 namespace DomainModelLayer
 {
@@ -19,6 +20,22 @@ namespace DomainModelLayer
         public User()
         {
             Role = new Role();
+        }
+
+        public override string ToString()
+        {
+            if (Username != null)
+            {
+                return Username;
+            }
+            else if (FirstName != null && LastName != null)
+            {
+                return FirstName + " " + LastName;
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 }

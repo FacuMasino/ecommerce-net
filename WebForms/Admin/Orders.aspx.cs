@@ -55,5 +55,18 @@ namespace WebForms.Admin
         {
             // hack
         }
+
+        /// <summary>
+        /// Evento que se dispara cuando se hace clic en cualquier control dentro del Repeater que tenga el atributo CommandName definido.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        protected void OrdersListRpt_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "Edit")
+            {
+                
+            }
+        }
     }
 }
