@@ -16,7 +16,7 @@ namespace WebForms
         private CategoriesManager _categoriesManager;
         private BrandsManager _brandsManager;
         private FeaturedsManager _featuredsManager;
-        private EmailManager _emailManager;
+        private EmailManager _emailManager; // TODO: ELIMINAR
 
         // PROPERTIES
 
@@ -38,10 +38,11 @@ namespace WebForms
             Categories = _categoriesManager.List();
             Brands = _brandsManager.List();
             TotalProducts = Products.Count; // Total de productos que permanece original
-            _emailManager = new EmailManager();
-            EmailTest();
+            // _emailManager = new EmailManager(); // TODO: ELIMINAR
+            // EmailTest(); // TODO: ELIMINAR
         }
 
+        // TODO: ELIMINAR
         private void EmailTest()
         {
             DomainModelLayer.User user = new DomainModelLayer.User()

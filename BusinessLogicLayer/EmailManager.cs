@@ -29,21 +29,6 @@ namespace BusinessLogicLayer
             _request.AddHeader("Content-Type", "application/json");
         }
 
-        public void SendTest()
-        {
-            var client = new RestClient("https://send.api.mailtrap.io/api/send");
-            var request = new RestRequest();
-            request.AddHeader("Authorization", ConfigurationManager.AppSettings["api_token"]);
-            request.AddHeader("Content-Type", "application/json");
-            request.AddParameter(
-                "application/json",
-                "{\"from\":{\"email\":\"mailtrap@demomailtrap.com\",\"name\":\"Mailtrap Test\"},\"to\":[{\"email\":\"joaqfm@gmail.com\"}],\"template_uuid\":\"a92a080c-fc38-4a8b-a222-a484933b013e\",\"template_variables\":{\"user_name\":\"Test_User_name\",\"next_step_link\":\"Test_Next_step_link\",\"get_started_link\":\"Test_Get_started_link\",\"onboarding_video_link\":\"Test_Onboarding_video_link\"}}",
-                ParameterType.RequestBody
-            );
-
-            var response = client.Post(request);
-        }
-
         public void SendEmail<T>(EmailMessage<T> emailMessage)
             where T : IEmailVariables, new()
         {
@@ -80,7 +65,13 @@ namespace BusinessLogicLayer
             var options = new JsonSerializerOptions
             {
                 WriteIndented = false,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DefaultIgnoreCondition = System
+                    .Text
+                    .Json
+                    .Serialization
+                    .JsonIgnoreCondition
+                    .WhenWritingNull // No parsea los valores que sean null (soluciona el bug en propiedad To que solo tiene Email y no Name)
             };
 
             return JsonSerializer.Serialize(emailMessage, options);
