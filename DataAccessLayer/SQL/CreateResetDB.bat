@@ -14,7 +14,7 @@ set /p choice=Ingrese su eleccion (1, 2, o 3):
 if "%choice%"=="1" (
     set connection_string="localhost\SQLEXPRESS"
 ) else if "%choice%"=="2" (
-    set connection_string="192.168.0.221"
+    set connection_string=192.168.0.221 -U SA -P Password1234
 ) else if "%choice%"=="3" (
     set connection_string="BANGHO\SQLEXPRESS"
 ) else (
