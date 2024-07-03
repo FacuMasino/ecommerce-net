@@ -216,6 +216,19 @@ end
 
 go
 
+create or alter procedure SP_List_Order_Statuses(
+	@DistributionChannelId int
+)
+as
+begin
+	select OrderStatusId
+	from ChannelStatuses
+	where DistributionChannelId = @DistributionChannelId
+	order by OrderStatusIndex
+end
+
+go
+
 -----------
 -- USERS --
 -----------
