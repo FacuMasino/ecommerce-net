@@ -29,7 +29,7 @@
                 runat="server"
                 OnClick="SearchBtn_Click" />
             <div class="invalid-feedback">
-                Ingrese al menos 2 caracteres.    
+                Ingrese al menos 2 caracteres.
             </div>
         </asp:Panel>
 
@@ -47,10 +47,10 @@
                     <asp:Repeater runat="server" ID="CategoriesListRpt" OnItemCommand="CategoriesListRpt_ItemCommand">
                         <ItemTemplate>
                             <tr>
+
+                                <!-- Nombre -->
+
                                 <td scope="row">
-
-                                    <!-- Nombre -->
-
                                     <asp:Label
                                         ID="CategoryNameLbl"
                                         runat="server"
@@ -66,6 +66,9 @@
                                         Text='<%#Eval("Name")%>'
                                         CssClass="form-control d-none" />
                                 </td>
+
+                                <!-- Acciones -->
+
                                 <td>
                                     <div class="d-flex gap-2">
 

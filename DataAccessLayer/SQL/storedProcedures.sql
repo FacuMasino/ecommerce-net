@@ -216,15 +216,30 @@ end
 
 go
 
+create or alter procedure SP_Get_Distribution_Channel_Id(
+	@OrderId int
+)
+as
+begin
+	select C.DistributionChannelId
+	from DistributionChannels C
+	inner join Orders O on O.DistributionChannelId = C.DistributionChannelId
+	where O.OrderId = @OrderId
+end
+
+go
+
 create or alter procedure SP_List_Order_Statuses(
 	@DistributionChannelId int
 )
 as
 begin
-	select OrderStatusId
-	from ChannelStatuses
-	where DistributionChannelId = @DistributionChannelId
-	order by OrderStatusIndex
+	select S.OrderStatusId, S.OrderStatusName
+	from OrderStatuses S
+	inner join ChannelStatuses CS on CS.OrderStatusId = S.OrderStatusId
+	inner join DistributionChannels C on C.DistributionChannelId = CS.DistributionChannelId
+	where C. DistributionChannelId = @DistributionChannelId
+	order by CS.OrderStatusIndex
 end
 
 go
@@ -257,10 +272,6 @@ begin
 end
 
 go
-
-------------
--- PEOPLE --
-------------
 
 create or alter procedure SP_Read_Person(
 	@PersonId int

@@ -1,12 +1,9 @@
-﻿using BusinessLogicLayer;
-using DomainModelLayer;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using UtilitiesLayer;
+using System.Xml.Linq;
+using BusinessLogicLayer;
+using DomainModelLayer;
 
 namespace WebForms.Admin
 {
@@ -17,6 +14,7 @@ namespace WebForms.Admin
         private Order _order;
         private List<Order> _orders;
         private OrdersManager _ordersManager;
+        private OrderStatusesManager _orderStatusesManager = new OrderStatusesManager();
 
         // CONSTRUCT
 
@@ -56,17 +54,22 @@ namespace WebForms.Admin
             // hack
         }
 
-        /// <summary>
-        /// Evento que se dispara cuando se hace clic en cualquier control dentro del Repeater que tenga el atributo CommandName definido.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="e"></param>
-        protected void OrdersListRpt_ItemCommand(object source, RepeaterCommandEventArgs e)
+        protected void OrdersListRpt_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if (e.CommandName == "Edit")
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                
+                _order = (Order)e.Item.DataItem;
+                int distributionChannelId = _ordersManager.GetDistributionChannelId(_order.Id);
+                DropDownList ddl = (DropDownList)e.Item.FindControl("OrderStatusesDDL");
+                ddl.DataSource = _orderStatusesManager.List(distributionChannelId);
+                ddl.DataBind();
+                ddl.SelectedValue = _order.OrderStatus.Name;
             }
+        }
+
+        protected void OrderStatusesDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // hack : logica para editar el estado de una orden
         }
     }
 }

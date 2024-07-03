@@ -13,6 +13,7 @@ namespace BusinessLogicLayer
         private PeopleManager _peopleManager = new PeopleManager();
         private UsersManager _usersManager = new UsersManager();
         private AddressesManager _addressesManager = new AddressesManager();
+        private OrderStatusesManager _orderStatusesManager = new OrderStatusesManager();
 
         public List<Order> List(int personId = 0) // hack : renombrar atributo OrderStatus por CurrentOrderStatus en clase Order del DML
         {
@@ -60,7 +61,7 @@ namespace BusinessLogicLayer
             foreach (Order order in orders)
             {
                 order.DeliveryAddress = _addressesManager.Read(order.DeliveryAddress.Id);
-                order.OrderStatus = ReadOrderStatus(order.OrderStatus.Id);
+                order.OrderStatus = _orderStatusesManager.Read(order.OrderStatus.Id);
                 order.DistributionChannel = ReadDistributionChannel(order.DistributionChannel.Id);
 
                 order.User.UserId = _usersManager.GetUserId(order.User.PersonId);
@@ -77,35 +78,6 @@ namespace BusinessLogicLayer
             }
 
             return orders;
-        }
-
-        private OrderStatus ReadOrderStatus(int orderStatusId)
-        {
-            OrderStatus orderStatus = new OrderStatus();
-
-            try
-            {
-                _dataAccess.SetQuery("select OrderStatusName from OrderStatuses where OrderStatusId = @OrderStatusId");
-                _dataAccess.SetParameter("@OrderStatusId", orderStatusId);
-                _dataAccess.ExecuteRead();
-
-                if (_dataAccess.Reader.Read())
-                {
-                    orderStatus.Id = orderStatusId;
-                    orderStatus.Name = _dataAccess.Reader["OrderStatusName"]?.ToString();
-                    orderStatus.Name = orderStatus.Name ?? "";
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                _dataAccess.CloseConnection();
-            }
-
-            return orderStatus;
         }
 
         private DistributionChannel ReadDistributionChannel(int distributionChannelId)
@@ -134,20 +106,20 @@ namespace BusinessLogicLayer
                 _dataAccess.CloseConnection();
             }
 
-            // hack : modularizar ListOrderStatuses()
+            distributionChannel.OrderStatuses = _orderStatusesManager.List(distributionChannel.Id);
+
+            return distributionChannel;
+        }
+
+        public int GetDistributionChannelId(int orderid)
+        {
+            int distributionChannelId = 0;
 
             try
             {
-                _dataAccess.SetProcedure("SP_List_Order_Statuses");
-                _dataAccess.SetParameter("@DistributionChannelId", distributionChannel.Id);
-                _dataAccess.ExecuteRead();
-
-                while (_dataAccess.Reader.Read())
-                {
-                    OrderStatus orderStatus = new OrderStatus();
-                    orderStatus.Id = (int)_dataAccess.Reader["OrderStatusId"];
-                    distributionChannel.OrderStatuses.Add(orderStatus);
-                }
+                _dataAccess.SetProcedure("SP_Get_Distribution_Channel_Id");
+                _dataAccess.SetParameter("@Orderid", orderid);
+                distributionChannelId = _dataAccess.ExecuteScalar();
             }
             catch (Exception ex)
             {
@@ -158,12 +130,7 @@ namespace BusinessLogicLayer
                 _dataAccess.CloseConnection();
             }
 
-            for (int i = 0; i < distributionChannel.OrderStatuses.Count; i++)
-            {
-                distributionChannel.OrderStatuses[i] = ReadOrderStatus(distributionChannel.OrderStatuses[i].Id);
-            }
-
-            return distributionChannel;
+            return distributionChannelId;
         }
     }
 }
