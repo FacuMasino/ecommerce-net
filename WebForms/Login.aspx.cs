@@ -32,14 +32,14 @@ namespace WebForms
                 }
                 else
                 {
-                    Session.Add("error", "User o Pass incorrectos");
-                    Response.Redirect("Login.aspx", false);
+                    Session.Add("error", "Mail o Pass incorrectos");
+                    Response.Redirect("ErrorLogin.aspx", false);
                 }
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
-                Response.Redirect("Login.aspx", false);
+                Response.Redirect("ErrorLogin.aspx");
             }
         }
     }
