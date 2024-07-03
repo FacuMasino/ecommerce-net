@@ -105,8 +105,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "select UserId,UserName, UserPassword,RoleId, P.Email from Users U Inner join Person P"
-                        + "  on U.PersonID = P.PersonId P. where P.Email = @Email"
+                    "select UserId,RoleId from Users U Inner join People P on U.PersonId = P.PersonId  where P.Email = @Email AND U.UserPassword = @Pass"
                 );
                 _dataAccess.SetParameter("@Email", user.Email);
                 _dataAccess.SetParameter("@Pass", user.Password);

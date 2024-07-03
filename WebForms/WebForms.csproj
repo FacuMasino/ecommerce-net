@@ -105,6 +105,7 @@
     <Content Include="Content\img\add-to-cart.svg" />
     <Content Include="Content\img\Empty-pana.svg" />
     <Content Include="Content\img\placeholder.jpg" />
+    <Content Include="ErrorLogin.aspx" />
     <Content Include="Product.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="OrderConfirmation.aspx" />
@@ -200,6 +201,13 @@
     </Compile>
     <Compile Include="Cart.aspx.designer.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorLogin.aspx.cs">
+      <DependentUpon>ErrorLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorLogin.aspx.designer.cs">
+      <DependentUpon>ErrorLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="Product.aspx.cs">
       <DependentUpon>Product.aspx</DependentUpon>
