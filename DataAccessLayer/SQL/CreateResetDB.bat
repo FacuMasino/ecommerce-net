@@ -32,7 +32,7 @@ echo.
 set /p confirm=Su eleccion: 
 
 if /i "%confirm%" NEQ "S" (
-    echo Operación cancelada.
+    echo Operacion cancelada.
     pause
     goto menu
 )
