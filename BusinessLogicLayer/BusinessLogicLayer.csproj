@@ -80,6 +80,7 @@
     <Compile Include="EmailManager.cs" />
     <Compile Include="FeaturedsManager.cs" />
     <Compile Include="OrdersManager.cs" />
+    <Compile Include="OrderStatusesManager.cs" />
     <Compile Include="PeopleManager.cs" />
     <Compile Include="ProductsManager.cs" />
     <Compile Include="BrandsManager.cs" />

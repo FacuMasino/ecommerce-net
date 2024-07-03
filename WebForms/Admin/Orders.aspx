@@ -40,18 +40,19 @@
                     <tr>
                         <th scope="col">Fecha</th>
                         <th scope="col">Cliente</th>
+                        <th scope="col">Distribución</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">Datos de entrega</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <asp:Repeater runat="server" ID="OrdersListRpt" OnItemCommand="OrdersListRpt_ItemCommand">
+                    <asp:Repeater runat="server" ID="OrdersListRpt" OnItemDataBound="OrdersListRpt_ItemDataBound">
                         <ItemTemplate>
                             <tr>
+
+                                <!-- Fecha (de creación) -->
+
                                 <td>
-
-                                    <!-- Fecha -->
-
                                     <asp:Label
                                         ID="DateLbl"
                                         runat="server"
@@ -59,10 +60,10 @@
                                         CssClass="text-black">
                                     </asp:Label>
                                 </td>
+
+                                <!-- Cliente -->
+
                                 <td scope="row">
-
-                                    <!-- Cliente -->
-
                                     <asp:Label
                                         ID="CategoryNameLbl"
                                         runat="server"
@@ -70,29 +71,53 @@
                                         CssClass="text-black">
                                     </asp:Label>
                                 </td>
-                                <td>
 
-                                    <!-- Estado -->
+                                <!-- Canal de distribución -->
 
+                                <td scope="row">
                                     <asp:Label
-                                        ID="StatusLbl"
+                                        ID="DistributionChannelLbl"
                                         runat="server"
-                                        Text='<%#Eval("OrderStatus")%>'
+                                        Text='<%#Eval("DistributionChannel")%>'
                                         CssClass="text-black">
                                     </asp:Label>
                                 </td>
+
+                                <!-- Estado -->
+
+                                <td>
+                                    <asp:DropDownList
+                                        ID="OrderStatusesDDL"
+                                        runat="server"
+                                        OnSelectedIndexChanged="OrderStatusesDDL_SelectedIndexChanged"
+                                        AutoPostBack="true"
+                                        CssClass="dropdown btn btn-secondary dropdown-toggle">
+                                    </asp:DropDownList>
+                                </td>
+
+                                <!-- Datos de entrega -->
+
                                 <td>
                                     <div class="d-flex gap-2">
 
-                                        <!-- Editar -->
+                                        <!-- Dirección -->
 
-                                        <asp:LinkButton
-                                            Text='<i class="bi bi-pencil-square"></i>'
-                                            CssClass="p-0 text-black fs-5"
-                                            CommandName="Edit"
-                                            CommandArgument='<%#Eval("Id")%>'
-                                            ID="EditCategoryBtn"
-                                            runat="server" />
+                                        <asp:Label
+                                            ID="DeliveryAddressLbl"
+                                            runat="server"
+                                            Text='<%#Eval("DeliveryAddress")%>'
+                                            CssClass="text-black">
+                                        </asp:Label>
+
+                                        <!-- Fecha (de entrega) -->
+
+                                        <asp:Label
+                                            ID="DeliveryDateLbl"
+                                            runat="server"
+                                            Text='<%#Eval("DeliveryDate", "{0:dd/MM/yyyy}")%>'
+                                            CssClass="text-black">
+                                        </asp:Label>
+
                                     </div>
                                 </td>
                             </tr>

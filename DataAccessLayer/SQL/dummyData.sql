@@ -342,7 +342,7 @@ INSERT INTO
 	OrderStatuses
 	(OrderStatusName)
 VALUES
-	('Pago pendiente o en proceso'), -- ID 1 Hardcoded
+	('Pago en proceso'), -- ID 1 Hardcoded
 	('Envío pendiente'), -- ID 2 Hardcoded
 	('Pedido enviado'), -- ID 3 Hardcoded
 	('Pedido entregado'), -- ID 4 Hardcoded
@@ -403,9 +403,9 @@ INSERT INTO
 	Orders
 	(CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId)
 VALUES
-	('2024-02-20', NULL, 4, 1, 2, 1),
-	('2024-03-30', NULL, NULL, 1, 3, 2),
-	('2024-07-02', NULL, NULL, 2, 4, 3);
+	('2024-02-20', NULL, 4, 2, 2, 1),
+	('2024-03-30', NULL, NULL, 7, 3, 2),
+	('2024-07-02', NULL, NULL, 5, 4, 3);
 
 GO
 
