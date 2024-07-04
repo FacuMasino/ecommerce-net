@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
@@ -151,11 +150,11 @@ namespace WebForms.Admin
             string filter = SearchTextBox.Text;
             GetSearchState(); // Obtiene el estado de busqueda
 
-            // Limpiar búsqueda
+            // Limpiar búsqueda si ya está buscando y el texto es el mismo
             if (_isSearching && _textToSearch == filter)
             {
                 // Resetear estado
-                SetSearchState(false, "");
+                SetSearchState(false, ""); // Limpia el estado de busqueda
 
                 // Resetear controles
                 SearchBtn.Text = "<i class=\"bi bi-search\"></i>";
@@ -172,15 +171,14 @@ namespace WebForms.Admin
                 SearchPanel.CssClass = "input-group mb-3";
                 _categories = _categories.FindAll(x => x.Name.ToUpper().Contains(filter.ToUpper()));
                 SearchBtn.Text = "<i class=\"bi bi-x-circle\"></i>"; // cambia icono boton de busqueda
-
-                SetSearchState(true, filter);
-
-                BindCategoriesRpt();
             }
             else
             {
                 SearchPanel.CssClass = "input-group mb-3 invalid";
             }
+
+            SetSearchState(true, filter); // Guarda el estado para saber que está buscando
+            BindCategoriesRpt();
         }
 
         /// <summary>
