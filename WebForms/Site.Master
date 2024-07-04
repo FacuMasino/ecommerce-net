@@ -82,9 +82,15 @@
                                     <i class="bi bi-person fs-4"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDDProducts">
+                                    <%if ( Session["user"] == null ) {  %>
                                     <li class="dropdown-item"><a class="text-decoration-none text-black" href="Login.aspx">Iniciar sesión</a></li>
                                     <li class="dropdown-item"><a class="text-decoration-none text-black" href="Signup.aspx">Registrarse</a></li>
-                                </ul>
+                              <%} else { %>   
+                                     <li class="dropdown-item"><a class="text-decoration-none text-black" href="Account.aspx">Mi Perfil</a></li>
+                                   <asp:Button Text="Cerrar Sesión" class="btn btn-light" ID="LogOut" OnClick="LogOut_Click" runat="server" />
+                                    
+                                    <% } %>
+                                    </ul>
                             </div>
                         </div>
                     </div>
