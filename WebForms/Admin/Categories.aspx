@@ -29,8 +29,7 @@
                 CssClass="btn rounded-end btn-outline-secondary"
                 runat="server"
                 OnClick="SearchBtn_Click"
-                ClientIDMode="Static"
-                />
+                ClientIDMode="Static" />
             <div class="invalid-feedback">
                 Ingrese al menos 2 caracteres.
             </div>
@@ -47,6 +46,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <% if (TotalCategories == 0)
+                        {
+                    %>
+                    <tr>
+                        <th scope="row" class="text-center fs-6 p-4" colspan="2">Ops! No hay categorías para mostrar.<br />
+                        </th>
+                    </tr>
+                    <%}
+                        else
+                        {
+                    %>
                     <asp:Repeater runat="server" ID="CategoriesListRpt" OnItemCommand="CategoriesListRpt_ItemCommand">
                         <ItemTemplate>
                             <tr>
@@ -119,6 +129,7 @@
                             </tr>
                         </ItemTemplate>
                     </asp:Repeater>
+                    <%} %>
                 </tbody>
             </table>
         </div>

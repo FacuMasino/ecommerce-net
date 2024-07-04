@@ -19,6 +19,11 @@ namespace WebForms.Admin
         private bool _isSearching;
         private string _textToSearch;
 
+        public int TotalCategories
+        {
+            get { return _categories == null ? 0 : _categories.Count; }
+        }
+
         // CONSTRUCT
 
         public Categories()

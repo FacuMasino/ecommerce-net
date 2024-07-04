@@ -46,6 +46,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <% if (TotalBrands == 0)
+                        {
+                    %>
+                    <tr>
+                        <th scope="row" class="text-center fs-6 p-4" colspan="2">Ops! No hay marcas para mostrar.<br />
+                        </th>
+                    </tr>
+                    <%}
+                        else
+                        {
+                    %>
                     <asp:Repeater runat="server" ID="BrandsListRpt" OnItemCommand="BrandsListRpt_ItemCommand">
                         <ItemTemplate>
                             <tr>
@@ -115,6 +126,7 @@
                             </tr>
                         </ItemTemplate>
                     </asp:Repeater>
+                    <%} %>
                 </tbody>
             </table>
         </div>

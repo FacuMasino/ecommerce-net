@@ -19,6 +19,11 @@ namespace WebForms.Admin
         private bool _isSearching;
         private string _textToSearch;
 
+        public int TotalBrands
+        {
+            get { return _brands == null ? 0 : _brands.Count; }
+        }
+
         //CONSTRUCT
         public Brands()
         {
