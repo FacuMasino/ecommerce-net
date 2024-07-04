@@ -21,13 +21,16 @@
                 ID="SearchTextBox"
                 runat="server"
                 Text=""
+                onKeyUp="checkSearchBtn();"
                 placeholder="Buscar por nombre" />
             <asp:LinkButton
                 Text='<i class="bi bi-search"></i>'
                 ID="SearchBtn"
                 CssClass="btn rounded-end btn-outline-secondary"
                 runat="server"
-                OnClick="SearchBtn_Click" />
+                OnClick="SearchBtn_Click"
+                ClientIDMode="Static"
+                />
             <div class="invalid-feedback">
                 Ingrese al menos 2 caracteres.
             </div>

@@ -47,3 +47,12 @@ const masterModal = new bootstrap.Modal(document.getElementById('MasterModal'));
 // Crea una nueva instancia de Bootstrap Toast para las notificaciones Toast
 const masterToastElement = document.getElementById('masterToast');
 const masterToast = new bootstrap.Toast(masterToastElement);
+
+const checkSearchBtn = () => {
+    let searchBtnIcon = document.getElementById('SearchBtn').firstElementChild;
+    let readyToSearch = searchBtnIcon.classList.contains("bi-search");
+    if (!readyToSearch) {
+        searchBtnIcon.classList.remove("bi-x-circle");
+        searchBtnIcon.classList.add("bi-search");
+    }
+}
