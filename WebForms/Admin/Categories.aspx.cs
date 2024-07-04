@@ -16,6 +16,8 @@ namespace WebForms.Admin
         private Category _category;
         private List<Category> _categories;
         private CategoriesManager _categoriesManager;
+        private bool _isSearching;
+        private string _textToSearch;
 
         // CONSTRUCT
 
@@ -96,6 +98,18 @@ namespace WebForms.Admin
             }
         }
 
+        private void GetSearchState()
+        {
+            _isSearching = ViewState["IsSearching"] as bool? ?? false;
+            _textToSearch = ViewState["TextToSearch"] as string ?? "";
+        }
+
+        private void SetSearchState(bool isSearching, string textToSearch)
+        {
+            ViewState["IsSearching"] = isSearching;
+            ViewState["TextToSearch"] = textToSearch;
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
@@ -129,7 +143,39 @@ namespace WebForms.Admin
 
         protected void SearchBtn_Click(object sender, EventArgs e)
         {
-            // hack
+            string filter = SearchTextBox.Text;
+            GetSearchState(); // Obtiene el estado de busqueda
+
+            // Limpiar búsqueda
+            if (_isSearching && _textToSearch == filter)
+            {
+                // Resetear estado
+                SetSearchState(false, "");
+
+                // Resetear controles
+                SearchBtn.Text = "<i class=\"bi bi-search\"></i>";
+                SearchTextBox.Text = "";
+                SearchPanel.CssClass = "input-group mb-3";
+
+                FetchCategories();
+                BindCategoriesRpt();
+                return;
+            }
+
+            if (2 <= filter.Length)
+            {
+                SearchPanel.CssClass = "input-group mb-3";
+                _categories = _categories.FindAll(x => x.Name.ToUpper().Contains(filter.ToUpper()));
+                SearchBtn.Text = "<i class=\"bi bi-x-circle\"></i>"; // cambia icono boton de busqueda
+
+                SetSearchState(true, filter);
+
+                BindCategoriesRpt();
+            }
+            else
+            {
+                SearchPanel.CssClass = "input-group mb-3 invalid";
+            }
         }
 
         /// <summary>

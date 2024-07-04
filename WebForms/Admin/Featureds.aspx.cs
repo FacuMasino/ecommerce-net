@@ -177,16 +177,15 @@ namespace WebForms.Admin
         {
             string filter = SearchTextBox.Text;
 
-            if (2 < filter.Length)
+            if (2 <= filter.Length)
             {
                 SearchPanel.CssClass = "input-group mb-3";
-                _productsList = _productsList.FindAll(
-                    x =>
-                        x.Name.ToUpper().Contains(filter.ToUpper())
-                        || x.Brand.ToString().ToUpper().Contains(filter.ToUpper())
-                        || x.Code.ToUpper().Contains(filter.ToUpper())
-                        || x.Description.ToUpper().Contains(filter.ToUpper())
-                        || x.Categories.Any(c => c.Name.ToUpper().Contains(filter.ToUpper()))
+                _productsList = _productsList.FindAll(x =>
+                    x.Name.ToUpper().Contains(filter.ToUpper())
+                    || x.Brand.ToString().ToUpper().Contains(filter.ToUpper())
+                    || x.Code.ToUpper().Contains(filter.ToUpper())
+                    || x.Description.ToUpper().Contains(filter.ToUpper())
+                    || x.Categories.Any(c => c.Name.ToUpper().Contains(filter.ToUpper()))
                 );
             }
             else
