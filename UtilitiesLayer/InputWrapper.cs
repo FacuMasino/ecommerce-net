@@ -13,20 +13,24 @@ namespace UtilitiesLayer
         public bool IsPositive { get; set; }
         public bool IsValid { get; set; }
 
+        public bool IsAlphanumeric { get; set; }
+
         public InputWrapper(
             TextBox textBox,
             Type inputType,
             int minLength = 2,
             int maxLength = 0,
-            bool positive = true
+            bool positiveNumber = true,
+            bool alphanumeric = false
         )
         {
             this.Control = textBox;
             this.InputType = inputType;
             MinLength = minLength;
             MaxLength = maxLength;
-            IsPositive = positive;
+            IsPositive = positiveNumber;
             IsValid = true;
+            IsAlphanumeric = alphanumeric;
         }
     }
 }

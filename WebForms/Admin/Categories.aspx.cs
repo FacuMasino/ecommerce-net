@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
@@ -26,6 +27,26 @@ namespace WebForms.Admin
         }
 
         // METHODS
+
+        private bool IsValidName(TextBox textBox)
+        {
+            InputWrapper auxWrapper = new InputWrapper(textBox, typeof(string), 2, 30, false, true);
+            if (Validator.IsGoodInput(auxWrapper))
+                return true;
+            return false;
+        }
+
+        private void Notify(string message)
+        {
+            Admin adminMP = (Admin)this.Master;
+            adminMP.ShowMasterToast(message);
+        }
+
+        private void Notify(string message, MasterPage master)
+        {
+            Admin adminMP = (Admin)master;
+            adminMP.ShowMasterToast(message);
+        }
 
         private void FetchCategories()
         {
@@ -65,15 +86,13 @@ namespace WebForms.Admin
             if (_categoriesManager.CountCategoryRelations(_category) == 0)
             {
                 _categoriesManager.Delete(_category);
-                ((Admin)masterPage).ShowMasterToast("La categoría fue eliminada con éxito!");
+                Notify("La categoría fue eliminada con éxito!", masterPage);
                 FetchCategories();
                 BindCategoriesRpt(masterPage);
             }
             else
             {
-                ((Admin)masterPage).ShowMasterToast(
-                    "La categoría está en uso y no puede ser borrada."
-                );
+                Notify("La categoría está en uso y no puede ser borrada.", masterPage);
             }
         }
 
@@ -127,6 +146,15 @@ namespace WebForms.Admin
             else if (e.CommandName == "Save")
             {
                 TextBox editTxt = (TextBox)e.Item.FindControl("EditCategoryNameTxt");
+
+                if (!IsValidName(editTxt))
+                {
+                    Notify(
+                        "El nombre de Categoría es inválido, debe ser entre 2 y 30 caracteres alfanuméricos."
+                    );
+                    return;
+                }
+
                 _category.Id = Convert.ToInt32(e.CommandArgument);
                 _category.Name = editTxt.Text;
 

@@ -91,6 +91,8 @@ namespace UtilitiesLayer
                         Debug.Print($"Campo Invalido: {input.Control.ClientID}");
                         return false;
                     }
+                    if (input.IsAlphanumeric && !IsAlphanumeric(input.Control.Text))
+                        return false;
                     break;
                 case "System.Decimal":
                     // Si se ingresa un nro fuera de rango, decimal.TryParse va a dar false

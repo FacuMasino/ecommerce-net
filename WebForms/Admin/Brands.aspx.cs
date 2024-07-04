@@ -5,6 +5,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
+using UtilitiesLayer;
 
 namespace WebForms.Admin
 {
@@ -25,6 +26,28 @@ namespace WebForms.Admin
         }
 
         // METHODS
+
+        private void Notify(string message)
+        {
+            Admin adminMP = (Admin)this.Master;
+            adminMP.ShowMasterToast(message);
+        }
+
+        /// <summary>
+        /// Notificar desde una funcion invocada por un Modal
+        /// </summary>
+        private void Notify(string message, MasterPage masterPage)
+        {
+            ((Admin)masterPage).ShowMasterToast(message);
+        }
+
+        private bool IsValidName(TextBox textBox)
+        {
+            InputWrapper auxWrapper = new InputWrapper(textBox, typeof(string), 2, 30, false, true);
+            if (Validator.IsGoodInput(auxWrapper))
+                return true;
+            return false;
+        }
 
         private void FetchBrands()
         {
@@ -118,6 +141,15 @@ namespace WebForms.Admin
             else if (e.CommandName == "Save")
             {
                 TextBox editTextBox = (TextBox)e.Item.FindControl("EditBrandNameTxt");
+
+                if (!IsValidName(editTextBox))
+                {
+                    Notify(
+                        "El nombre de Marca es inválido, debe ser entre 2 y 30 caracteres alfanuméricos."
+                    );
+                    return;
+                }
+
                 _brand.Id = Convert.ToInt32(e.CommandArgument);
                 _brand.Name = editTextBox.Text;
 
@@ -175,20 +207,6 @@ namespace WebForms.Admin
             {
                 Notify("La Marca está en uso y no puede ser borrada.", masterPage);
             }
-        }
-
-        private void Notify(string message)
-        {
-            Admin adminMP = (Admin)this.Master;
-            adminMP.ShowMasterToast(message);
-        }
-
-        /// <summary>
-        /// Notificar desde una funcion invocada por un Modal
-        /// </summary>
-        private void Notify(string message, MasterPage masterPage)
-        {
-            ((Admin)masterPage).ShowMasterToast(message);
         }
     }
 }
