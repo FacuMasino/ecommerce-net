@@ -157,5 +157,75 @@ namespace UtilitiesLayer
 
             return welcomeEmail;
         }
+
+        public static EmailMessage<NewOrderEmail> ComposeNewOrderEmail(
+            User user,
+            string ecommerceName,
+            string orderNumber,
+            string orderLink
+        )
+        {
+            EmailMessage<NewOrderEmail> newOrderEmail = new EmailMessage<NewOrderEmail>
+            {
+                To = new List<EmailAddress> { new EmailAddress { Email = user.Email } },
+                TemplateVariables = new NewOrderEmail
+                {
+                    FirstName = user.FirstName,
+                    EcommerceName = ecommerceName,
+                    OrderLink = orderLink,
+                    OrderNumber = orderNumber
+                }
+            };
+
+            return newOrderEmail;
+        }
+
+        public static EmailMessage<OrderShippingEmail> ComposeShippingEmail(
+            User user,
+            string ecommerceName,
+            string orderNumber,
+            string orderLink,
+            string orderTracking
+        )
+        {
+            EmailMessage<OrderShippingEmail> shippingEmail = new EmailMessage<OrderShippingEmail>
+            {
+                To = new List<EmailAddress> { new EmailAddress { Email = user.Email } },
+                TemplateVariables = new OrderShippingEmail
+                {
+                    FirstName = user.FirstName,
+                    EcommerceName = ecommerceName,
+                    OrderLink = orderLink,
+                    OrderNumber = orderNumber,
+                    OrderTracking = orderTracking
+                }
+            };
+
+            return shippingEmail;
+        }
+
+        public static EmailMessage<OrderOnStoreEmail> ComposeOrderOnStoreEmail(
+            User user,
+            string ecommerceName,
+            string orderNumber,
+            string orderLink,
+            string orderAction
+        )
+        {
+            EmailMessage<OrderOnStoreEmail> orderOnStoreEmail = new EmailMessage<OrderOnStoreEmail>
+            {
+                To = new List<EmailAddress> { new EmailAddress { Email = user.Email } },
+                TemplateVariables = new OrderOnStoreEmail
+                {
+                    FirstName = user.FirstName,
+                    EcommerceName = ecommerceName,
+                    OrderLink = orderLink,
+                    OrderNumber = orderNumber,
+                    OrderAction = orderAction
+                }
+            };
+
+            return orderOnStoreEmail;
+        }
     }
 }
