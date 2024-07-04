@@ -11,7 +11,11 @@ namespace WebForms
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["user"] == null)
+            {
+                Session.Add("error", "Debes realizar el Login para ver tus datos");
+                Response.Redirect("Login.aspx", false);
+            }
         }
     }
 }

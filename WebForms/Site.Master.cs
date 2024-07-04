@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web;
 using BusinessLogicLayer;
 using DomainModelLayer;
 
@@ -33,6 +34,12 @@ namespace WebForms
             {
                 _productSets = (List<ProductSet>)Session["CurrentProductSets"];
             }
+        }
+
+        protected void LogOut_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("GoodBye.aspx", false);
         }
     }
 }

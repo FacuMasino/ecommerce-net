@@ -115,7 +115,7 @@ namespace BusinessLogicLayer
                 while (_dataAccess.Reader.Read())
                 {
                     user.UserId = (int)_dataAccess.Reader["UserId"];
-                    user.Role.Id = (int)_dataAccess.Reader["RoleId"];
+                    user.Role.Id = Convert.ToInt32(_dataAccess.Reader["RoleId"]);
                     return true;
                 }
                 return false;

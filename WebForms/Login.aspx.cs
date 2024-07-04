@@ -28,7 +28,7 @@ namespace WebForms
                 if (_userManager.Login(_user))
                 {
                     Session.Add("user", _user);
-                    Response.Redirect("Home.aspx");
+                    Response.Redirect("Home.aspx", false);
                 }
                 else
                 {
