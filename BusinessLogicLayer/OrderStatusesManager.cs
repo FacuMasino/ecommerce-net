@@ -55,7 +55,7 @@ namespace BusinessLogicLayer
                 {
                     orderStatus.Id = orderStatusId;
                     orderStatus.Name = _dataAccess.Reader["OrderStatusName"]?.ToString();
-                    orderStatus.Name = orderStatus.Name ?? "";
+                    orderStatus.Name = orderStatus.Name ?? ""; // hack : verificar si es necesaria esta linea
                 }
             }
             catch (Exception ex)

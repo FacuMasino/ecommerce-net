@@ -7,19 +7,35 @@ go
 --------------
 
 create or alter procedure SP_List_Products(
-	@OnlyActive bit
+	@OnlyActive bit,
+	@OrderId int
 )
 as
 begin
-	if @OnlyActive = 1
+	if (@OnlyActive = 1 and @OrderId = 0)
 	begin
-		select ProductId, IsActive, Code, ProductName, ProductDescription, Price, Cost, Stock, BrandId
-		from Products where IsActive = 1
+		select P.ProductId, P.IsActive, P.Code, P.ProductName, P.ProductDescription, P.Price, P.Cost, P.Stock, P.BrandId
+		from Products P
+		where P.IsActive = 1
 	end
-	else 
+	else if (@OnlyActive = 0 and @OrderId = 0)
 	begin
-		select ProductId, IsActive, Code, ProductName, ProductDescription, Price, Cost, Stock, BrandId
-		from Products
+		select P.ProductId, P.IsActive, P.Code, P.ProductName, P.ProductDescription, P.Price, P.Cost, P.Stock, P.BrandId
+		from Products P
+	end
+	else if (@OnlyActive = 1 and @OrderId = 1)
+	begin
+		select P.ProductId, P.IsActive, P.Code, P.ProductName, P.ProductDescription, P.Price, P.Cost, P.Stock, P.BrandId, OP.Amount
+		from Products P
+		inner join OrderProducts OP on OP.ProductId = P.ProductId
+		where P.IsActive = 1 and OP.OrderId = @OrderId
+	end
+	--else if (@OnlyActive = 0 and @OrderId = 1)
+	begin
+		select P.ProductId, P.IsActive, P.Code, P.ProductName, P.ProductDescription, P.Price, P.Cost, P.Stock, P.BrandId, OP.Amount
+		from Products P
+		inner join OrderProducts OP on OP.ProductId = P.ProductId
+		where OP.OrderId = @OrderId
 	end
 end
 
@@ -216,15 +232,14 @@ end
 
 go
 
-create or alter procedure SP_Get_Distribution_Channel_Id(
+create or alter procedure SP_Read_Order(
 	@OrderId int
 )
 as
 begin
-	select C.DistributionChannelId
-	from DistributionChannels C
-	inner join Orders O on O.DistributionChannelId = C.DistributionChannelId
-	where O.OrderId = @OrderId
+	select CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId
+	from Orders
+	where OrderId = @OrderId
 end
 
 go

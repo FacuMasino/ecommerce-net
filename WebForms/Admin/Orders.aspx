@@ -28,7 +28,7 @@
                 runat="server"
                 OnClick="SearchBtn_Click" />
             <div class="invalid-feedback">
-                Ingrese al menos 2 caracteres.    
+                Ingrese al menos 2 caracteres.
             </div>
         </asp:Panel>
 
@@ -42,11 +42,11 @@
                         <th scope="col">Cliente</th>
                         <th scope="col">Distribución</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">Datos de entrega</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <asp:Repeater runat="server" ID="OrdersListRpt" OnItemDataBound="OrdersListRpt_ItemDataBound">
+                    <asp:Repeater runat="server" ID="OrdersListRpt" OnItemCommand="OrdersListRpt_ItemCommand">
                         <ItemTemplate>
                             <tr>
 
@@ -86,37 +86,28 @@
                                 <!-- Estado -->
 
                                 <td>
-                                    <asp:DropDownList
-                                        ID="OrderStatusesDDL"
+                                    <asp:Label
+                                        ID="OrderStatusLbl"
                                         runat="server"
-                                        OnSelectedIndexChanged="OrderStatusesDDL_SelectedIndexChanged"
-                                        AutoPostBack="true"
-                                        CssClass="dropdown btn btn-secondary dropdown-toggle w-100">
-                                    </asp:DropDownList>
+                                        Text='<%#Eval("OrderStatus")%>'
+                                        CssClass="text-black">
+                                    </asp:Label>
                                 </td>
 
-                                <!-- Datos de entrega -->
+                                <!-- Acciones -->
 
                                 <td>
                                     <div class="d-flex gap-2">
 
-                                        <!-- Dirección -->
+                                        <!-- Editar -->
 
-                                        <asp:Label
-                                            ID="DeliveryAddressLbl"
-                                            runat="server"
-                                            Text='<%#Eval("DeliveryAddress")%>'
-                                            CssClass="text-black">
-                                        </asp:Label>
-
-                                        <!-- Fecha (de entrega) -->
-
-                                        <asp:Label
-                                            ID="DeliveryDateLbl"
-                                            runat="server"
-                                            Text='<%#Eval("DeliveryDate", "{0:dd/MM/yyyy}")%>'
-                                            CssClass="text-black">
-                                        </asp:Label>
+                                        <asp:LinkButton
+                                            Text='<i class="bi bi-pencil-square"></i>'
+                                            CssClass="p-0 text-black fs-5"
+                                            CommandName="Edit"
+                                            CommandArgument='<%#Eval("Id")%>'
+                                            ID="EditOrderBtn"
+                                            runat="server" />
 
                                     </div>
                                 </td>

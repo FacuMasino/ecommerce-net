@@ -237,7 +237,7 @@ GO
 -- PRODUCT ORDERS --
 --------------------
 
-CREATE TABLE ProductOrders
+CREATE TABLE OrderProducts
 (
 	OrderId int FOREIGN KEY REFERENCES Orders (OrderId) NOT NULL,
 	ProductId int FOREIGN KEY REFERENCES Products (ProductId) NOT NULL,

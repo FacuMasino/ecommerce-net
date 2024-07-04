@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Configuration;
 using System.Web.UI.WebControls;
-using System.Xml.Linq;
 using BusinessLogicLayer;
 using DomainModelLayer;
 
@@ -11,16 +11,13 @@ namespace WebForms.Admin
     {
         // ATTRIBUTES
 
-        private Order _order;
         private List<Order> _orders;
         private OrdersManager _ordersManager;
-        private OrderStatusesManager _orderStatusesManager = new OrderStatusesManager();
 
         // CONSTRUCT
 
         public Orders()
         {
-            _order = new Order();
             _ordersManager = new OrdersManager();
             FetchOrders();
         }
@@ -54,22 +51,13 @@ namespace WebForms.Admin
             // hack
         }
 
-        protected void OrdersListRpt_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        protected void OrdersListRpt_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            if (e.CommandName == "Edit")
             {
-                _order = (Order)e.Item.DataItem;
-                int distributionChannelId = _ordersManager.GetDistributionChannelId(_order.Id);
-                DropDownList ddl = (DropDownList)e.Item.FindControl("OrderStatusesDDL");
-                ddl.DataSource = _orderStatusesManager.List(distributionChannelId);
-                ddl.DataBind();
-                ddl.SelectedValue = _order.OrderStatus.Name;
+                int orderId = Convert.ToInt32(e.CommandArgument);
+                Response.Redirect("Order.aspx?orderId=" + orderId, false);
             }
-        }
-
-        protected void OrderStatusesDDL_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // hack : logica para editar el estado de una orden
         }
     }
 }

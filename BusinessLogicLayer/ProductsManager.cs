@@ -13,7 +13,7 @@ namespace BusinessLogicLayer
         private CategoriesManager _categoriesManager = new CategoriesManager();
         private ImagesManager _imagesManager = new ImagesManager();
 
-        public List<Product> List(bool onlyActive = true, bool onlyAvailable = false)
+        public List<Product> List(bool onlyActive = true, bool onlyAvailable = false, int orderId = 0)
         {
             List<Product> products = new List<Product>();
 
@@ -21,6 +21,7 @@ namespace BusinessLogicLayer
             {
                 _dataAccess.SetProcedure("SP_List_Products");
                 _dataAccess.SetParameter("@OnlyActive", onlyActive);
+                _dataAccess.SetParameter("@OrderId", orderId);
                 _dataAccess.ExecuteRead();
 
                 while (_dataAccess.Reader.Read())
@@ -41,7 +42,7 @@ namespace BusinessLogicLayer
 
                     if (onlyAvailable & product.Stock == 0)
                     {
-                        continue; // No agregar si no tiene stock
+                        continue; // hack : No agregar si no tiene stock
                     }
 
                     products.Add(product);

@@ -14,8 +14,9 @@ namespace BusinessLogicLayer
         private UsersManager _usersManager = new UsersManager();
         private AddressesManager _addressesManager = new AddressesManager();
         private OrderStatusesManager _orderStatusesManager = new OrderStatusesManager();
+        private DistributionChannelsManager _distributionChannelsManager = new DistributionChannelsManager();
 
-        public List<Order> List(int personId = 0) // hack : renombrar atributo OrderStatus por CurrentOrderStatus en clase Order del DML
+        public List<Order> List(int personId = 0)
         {
             List<Order> orders = new List<Order>();
 
@@ -32,7 +33,7 @@ namespace BusinessLogicLayer
                     order.Id = (int)_dataAccess.Reader["OrderId"];
                     order.CreationDate = (DateTime)_dataAccess.Reader["CreationDate"];
 
-                    if (_dataAccess.Reader.IsDBNull(_dataAccess.Reader.GetOrdinal("DeliveryDate"))) // hack
+                    if (_dataAccess.Reader.IsDBNull(_dataAccess.Reader.GetOrdinal("DeliveryDate"))) // hack : implementar operador ?
                     {
                         order.DeliveryDate = DateTime.MinValue;
                     }
@@ -62,7 +63,7 @@ namespace BusinessLogicLayer
             {
                 order.DeliveryAddress = _addressesManager.Read(order.DeliveryAddress.Id);
                 order.OrderStatus = _orderStatusesManager.Read(order.OrderStatus.Id);
-                order.DistributionChannel = ReadDistributionChannel(order.DistributionChannel.Id);
+                order.DistributionChannel = _distributionChannelsManager.Read(order.DistributionChannel.Id);
 
                 order.User.UserId = _usersManager.GetUserId(order.User.PersonId);
 
@@ -80,21 +81,34 @@ namespace BusinessLogicLayer
             return orders;
         }
 
-        private DistributionChannel ReadDistributionChannel(int distributionChannelId)
+        public Order Read(int orderId)
         {
-            DistributionChannel distributionChannel = new DistributionChannel();
+            Order order = new Order();
 
             try
             {
-                _dataAccess.SetQuery("select DistributionChannelName from DistributionChannels where DistributionChannelId = @DistributionChannelId");
-                _dataAccess.SetParameter("@DistributionChannelId", distributionChannelId);
+                _dataAccess.SetProcedure("SP_Read_Order");
+                _dataAccess.SetParameter("@OrderId", orderId);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
                 {
-                    distributionChannel.Id = distributionChannelId;
-                    distributionChannel.Name = _dataAccess.Reader["DistributionChannelName"]?.ToString();
-                    distributionChannel.Name = distributionChannel.Name ?? ""; // hack : Verificar si es necesaria esta linea. Buscar posibles casos similares caso que no lo sea.
+                    order.Id = orderId;
+                    order.CreationDate = (DateTime)_dataAccess.Reader["CreationDate"];
+
+                    if (_dataAccess.Reader.IsDBNull(_dataAccess.Reader.GetOrdinal("DeliveryDate"))) // hack : implementar operador ?
+                    {
+                        order.DeliveryDate = DateTime.MinValue;
+                    }
+                    else
+                    {
+                        order.DeliveryDate = _dataAccess.Reader.GetDateTime(_dataAccess.Reader.GetOrdinal("DeliveryDate"));
+                    }
+
+                    order.DeliveryAddress.Id = _dataAccess.Reader["DeliveryAddressId"] as int? ?? order.DeliveryAddress.Id;
+                    order.OrderStatus.Id = (int)_dataAccess.Reader["OrderStatusId"];
+                    order.User.PersonId = (int)_dataAccess.Reader["PersonId"];
+                    order.DistributionChannel.Id = (int)_dataAccess.Reader["DistributionChannelId"];
                 }
             }
             catch (Exception ex)
@@ -106,31 +120,48 @@ namespace BusinessLogicLayer
                 _dataAccess.CloseConnection();
             }
 
-            distributionChannel.OrderStatuses = _orderStatusesManager.List(distributionChannel.Id);
+            order.DeliveryAddress = _addressesManager.Read(order.DeliveryAddress.Id);
+            order.OrderStatus = _orderStatusesManager.Read(order.OrderStatus.Id);
+            order.DistributionChannel = _distributionChannelsManager.Read(order.DistributionChannel.Id);
 
-            return distributionChannel;
+            order.User.UserId = _usersManager.GetUserId(order.User.PersonId);
+
+            if (0 < order.User.UserId)
+            {
+                order.User = _usersManager.Read(order.User.UserId);
+            }
+            else
+            {
+                _person = _peopleManager.Read(order.User.PersonId);
+                Helper.AssignPerson(order.User, _person);
+            }
+
+            return order;
         }
 
-        public int GetDistributionChannelId(int orderid)
+        /// <summary>
+        /// Actualiza el estado de una orden. En caso de estar usando Edit(), sería redundante ejecutar ambos métodos en serie.
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="orderStatusId"></param>
+        public void UpdateOrderStatus(int orderId, int orderStatusId)
         {
-            int distributionChannelId = 0;
-
             try
             {
-                _dataAccess.SetProcedure("SP_Get_Distribution_Channel_Id");
-                _dataAccess.SetParameter("@Orderid", orderid);
-                distributionChannelId = _dataAccess.ExecuteScalar();
+                _dataAccess.SetQuery("update Orders set OrderStatusId = @OrderStatusId where OrderId = @OrderId");
+                _dataAccess.SetParameter("@OrderId", orderId);
+                _dataAccess.SetParameter("@OrderStatusId", orderStatusId);
+                _dataAccess.ExecuteAction();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+
+                throw;
             }
             finally
             {
                 _dataAccess.CloseConnection();
             }
-
-            return distributionChannelId;
         }
     }
 }
