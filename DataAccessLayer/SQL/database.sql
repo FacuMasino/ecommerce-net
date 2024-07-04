@@ -241,7 +241,7 @@ CREATE TABLE OrderProducts
 (
 	OrderId int FOREIGN KEY REFERENCES Orders (OrderId) NOT NULL,
 	ProductId int FOREIGN KEY REFERENCES Products (ProductId) NOT NULL,
-	Amount int DEFAULT (1) NOT NULL,
+	Quantity int DEFAULT (1) NOT NULL,
 	PRIMARY KEY (OrderId, ProductId)
 ) 
 GO

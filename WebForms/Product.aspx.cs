@@ -62,7 +62,7 @@ namespace WebForms
 
         protected void FilterBySuggestedList()
         {
-            Products = _productsManager.List();
+            Products = _productsManager.List<Product>();
             Products = Products.Where(p => p.Categories.Any(c => c.Id == _product.Id)).ToList();
 
             int size = Products.Count;

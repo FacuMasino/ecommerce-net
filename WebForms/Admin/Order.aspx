@@ -49,7 +49,7 @@
                                         Text='<%#Eval("Name")%>'>
                                     </asp:Label>
 
-                                    <span class="text-small">1x $ P.Unit</span>
+                                    <span class="text-small"> x <%#Eval("Quantity")%> unidades</span>
                                 </div>
                                 <div class="col-3 text-end">
                                     <p class="pe-2">$ Total</p>

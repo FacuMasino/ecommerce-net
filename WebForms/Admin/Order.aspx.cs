@@ -16,7 +16,7 @@ namespace WebForms.Admin
         private Order _order;
         private OrdersManager _ordersManager;
         private OrderStatusesManager _orderStatusesManager;
-        private List<Product> _products;
+        private List<ProductSet> _productSets;
         private ProductsManager _productsManager;
 
         // CONSTRUCT
@@ -26,7 +26,7 @@ namespace WebForms.Admin
             _order = new Order();
             _ordersManager = new OrdersManager();
             _orderStatusesManager = new OrderStatusesManager();
-            _products = new List<Product>();
+            _productSets = new List<ProductSet>();
             _productsManager = new ProductsManager();
         }
 
@@ -34,12 +34,12 @@ namespace WebForms.Admin
 
         private void FetchProducts()
         {
-            _products = _productsManager.List(false, false, _order.Id);
+            _productSets = _productsManager.List<ProductSet>(false, false, _order.Id);
         }
 
         private void BindProductsRpt()
         {
-            ProductsRpt.DataSource = _products;
+            ProductsRpt.DataSource = _productSets;
             ProductsRpt.DataBind();
         }
 

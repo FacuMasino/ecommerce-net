@@ -22,7 +22,7 @@ namespace WebForms.Admin
 
         private void BindProductList()
         {
-            ProductListRepeater.DataSource = _productsManager.List();
+            ProductListRepeater.DataSource = _productsManager.List<Product>();
             ProductListRepeater.DataBind();
         }
 
@@ -32,7 +32,7 @@ namespace WebForms.Admin
         private void BindProductList(MasterPage masterPage)
         {
             Repeater auxRpt = ((Repeater)Helper.FindControl(masterPage, "ProductListRepeater"));
-            auxRpt.DataSource = _productsManager.List();
+            auxRpt.DataSource = _productsManager.List<Product>();
             auxRpt.DataBind();
         }
 

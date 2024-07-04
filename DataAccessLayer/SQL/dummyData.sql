@@ -415,7 +415,7 @@ GO
 
 INSERT INTO
 	OrderProducts
-	(OrderId, ProductId, Amount)
+	(OrderId, ProductId, Quantity)
 VALUES
 	(1, 1, 1),
 	(1, 2, 2),

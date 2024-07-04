@@ -13,9 +13,10 @@ namespace BusinessLogicLayer
         private CategoriesManager _categoriesManager = new CategoriesManager();
         private ImagesManager _imagesManager = new ImagesManager();
 
-        public List<Product> List(bool onlyActive = true, bool onlyAvailable = false, int orderId = 0)
+        public List<ProductType> List<ProductType>(bool onlyActive = true, bool onlyAvailable = false, int orderId = 0)
+            where ProductType : Product, new()
         {
-            List<Product> products = new List<Product>();
+            List<ProductType> productTypeList = new List<ProductType>();
 
             try
             {
@@ -26,26 +27,31 @@ namespace BusinessLogicLayer
 
                 while (_dataAccess.Reader.Read())
                 {
-                    Product product = new Product();
+                    ProductType productType = new ProductType();
 
-                    product.Id = (int)_dataAccess.Reader["ProductId"];
-                    product.IsActive = (bool)_dataAccess.Reader["IsActive"];
-                    product.Code = _dataAccess.Reader["Code"]?.ToString();
-                    product.Name = _dataAccess.Reader["ProductName"]?.ToString();
-                    product.Description = _dataAccess.Reader["ProductDescription"]?.ToString();
-                    product.Price = _dataAccess.Reader["Price"] as decimal? ?? product.Price;
-                    product.Cost = _dataAccess.Reader["Cost"] as decimal? ?? product.Cost;
-                    product.Stock = (int)_dataAccess.Reader["Stock"] as int? ?? product.Stock;
-                    product.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? product.Brand.Id;
-                    product.Categories = _categoriesManager.List(true, product.Id);
-                    product.Images = _imagesManager.List(product.Id);
+                    productType.Id = (int)_dataAccess.Reader["ProductId"];
+                    productType.IsActive = (bool)_dataAccess.Reader["IsActive"];
+                    productType.Code = _dataAccess.Reader["Code"]?.ToString();
+                    productType.Name = _dataAccess.Reader["ProductName"]?.ToString();
+                    productType.Description = _dataAccess.Reader["ProductDescription"]?.ToString();
+                    productType.Price = _dataAccess.Reader["Price"] as decimal? ?? productType.Price;
+                    productType.Cost = _dataAccess.Reader["Cost"] as decimal? ?? productType.Cost;
+                    productType.Stock = (int)_dataAccess.Reader["Stock"] as int? ?? productType.Stock;
+                    productType.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? productType.Brand.Id;
+                    productType.Categories = _categoriesManager.List(true, productType.Id);
+                    productType.Images = _imagesManager.List(productType.Id);
+                    
+                    if (productType is ProductSet)
+                    {
+                        (productType as ProductSet).Quantity = (int)_dataAccess.Reader["Quantity"] as int? ?? (productType as ProductSet).Quantity;
+                    }
 
-                    if (onlyAvailable & product.Stock == 0)
+                    if (onlyAvailable & productType.Stock == 0)
                     {
                         continue; // hack : No agregar si no tiene stock
                     }
 
-                    products.Add(product);
+                    productTypeList.Add(productType);
                 }
             }
             catch (Exception ex)
@@ -57,12 +63,12 @@ namespace BusinessLogicLayer
                 _dataAccess.CloseConnection();
             }
 
-            foreach (Product product in products)
+            foreach (ProductType productType in productTypeList)
             {
-                product.Brand = _brandsManager.Read(product.Brand.Id);
+                productType.Brand = _brandsManager.Read(productType.Brand.Id);
             }
 
-            return products;
+            return productTypeList;
         }
 
         public Product Read(int productId, bool onlyActive = true)

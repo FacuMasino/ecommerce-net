@@ -81,7 +81,7 @@ namespace WebForms.Admin
         private void GetProductsList()
         {
             Session.Remove("Products");
-            _productsList = _productsManager.List(true, true);
+            _productsList = _productsManager.List<Product>(true, true);
             Session["Products"] = _productsList;
         }
 

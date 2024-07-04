@@ -25,14 +25,14 @@ begin
 	end
 	else if (@OnlyActive = 1 and @OrderId = 1)
 	begin
-		select P.ProductId, P.IsActive, P.Code, P.ProductName, P.ProductDescription, P.Price, P.Cost, P.Stock, P.BrandId, OP.Amount
+		select P.ProductId, P.IsActive, P.Code, P.ProductName, P.ProductDescription, P.Price, P.Cost, P.Stock, P.BrandId, OP.Quantity
 		from Products P
 		inner join OrderProducts OP on OP.ProductId = P.ProductId
 		where P.IsActive = 1 and OP.OrderId = @OrderId
 	end
 	--else if (@OnlyActive = 0 and @OrderId = 1)
 	begin
-		select P.ProductId, P.IsActive, P.Code, P.ProductName, P.ProductDescription, P.Price, P.Cost, P.Stock, P.BrandId, OP.Amount
+		select P.ProductId, P.IsActive, P.Code, P.ProductName, P.ProductDescription, P.Price, P.Cost, P.Stock, P.BrandId, OP.Quantity
 		from Products P
 		inner join OrderProducts OP on OP.ProductId = P.ProductId
 		where OP.OrderId = @OrderId
