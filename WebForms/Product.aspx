@@ -20,14 +20,16 @@
                     <div id="carouselExampleIndicators" class="carousel slide h-100">
                         <div class="carousel-inner h-100">
                             <%
+                                bool isFirstItem = true;
                                 foreach (DomainModelLayer.Image image in _product.Images)
                                 {
                             %>
-                            <div class="carousel-item h-100 active">
+                            <div class="carousel-item h-100 <%: isFirstItem ? "active":""%>">
                                 <img src="<%: image.Url%>" class="object-fit-contain d-block" alt="Imagen de <%:_product.Name%>"
                                     width="300px" height="100%" onerror="this.src='Content/img/placeholder.jpg'" />
                             </div>
                             <%
+                                    isFirstItem = false;
                                 }
                             %>
                         </div>

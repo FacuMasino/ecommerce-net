@@ -47,7 +47,7 @@
 
                 <div class="mb-3">
                     <h2 class="fs-5 mb-3">Forma de Entrega</h2>
-                    <div>
+                    <div class="d-flex gap-2">
                         <asp:RadioButton
                             ID="DeliveryRB"
                             runat="server"
@@ -56,9 +56,9 @@
                             Text="Envío a domicilio"
                             OnCheckedChanged="DeliveryRB_CheckedChanged"
                             AutoPostBack="true"
-                            CssClass="no-outline form-check-input" />
+                            />
                     </div>
-                    <div>
+                    <div class="d-flex gap-2">
                         <asp:RadioButton
                             ID="PickupRB"
                             runat="server"
@@ -67,7 +67,7 @@
                             Text="Retiro en sucursal"
                             OnCheckedChanged="PickupRB_CheckedChanged"
                             AutoPostBack="true"
-                            CssClass="no-outline form-check-input" />
+                            />
                     </div>
                 </div>
 
@@ -136,32 +136,32 @@
 
                 <div class="mb-3">
                     <h2 class="fs-5 mb-3">Método de pago</h2>
-                    <div>
+                    <div class="d-flex gap-2">
                         <asp:RadioButton
                             ID="CashRB"
                             runat="server"
                             Checked="true"
                             GroupName="PaymentType"
                             Text="Efectivo"
-                            CssClass="no-outline form-check-input" />
+                            />
                     </div>
-                    <div>
+                    <div class="d-flex gap-2">
                         <asp:RadioButton
                             ID="MercadoPagoRB"
                             runat="server"
                             Checked="false"
                             GroupName="PaymentType"
                             Text="Mercado Pago"
-                            CssClass="no-outline form-check-input" />
+                             />
                     </div>
-                    <div>
+                    <div class="d-flex gap-2">
                         <asp:RadioButton
                             ID="BankRB"
                             runat="server"
                             Checked="false"
                             GroupName="PaymentType"
                             Text="Transferencia bancaria"
-                            CssClass="no-outline form-check-input" />
+                             />
                     </div>
                 </div>
 
