@@ -299,10 +299,10 @@ INSERT INTO
 	AddressId
 	)
 VALUES
-	('Ana', 'Bertello', 35147428, NULL, bertelloana@outlook.com, NULL, 1),
-	('Facundo', 'Masino', NULL, NULL, NULL, NULL, 2),
-	('Maximiliano', 'Malvicino', NULL, NULL, NULL, NULL, 3),
-	('Carlos', 'Paz', NULL, NULL, NULL, NULL, NULL);
+	('Ana', 'Bertello', '35147428', NULL, 'bertelloana@outlook.com', NULL, 1),
+	('Facundo', 'Masino', NULL, NULL, 'fac@gmail.com', NULL, 2),
+	('Maximiliano', 'Malvicino', NULL, NULL, 'max@g.com', NULL, 3),
+	('Carlos', 'Paz', NULL, NULL, 'carlito@hotmail.com', NULL, NULL);
 
 GO
 
