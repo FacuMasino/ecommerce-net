@@ -37,7 +37,7 @@
                                         ID="ImageLbl"
                                         runat="server"
                                         ImageUrl="https://cdn-icons-png.flaticon.com/512/3868/3868869.png"
-                                        CssClass="w-100 object-fit-contain rounded"/>
+                                        CssClass="w-100 object-fit-contain rounded" />
                                 </div>
                                 <div class="col-7">
                                     <asp:Label
@@ -100,13 +100,27 @@
                     <h3 class="fs-5 m-0 fw-normal">Administrar estado</h3>
                 </div>
                 <div class="px-3 py-2">
+
+                    <!-- Canal de distribución -->
+
+                    <td>
+                        <asp:Label
+                            ID="DistributionChannelLbl"
+                            runat="server"
+                            CssClass="text-black mb-2">
+                        </asp:Label>
+                    </td>
+
+                    <!-- Estado -->
+
                     <asp:DropDownList
                         ID="OrderStatusesDDL"
                         runat="server"
                         OnSelectedIndexChanged="OrderStatusesDDL_SelectedIndexChanged"
                         AutoPostBack="true"
-                        CssClass="dropdown btn btn-secondary dropdown-toggle w-100">
+                        CssClass="dropdown btn btn-secondary dropdown-toggle w-100 mt-2">
                     </asp:DropDownList>
+
                 </div>
             </div>
         </section>

@@ -262,20 +262,8 @@ INSERT INTO
 	Addresses
 	(StreetName, StreetNumber, Flat, Details, CityId)
 VALUES
-	(
-		'Piedra Buena',
-		'389',
-		'2C',
-		'En frente de las vías',
-		'2'
-	),
-	(
-		'9 de Julio',
-		'1290',
-		'2C',
-		'No anda el timbre',
-		'1'
-	),
+	('Piedra Buena', '389', '2C', 'En frente de las vías', '2'),
+	('9 de Julio', '1290', '2C', 'No anda el timbre', '1'),
 	('Córdoba', '2345', '9B', 'Puerta roja', '1'),
 	('Perón', '345', '', '', '4'),
 	('Cazón', '768', '', '', '5'),
@@ -302,7 +290,8 @@ VALUES
 	('Ana', 'Bertello', '35147428', NULL, 'ana@outlook.com', NULL, 1),
 	('Facundo', 'Masino', NULL, '15548026', 'facu@gmail.com', NULL, 2),
 	('Maximiliano', 'Malvicino', NULL, NULL, 'maxi@gmail.com', NULL, 3),
-	('Carlos', 'Paz', NULL, NULL, 'carlos@hotmail.com', NULL, NULL);
+	('Carlos', 'Paz', NULL, NULL, 'carlos@hotmail.com', NULL, NULL),
+	('Juan', 'Berlinguieri', NULL, NULL, 'berlinguieri@hotmail.com', NULL, NULL);
 
 GO
 
@@ -350,7 +339,8 @@ VALUES
 	('Pago y retiro pendientes'), -- ID 6 Hardcoded
 	('Retiro pendiente'), -- ID 7 Hardcoded
 	('Devolución pendiente'), -- ID 8 Hardcoded
-	('Orden cancelada'); -- ID 9 Hardcoded
+	('Orden cancelada'), -- ID 9 Hardcoded
+	('Envío y pago pendientes'); -- ID 10 Hardcoded
 
 GO
 
@@ -378,7 +368,8 @@ INSERT INTO
 VALUES
 	('Pago virtual y envío'),
 	('Pago virtual y retiro'),
-	('Pago personal y retiro');
+	('Pago personal y retiro'),
+	('Pago personal y envío');
 
 GO
 
@@ -405,7 +396,11 @@ VALUES
 	(3, 6, 0),
 	(3, 5, 1),
 	(3, 8, 2),
-	(3, 9, 3);
+	(3, 9, 3),
+	(4, 10, 0),
+	(4, 5, 1),
+	(4, 8, 2),
+	(4, 9, 3);
 
 GO
 
@@ -419,7 +414,8 @@ INSERT INTO
 VALUES
 	('2024-02-20', NULL, 4, 2, 2, 1, 2),
 	('2024-03-30', NULL, NULL, 7, 3, 2, 3),
-	('2024-07-02', NULL, NULL, 5, 4, 3, 1);
+	('2024-07-02', NULL, NULL, 5, 4, 3, 1),
+	('2024-07-02', NULL, 5, 2, 5, 4, 1);
 
 GO
 
@@ -436,6 +432,7 @@ VALUES
 	(2, 3, 3),
 	(2, 4, 4),
 	(2, 5, 5),
-	(3, 6, 1);
+	(3, 6, 1),
+	(4, 4, 2);
 
 GO

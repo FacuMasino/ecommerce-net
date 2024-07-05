@@ -65,6 +65,7 @@ namespace WebForms.Admin
             OrderCreationDateLbl.Text = "Generada el " + _order.CreationDate.ToString("dd-MM-yyyy");
             TotalLbl.Text = "$" + _shoppingCart.Total.ToString();
             PaymentTypeLbl.Text = _order.PaymentType.Name;
+            DistributionChannelLbl.Text = "Canal de distribución: " + _order.DistributionChannel.Name;
 
             if (_order.User.Username != null)
             {
@@ -80,7 +81,7 @@ namespace WebForms.Admin
             PhoneLbl.Text = "Tel.: " + _order.User.Phone;
             EmailLbl.Text = "Email: " + _order.User.Email;
 
-            if (_order.DeliveryAddress != null)
+            if (_order.DeliveryAddress.ToString() != "")
             {
                 StreetNameLbl.Text = _order.DeliveryAddress.StreetName;
                 StreetNumberLbl.Text = _order.DeliveryAddress.StreetNumber;
@@ -88,6 +89,10 @@ namespace WebForms.Admin
                 CityLbl.Text = "Ciudad: " + _order.DeliveryAddress.City;
                 ProvinceLbl.Text = "Provincia: " + _order.DeliveryAddress.Province;
                 DetailsLbl.Text = "Detalles: " + _order.DeliveryAddress.Details;
+            }
+            else
+            {
+                StreetNameLbl.Text = "Pedido solicitado sin envío";
             }
         }
 
