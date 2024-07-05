@@ -11,7 +11,7 @@
             </div>
             <div class="mb-3">
                 <label for="UsrEmail" class="form-label">Correo Electrónico</label>
-                <asp:TextBox runat="server" TextBoxMode="email" class="form-control" ID="UsrEmailTxt" placeholder="tucorreo@correo.com" />
+                <asp:TextBox runat="server" TextMode="email" class="form-control" ID="UsrEmailTxt" placeholder="tucorreo@correo.com" />
             </div>
             <div class="mb-3">
                 <label for="UsrName" class="form-label">Nombre</label>
@@ -23,12 +23,12 @@
             </div>
             <div class="mb-3">
                 <label for="UsrPass" class="form-label">Contraseña</label>
-                <asp:TextBox runat="server" TextBoxMode="Password" class="form-control" ID="UsrPassTxt" placeholder="Contraseña" />
+                <asp:TextBox runat="server" TextMode="Password" class="form-control" ID="UsrPassTxt" placeholder="Contraseña" />
             </div>
 
             <div class="mb-3">
                 <label for="UsrPassCheck" class="form-label">Confirmar Contraseña</label>
-                <asp:TextBox runat="server" TextBoxMode="Password" class="form-control" ID="UsrPassCheckTxt" placeholder="Repite tu contarseña" />
+                <asp:TextBox runat="server" TextMode="Password" class="form-control" ID="UsrPassCheckTxt" placeholder="Repite tu contarseña" />
                 <div class="d-flex flex-column px-2">
                     <span id="passwordHelp" class="form-text fw-bold">Requisitos
                     </span>

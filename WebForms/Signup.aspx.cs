@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
 using UtilitiesLayer;
-using WebForms.Admin;
 
 namespace WebForms
 {
@@ -54,6 +48,7 @@ namespace WebForms
                 if (_usersManager.Add(_user) != 0)
                 {
                     /// FALTA GENERAR NOTIFICACION EXITOSA
+                    Helper.ComposeWelcomeEmail(_user, Helper.EcommerceName, Helper.EcommerceUrl);
                     Response.Redirect("Login.aspx", false);
                 }
                 else

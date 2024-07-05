@@ -87,7 +87,9 @@
                                     <li class="dropdown-item"><a class="text-decoration-none text-black" href="Signup.aspx">Registrarse</a></li>
                               <%} else { %>   
                                      <li class="dropdown-item"><a class="text-decoration-none text-black" href="Account.aspx">Mi Perfil</a></li>
-                                   <asp:Button Text="Cerrar Sesión" class="btn btn-light" ID="LogOut" OnClick="LogOut_Click" runat="server" />
+                                   <li class="dropdown-item">
+                                       <asp:LinkButton Text="Cerrar Sesión" CssClass="text-decoration-none text-black" ID="LogOut" OnClick="LogOut_Click" runat="server" />
+                                   </li>
                                     
                                     <% } %>
                                     </ul>

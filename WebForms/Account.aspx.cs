@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WebForms
 {
@@ -26,6 +20,7 @@ namespace WebForms
                      {
                          UsrNameTitleTxt.Text = _user.Username;
                      }*/
+                    UsrGreetingLbl.Text = _user.FirstName;
                     UsrSurnameTxt.Text = _user.LastName;
                     UsrNameTxt.Text = _user.FirstName;
                     UsrDocumentTxt.Text = _user.TaxCode;

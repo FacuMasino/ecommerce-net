@@ -8,7 +8,9 @@
     <div class="container">
         <div class="d-flex flex-column">
             <div class="mt-4">
-           <h2 class="fs-4 fw-bold">Hola!</h2> 
+           <h2 class="fs-4 fw-bold">Hola!
+               <asp:Label ID="UsrGreetingLbl" runat="server"/>
+           </h2> 
                 <%--Me falta el condicional si username viene vacio o con info  ---%>
             <p class="fs-5">Bienvenido a tu cuenta.</p>
             </div>
@@ -24,21 +26,21 @@
                 <div class="col-md col-12 p-4">
                     <h2 class="fs-5 mb-3">Información Personal</h2>
                     <div class="mb-3 ">
-                        <asp:TextBox runat="server" TextBoxMode="email" class="form-control" ID="UsrEmailTxt" placeholder="tucorreo@correo.com" />
+                        <asp:TextBox runat="server" TextBox="email" cssclass="form-control" ID="UsrEmailTxt" placeholder="tucorreo@correo.com" />
                     </div>
                     <div class="row mb-3">
                         <div class="col">
-                            <asp:TextBox runat="server" TextBoxMode="text" class="form-control" ID="UsrNameTxt" placeholder="Nombres" />
+                            <asp:TextBox runat="server" class="form-control" ID="UsrNameTxt" placeholder="Nombres" />
                         </div>
                         <div class="col">
-                            <asp:TextBox runat="server" TextBoxMode="text" class="form-control" ID="UsrSurnameTxt" placeholder="Apellidos" />
+                            <asp:TextBox runat="server" class="form-control" ID="UsrSurnameTxt" placeholder="Apellidos" />
                         </div>
                     </div>
                     <div class="mb-3">
-                        <asp:TextBox runat="server" TextBoxMode="number" class="form-control" ID="UsrDocumentTxt" placeholder="DNI" />
+                        <asp:TextBox runat="server" TextMode="number" class="form-control" ID="UsrDocumentTxt" placeholder="DNI" />
                     </div>
                     <div class="mb-3">
-                        <asp:TextBox runat="server" TextBoxMode="date" class="form-control" ID="BirthDateTxt" placeholder="Fecha de Nacimiento"/>
+                        <asp:TextBox runat="server" TextMode="date" class="form-control" ID="BirthDateTxt" placeholder="Fecha de Nacimiento"/>
                     </div>
                     <h2 class="fs-5 mb-3">Seguridad</h2>
                     <button type="button" class="btn btn-dark">Cambiar Contraseña</button>
@@ -46,12 +48,12 @@
                 <div class="col-md col-12 p-4 border-md-start">
                     <h2 class="fs-5 mb-3">Datos para tus envíos</h2>
                     <div class="mb-3">
-                        <asp:TextBox runat="server" TextBoxMode="text" class="form-control" ID="UsrAdreTxt" placeholder="Domicilio" />
+                        <asp:TextBox runat="server" class="form-control" ID="UsrAdreTxt" placeholder="Domicilio" />
                     </div>
 
                     <div class="row mb-3">
                         <div class="col">
-                            <asp:TextBox runat="server" TextBoxMode="number" class="form-control" ID="UsrNmberTxt" placeholder="Numero" />
+                            <asp:TextBox runat="server" TextMode="number" class="form-control" ID="UsrNmberTxt" placeholder="Numero" />
                         </div>
                         <div class="col">
                             <asp:TextBox runat="server" class="form-control" ID="UsrDptTxt" placeholder="Piso/Depto/Oficina" />
@@ -59,10 +61,10 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col">
-                            <asp:TextBox runat="server" TextBoxMode="text" class="form-control" ID="UsrPCTxt" placeholder="Código Postal" />
+                            <asp:TextBox runat="server" class="form-control" ID="UsrPCTxt" placeholder="Código Postal" />
                         </div>
                         <div class="col">
-                            <asp:TextBox runat="server" TextBoxMode="text" class="form-control" ID="UsrCityTxt" placeholder="Ciudad" />
+                            <asp:TextBox runat="server" class="form-control" ID="UsrCityTxt" placeholder="Ciudad" />
                         </div>
                     </div>
                     <div class="mb-3">
@@ -74,7 +76,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <asp:TextBox runat="server" TextBoxMode="number" class="form-control" ID="UsrPhoneTxt" placeholder="Teléfono" />
+                        <asp:TextBox runat="server" TextMode="number" class="form-control" ID="UsrPhoneTxt" placeholder="Teléfono" />
                     </div>
                 </div>
             </div>

@@ -306,7 +306,7 @@ INSERT INTO
 	)
 VALUES
 	('Ana', 'Bertello', '35147428', NULL, 'ana@outlook.com', NULL, 1),
-	('Facundo', 'Masino', NULL, '15548026', 'facu@gmail.com', NULL, 2),
+	('Facundo', 'Masino', NULL, '15548026', 'joaqfm@gmail.com', NULL, 2),
 	('Maximiliano', 'Malvicino', NULL, NULL, 'maxi@gmail.com', NULL, 3),
 	('Carlos', 'Paz', NULL, NULL, 'carlos@hotmail.com', NULL, NULL),
 	('Juan', 'Berlinguieri', NULL, NULL, 'berlinguieri@hotmail.com', NULL, NULL);
