@@ -244,7 +244,7 @@ end
 
 go
 
-create or alter procedure SP_Add_Order(
+create or alter procedure SP_Add_Order_Confirmation(
 	@DeliveryAddressId int,
 	@OrderStatusId int,
 	@PersonId int,
@@ -257,12 +257,12 @@ begin
 	(DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId, PaymentTypeId)
 	output inserted.OrderId
 	values
-	(@DeliveryAddressId, @OrderStatusId, @PersonId,	@DistributionChannelId, @PaymentTypeId)
+	(@DeliveryAddressId, @OrderStatusId, @PersonId, @DistributionChannelId, @PaymentTypeId)
 end
 
 go
 
-create or alter procedure SP_Add_Order_Product(
+create or alter procedure SP_Add_Product_To_Order(
 	@OrderId int,
 	@ProductId int,
 	@Quantity int
