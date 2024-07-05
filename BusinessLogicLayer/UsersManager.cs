@@ -12,6 +12,8 @@ namespace BusinessLogicLayer
         private Person _person;
         private PeopleManager _peopleManager = new PeopleManager();
         private RolesManager _rolesManager = new RolesManager();
+        private AddressesManager _adressManager = new AddressesManager();
+        private Address _address;
 
         public User Read(int userId)
         {
@@ -217,9 +219,24 @@ namespace BusinessLogicLayer
                     user.Role.Id = Convert.ToInt32(_dataAccess.Reader["RoleId"]);
                     user.LastName = (string)_dataAccess.Reader["LastName"];
                     user.FirstName = (string)_dataAccess.Reader["FirstName"];
-                    user.Phone = (string)_dataAccess.Reader["Phone"];
-                    user.TaxCode = (string)_dataAccess.Reader["TaxCode"];
-                    user.Birth = DateTime.Parse(_dataAccess.Reader["Birth"].ToString());
+
+                    if (!(_dataAccess.Reader["Phone"] is DBNull))
+                    {
+                        user.Phone = (string)_dataAccess.Reader["Phone"];
+                    }
+
+                    if (!(_dataAccess.Reader["TaxCode"] is DBNull))
+                    {
+                        user.TaxCode = (string)_dataAccess.Reader["TaxCode"];
+                    }
+                    if (!(_dataAccess.Reader["Birth"] is DBNull))
+                    {
+                        user.Birth = DateTime.Parse(_dataAccess.Reader["Birth"].ToString());
+                    }
+                    /*
+                    _adressManager.GetId(user.Address);
+                    _adressManager.Read(_address.Id);
+                    */
                     user.Address.StreetName = (string)_dataAccess.Reader["StreetName"];
                     user.Address.StreetNumber = (string)_dataAccess.Reader["StreetNumber"];
                     user.Address.City.Name = (string)_dataAccess.Reader["CityName"];

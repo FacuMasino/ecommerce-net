@@ -22,6 +22,10 @@ namespace WebForms
 
                 if (_user != null)
                 {
+                    /* if (UsrNameTitleTxt.Text != "")
+                     {
+                         UsrNameTitleTxt.Text = _user.Username;
+                     }*/
                     UsrSurnameTxt.Text = _user.LastName;
                     UsrNameTxt.Text = _user.FirstName;
                     UsrDocumentTxt.Text = _user.TaxCode;
@@ -32,6 +36,7 @@ namespace WebForms
                     UsrDptTxt.Text = _user.Address.Flat;
                     UsrCityTxt.Text = _user.Address.City.Name;
                     UsrPCTxt.Text = _user.Address.City.ZipCode;
+
                     UsrPhoneTxt.Text = _user.Phone;
                     BirthDateTxt.Text = _user.Birth.ToString("yyyy-MM-dd");
                 }
