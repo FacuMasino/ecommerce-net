@@ -17,20 +17,17 @@ namespace WebForms.Admin
         private List<Product> _productsList;
         private Admin _adminMP; // Referencia a la instancia de la Admin Master Page
         private int _currentProductId;
+        private bool _isSearching;
+        private string _textToSearch;
 
         public int TotalFeatureds
         {
-            get
-            {
-                if (Session["FeaturedsProducts"] != null)
-                {
-                    return ((List<FeaturedProduct>)Session["FeaturedsProducts"]).Count;
-                }
-                else
-                {
-                    return _featuredsList.Count;
-                }
-            }
+            get { return _featuredsList == null ? 0 : _featuredsList.Count; }
+        }
+
+        public int TotalProducts
+        {
+            get { return _productsList == null ? 0 : _productsList.Count; }
         }
 
         public Featureds()
@@ -39,6 +36,18 @@ namespace WebForms.Admin
             _featuredsManager = new FeaturedsManager();
             _featuredsList = new List<FeaturedProduct>();
             _productsList = new List<Product>();
+        }
+
+        private void GetSearchState()
+        {
+            _isSearching = ViewState["IsSearching"] as bool? ?? false;
+            _textToSearch = ViewState["TextToSearch"] as string ?? "";
+        }
+
+        private void SetSearchState(bool isSearching, string textToSearch)
+        {
+            ViewState["IsSearching"] = isSearching;
+            ViewState["TextToSearch"] = textToSearch;
         }
 
         /// <summary>
@@ -176,6 +185,24 @@ namespace WebForms.Admin
         protected void SearchBtn_Click(object sender, EventArgs e)
         {
             string filter = SearchTextBox.Text;
+            GetSearchState(); // Obtiene el estado de busqueda
+
+            // Limpiar búsqueda si ya está buscando y el texto es el mismo
+            if (_isSearching && _textToSearch == filter)
+            {
+                // Actualizar y limpiar lista
+                UpdateProductsList(false);
+
+                // Resetear estado
+                SetSearchState(false, ""); // Limpia el estado de busqueda
+
+                // Resetear controles
+                SearchBtn.Text = "<i class=\"bi bi-search\"></i>";
+                SearchTextBox.Text = "";
+                SearchPanel.CssClass = "input-group mb-3";
+
+                return;
+            }
 
             if (2 <= filter.Length)
             {
@@ -187,13 +214,15 @@ namespace WebForms.Admin
                     || x.Description.ToUpper().Contains(filter.ToUpper())
                     || x.Categories.Any(c => c.Name.ToUpper().Contains(filter.ToUpper()))
                 );
+                SearchBtn.Text = "<i class=\"bi bi-x-circle\"></i>"; // cambia icono boton de busqueda
             }
             else
             {
                 SearchPanel.CssClass = "input-group mb-3 invalid";
             }
 
-            UpdateProductsList(true);
+            SetSearchState(true, filter);
+            UpdateProductsList(true); // Bindea la lista filtrada
             ProductsCollapse.CssClass = "collapse border rounded-bottom p-3 show";
         }
 
