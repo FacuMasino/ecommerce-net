@@ -7,33 +7,33 @@ namespace BusinessLogicLayer
     {
         // ATTRIBUTES
 
-        private Cart _cart;
+        private ShoppingCart _shoppingCart;
         private ProductSet _ProductSet;
 
         // PROPERTIES
 
         public List<ProductSet> CurrentProductSets
         {
-            set { _cart.ProductSets = value; }
+            set { _shoppingCart.ProductSets = value; }
         }
 
         // CONSTRUCT
 
         public CartManager()
         {
-            _cart = new Cart();
+            _shoppingCart = new ShoppingCart();
         }
 
         // METHODS
 
         public List<ProductSet> List()
         {
-            return _cart.ProductSets;
+            return _shoppingCart.ProductSets;
         }
 
         private bool ProductExists(int id)
         {
-            if (_cart.ProductSets.Find(x => x.Id == id) == null)
+            if (_shoppingCart.ProductSets.Find(x => x.Id == id) == null)
             {
                 return false;
             }
@@ -41,9 +41,9 @@ namespace BusinessLogicLayer
             return true;
         }
 
-        private ProductSet ReadProductSet(int id) // Me tomé el atrevimiento de cambiar el nombre de tu método Facu <3
+        private ProductSet ReadProductSet(int id)
         {
-            return _cart.ProductSets.Find(x => x.Id == id);
+            return _shoppingCart.ProductSets.Find(x => x.Id == id);
         }
 
         public void Add(Product Product, int quantity = 1)
@@ -66,7 +66,7 @@ namespace BusinessLogicLayer
                     Quantity = quantity
                 };
 
-                _cart.ProductSets.Add(_ProductSet);
+                _shoppingCart.ProductSets.Add(_ProductSet);
             }
         }
 
@@ -92,12 +92,12 @@ namespace BusinessLogicLayer
         public void Delete(int ProductId)
         {
             _ProductSet = ReadProductSet(ProductId);
-            _cart.ProductSets.Remove(_ProductSet);
+            _shoppingCart.ProductSets.Remove(_ProductSet);
         }
 
         public void Clear()
         {
-            _cart.ProductSets.Clear();
+            _shoppingCart.ProductSets.Clear();
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace BusinessLogicLayer
         /// <returns>Cantidad de productos</returns>
         public int Count()
         {
-            return _cart.ProductSets.Count;
+            return _shoppingCart.ProductSets.Count;
         }
 
         /// <summary>
@@ -117,18 +117,18 @@ namespace BusinessLogicLayer
         public int Count(int productId)
         {
             int count = 0;
-            if (_cart.ProductSets.Count > 0)
+            if (_shoppingCart.ProductSets.Count > 0)
             {
                 // Si .Find no devuelve null, intenta acceder a la prop Quantiy
                 // Sino se asigna 0
-                count = _cart.ProductSets.Find(p => p.Id == productId)?.Quantity ?? 0;
+                count = _shoppingCart.ProductSets.Find(p => p.Id == productId)?.Quantity ?? 0;
             }
             return count;
         }
 
         public decimal GetTotal()
         {
-            return _cart.Total;
+            return _shoppingCart.Total;
         }
     }
 }

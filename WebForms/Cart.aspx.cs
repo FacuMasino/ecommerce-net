@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
@@ -16,14 +13,14 @@ namespace WebForms
 
         private Product _product;
         private ProductsManager _productsManager;
-        private CartManager _cartManager;
+        private CartManager _shoppingCartManager;
 
         // PROPERTIES
 
         public CartManager ProductsCart
         {
-            get { return _cartManager; }
-            set { _cartManager = value; }
+            get { return _shoppingCartManager; }
+            set { _shoppingCartManager = value; }
         }
 
         // CONSTRUCT
@@ -31,7 +28,7 @@ namespace WebForms
         public Cart()
         {
             _productsManager = new ProductsManager();
-            _cartManager = new CartManager();
+            _shoppingCartManager = new CartManager();
         }
 
         // METHODS
@@ -42,14 +39,14 @@ namespace WebForms
             {
                 int id = Convert.ToInt32(Request.QueryString["id"]);
                 _product = _productsManager.Read(id);
-                _cartManager.Add(_product);
-                Session["CurrentProductSets"] = _cartManager.List();
+                _shoppingCartManager.Add(_product);
+                Session["CurrentProductSets"] = _shoppingCartManager.List();
             }
         }
 
         private void BindRepeater()
         {
-            CartRepeater.DataSource = _cartManager.List();
+            CartRepeater.DataSource = _shoppingCartManager.List();
             CartRepeater.DataBind();
         }
 
@@ -63,7 +60,7 @@ namespace WebForms
         {
             if (Session["CurrentProductSets"] != null)
             {
-                _cartManager.CurrentProductSets = (List<ProductSet>)Session["CurrentProductSets"];
+                _shoppingCartManager.CurrentProductSets = (List<ProductSet>)Session["CurrentProductSets"];
             }
         }
 
@@ -82,21 +79,21 @@ namespace WebForms
         protected void removeLnkButton_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(((LinkButton)sender).CommandArgument);
-            _cartManager.Remove(id);
+            _shoppingCartManager.Remove(id);
             BindControls();
         }
 
         protected void addLnkButton_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(((LinkButton)sender).CommandArgument);
-            _cartManager.Add(id);
+            _shoppingCartManager.Add(id);
             BindControls();
         }
 
         protected void deleteLnkButton_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(((LinkButton)sender).CommandArgument);
-            _cartManager.Delete(id);
+            _shoppingCartManager.Delete(id);
             BindControls();
         }
 

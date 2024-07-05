@@ -299,10 +299,10 @@ INSERT INTO
 	AddressId
 	)
 VALUES
-	('Ana', 'Bertello', '35147428', NULL, 'bertelloana@outlook.com', NULL, 1),
-	('Facundo', 'Masino', NULL, NULL, 'fac@gmail.com', NULL, 2),
-	('Maximiliano', 'Malvicino', NULL, NULL, 'max@g.com', NULL, 3),
-	('Carlos', 'Paz', NULL, NULL, 'carlito@hotmail.com', NULL, NULL);
+	('Ana', 'Bertello', '35147428', NULL, 'ana@outlook.com', NULL, 1),
+	('Facundo', 'Masino', NULL, '15548026', 'facu@gmail.com', NULL, 2),
+	('Maximiliano', 'Malvicino', NULL, NULL, 'maxi@gmail.com', NULL, 3),
+	('Carlos', 'Paz', NULL, NULL, 'carlos@hotmail.com', NULL, NULL);
 
 GO
 
@@ -354,6 +354,20 @@ VALUES
 
 GO
 
+-------------------
+-- PAYMENT TYPES --
+-------------------
+
+INSERT INTO
+	PaymentTypes
+	(PaymentTypeName)
+VALUES
+	('Efectivo'),
+	('Mercado Pago'),
+	('Transferencia bancaria');
+
+GO
+
 ---------------------------
 -- DISTRIBUTION CHANNELS --
 ---------------------------
@@ -401,11 +415,11 @@ GO
 
 INSERT INTO
 	Orders
-	(CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId)
+	(CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId, PaymentTypeId)
 VALUES
-	('2024-02-20', NULL, 4, 2, 2, 1),
-	('2024-03-30', NULL, NULL, 7, 3, 2),
-	('2024-07-02', NULL, NULL, 5, 4, 3);
+	('2024-02-20', NULL, 4, 2, 2, 1, 2),
+	('2024-03-30', NULL, NULL, 7, 3, 2, 3),
+	('2024-07-02', NULL, NULL, 5, 4, 3, 1);
 
 GO
 

@@ -219,13 +219,13 @@ as
 begin
 	if (0 < @PersonId)
 	begin
-		select OrderId, CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId
+		select OrderId, CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId, PaymentTypeId
 		from Orders
 		where PersonId = @PersonId
 	end
 	else
 	begin
-		select OrderId, CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId
+		select OrderId, CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId, PaymentTypeId
 		from Orders
 	end
 end
@@ -237,7 +237,7 @@ create or alter procedure SP_Read_Order(
 )
 as
 begin
-	select CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId
+	select CreationDate, DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId, PaymentTypeId
 	from Orders
 	where OrderId = @OrderId
 end

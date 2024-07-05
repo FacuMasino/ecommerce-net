@@ -15,6 +15,7 @@ namespace BusinessLogicLayer
         private AddressesManager _addressesManager = new AddressesManager();
         private OrderStatusesManager _orderStatusesManager = new OrderStatusesManager();
         private DistributionChannelsManager _distributionChannelsManager = new DistributionChannelsManager();
+        private PaymentTypesManager _paymentTypesManager = new PaymentTypesManager();
 
         public List<Order> List(int personId = 0)
         {
@@ -46,6 +47,7 @@ namespace BusinessLogicLayer
                     order.OrderStatus.Id = (int)_dataAccess.Reader["OrderStatusId"];
                     order.User.PersonId = (int)_dataAccess.Reader["PersonId"];
                     order.DistributionChannel.Id = (int)_dataAccess.Reader["DistributionChannelId"];
+                    order.PaymentType.Id = (int)_dataAccess.Reader["PaymentTypeId"];
 
                     orders.Add(order);
                 }
@@ -64,6 +66,7 @@ namespace BusinessLogicLayer
                 order.DeliveryAddress = _addressesManager.Read(order.DeliveryAddress.Id);
                 order.OrderStatus = _orderStatusesManager.Read(order.OrderStatus.Id);
                 order.DistributionChannel = _distributionChannelsManager.Read(order.DistributionChannel.Id);
+                order.PaymentType = _paymentTypesManager.Read(order.PaymentType.Id);
 
                 order.User.UserId = _usersManager.GetUserId(order.User.PersonId);
 
@@ -109,6 +112,7 @@ namespace BusinessLogicLayer
                     order.OrderStatus.Id = (int)_dataAccess.Reader["OrderStatusId"];
                     order.User.PersonId = (int)_dataAccess.Reader["PersonId"];
                     order.DistributionChannel.Id = (int)_dataAccess.Reader["DistributionChannelId"];
+                    order.PaymentType.Id = (int)_dataAccess.Reader["PaymentTypeId"];
                 }
             }
             catch (Exception ex)
@@ -123,6 +127,7 @@ namespace BusinessLogicLayer
             order.DeliveryAddress = _addressesManager.Read(order.DeliveryAddress.Id);
             order.OrderStatus = _orderStatusesManager.Read(order.OrderStatus.Id);
             order.DistributionChannel = _distributionChannelsManager.Read(order.DistributionChannel.Id);
+            order.PaymentType = _paymentTypesManager.Read(order.PaymentType.Id);
 
             order.User.UserId = _usersManager.GetUserId(order.User.PersonId);
 

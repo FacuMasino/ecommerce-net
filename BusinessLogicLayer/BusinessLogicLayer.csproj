@@ -82,6 +82,7 @@
     <Compile Include="FeaturedsManager.cs" />
     <Compile Include="OrdersManager.cs" />
     <Compile Include="OrderStatusesManager.cs" />
+    <Compile Include="PaymentTypesManager.cs" />
     <Compile Include="PeopleManager.cs" />
     <Compile Include="ProductsManager.cs" />
     <Compile Include="BrandsManager.cs" />

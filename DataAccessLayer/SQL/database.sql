@@ -193,6 +193,17 @@ CREATE TABLE OrderStatuses
 ) 
 GO
 
+-------------------
+-- PAYMENT TYPES --
+-------------------
+
+CREATE TABLE PaymentTypes
+(
+	PaymentTypeId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+	PaymentTypeName varchar(30) NOT NULL
+)
+GO
+
 ---------------------------
 -- DISTRIBUTION CHANNELS --
 ---------------------------
@@ -211,7 +222,7 @@ GO
 CREATE TABLE ChannelStatuses
 (
 	DistributionChannelId int FOREIGN KEY REFERENCES DistributionChannels(DistributionChannelId) NOT NULL,
-	OrderStatusId int FOREIGN KEY REFERENCES OrderStatuses(OrderStatusId) NOT NULL,
+	OrderStatusId int FOREIGN KEY REFERENCES OrderStatuses (OrderStatusId) NOT NULL,
 	OrderStatusIndex int NOT NULL,
 	PRIMARY KEY (DistributionChannelId, OrderStatusId)
 )
@@ -229,7 +240,8 @@ CREATE TABLE Orders
 	DeliveryAddressId int FOREIGN KEY REFERENCES Addresses (AddressId) NULL,
 	OrderStatusId int FOREIGN KEY REFERENCES OrderStatuses (OrderStatusId) NOT NULL,
 	PersonId int FOREIGN KEY REFERENCES People (PersonId) NOT NULL,
-	DistributionChannelId int FOREIGN KEY REFERENCES DistributionChannels (DistributionChannelId) NOT NULL
+	DistributionChannelId int FOREIGN KEY REFERENCES DistributionChannels (DistributionChannelId) NOT NULL,
+	PaymentTypeId int FOREIGN KEY REFERENCES PaymentTypes (PaymentTypeId) NOT NULL
 )
 GO
 

@@ -13,7 +13,7 @@ namespace WebForms
 
         public Product _product;
         private ProductsManager _productsManager;
-        private CartManager _cartManager;
+        private CartManager _shoppingCartManager;
 
         // PROPERTIES
         public List<Product> Products { get; set; }
@@ -25,7 +25,7 @@ namespace WebForms
         {
             _product = new Product();
             _productsManager = new ProductsManager();
-            _cartManager = new CartManager();
+            _shoppingCartManager = new CartManager();
             Products = new List<Product>();
             SugProducts = new List<Product>();
         }
@@ -48,7 +48,7 @@ namespace WebForms
         {
             if (Session["CurrentProductSets"] != null)
             {
-                _cartManager.CurrentProductSets = (List<ProductSet>)Session["CurrentProductSets"];
+                _shoppingCartManager.CurrentProductSets = (List<ProductSet>)Session["CurrentProductSets"];
             }
         }
 
@@ -57,7 +57,7 @@ namespace WebForms
         /// </summary>
         public int GetCartQty()
         {
-            return _cartManager.Count(_product.Id);
+            return _shoppingCartManager.Count(_product.Id);
         }
 
         protected void FilterBySuggestedList()
@@ -108,14 +108,14 @@ namespace WebForms
         {
             if (!IsOnCart())
                 return;
-            _cartManager.Remove(_product.Id);
-            Session["CurrentProductSets"] = _cartManager.List();
+            _shoppingCartManager.Remove(_product.Id);
+            Session["CurrentProductSets"] = _shoppingCartManager.List();
         }
 
         protected void AddLnkButton_Click(object sender, EventArgs e)
         {
-            _cartManager.Add(_product);
-            Session["CurrentProductSets"] = _cartManager.List();
+            _shoppingCartManager.Add(_product);
+            Session["CurrentProductSets"] = _shoppingCartManager.List();
         }
     }
 }

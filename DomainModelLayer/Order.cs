@@ -26,12 +26,16 @@ namespace DomainModelLayer
         [DisplayName("Canal de distribución")]
         public DistributionChannel DistributionChannel { get; set; }
 
+        [DisplayName("Medio de pago")]
+        public PaymentType PaymentType { get; set; }
+
         public Order()
         {
             DeliveryAddress = new Address();
             OrderStatus = new OrderStatus();
             User = new User();
             DistributionChannel = new DistributionChannel();
+            PaymentType = new PaymentType();
         }
     }
 }

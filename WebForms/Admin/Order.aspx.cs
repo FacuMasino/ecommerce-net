@@ -1,11 +1,7 @@
-﻿using BusinessLogicLayer;
-using DomainModelLayer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
+﻿using System;
 using System.Web.UI.WebControls;
+using BusinessLogicLayer;
+using DomainModelLayer;
 
 namespace WebForms.Admin
 {
@@ -16,7 +12,7 @@ namespace WebForms.Admin
         private Order _order;
         private OrdersManager _ordersManager;
         private OrderStatusesManager _orderStatusesManager;
-        private List<ProductSet> _productSets;
+        private ShoppingCart _shoppingCart;
         private ProductsManager _productsManager;
 
         // CONSTRUCT
@@ -26,7 +22,7 @@ namespace WebForms.Admin
             _order = new Order();
             _ordersManager = new OrdersManager();
             _orderStatusesManager = new OrderStatusesManager();
-            _productSets = new List<ProductSet>();
+            _shoppingCart = new ShoppingCart();
             _productsManager = new ProductsManager();
         }
 
@@ -34,13 +30,13 @@ namespace WebForms.Admin
 
         private void FetchProducts()
         {
-            _productSets = _productsManager.List<ProductSet>(false, false, _order.Id);
+            _shoppingCart.ProductSets = _productsManager.List<ProductSet>(false, false, _order.Id);
         }
 
-        private void BindProductsRpt()
+        private void BindProductSetsRpt()
         {
-            ProductsRpt.DataSource = _productSets;
-            ProductsRpt.DataBind();
+            ProductSetsRpt.DataSource = _shoppingCart.ProductSets;
+            ProductSetsRpt.DataBind();
         }
 
         private void FetchOrder()
@@ -63,6 +59,38 @@ namespace WebForms.Admin
             OrderStatusesDDL.SelectedValue = _order.OrderStatus.Id.ToString();
         }
 
+        private void MapControls()
+        {
+            OrderIdLbl.Text = "Orden #" + _order.Id.ToString();
+            OrderCreationDateLbl.Text = "Generada el " + _order.CreationDate.ToString("dd-MM-yyyy");
+            TotalLbl.Text = "$" + _shoppingCart.Total.ToString();
+            PaymentTypeLbl.Text = _order.PaymentType.Name;
+
+            if (_order.User.Username != null)
+            {
+                UsernameLbl.Text = "Nombre de usuario: " + _order.User.Username;
+            }
+            else
+            {
+                UsernameLbl.Text = "Usuario no registrado";
+            }
+
+            FirstNameLbl.Text = _order.User.FirstName;
+            LastNameLbl.Text = _order.User.LastName;
+            PhoneLbl.Text = "Tel.: " + _order.User.Phone;
+            EmailLbl.Text = "Email: " + _order.User.Email;
+
+            if (_order.DeliveryAddress != null)
+            {
+                StreetNameLbl.Text = _order.DeliveryAddress.StreetName;
+                StreetNumberLbl.Text = _order.DeliveryAddress.StreetNumber;
+                FlatLbl.Text = "Departamento: " + _order.DeliveryAddress.Flat;
+                CityLbl.Text = "Ciudad: " + _order.DeliveryAddress.City;
+                ProvinceLbl.Text = "Provincia: " + _order.DeliveryAddress.Province;
+                DetailsLbl.Text = "Detalles: " + _order.DeliveryAddress.Details;
+            }
+        }
+
         //  EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
@@ -72,7 +100,8 @@ namespace WebForms.Admin
                 FetchOrder();
                 BindOrderStatusesDDL();
                 FetchProducts();
-                BindProductsRpt();
+                BindProductSetsRpt();
+                MapControls();
             }
         }
 
@@ -84,36 +113,20 @@ namespace WebForms.Admin
             _order.OrderStatus.Id = Convert.ToInt32(OrderStatusesDDL.SelectedValue);
             _ordersManager.UpdateOrderStatus(_order.Id, _order.OrderStatus.Id);
         }
+
+        protected void ProductSetsRpt_ItemDataBound(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                System.Web.UI.WebControls.Image imageLbl = e.Item.FindControl("ImageLbl") as System.Web.UI.WebControls.Image;
+
+                ProductSet productSet = (ProductSet)e.Item.DataItem;
+
+                if (0 < productSet.Images.Count)
+                {
+                    imageLbl.ImageUrl = productSet.Images[0].Url;
+                }
+            }
+        }
     }
 }
-
-
-/*
- 
-<!-- Datos de entrega -->
-
-                                <td>
-                                    <div class="d-flex gap-2">
-
-                                        <!-- Dirección -->
-
-                                        <asp:Label
-                                            ID="DeliveryAddressLbl"
-                                            runat="server"
-                                            Text='<%#Eval("DeliveryAddress")%>'
-                                            CssClass="text-black">
-                                        </asp:Label>
-
-                                        <!-- Fecha (de entrega) -->
-
-                                        <asp:Label
-                                            ID="DeliveryDateLbl"
-                                            runat="server"
-                                            Text='<%#Eval("DeliveryDate", "{0:dd/MM/yyyy}")%>'
-                                            CssClass="text-black">
-                                        </asp:Label>
-
-                                    </div>
-                                </td>
-
- */

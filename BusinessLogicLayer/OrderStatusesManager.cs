@@ -1,7 +1,7 @@
-﻿using DataAccessLayer;
-using DomainModelLayer;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using DataAccessLayer;
+using DomainModelLayer;
 
 namespace BusinessLogicLayer
 {
@@ -54,8 +54,7 @@ namespace BusinessLogicLayer
                 if (_dataAccess.Reader.Read())
                 {
                     orderStatus.Id = orderStatusId;
-                    orderStatus.Name = _dataAccess.Reader["OrderStatusName"]?.ToString();
-                    orderStatus.Name = orderStatus.Name ?? ""; // hack : verificar si es necesaria esta linea
+                    orderStatus.Name = (string)_dataAccess.Reader["OrderStatusName"];
                 }
             }
             catch (Exception ex)

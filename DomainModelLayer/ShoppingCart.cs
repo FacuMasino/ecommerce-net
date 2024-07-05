@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace DomainModelLayer
 {
-    public class Cart
+    public class ShoppingCart
     {
         // PROPERTIES
 
@@ -19,7 +19,7 @@ namespace DomainModelLayer
 
         // CONSTRUCT
 
-        public Cart()
+        public ShoppingCart()
         {
             ProductSets = new List<ProductSet>();
         }

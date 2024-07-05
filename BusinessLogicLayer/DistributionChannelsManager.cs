@@ -22,8 +22,7 @@ namespace BusinessLogicLayer
                 if (_dataAccess.Reader.Read())
                 {
                     distributionChannel.Id = distributionChannelId;
-                    distributionChannel.Name = _dataAccess.Reader["DistributionChannelName"]?.ToString();
-                    distributionChannel.Name = distributionChannel.Name ?? ""; // hack : Verificar si es necesaria esta linea. Buscar posibles casos similares caso que no lo sea.
+                    distributionChannel.Name = (string)_dataAccess.Reader["DistributionChannelName"];
                 }
             }
             catch (Exception ex)
