@@ -91,6 +91,7 @@
     <Compile Include="ImagesManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProvincesManager.cs" />
+    <Compile Include="RolesManager.cs" />
     <Compile Include="UsersManager.cs" />
   </ItemGroup>
   <ItemGroup>

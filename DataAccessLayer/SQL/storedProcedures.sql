@@ -263,6 +263,18 @@ go
 -- USERS --
 -----------
 
+create or alter procedure SP_Get_Person_Id(
+	@Email varchar(30)
+)
+as
+begin
+	select PersonId
+	from People
+	where Email = @Email
+end
+
+go
+
 create or alter procedure SP_Get_User_Id(
 	@PersonId int
 )
@@ -272,6 +284,18 @@ begin
 	from Users U
 	right join People P on P.PersonId = U.PersonId
 	where P.PersonId = @PersonId
+end
+
+go
+
+create or alter procedure SP_Read_Person(
+	@PersonId int
+)
+as
+begin
+	select IsActive, FirstName, LastName, TaxCode, Phone, Email, Birth, AddressId
+	from People
+	where PersonId = @PersonId
 end
 
 go
@@ -288,14 +312,35 @@ end
 
 go
 
-create or alter procedure SP_Read_Person(
+create or alter procedure SP_Add_Person(
+	@IsActive bit,
+	@FirstName varchar(30),
+	@LastName varchar(30),
+	@TaxCode varchar(30),
+	@Phone varchar(30),
+	@Email varchar(30),
+	@Birth datetime,
+	@AddressId int
+)
+as
+begin
+	insert into People
+	(IsActive, FirstName, LastName, TaxCode, Phone, Email, Birth, AddressId)
+	output inserted.PersonId
+	values
+	(@IsActive, @FirstName, @LastName, @TaxCode, @Phone, @Email, @Birth, @AddressId)
+end
+
+go
+
+create or alter procedure SP_Delete_Person_Logically(
 	@PersonId int
 )
 as
 begin
-	select IsActive, FirstName, LastName, TaxCode, Phone, Email, Birth, AddressId
-	from People
-	where PersonId = @PersonId
+	update People
+	set IsActive = 0
+	where PersonId = @PersonId;
 end
 
 go

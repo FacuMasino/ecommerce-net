@@ -151,7 +151,7 @@ CREATE TABLE People
 	LastName varchar(30) NOT NULL,
 	TaxCode varchar(30) NULL,
 	Phone varchar(30) NULL,
-	Email varchar(30) NOT NULL UNIQUE ,
+	Email varchar(30) UNIQUE NOT NULL,
 	Birth date NULL,
 	AddressId int FOREIGN KEY REFERENCES Addresses (AddressId) NULL,
 ) 

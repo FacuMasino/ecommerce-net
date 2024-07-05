@@ -11,7 +11,7 @@ namespace BusinessLogicLayer
         private DataAccess _dataAccess = new DataAccess();
         private Person _person;
         private PeopleManager _peopleManager = new PeopleManager();
-        private User _user;
+        private RolesManager _rolesManager = new RolesManager();
 
         public User Read(int userId)
         {
@@ -42,7 +42,7 @@ namespace BusinessLogicLayer
                 _dataAccess.CloseConnection();
             }
 
-            user.Role = ReadRole(user.Role.Id);
+            user.Role = _rolesManager.Read(user.Role.Id);
 
             _person = _peopleManager.Read(user.PersonId);
             Helper.AssignPerson(user, _person);
@@ -72,44 +72,15 @@ namespace BusinessLogicLayer
             return userId;
         }
 
-        private Role ReadRole(int roleId)
-        {
-            Role role = new Role();
-
-            try
-            {
-                _dataAccess.SetQuery("select RoleName from Roles where RoleId = @RoleId");
-                _dataAccess.SetParameter("@RoleId", roleId);
-                _dataAccess.ExecuteRead();
-
-                if (_dataAccess.Reader.Read())
-                {
-                    role.Id = roleId;
-                    role.Name = _dataAccess.Reader["RoleName"]?.ToString();
-                    role.Name = role.Name ?? "";
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                _dataAccess.CloseConnection();
-            }
-
-            return role;
-        }
-
         public bool Login(User user)
         {
             try
             {
                 _dataAccess.SetQuery(
-                    "select UserId,RoleId,P.LastName, P.FirstName,P.Phone, P.Birth,  P.Email, P.TaxCode, P.AddressId, A.StreetName, A.StreetNumber, A.Flat, C.ZipCode,C.CityName,   U.Username from Users U Inner join People P on U.PersonId = P.PersonId Inner join Addresses A On A.AddressId = P.AddressId Inner Join Cities C ON A.CityId = C.CityId where P.Email = @Email AND U.UserPassword = @Pass"
+                    "select UserId,RoleId,P.LastName, P.FirstName,P.Phone, P.Birth,  P.Email, P.TaxCode, P.AddressId, A.StreetName, A.StreetNumber, A.Flat, C.ZipCode,C.CityName,   U.Username from Users U Inner join People P on U.PersonId = P.PersonId Inner join Addresses A On A.AddressId = P.AddressId Inner Join Cities C ON A.CityId = C.CityId where P.Email = @Email AND U.UserPassword = @UserPassword"
                 );
                 _dataAccess.SetParameter("@Email", user.Email);
-                _dataAccess.SetParameter("@Pass", user.Password);
+                _dataAccess.SetParameter("@UserPassword", user.Password);
 
                 _dataAccess.ExecuteRead();
 
