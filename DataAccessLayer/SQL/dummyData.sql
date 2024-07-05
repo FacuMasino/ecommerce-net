@@ -119,9 +119,9 @@ VALUES
 
 GO
 
----------------------------
--- CATEGORIES X PRODUCTS --
----------------------------
+------------------------
+-- PRODUCT CATEGORIES --
+------------------------
 
 INSERT INTO
 	ProductCategories
@@ -437,9 +437,9 @@ VALUES
 
 GO
 
------------------------
--- ORDERS X PRODUCTS --
------------------------
+--------------------
+-- ORDER PRODUCTS --
+--------------------
 
 INSERT INTO
 	OrderProducts

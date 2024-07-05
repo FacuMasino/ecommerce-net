@@ -244,6 +244,39 @@ end
 
 go
 
+create or alter procedure SP_Add_Order(
+	@DeliveryAddressId int,
+	@OrderStatusId int,
+	@PersonId int,
+	@DistributionChannelId int,
+	@PaymentTypeId int
+)
+as
+begin
+	insert into Orders
+	(DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId, PaymentTypeId)
+	output inserted.OrderId
+	values
+	(@DeliveryAddressId, @OrderStatusId, @PersonId,	@DistributionChannelId, @PaymentTypeId)
+end
+
+go
+
+create or alter procedure SP_Add_Order_Product(
+	@OrderId int,
+	@ProductId int,
+	@Quantity int
+)
+as
+begin
+	insert into OrderProducts
+	(OrderId, ProductId, Quantity)
+	values
+	(@OrderId, @ProductId, @Quantity)
+end
+
+go
+
 create or alter procedure SP_List_Order_Statuses(
 	@DistributionChannelId int
 )
