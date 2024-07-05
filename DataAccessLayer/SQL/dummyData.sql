@@ -299,7 +299,7 @@ INSERT INTO
 	AddressId
 	)
 VALUES
-	('Ana', 'Bertello', NULL, NULL, NULL, NULL, 1),
+	('Ana', 'Bertello', 35147428, NULL, bertelloana@outlook, NULL, 1),
 	('Facundo', 'Masino', NULL, NULL, NULL, NULL, 2),
 	('Maximiliano', 'Malvicino', NULL, NULL, NULL, NULL, 3),
 	('Carlos', 'Paz', NULL, NULL, NULL, NULL, NULL);
@@ -328,7 +328,7 @@ INSERT INTO
 	Users
 	(Username, UserPassword, RoleId, PersonId)
 VALUES
-	('Ani77aa', 'restrepo', '1', '1'),
+	('Ani77aa', 'aniani', '1', '1'),
 	('FacuMasino', 'donpablo', '2', '2'),
 	('mrmalvicino', 'elchili', '2', '3');
 
