@@ -12,10 +12,20 @@
         </div>
         <!-- BUSCADOR -->
         <asp:Panel ID="SearchPanel" runat="server" CssClass="input-group mb-3" DefaultButton="searchBtn">
-            <asp:TextBox CssClass="form-control" ID="SearchTextBox" runat="server" Text="" placeholder="Buscar por nombre, marca, etc"
-                />
-            <asp:LinkButton Text='<i class="bi bi-search"></i>' ID="SearchBtn" CssClass="btn rounded-end btn-outline-secondary"
-                runat="server" OnClick="SearchBtn_Click" />
+            <asp:TextBox
+                CssClass="form-control"
+                ID="SearchTextBox"
+                runat="server"
+                Text=""
+                onKeyUp="checkSearchBtn();"
+                placeholder="Buscar por nombre, marca, categoría" />
+            <asp:LinkButton
+                Text='<i class="bi bi-search"></i>'
+                ID="SearchBtn"
+                CssClass="btn rounded-end btn-outline-secondary"
+                runat="server"
+                ClientIDMode="Static"
+                OnClick="SearchBtn_Click" />
             <div class="invalid-feedback">
                 Ingrese al menos 2 caracteres.    
             </div>
@@ -33,6 +43,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <% if (TotalProducts == 0)
+                        {
+                    %>
+                    <tr>
+                        <th scope="row" class="text-center fs-6 p-4" colspan="5">Ops! No hay productos para
+                            mostrar.<br />
+                        </th>
+                    </tr>
+                    <%}
+                        else
+                        {
+                    %>
                     <asp:Repeater runat="server" ID="ProductListRepeater">
                         <ItemTemplate>
                             <tr>
@@ -56,17 +78,18 @@
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                         <!-- Eliminar -->
-                                        <asp:LinkButton Text='<i class="bi bi-trash3"></i>' 
-                                            CssClass="p-0 text-black fs-5" 
-                                            CommandArgument='<%#Eval("Id")%>' 
-                                            ID="DeleteProductLnkBtn" 
-                                            OnClick="DeleteProductLnkBtn_Click" 
+                                        <asp:LinkButton Text='<i class="bi bi-trash3"></i>'
+                                            CssClass="p-0 text-black fs-5"
+                                            CommandArgument='<%#Eval("Id")%>'
+                                            ID="DeleteProductLnkBtn"
+                                            OnClick="DeleteProductLnkBtn_Click"
                                             runat="server" />
                                     </div>
                                 </td>
                             </tr>
                         </ItemTemplate>
                     </asp:Repeater>
+                    <%} %>
                 </tbody>
 
             </table>
