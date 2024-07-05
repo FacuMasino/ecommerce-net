@@ -39,17 +39,40 @@ namespace BusinessLogicLayer
 
         public int Add(Role role)
         {
+            // hack : No es necesario para un MVP
             return -1;
         }
 
         public void Edit(Role role)
         {
-
+            // hack : No es necesario para un MVP
         }
 
         public int GetId(Role role)
         {
-            return -1;
+            int roleId = 0;
+
+            try
+            {
+                _dataAccess.SetQuery("select RoleId from Roles where RoleName = @RoleName");
+                _dataAccess.SetParameter("@RoleName", role.Name);
+                _dataAccess.ExecuteRead();
+
+                if (_dataAccess.Reader.Read())
+                {
+                    roleId = (int)_dataAccess.Reader["RoleId"];
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+
+            return roleId;
         }
     }
 }
