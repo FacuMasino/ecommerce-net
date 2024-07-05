@@ -17,6 +17,8 @@ namespace BusinessLogicLayer
             set { _shoppingCart.ProductSets = value; }
         }
 
+        public ShoppingCart ShoppingCart {  get { return _shoppingCart; } }
+
         // CONSTRUCT
 
         public CartManager()

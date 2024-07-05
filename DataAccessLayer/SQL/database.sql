@@ -175,7 +175,7 @@ GO
 CREATE TABLE Users
 (
 	UserId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-	Username varchar(30) NOT NULL,
+	Username varchar(30) NULL,
 	UserPassword varchar(30) NOT NULL,
 	RoleId tinyint FOREIGN KEY REFERENCES Roles (RoleId) NOT NULL,
 	PersonId int FOREIGN KEY REFERENCES People (PersonId) NOT NULL

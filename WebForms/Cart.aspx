@@ -72,7 +72,7 @@
                             </li>
                         </ul>
                     </div>
-                    <a class="btn w-100 btn-primary mb-2" href="OrderConfirmation.aspx">Ir a Pagar</a>
+                    <asp:Button ID="ConfirmOrderBtn" runat="server" Text="Confirmar orden" OnClick="ConfirmOrderBtn_Click" CssClass="btn w-100 btn-primary mb-2"/>
                     <a class="mb-2 w-100 d-block text-black" href="Home.aspx">Volver a la tienda</a>
                 </div>
             </div>

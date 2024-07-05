@@ -144,6 +144,11 @@ namespace BusinessLogicLayer
             return order;
         }
 
+        public int Add(Order order)
+        {
+            return -1; // hack
+        }
+
         /// <summary>
         /// Actualiza el estado de una orden. En caso de estar usando Edit(), sería redundante ejecutar ambos métodos en serie.
         /// </summary>

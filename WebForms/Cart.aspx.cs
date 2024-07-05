@@ -126,5 +126,11 @@ namespace WebForms
                 }
             }
         }
+
+        protected void ConfirmOrderBtn_Click(object sender, EventArgs e)
+        {
+            Session.Add("shoppingCart", _shoppingCartManager.ShoppingCart);
+            Response.Redirect("OrderConfirmation.aspx", false);
+        }
     }
 }
