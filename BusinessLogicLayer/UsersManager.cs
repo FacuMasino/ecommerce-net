@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web.UI;
 using DataAccessLayer;
 using DomainModelLayer;
 using UtilitiesLayer;
@@ -217,6 +216,7 @@ namespace BusinessLogicLayer
                 {
                     user.UserId = (int)_dataAccess.Reader["UserId"];
                     user.Role.Id = Convert.ToInt32(_dataAccess.Reader["RoleId"]);
+
                     user.LastName = (string)_dataAccess.Reader["LastName"];
                     user.FirstName = (string)_dataAccess.Reader["FirstName"];
 
@@ -259,7 +259,7 @@ namespace BusinessLogicLayer
 
         public bool IsAdmin(User user)
         {
-            if (user.Role.Name == "Admin")
+            if (user.Role.Id == 2) // admin
             {
                 return true;
             }

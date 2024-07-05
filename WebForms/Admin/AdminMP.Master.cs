@@ -9,6 +9,7 @@ namespace WebForms.Admin
     public partial class Admin : System.Web.UI.MasterPage
     {
         private OrdersManager _ordersManager;
+        private UsersManager _usersManager;
 
         public int PendingOrders
         {
@@ -18,6 +19,7 @@ namespace WebForms.Admin
         public Admin()
         {
             _ordersManager = new OrdersManager();
+            _usersManager = new UsersManager();
         }
 
         // METHODS
@@ -103,6 +105,16 @@ namespace WebForms.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["user"] == null)
+            {
+                Response.Redirect("/AccessDenied.aspx");
+            }
+
+            if (!_usersManager.IsAdmin((User)Session["user"]))
+            {
+                Response.Redirect("/AccessDenied.aspx");
+            }
+
             CheckActiveItem();
         }
 

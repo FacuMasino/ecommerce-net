@@ -64,6 +64,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AccessDenied.aspx" />
     <Content Include="Account.aspx" />
     <Content Include="AccountRecovery.aspx" />
     <Content Include="Admin\Brands.aspx" />
@@ -106,6 +107,7 @@
     <Content Include="Content\img\add-to-cart.svg" />
     <Content Include="Content\img\Empty-pana.svg" />
     <Content Include="Content\img\placeholder.jpg" />
+    <Content Include="Content\img\policy-rafiki.svg" />
     <Content Include="Content\img\Thinking face-rafiki.svg" />
     <Content Include="ErrorLogin.aspx" />
     <Content Include="GoodBye.aspx" />
@@ -129,6 +131,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessDenied.aspx.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AccessDenied.aspx.designer.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Account.aspx.cs">
       <DependentUpon>Account.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
