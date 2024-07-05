@@ -26,8 +26,7 @@
                         {
                     %>
                     <tr>
-                        <th scope="row" class="text-center fs-5 p-4" colspan="4">
-                            Ops! Parece que aún no tienes productos destacados.<br />
+                        <th scope="row" class="text-center fs-5 p-4" colspan="4">Ops! Parece que aún no tienes productos destacados.<br />
                             Intenta agregar uno desde el panel "Agregar Producto" !
                         </th>
                     </tr>
@@ -61,7 +60,7 @@
                                     </div>
                                 </td>
                                 <td class="align-middle">
-                                    <div class="d-flex gap-2">
+                                    <div class="d-flex justify-content-between gap-2">
                                         <!-- Subir orden -->
                                         <asp:LinkButton Text='<i class="bi bi-caret-up-fill"></i>'
                                             CssClass="p-0 text-black fs-5"
@@ -103,12 +102,23 @@
                 Producto
             <i class="bi bi-caret-down-fill"></i>
             </a>
-            <asp:Panel CssClass="collapse border rounded-bottom p-3" id="ProductsCollapse" ClientIDMode="Static" runat="server">
+            <asp:Panel CssClass="collapse border rounded-bottom p-3" ID="ProductsCollapse" ClientIDMode="Static" runat="server">
                 <!-- BUSCADOR -->
                 <asp:Panel ID="SearchPanel" runat="server" CssClass="input-group mb-3" DefaultButton="searchBtn">
-                    <asp:TextBox CssClass="form-control" ID="SearchTextBox" runat="server" Text="" placeholder="Buscar por nombre, marca, etc" />
-                    <asp:LinkButton Text='<i class="bi bi-search"></i>' ID="SearchBtn" CssClass="btn rounded-end btn-outline-secondary"
-                        runat="server" OnClick="SearchBtn_Click" />
+                    <asp:TextBox
+                        CssClass="form-control"
+                        ID="SearchTextBox"
+                        runat="server"
+                        Text=""
+                        onKeyUp="checkSearchBtn();"
+                        placeholder="Buscar por nombre, marca, etc" />
+                    <asp:LinkButton
+                        Text='<i class="bi bi-search"></i>'
+                        ID="SearchBtn"
+                        CssClass="btn rounded-end btn-outline-secondary"
+                        runat="server"
+                        ClientIDMode="Static"
+                        OnClick="SearchBtn_Click" />
                     <div class="invalid-feedback">
                         Ingrese al menos 2 caracteres.    
                     </div>
@@ -126,6 +136,17 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <% if (TotalProducts == 0)
+                                {
+                            %>
+                            <tr>
+                                <th scope="row" class="text-center fs-6 p-4" colspan="5">Ops! No hay productos para mostrar.<br />
+                                </th>
+                            </tr>
+                            <%}
+                                else
+                                {
+                            %>
                             <asp:Repeater runat="server" ID="ProductListRepeater">
                                 <ItemTemplate>
                                     <tr>
@@ -156,6 +177,7 @@
                                     </tr>
                                 </ItemTemplate>
                             </asp:Repeater>
+                            <%} %>
                         </tbody>
 
                     </table>
