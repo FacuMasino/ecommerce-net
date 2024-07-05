@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.UI;
 using DataAccessLayer;
 using DomainModelLayer;
 using UtilitiesLayer;
@@ -105,7 +106,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "select UserId,RoleId from Users U Inner join People P on U.PersonId = P.PersonId  where P.Email = @Email AND U.UserPassword = @Pass"
+                    "select UserId,RoleId,P.LastName, P.FirstName,P.Phone, P.Birth,  P.Email, P.TaxCode, P.AddressId, A.StreetName, A.StreetNumber, A.Flat, C.ZipCode,C.CityName,   U.Username from Users U Inner join People P on U.PersonId = P.PersonId Inner join Addresses A On A.AddressId = P.AddressId Inner Join Cities C ON A.CityId = C.CityId where P.Email = @Email AND U.UserPassword = @Pass"
                 );
                 _dataAccess.SetParameter("@Email", user.Email);
                 _dataAccess.SetParameter("@Pass", user.Password);
@@ -116,6 +117,17 @@ namespace BusinessLogicLayer
                 {
                     user.UserId = (int)_dataAccess.Reader["UserId"];
                     user.Role.Id = Convert.ToInt32(_dataAccess.Reader["RoleId"]);
+                    user.LastName = (string)_dataAccess.Reader["LastName"];
+                    user.FirstName = (string)_dataAccess.Reader["FirstName"];
+                    user.Phone = (string)_dataAccess.Reader["Phone"];
+                    user.TaxCode = (string)_dataAccess.Reader["TaxCode"];
+                    user.Birth = DateTime.Parse(_dataAccess.Reader["Birth"].ToString());
+                    user.Address.StreetName = (string)_dataAccess.Reader["StreetName"];
+                    user.Address.StreetNumber = (string)_dataAccess.Reader["StreetNumber"];
+                    user.Address.City.Name = (string)_dataAccess.Reader["CityName"];
+                    user.Address.City.ZipCode = (string)_dataAccess.Reader["ZipCode"];
+                    user.Address.Flat = (string)_dataAccess.Reader["Flat"];
+
                     return true;
                 }
                 return false;
@@ -127,6 +139,18 @@ namespace BusinessLogicLayer
             finally
             {
                 _dataAccess.CloseConnection();
+            }
+        }
+
+        public bool IsAdmin(User user)
+        {
+            if (user.Role.Name == "Admin")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
