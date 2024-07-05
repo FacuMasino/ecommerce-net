@@ -50,7 +50,126 @@ namespace BusinessLogicLayer
             return user;
         }
 
-        public int GetUserId(int personId)
+        public int Add(User user)
+        {
+            user.PersonId = _peopleManager.Add(user);
+
+            if (user.Role != null)
+            {
+                int foundRoleId = _rolesManager.GetId(user.Role);
+
+                if (foundRoleId == 0)
+                {
+                    user.Role.Id = _rolesManager.Add(user.Role);
+                }
+                else
+                {
+                    user.Role.Id = foundRoleId;
+                }
+            }
+
+            int UserId = 0;
+
+            try
+            {
+                _dataAccess.SetProcedure("SP_Add_User");
+                SetParameters(user);
+                UserId = _dataAccess.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+
+            return UserId;
+        }
+
+        public void Edit(User user)
+        {
+            _peopleManager.Edit(user);
+
+            if (user.Role != null)
+            {
+                int foundRoleId = _rolesManager.GetId(user.Role);
+
+                if (foundRoleId == 0)
+                {
+                    user.Role.Id = _rolesManager.Add(user.Role);
+                }
+                else if (foundRoleId == user.Role.Id)
+                {
+                    _rolesManager.Edit(user.Role);
+                }
+                else
+                {
+                    user.Role.Id = foundRoleId;
+                }
+            }
+
+            try
+            {
+                _dataAccess.SetProcedure("SP_Edit_User");
+                _dataAccess.SetParameter("@UserId", user.UserId);
+                SetParameters(user);
+                _dataAccess.ExecuteAction();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+        }
+
+        public void DeleteLogically(User user)
+        {
+            try
+            {
+                _dataAccess.SetProcedure("SP_Delete_User_Logically");
+                _dataAccess.SetParameter("@UserId", user.UserId);
+                _dataAccess.ExecuteAction();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+        }
+
+        public void Delete(User user, bool isLogicalDeletion = true)
+        {
+            if (isLogicalDeletion == true)
+            {
+                DeleteLogically(user);
+                return;
+            }
+
+            try
+            {
+                _dataAccess.SetQuery("delete from Users where UserId = @UserId");
+                _dataAccess.SetParameter("@UserId", user.UserId);
+                _dataAccess.ExecuteAction();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+        }
+
+        public int GetId(int personId)
         {
             int userId = 0;
 
@@ -70,6 +189,14 @@ namespace BusinessLogicLayer
             }
 
             return userId;
+        }
+
+        private void SetParameters(User user)
+        {
+            _dataAccess.SetParameter("@Username", user.Username);
+            _dataAccess.SetParameter("@UserPassword", user.Password);
+            _dataAccess.SetParameter("@RoleId", user.Role.Id);
+            _dataAccess.SetParameter("@PersonId", user.PersonId);
         }
 
         public bool Login(User user)

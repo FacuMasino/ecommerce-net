@@ -68,7 +68,7 @@ namespace BusinessLogicLayer
                 order.DistributionChannel = _distributionChannelsManager.Read(order.DistributionChannel.Id);
                 order.PaymentType = _paymentTypesManager.Read(order.PaymentType.Id);
 
-                order.User.UserId = _usersManager.GetUserId(order.User.PersonId);
+                order.User.UserId = _usersManager.GetId(order.User.PersonId);
 
                 if (0 < order.User.UserId)
                 {
@@ -129,7 +129,7 @@ namespace BusinessLogicLayer
             order.DistributionChannel = _distributionChannelsManager.Read(order.DistributionChannel.Id);
             order.PaymentType = _paymentTypesManager.Read(order.PaymentType.Id);
 
-            order.User.UserId = _usersManager.GetUserId(order.User.PersonId);
+            order.User.UserId = _usersManager.GetId(order.User.PersonId);
 
             if (0 < order.User.UserId)
             {

@@ -36,5 +36,20 @@ namespace BusinessLogicLayer
 
             return role;
         }
+
+        public int Add(Role role)
+        {
+            return -1;
+        }
+
+        public void Edit(Role role)
+        {
+
+        }
+
+        public int GetId(Role role)
+        {
+            return -1;
+        }
     }
 }
