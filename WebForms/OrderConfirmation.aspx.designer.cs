@@ -60,6 +60,15 @@ namespace WebForms
         protected global::System.Web.UI.WebControls.RadioButton PickupRB;
 
         /// <summary>
+        /// AddressPnl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel AddressPnl;
+
+        /// <summary>
         /// ProvincesDDL control.
         /// </summary>
         /// <remarks>
@@ -69,13 +78,13 @@ namespace WebForms
         protected global::System.Web.UI.WebControls.DropDownList ProvincesDDL;
 
         /// <summary>
-        /// CitiesDDL control.
+        /// CityTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CitiesDDL;
+        protected global::System.Web.UI.WebControls.TextBox CityTxt;
 
         /// <summary>
         /// StreetNameTxt control.

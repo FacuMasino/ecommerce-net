@@ -35,5 +35,37 @@ namespace BusinessLogicLayer
 
             return paymentType;
         }
+
+        public int GetId(PaymentType paymentType)
+        {
+            if (paymentType == null)
+            {
+                return 0;
+            }
+
+            int paymentTypeId = 0;
+
+            try
+            {
+                _dataAccess.SetQuery("select PaymentTypeId from PaymentTypes where PaymentTypeName = @PaymentTypeName");
+                _dataAccess.SetParameter("@PaymentTypeName", paymentType.Name);
+                _dataAccess.ExecuteRead();
+
+                if (_dataAccess.Reader.Read())
+                {
+                    paymentTypeId = (int)_dataAccess.Reader["PaymentTypeId"];
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+
+            return paymentTypeId;
+        }
     }
 }

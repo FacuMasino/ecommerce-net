@@ -2,7 +2,6 @@
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
-using UtilitiesLayer;
 
 namespace WebForms
 {
@@ -13,6 +12,9 @@ namespace WebForms
         private Order _order;
         private ShoppingCart _shoppingCart;
         private OrdersManager _ordersManager;
+        private ProvincesManager _provincesManager;
+        private CitiesManager _citiesManager;
+        private PaymentTypesManager _paymentTypesManager;
 
         // PROPERTIES
 
@@ -23,6 +25,9 @@ namespace WebForms
             _order = new Order();
             _shoppingCart = new ShoppingCart();
             _ordersManager = new OrdersManager();
+            _provincesManager = new ProvincesManager();
+            _citiesManager = new CitiesManager();
+            _paymentTypesManager = new PaymentTypesManager();
         }
 
         // METHODS
@@ -38,14 +43,67 @@ namespace WebForms
             ProductSetsRpt.DataBind();
         }
 
-        private void MapControls()
+        private void BindProvincesDDL()
         {
-            //hack
+            ProvincesDDL.DataSource = _provincesManager.List(1);
+            ProvincesDDL.DataTextField = "Name";
+            ProvincesDDL.DataValueField = "Id";
+            ProvincesDDL.DataBind();
+            ProvincesDDL.SelectedIndex = 0;
+        }
+
+        private void SetPerson()
+        {
+            _order.User.FirstName = FirstNameTxt.Text;
+            _order.User.LastName = LastNameTxt.Text;
+            _order.User.Email = EmailTxt.Text;
+        }
+
+        private void SetAddress()
+        {
+            _order.DeliveryAddress.Flat = FlatTxt.Text;
+            _order.DeliveryAddress.StreetName = StreetNameTxt.Text;
+            _order.DeliveryAddress.StreetNumber = StreetNumberTxt.Text;
+            _order.DeliveryAddress.City.Name = CityTxt.Text;
+            _order.DeliveryAddress.City.ZipCode = ZipCodeTxt.Text;
+            _order.DeliveryAddress.City.Id = _citiesManager.GetId(_order.DeliveryAddress.City);
+            _order.DeliveryAddress.Province.Name = (string)ProvincesDDL.SelectedValue;
+            _order.DeliveryAddress.Province.Id = _provincesManager.GetId(_order.DeliveryAddress.Province);
+        }
+
+        private void SetPaymentType()
+        {
+            if (CashRB.Checked)
+            {
+                _order.PaymentType.Name = "Efectivo";
+            }
+            else if (MercadoPagoRB.Checked)
+            {
+                _order.PaymentType.Name = "Mercado Pago";
+            }
+            else
+            {
+                _order.PaymentType.Name = "Transferencia bancaria";
+            }
+
+            _order.PaymentType.Id = _paymentTypesManager.GetId(_order.PaymentType);
         }
 
         private void SetOrder()
         {
-            //hack
+            SetPerson();
+
+            if (DeliveryRB.Checked)
+            {
+                SetAddress();
+            }
+
+            SetPaymentType();
+        }
+
+        private void MapControls()
+        {
+            TotalLbl.Text = _shoppingCart.Total.ToString();
         }
 
         // EVENTS
@@ -56,6 +114,7 @@ namespace WebForms
             {
                 FetchShoppingCart();
                 BindProductSetsRpt();
+                BindProvincesDDL();
                 MapControls();
             }
         }
@@ -77,7 +136,18 @@ namespace WebForms
 
         protected void SubmitOrder_Click(object sender, EventArgs e)
         {
-            _ordersManager.Add(_order);
+            SetOrder();
+            _order.Id = _ordersManager.Add(_order);
+        }
+
+        protected void DeliveryRB_CheckedChanged(object sender, EventArgs e)
+        {
+            AddressPnl.Visible = !AddressPnl.Visible;
+        }
+
+        protected void PickupRB_CheckedChanged(object sender, EventArgs e)
+        {
+            AddressPnl.Visible = !AddressPnl.Visible;
         }
     }
 }

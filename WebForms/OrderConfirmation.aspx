@@ -54,6 +54,8 @@
                             Checked="true"
                             GroupName="Delivery"
                             Text="Envío a domicilio"
+                            OnCheckedChanged="DeliveryRB_CheckedChanged"
+                            AutoPostBack="true"
                             CssClass="no-outline form-check-input" />
                     </div>
                     <div>
@@ -63,13 +65,15 @@
                             Checked="false"
                             GroupName="Delivery"
                             Text="Retiro en sucursal"
+                            OnCheckedChanged="PickupRB_CheckedChanged"
+                            AutoPostBack="true"
                             CssClass="no-outline form-check-input" />
                     </div>
                 </div>
 
                 <!-- Dirección de entrega -->
 
-                <div>
+                <asp:Panel ID="AddressPnl" runat="server">
                     <div class="mb-3">
                         <h2 class="fs-5 mb-3">Dirección de entrega</h2>
                     </div>
@@ -82,11 +86,12 @@
                         </asp:DropDownList>
                     </div>
                     <div class="mb-3">
-                        <asp:DropDownList
-                            ID="CitiesDDL"
+                        <asp:TextBox
+                            ID="CityTxt"
                             runat="server"
-                            CssClass="form-select">
-                        </asp:DropDownList>
+                            Text="Ciudad"
+                            CssClass="form-control">
+                        </asp:TextBox>
                     </div>
 
                     <div class="row mb-3">
@@ -125,7 +130,7 @@
                             </asp:TextBox>
                         </div>
                     </div>
-                </div>
+                </asp:Panel>
 
                 <!-- Método de pago -->
 
