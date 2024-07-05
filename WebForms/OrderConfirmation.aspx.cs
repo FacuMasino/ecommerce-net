@@ -14,6 +14,7 @@ namespace WebForms
         private OrdersManager _ordersManager;
         private ProvincesManager _provincesManager;
         private CitiesManager _citiesManager;
+        private AddressesManager _addressesManager;
         private PaymentTypesManager _paymentTypesManager;
         private DistributionChannelsManager _distributionChannelsManager;
         private OrderStatusesManager _orderStatusesManager;
@@ -29,6 +30,7 @@ namespace WebForms
             _ordersManager = new OrdersManager();
             _provincesManager = new ProvincesManager();
             _citiesManager = new CitiesManager();
+            _addressesManager = new AddressesManager();
             _paymentTypesManager = new PaymentTypesManager();
             _distributionChannelsManager = new DistributionChannelsManager();
             _orderStatusesManager = new OrderStatusesManager();
@@ -68,6 +70,7 @@ namespace WebForms
                 _order.DeliveryAddress.City.Id = _citiesManager.GetId(_order.DeliveryAddress.City);
                 _order.DeliveryAddress.Province.Name = (string)ProvincesDDL.SelectedValue;
                 _order.DeliveryAddress.Province.Id = _provincesManager.GetId(_order.DeliveryAddress.Province);
+                _order.DeliveryAddress.Id = _addressesManager.GetId(_order.DeliveryAddress);
             }
         }
 

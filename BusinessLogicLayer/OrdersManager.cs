@@ -157,7 +157,51 @@ namespace BusinessLogicLayer
 
         public int Add(Order order, List<ProductSet> productSets)
         {
-            return -1; // hack
+            try
+            {
+                _dataAccess.SetProcedure("SP_Add_Order_Confirmation");
+                SetParameters(order);
+                order.Id = _dataAccess.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+
+            foreach (ProductSet productSet in productSets)
+            {
+                try
+                {
+                    _dataAccess.SetProcedure("SP_Add_Product_To_Order");
+                    _dataAccess.SetParameter("@OrderId", order.Id);
+                    _dataAccess.SetParameter("@ProductId", productSet.Id);
+                    _dataAccess.SetParameter("@Quantity", productSet.Quantity);
+                    _dataAccess.ExecuteAction();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    _dataAccess.CloseConnection();
+                }
+            }
+
+            return order.Id;
+        }
+
+        private void SetParameters(Order order)
+        {
+            _dataAccess.SetParameter("@DeliveryAddressId", order.DeliveryAddress.Id);
+            _dataAccess.SetParameter("@OrderStatusId", order.OrderStatus.Id);
+            _dataAccess.SetParameter("@PersonId", order.User.PersonId);
+            _dataAccess.SetParameter("@DistributionChannelId", order.DistributionChannel.Id);
+            _dataAccess.SetParameter("@PaymentTypeId", order.PaymentType.Id);
         }
 
         /// <summary>
