@@ -8,9 +8,9 @@
     <div class="container">
         <div class="d-flex flex-column">
             <div class="mt-4">
-
-                <h2 class="fs-4 fw-bold">Hola Nombre!</h2>
-                <p class="fs-5">Bienvenido a tu cuenta.</p>
+           <h2 class="fs-4 fw-bold">Hola!</h2> 
+                <%--Me falta el condicional si username viene vacio o con info  ---%>
+            <p class="fs-5">Bienvenido a tu cuenta.</p>
             </div>
             <ul class="nav align-self-md-end align-self-start">
                 <li class="nav-item">
