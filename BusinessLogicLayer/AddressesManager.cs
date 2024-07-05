@@ -215,7 +215,7 @@ namespace BusinessLogicLayer
             try
             {
                 _dataAccess.SetQuery(
-                    "select AddressId from Addresses where StreetName = @StreetName and StreetNumber = @StreetNumber and CityId = @CityId"
+                    "select  Top 1  AddressId  from Addresses where StreetName = @StreetName and StreetNumber = @StreetNumber and CityId = @CityId"
                 );
                 _dataAccess.SetParameter("@StreetName", address.StreetName);
                 _dataAccess.SetParameter("@StreetNumber", address.StreetNumber);

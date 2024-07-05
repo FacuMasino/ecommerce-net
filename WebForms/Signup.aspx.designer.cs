@@ -15,48 +15,57 @@ namespace WebForms
     {
 
         /// <summary>
-        /// UsrEmail control.
+        /// UsrEmailTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrEmail;
+        protected global::System.Web.UI.WebControls.TextBox UsrEmailTxt;
 
         /// <summary>
-        /// UsrName control.
+        /// UsrNameTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrName;
+        protected global::System.Web.UI.WebControls.TextBox UsrNameTxt;
 
         /// <summary>
-        /// UsrSurNm control.
+        /// UsrSurNmTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrSurNm;
+        protected global::System.Web.UI.WebControls.TextBox UsrSurNmTxt;
 
         /// <summary>
-        /// UsrPass control.
+        /// UsrPassTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrPass;
+        protected global::System.Web.UI.WebControls.TextBox UsrPassTxt;
 
         /// <summary>
-        /// UsrPassCheck control.
+        /// UsrPassCheckTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrPassCheck;
+        protected global::System.Web.UI.WebControls.TextBox UsrPassCheckTxt;
+
+        /// <summary>
+        /// BtnSignUp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnSignUp;
     }
 }

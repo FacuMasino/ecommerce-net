@@ -43,10 +43,13 @@ namespace BusinessLogicLayer
                     }
                     else
                     {
-                        person.Birth = _dataAccess.Reader.GetDateTime(_dataAccess.Reader.GetOrdinal("Birth"));
+                        person.Birth = _dataAccess.Reader.GetDateTime(
+                            _dataAccess.Reader.GetOrdinal("Birth")
+                        );
                     }
 
-                    person.Address.Id = _dataAccess.Reader["AddressId"] as int? ?? person.Address.Id;
+                    person.Address.Id =
+                        _dataAccess.Reader["AddressId"] as int? ?? person.Address.Id;
                 }
             }
             catch (Exception ex)
