@@ -86,7 +86,10 @@
                                 <a id="BtnNavOrders" href="Orders.aspx" class="nav-link text-black" runat="server">
                                     <i class="bi bi-inbox me-2"></i>
                                     Pedidos
-                                    <span class="badge bg-danger">4</span>
+                                    <% if (PendingOrders > 0)
+                                        {  %>
+                                    <span class="badge bg-danger"><%:PendingOrders%></span>
+                                    <%} %>
                                 </a>
                             </li>
                             <li>

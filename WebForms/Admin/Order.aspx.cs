@@ -15,6 +15,11 @@ namespace WebForms.Admin
         private ShoppingCart _shoppingCart;
         private ProductsManager _productsManager;
 
+        public string CurrentStatusName
+        {
+            get { return _order == null ? "" : _order.OrderStatus.Name; }
+        }
+
         // CONSTRUCT
 
         public OrderPage()
@@ -63,9 +68,10 @@ namespace WebForms.Admin
         {
             OrderIdLbl.Text = "Orden #" + _order.Id.ToString();
             OrderCreationDateLbl.Text = "Generada el " + _order.CreationDate.ToString("dd-MM-yyyy");
-            TotalLbl.Text = "$" + _shoppingCart.Total.ToString();
+            TotalLbl.Text = "$" + _shoppingCart.Total.ToString("F2");
             PaymentTypeLbl.Text = _order.PaymentType.Name;
-            DistributionChannelLbl.Text = "Canal de distribución: " + _order.DistributionChannel.Name;
+            DistributionChannelLbl.Text =
+                "Canal de distribución: " + _order.DistributionChannel.Name;
 
             if (_order.User.Username != null)
             {
@@ -119,11 +125,18 @@ namespace WebForms.Admin
             _ordersManager.UpdateOrderStatus(_order.Id, _order.OrderStatus.Id);
         }
 
-        protected void ProductSetsRpt_ItemDataBound(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e)
+        protected void ProductSetsRpt_ItemDataBound(
+            object sender,
+            System.Web.UI.WebControls.RepeaterItemEventArgs e
+        )
         {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            if (
+                e.Item.ItemType == ListItemType.Item
+                || e.Item.ItemType == ListItemType.AlternatingItem
+            )
             {
-                System.Web.UI.WebControls.Image imageLbl = e.Item.FindControl("ImageLbl") as System.Web.UI.WebControls.Image;
+                System.Web.UI.WebControls.Image imageLbl =
+                    e.Item.FindControl("ImageLbl") as System.Web.UI.WebControls.Image;
 
                 ProductSet productSet = (ProductSet)e.Item.DataItem;
 

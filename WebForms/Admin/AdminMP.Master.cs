@@ -1,12 +1,25 @@
 ﻿using System;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using BusinessLogicLayer;
 using DomainModelLayer;
 
 namespace WebForms.Admin
 {
     public partial class Admin : System.Web.UI.MasterPage
     {
+        private OrdersManager _ordersManager;
+
+        public int PendingOrders
+        {
+            get { return _ordersManager == null ? 0 : _ordersManager.CountPendingOrders(); }
+        }
+
+        public Admin()
+        {
+            _ordersManager = new OrdersManager();
+        }
+
         // METHODS
 
         private void CheckActiveItem()

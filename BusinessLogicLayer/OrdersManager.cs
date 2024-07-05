@@ -14,7 +14,8 @@ namespace BusinessLogicLayer
         private UsersManager _usersManager = new UsersManager();
         private AddressesManager _addressesManager = new AddressesManager();
         private OrderStatusesManager _orderStatusesManager = new OrderStatusesManager();
-        private DistributionChannelsManager _distributionChannelsManager = new DistributionChannelsManager();
+        private DistributionChannelsManager _distributionChannelsManager =
+            new DistributionChannelsManager();
         private PaymentTypesManager _paymentTypesManager = new PaymentTypesManager();
 
         public List<Order> List(int personId = 0)
@@ -40,10 +41,13 @@ namespace BusinessLogicLayer
                     }
                     else
                     {
-                        order.DeliveryDate = _dataAccess.Reader.GetDateTime(_dataAccess.Reader.GetOrdinal("DeliveryDate"));
+                        order.DeliveryDate = _dataAccess.Reader.GetDateTime(
+                            _dataAccess.Reader.GetOrdinal("DeliveryDate")
+                        );
                     }
 
-                    order.DeliveryAddress.Id = _dataAccess.Reader["DeliveryAddressId"] as int? ?? order.DeliveryAddress.Id;
+                    order.DeliveryAddress.Id =
+                        _dataAccess.Reader["DeliveryAddressId"] as int? ?? order.DeliveryAddress.Id;
                     order.OrderStatus.Id = (int)_dataAccess.Reader["OrderStatusId"];
                     order.User.PersonId = (int)_dataAccess.Reader["PersonId"];
                     order.DistributionChannel.Id = (int)_dataAccess.Reader["DistributionChannelId"];
@@ -65,7 +69,9 @@ namespace BusinessLogicLayer
             {
                 order.DeliveryAddress = _addressesManager.Read(order.DeliveryAddress.Id);
                 order.OrderStatus = _orderStatusesManager.Read(order.OrderStatus.Id);
-                order.DistributionChannel = _distributionChannelsManager.Read(order.DistributionChannel.Id);
+                order.DistributionChannel = _distributionChannelsManager.Read(
+                    order.DistributionChannel.Id
+                );
                 order.PaymentType = _paymentTypesManager.Read(order.PaymentType.Id);
 
                 order.User.UserId = _usersManager.GetId(order.User.PersonId);
@@ -105,10 +111,13 @@ namespace BusinessLogicLayer
                     }
                     else
                     {
-                        order.DeliveryDate = _dataAccess.Reader.GetDateTime(_dataAccess.Reader.GetOrdinal("DeliveryDate"));
+                        order.DeliveryDate = _dataAccess.Reader.GetDateTime(
+                            _dataAccess.Reader.GetOrdinal("DeliveryDate")
+                        );
                     }
 
-                    order.DeliveryAddress.Id = _dataAccess.Reader["DeliveryAddressId"] as int? ?? order.DeliveryAddress.Id;
+                    order.DeliveryAddress.Id =
+                        _dataAccess.Reader["DeliveryAddressId"] as int? ?? order.DeliveryAddress.Id;
                     order.OrderStatus.Id = (int)_dataAccess.Reader["OrderStatusId"];
                     order.User.PersonId = (int)_dataAccess.Reader["PersonId"];
                     order.DistributionChannel.Id = (int)_dataAccess.Reader["DistributionChannelId"];
@@ -126,7 +135,9 @@ namespace BusinessLogicLayer
 
             order.DeliveryAddress = _addressesManager.Read(order.DeliveryAddress.Id);
             order.OrderStatus = _orderStatusesManager.Read(order.OrderStatus.Id);
-            order.DistributionChannel = _distributionChannelsManager.Read(order.DistributionChannel.Id);
+            order.DistributionChannel = _distributionChannelsManager.Read(
+                order.DistributionChannel.Id
+            );
             order.PaymentType = _paymentTypesManager.Read(order.PaymentType.Id);
 
             order.User.UserId = _usersManager.GetId(order.User.PersonId);
@@ -158,20 +169,35 @@ namespace BusinessLogicLayer
         {
             try
             {
-                _dataAccess.SetQuery("update Orders set OrderStatusId = @OrderStatusId where OrderId = @OrderId");
+                _dataAccess.SetQuery(
+                    "update Orders set OrderStatusId = @OrderStatusId where OrderId = @OrderId"
+                );
                 _dataAccess.SetParameter("@OrderId", orderId);
                 _dataAccess.SetParameter("@OrderStatusId", orderStatusId);
                 _dataAccess.ExecuteAction();
             }
             catch (Exception)
             {
-
                 throw;
             }
             finally
             {
                 _dataAccess.CloseConnection();
             }
+        }
+
+        public int CountPendingOrders()
+        {
+            List<Order> orders = List();
+
+            int counter = 0;
+            foreach (Order order in orders)
+            {
+                if (order.OrderStatus.Id != 5 && order.OrderStatus.Id != 9)
+                    counter++;
+            }
+
+            return counter;
         }
     }
 }

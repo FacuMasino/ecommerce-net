@@ -21,11 +21,12 @@
             <!-- Productos -->
 
             <div class="bg-white py-2 border-1 border rounded">
-                <div class="d-flex justify-content-between align-items-center border-bottom px-3 py-2">
+                <div class="d-flex justify-content-between align-items-center border-bottom px-3 pb-2">
                     <h3 class="fs-5 m-0 fw-normal">Productos</h3>
+                    <span class="text-small bg-body-secondary rounded border py-0 px-2"><%:CurrentStatusName%></span>
                 </div>
 
-                <div class="d-flex flex-column gap-2 px-3 py-2 border-bottom">
+                <div class="d-flex flex-column gap-2 px-3 py-2">
 
                     <!-- Lista de productos -->
 
@@ -57,12 +58,12 @@
                                     </p>
 
                                     <p class="text-small">
-                                        Precio unitario: $ <%#Eval("Price")%>
+                                        Precio unitario: $ <%#((decimal)Eval("Price")).ToString("F2")%>
                                     </p>
                                 </div>
                                 <div class="col-3 text-end">
                                     <p class="pe-2">
-                                        $<%#Eval("Subtotal")%>
+                                        $<%#((decimal)Eval("Subtotal")).ToString("F2")%>
                                     </p>
                                 </div>
                             </div>
