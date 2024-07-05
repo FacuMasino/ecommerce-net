@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="AdminMP.Master" AutoEventWireup="true" CodeBehind="Orders.aspx.cs" Inherits="WebForms.Admin.Orders" %>
+﻿<%@ Page Title="Pedidos" Language="C#" MasterPageFile="AdminMP.Master" AutoEventWireup="true" CodeBehind="Orders.aspx.cs" Inherits="WebForms.Admin.Orders" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
 </asp:Content>
@@ -20,12 +20,14 @@
                 ID="SearchTextBox"
                 runat="server"
                 Text=""
-                placeholder="Buscar por nombre" />
+                onKeyUp="checkSearchBtn();"
+                placeholder="Buscar por nombre de usuario o cliente" />
             <asp:LinkButton
                 Text='<i class="bi bi-search"></i>'
                 ID="SearchBtn"
                 CssClass="btn rounded-end btn-outline-secondary"
                 runat="server"
+                ClientIDMode="Static"
                 OnClick="SearchBtn_Click" />
             <div class="invalid-feedback">
                 Ingrese al menos 2 caracteres.
