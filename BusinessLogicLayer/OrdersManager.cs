@@ -157,6 +157,77 @@ namespace BusinessLogicLayer
 
         public int Add(Order order, List<ProductSet> productSets)
         {
+            if (order.DeliveryAddress != null)
+            {
+                int foundDeliveryAddressId = _addressesManager.GetId(order.DeliveryAddress);
+
+                if (foundDeliveryAddressId == 0)
+                {
+                    _addressesManager.Add(order.DeliveryAddress);
+                    order.DeliveryAddress.Id = Helper.GetLastId("Addresses");
+                }
+                else
+                {
+                    order.DeliveryAddress.Id = foundDeliveryAddressId;
+                }
+            }
+
+            if (order.User != null)
+            {
+                int foundPersonId = _peopleManager.GetId(order.User);
+
+                if (foundPersonId == 0)
+                {
+                    order.User.PersonId = _peopleManager.Add(order.User);
+                }
+                else
+                {
+                    order.User.PersonId = foundPersonId;
+                }
+            }
+
+            if (order.PaymentType != null)
+            {
+                int foundPaymentTypeId = _paymentTypesManager.GetId(order.PaymentType);
+
+                if (foundPaymentTypeId == 0)
+                {
+                    order.PaymentType.Id = _paymentTypesManager.Add(order.PaymentType);
+                }
+                else
+                {
+                    order.PaymentType.Id = foundPaymentTypeId;
+                }
+            }
+
+            if (order.DistributionChannel != null)
+            {
+                int foundDistributionChannelId = _distributionChannelsManager.GetId(order.DistributionChannel);
+
+                if (foundDistributionChannelId == 0)
+                {
+                    order.DistributionChannel.Id = _distributionChannelsManager.Add(order.DistributionChannel);
+                }
+                else
+                {
+                    order.DistributionChannel.Id = foundDistributionChannelId;
+                }
+            }
+
+            if (order.OrderStatus != null)
+            {
+                int foundOrderStatusId = _orderStatusesManager.GetId(order.OrderStatus);
+
+                if (foundOrderStatusId == 0)
+                {
+                    order.OrderStatus.Id = _orderStatusesManager.Add(order.OrderStatus);
+                }
+                else
+                {
+                    order.OrderStatus.Id = foundOrderStatusId;
+                }
+            }
+
             try
             {
                 _dataAccess.SetProcedure("SP_Add_Order_Confirmation");

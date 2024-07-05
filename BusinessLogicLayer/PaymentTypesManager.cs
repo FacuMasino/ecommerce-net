@@ -36,6 +36,12 @@ namespace BusinessLogicLayer
             return paymentType;
         }
 
+        public int Add(PaymentType paymentType)
+        {
+            // hack : No es necesario para un MVP
+            return -1;
+        }
+
         public int GetId(PaymentType paymentType)
         {
             if (paymentType == null)
