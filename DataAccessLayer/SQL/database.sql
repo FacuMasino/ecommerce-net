@@ -246,7 +246,7 @@ CREATE TABLE Orders
 GO
 
 --------------------
--- PRODUCT ORDERS --
+-- ORDER PRODUCTS --
 --------------------
 
 CREATE TABLE OrderProducts
