@@ -144,7 +144,7 @@ namespace BusinessLogicLayer
             return order;
         }
 
-        public int Add(Order order)
+        public int Add(Order order, List<ProductSet> productSets)
         {
             return -1; // hack
         }

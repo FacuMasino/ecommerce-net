@@ -15,19 +15,23 @@ namespace WebForms
         private ProvincesManager _provincesManager;
         private CitiesManager _citiesManager;
         private PaymentTypesManager _paymentTypesManager;
+        private DistributionChannelsManager _distributionChannelsManager;
+        private OrderStatusesManager _orderStatusesManager;
 
         // PROPERTIES
 
         // CONSTRUCT
 
         public OrderConfirmation()
-        { 
+        {
             _order = new Order();
             _shoppingCart = new ShoppingCart();
             _ordersManager = new OrdersManager();
             _provincesManager = new ProvincesManager();
             _citiesManager = new CitiesManager();
             _paymentTypesManager = new PaymentTypesManager();
+            _distributionChannelsManager = new DistributionChannelsManager();
+            _orderStatusesManager = new OrderStatusesManager();
         }
 
         // METHODS
@@ -52,23 +56,26 @@ namespace WebForms
             ProvincesDDL.SelectedIndex = 0;
         }
 
+        private void SetAddress()
+        {
+            if (DeliveryRB.Checked)
+            {
+                _order.DeliveryAddress.Flat = FlatTxt.Text;
+                _order.DeliveryAddress.StreetName = StreetNameTxt.Text;
+                _order.DeliveryAddress.StreetNumber = StreetNumberTxt.Text;
+                _order.DeliveryAddress.City.Name = CityTxt.Text;
+                _order.DeliveryAddress.City.ZipCode = ZipCodeTxt.Text;
+                _order.DeliveryAddress.City.Id = _citiesManager.GetId(_order.DeliveryAddress.City);
+                _order.DeliveryAddress.Province.Name = (string)ProvincesDDL.SelectedValue;
+                _order.DeliveryAddress.Province.Id = _provincesManager.GetId(_order.DeliveryAddress.Province);
+            }
+        }
+
         private void SetPerson()
         {
             _order.User.FirstName = FirstNameTxt.Text;
             _order.User.LastName = LastNameTxt.Text;
             _order.User.Email = EmailTxt.Text;
-        }
-
-        private void SetAddress()
-        {
-            _order.DeliveryAddress.Flat = FlatTxt.Text;
-            _order.DeliveryAddress.StreetName = StreetNameTxt.Text;
-            _order.DeliveryAddress.StreetNumber = StreetNumberTxt.Text;
-            _order.DeliveryAddress.City.Name = CityTxt.Text;
-            _order.DeliveryAddress.City.ZipCode = ZipCodeTxt.Text;
-            _order.DeliveryAddress.City.Id = _citiesManager.GetId(_order.DeliveryAddress.City);
-            _order.DeliveryAddress.Province.Name = (string)ProvincesDDL.SelectedValue;
-            _order.DeliveryAddress.Province.Id = _provincesManager.GetId(_order.DeliveryAddress.Province);
         }
 
         private void SetPaymentType()
@@ -89,16 +96,59 @@ namespace WebForms
             _order.PaymentType.Id = _paymentTypesManager.GetId(_order.PaymentType);
         }
 
+        private void SetDistributionChannel()
+        {
+            if (CashRB.Checked)
+            {
+                if (DeliveryRB.Checked)
+                {
+                    _order.DistributionChannel = _distributionChannelsManager.Read(4);
+                }
+                else
+                {
+                    _order.DistributionChannel = _distributionChannelsManager.Read(3);
+                }
+            }
+            else
+            {
+                if (DeliveryRB.Checked)
+                {
+                    _order.DistributionChannel = _distributionChannelsManager.Read(1);
+                }
+                else
+                {
+                    _order.DistributionChannel = _distributionChannelsManager.Read(2);
+                }
+            }
+        }
+
+        private void SetOrderStatus()
+        {
+            if (_order.DistributionChannel.Id == 1)
+            {
+                _order.OrderStatus = _orderStatusesManager.Read(1);
+            }
+            else if (_order.DistributionChannel.Id == 2)
+            {
+                _order.OrderStatus = _orderStatusesManager.Read(1);
+            }
+            else if (_order.DistributionChannel.Id == 3)
+            {
+                _order.OrderStatus = _orderStatusesManager.Read(6);
+            }
+            else // if (_order.DistributionChannel.Id == 4)
+            {
+                _order.OrderStatus = _orderStatusesManager.Read(10);
+            }
+        }
+
         private void SetOrder()
         {
+            SetAddress();
             SetPerson();
-
-            if (DeliveryRB.Checked)
-            {
-                SetAddress();
-            }
-
             SetPaymentType();
+            SetDistributionChannel();
+            SetOrderStatus();
         }
 
         private void MapControls()
@@ -134,12 +184,6 @@ namespace WebForms
             }
         }
 
-        protected void SubmitOrder_Click(object sender, EventArgs e)
-        {
-            SetOrder();
-            _order.Id = _ordersManager.Add(_order);
-        }
-
         protected void DeliveryRB_CheckedChanged(object sender, EventArgs e)
         {
             AddressPnl.Visible = !AddressPnl.Visible;
@@ -148,6 +192,12 @@ namespace WebForms
         protected void PickupRB_CheckedChanged(object sender, EventArgs e)
         {
             AddressPnl.Visible = !AddressPnl.Visible;
+        }
+
+        protected void SubmitOrder_Click(object sender, EventArgs e)
+        {
+            SetOrder();
+            _order.Id = _ordersManager.Add(_order, _shoppingCart.ProductSets);
         }
     }
 }
