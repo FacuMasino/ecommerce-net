@@ -2,6 +2,7 @@
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
+using UtilitiesLayer;
 
 namespace WebForms.Admin
 {
@@ -14,11 +15,7 @@ namespace WebForms.Admin
         private OrderStatusesManager _orderStatusesManager;
         private ShoppingCart _shoppingCart;
         private ProductsManager _productsManager;
-
-        public string CurrentStatusName
-        {
-            get { return _order == null ? "" : _order.OrderStatus.Name; }
-        }
+        private EmailManager _emailManager;
 
         // CONSTRUCT
 
@@ -29,6 +26,7 @@ namespace WebForms.Admin
             _orderStatusesManager = new OrderStatusesManager();
             _shoppingCart = new ShoppingCart();
             _productsManager = new ProductsManager();
+            _emailManager = new EmailManager();
         }
 
         // METHODS
@@ -66,6 +64,7 @@ namespace WebForms.Admin
 
         private void MapControls()
         {
+            OrderStatusLbl.Text = _order.OrderStatus.Name;
             OrderIdLbl.Text = "Orden #" + _order.Id.ToString();
             OrderCreationDateLbl.Text = "Generada el " + _order.CreationDate.ToString("dd-MM-yyyy");
             TotalLbl.Text = "$" + _shoppingCart.Total.ToString("F2");
@@ -123,6 +122,17 @@ namespace WebForms.Admin
             FetchOrder();
             _order.OrderStatus.Id = Convert.ToInt32(OrderStatusesDDL.SelectedValue);
             _ordersManager.UpdateOrderStatus(_order.Id, _order.OrderStatus.Id);
+            if (_order.OrderStatus.Id == 3) // Implementacion provisoria envio de email
+            {
+                EmailMessage<OrderShippingEmail> shippingEmail = Helper.ComposeShippingEmail(
+                    _order.User,
+                    Helper.EcommerceName,
+                    _order.Id.ToString(),
+                    $"https://localhost:44324/Admin/order.aspx?id={_order.Id}",
+                    "NoImplementado"
+                );
+                _emailManager.SendEmail(shippingEmail);
+            }
         }
 
         protected void ProductSetsRpt_ItemDataBound(

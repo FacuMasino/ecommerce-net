@@ -23,7 +23,7 @@
             <div class="bg-white py-2 border-1 border rounded">
                 <div class="d-flex justify-content-between align-items-center border-bottom px-3 pb-2">
                     <h3 class="fs-5 m-0 fw-normal">Productos</h3>
-                    <span class="text-small bg-body-secondary rounded border py-0 px-2"><%:CurrentStatusName%></span>
+                    <asp:Label ID="OrderStatusLbl" runat="server" class="text-small bg-body-secondary rounded border py-0 px-2" />
                 </div>
 
                 <div class="d-flex flex-column gap-2 px-3 py-2">
