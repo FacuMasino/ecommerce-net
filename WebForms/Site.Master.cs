@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
 using BusinessLogicLayer;
 using DomainModelLayer;
 
@@ -24,6 +23,24 @@ namespace WebForms
             _productSets = new List<ProductSet>();
             Categories = new List<Category>();
             Categories = _categoriesManager.List();
+        }
+
+        // METHODS
+
+        public bool ShouldDisplayLoginPrompt()
+        {
+            if (Session["user"] != null) // Si inició sesión no mostrar
+                return false;
+
+            switch (Request.Path)
+            {
+                case "/Login.aspx":
+                    return false;
+                case "/Signup.aspx":
+                    return false;
+                default:
+                    return true;
+            }
         }
 
         // EVENTS
