@@ -115,6 +115,33 @@ VALUES
 		'995000',
 		'8',
 		'2'
+	),
+		(
+		'S256',
+		'Monitor Samsung',
+		'Neftlix en pantalla ergonomica',
+		'215000',
+		'19500',
+		'2',
+		'1'
+	),
+	(
+		'P50 Pro',
+		'Huawei Pro',
+		'Momentos únicos, capturas reales. Especial para ver los videos del profe Maxi.',
+		'150000',
+		'95000',
+		'10',
+		'4'
+	),
+		(
+		'MR-40',
+		'Motorola Gris Mate',
+		'Descubrí la pantalla plegable.Al plegarse, adopta un tamaño pequeño y compacto. ',
+		'1299999',
+		'950000',
+		'2',
+		'5'
 	);
 
 GO
@@ -136,7 +163,11 @@ VALUES
 	(3,5),
 	(6,5),
 	(6,3),
-	(7,1);
+	(7,1),
+	(8,2),
+    (9,2),
+    (10,1);
+
 
 GO
 
@@ -202,6 +233,21 @@ VALUES
 	(
 		'https://ik.imagekit.io/tpce16/products/IPHONE15PRO_WHITE_1024x1024.png_v=1710128219?updatedAt=1718288712790',
 		'7'
+	),
+	('https://arrichetta.com.ar/wp-content/uploads/2021/01/LF27T350FHLCZB-1',
+		'8'
+	),
+	(
+		'https://arrichetta.com.ar/wp-content/uploads/2021/01/LF27T350FH_3.png',
+		'8'
+	),
+	(
+		'https://clevercel.mx/cdn/shop/files/huawei-p30-lite_06ed1a77-5959-4add-8239-fabacde4fd77_700x.png?v=1713365233',
+		'9'
+	),
+	(
+		'https://armoto.vtexassets.com/arquivos/ids/165522-800-800?v=638439565882870000&width=800&height=800&aspect=true',
+		'10'
 	);
 
 GO
