@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
-using UtilitiesLayer;
 
 namespace WebForms
 {
@@ -16,7 +15,8 @@ namespace WebForms
         private CategoriesManager _categoriesManager;
         private BrandsManager _brandsManager;
         private FeaturedsManager _featuredsManager;
-        private EmailManager _emailManager; // TODO: ELIMINAR
+        private bool _isSearching;
+        private string _textToSearch;
 
         // PROPERTIES
 
@@ -38,26 +38,6 @@ namespace WebForms
             Categories = _categoriesManager.List();
             Brands = _brandsManager.List();
             TotalProducts = Products.Count; // Total de productos que permanece original
-            // _emailManager = new EmailManager(); // TODO: ELIMINAR
-            // EmailTest(); // TODO: ELIMINAR
-        }
-
-        // TODO: ELIMINAR
-        private void EmailTest()
-        {
-            DomainModelLayer.User user = new DomainModelLayer.User()
-            {
-                FirstName = "Facundo",
-                Email = "joaqfm@gmail.com"
-            };
-
-            EmailMessage<WelcomeEmail> test = Helper.ComposeWelcomeEmail(
-                user,
-                Helper.EcommerceName,
-                Helper.EcommerceUrl
-            );
-
-            _emailManager.SendEmail(test);
         }
 
         // METHODS
@@ -108,6 +88,23 @@ namespace WebForms
             }
         }
 
+        private void GetSearchState()
+        {
+            _isSearching = ViewState["IsSearching"] as bool? ?? false;
+            _textToSearch = ViewState["TextToSearch"] as string ?? "";
+        }
+
+        private void SetSearchState(bool isSearching, string textToSearch)
+        {
+            ViewState["IsSearching"] = isSearching;
+            ViewState["TextToSearch"] = textToSearch;
+        }
+
+        private void GetProductsList()
+        {
+            Products = _productsManager.List<Product>(true, true);
+        }
+
         /// <summary>
         /// Genera una lista con los ultimos 3 productos agregados
         ///  mostrandolos como Nuevos Ingresos
@@ -137,13 +134,30 @@ namespace WebForms
             CheckRequest(); // Verificar si se pasaron parámetros
         }
 
-        protected void searchBtn_Click(object sender, EventArgs e)
+        protected void SearchBtn_Click(object sender, EventArgs e)
         {
-            string filter = searchTextBox.Text;
+            string filter = SearchTextBox.Text;
 
-            if (2 < filter.Length)
+            GetSearchState(); // Obtiene el estado de busqueda
+
+            // Limpiar búsqueda si ya está buscando y el texto es el mismo
+            if (_isSearching && _textToSearch == filter)
             {
-                searchPanel.CssClass = "input-group mb-3";
+                // Resetear estado
+                SetSearchState(false, ""); // Limpia el estado de busqueda
+
+                // Resetear controles
+                SearchBtn.Text = "<i class=\"bi bi-search\"></i>";
+                SearchTextBox.Text = "";
+                SearchPanel.CssClass = "input-group mb-3";
+
+                GetProductsList();
+                return;
+            }
+
+            if (2 <= filter.Length)
+            {
+                SearchPanel.CssClass = "input-group mb-3";
                 Products = Products.FindAll(
                     x =>
                         x.Name.ToUpper().Contains(filter.ToUpper())
@@ -152,11 +166,14 @@ namespace WebForms
                         || x.Description.ToUpper().Contains(filter.ToUpper())
                         || x.Categories.Any(c => c.Name.ToUpper().Contains(filter.ToUpper()))
                 );
+                SearchBtn.Text = "<i class=\"bi bi-x-circle\"></i>"; // cambia icono boton de busqueda
             }
             else
             {
-                searchPanel.CssClass = "input-group mb-3 invalid";
+                SearchPanel.CssClass = "input-group mb-3 invalid";
             }
+
+            SetSearchState(true, filter); // Guarda el estado para saber que está buscando
         }
     }
 }
