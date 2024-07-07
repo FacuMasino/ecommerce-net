@@ -32,18 +32,18 @@
                         featuredIndex++;
                 %>
                 <div class="carousel-item <%:(featuredIndex == 1 ? "active":"")%>">
-                    <div class="row row-carousel">
-                        <div class="col-5">
+                    <div class="row row-carousel flex-md-row flex-column py-md-2 py-4">
+                        <div class="col-md-5 col">
                             <div class="d-flex align-items-center justify-content-center position-relative">
                                 <span class="featured-badge fw-500"><%:product.ShowAsNew ? "NUEVO":"DESTACADO"%></span>
                                 <img src="<%:product.Images[0].Url%>"
                                     class="d-block w-100 img-hero-carousel" alt="<%:product.Name%>" />
                             </div>
                         </div>
-                        <div class="col-7 d-flex ps-3 py-3 flex-column justify-content-center hero-column-bg text-white">
+                        <div class="col-md-7 col d-flex ps-3 py-3 flex-column justify-content-center hero-column-bg text-white">
                             <h3 class="fs-5 mb-auto text-center">Producto destacado en <%:product.Categories[0].ToString()%>
                             </h3>
-                            <div class="d-flex flex-column justify-content-center h-100">
+                            <div class="d-flex flex-column justify-content-center align-items-md-start align-items-center h-100">
                                 <h5 class="fw-bold fs-2 mb-3"><%:$"{product.Brand} {product.Name}" %></h5>
                                 <span class="featured-price fs-4">$ <%:product.Price.ToString("F2")%></span>
                             </div>

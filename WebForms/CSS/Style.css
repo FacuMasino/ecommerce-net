@@ -227,12 +227,8 @@ body {
     border-radius: 2px;
     color: white;
     padding: 5px 10px;
-    /*font-size: 20px;*/
     z-index: 1;
-    /*transform: rotate(-90deg);*/
     box-shadow: var( --bs-box-shadow-sm) !important;
-    /*top: 50%;*/
-    /*left: 10px;*/
     bottom: 25px;
 }
 
@@ -272,5 +268,13 @@ body {
 @media (max-width: 768px) {
     .border-sm-bottom {
         border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+    }
+    .img-hero-carousel {
+        max-height: 200px !important;
+    }
+    .featured-badge {
+        border-radius: 2px;
+        font-size: 0.75rem;
+        padding: 3px 5px;
     }
 }

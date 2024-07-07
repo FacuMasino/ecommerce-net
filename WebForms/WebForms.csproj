@@ -127,7 +127,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\main.js" />
-    <Content Include="Scripts\mainServer.js" />
     <Content Include="Signup.aspx" />
     <Content Include="SignUpError.aspx" />
     <Content Include="Web.config" />
