@@ -104,15 +104,15 @@
                             <a href="#" class="d-flex align-items-center text-decoration-none text-black dropdown-toggle"
                                 id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-person me-2 rounded-circle"></i>
-                                <strong>Usuario</strong>
+                                <strong><%:UserFirstName%></strong>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                                 <li><a class="dropdown-item" href="/">Ir a la tienda</a></li>
-                                <li><a class="dropdown-item" href="#">Mis datos</a></li>
+                                <li><a class="dropdown-item" href="/Account.aspx">Mis datos</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                                <li><asp:LinkButton ID="LogoutBtn" CssClass="dropdown-item" OnClick="LogoutBtn_Click" runat="server">Cerrar sesión</asp:LinkButton></li>
                             </ul>
                         </div>
                     </div>

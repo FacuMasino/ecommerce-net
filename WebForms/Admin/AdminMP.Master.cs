@@ -10,6 +10,12 @@ namespace WebForms.Admin
     {
         private OrdersManager _ordersManager;
         private UsersManager _usersManager;
+        private string _userFirstName;
+
+        public string UserFirstName
+        {
+            get { return _userFirstName; }
+        }
 
         public int PendingOrders
         {
@@ -117,6 +123,7 @@ namespace WebForms.Admin
                 return;
             }
 
+            _userFirstName = ((User)Session["user"]).FirstName ?? "Usuario";
             CheckActiveItem();
         }
 
@@ -142,6 +149,12 @@ namespace WebForms.Admin
         protected void MasterModalCancelBtn_Click(object sender, EventArgs e)
         {
             (BodyPlaceHolder.Page as BasePage).OnModalCancelled();
+        }
+
+        protected void LogoutBtn_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("/GoodBye.aspx", false);
         }
     }
 }

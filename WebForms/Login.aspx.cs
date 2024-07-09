@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
 
@@ -15,8 +10,30 @@ namespace WebForms
         private Person _person;
         private UsersManager _userManager = new UsersManager();
         private bool errorlog = false;
+        private string _redirectTo = "Home.aspx";
 
-        protected void Page_Load(object sender, EventArgs e) { }
+        private void CheckRequest()
+        {
+            foreach (string key in Request.QueryString.AllKeys)
+            {
+                switch (key)
+                {
+                    case "redirect":
+                        if (Request.QueryString[key] == "admin")
+                        {
+                            _redirectTo = "/admin";
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            CheckRequest();
+        }
 
         protected void LoginButton_Click(object sender, EventArgs e)
         {
@@ -29,7 +46,7 @@ namespace WebForms
                 if (_userManager.Login(_user))
                 {
                     Session.Add("user", _user);
-                    Response.Redirect("Home.aspx", false);
+                    Response.Redirect(_redirectTo, false);
                 }
                 else
                 {
