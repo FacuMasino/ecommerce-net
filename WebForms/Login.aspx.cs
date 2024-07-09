@@ -14,6 +14,7 @@ namespace WebForms
         private User _user;
         private Person _person;
         private UsersManager _userManager = new UsersManager();
+        private bool errorlog = false;
 
         protected void Page_Load(object sender, EventArgs e) { }
 
@@ -32,14 +33,26 @@ namespace WebForms
                 }
                 else
                 {
-                    Session.Add("error", "Mail o Pass incorrectos");
-                    Response.Redirect("ErrorLogin.aspx", false);
+                    errorlog = true;
                 }
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
                 Response.Redirect("ErrorLogin.aspx");
+            }
+        }
+
+        public bool IncorrectData()
+        {
+            ///// SI EL MAIL NO EXISTE EN LA BASE
+            if (errorlog == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
