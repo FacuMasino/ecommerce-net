@@ -8,7 +8,7 @@
     <div class="container">
         <div class="d-flex flex-column">
             <div class="mt-4">
-                <h2 class="fs-4 fw-bold">Hola Nombre!</h2>
+                <asp:Label ID="WelcomeTxt" runat="server" Text="Label" CssClass="fs-4 fw-bold"></asp:Label>
                 <p class="fs-5">Bienvenido a tu cuenta.</p>
             </div>
             <ul class="nav align-self-end">

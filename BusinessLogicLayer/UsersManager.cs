@@ -11,7 +11,7 @@ namespace BusinessLogicLayer
         private Person _person;
         private PeopleManager _peopleManager = new PeopleManager();
         private RolesManager _rolesManager = new RolesManager();
-        private AddressesManager _adressManager = new AddressesManager();
+        private AddressesManager _addressesManager = new AddressesManager();
         private Address _address;
 
         public User Read(int userId)
@@ -222,8 +222,8 @@ namespace BusinessLogicLayer
                         user.Birth = DateTime.Parse(_dataAccess.Reader["Birth"].ToString());
                     }
                     /*
-                    _adressManager.GetId(user.Address);
-                    _adressManager.Read(_address.Id);
+                    _addressesManager.GetId(user.Address);
+                    _addressesManager.Read(_address.Id);
                     */
                     user.Address.StreetName = (string)_dataAccess.Reader["StreetName"];
                     user.Address.StreetNumber = (string)_dataAccess.Reader["StreetNumber"];

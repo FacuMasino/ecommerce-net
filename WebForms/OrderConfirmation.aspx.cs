@@ -207,6 +207,7 @@ namespace WebForms
                 throw ex;
             }
 
+            Session.Add("user", _order.User);
             Response.Redirect("Orders.aspx");
         }
     }
