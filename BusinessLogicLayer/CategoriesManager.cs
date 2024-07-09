@@ -223,7 +223,7 @@ namespace BusinessLogicLayer
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {

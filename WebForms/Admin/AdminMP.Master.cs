@@ -108,11 +108,13 @@ namespace WebForms.Admin
             if (Session["user"] == null)
             {
                 Response.Redirect("/AccessDenied.aspx");
+                return;
             }
 
             if (!_usersManager.IsAdmin((User)Session["user"]))
             {
                 Response.Redirect("/AccessDenied.aspx");
+                return;
             }
 
             CheckActiveItem();

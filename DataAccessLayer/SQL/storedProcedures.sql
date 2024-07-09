@@ -61,6 +61,18 @@ end
 
 go
 
+create or alter procedure SP_Add_Visit (
+	@ProductId int
+)
+as
+begin
+	Update products
+		set TotalVisits += 1
+	where ProductId = @ProductId
+end
+
+go
+
 ----------------
 -- CATEGORIES --
 ----------------
@@ -390,4 +402,50 @@ begin
 	where PersonId = @PersonId;
 end
 
+go
+
+-----------
+-- STATS --
+-----------
+
+create or alter procedure SP_Count_Finished_Orders
+as
+begin
+	Select count(OrderId)
+		from Orders
+	where OrderStatusId = 5
+end
+go
+
+create or alter procedure SP_Count_Active_Products 
+as
+begin
+	Select count(ProductId)
+		from Products 
+	where IsActive = 1 
+end
+go
+
+create or alter procedure SP_Count_Sold_Products 
+as
+begin
+	Select IsNull(SUM(OP.Quantity),0)
+		from OrderProducts OP
+		inner join Orders O
+		on O.OrderId = OP.OrderId
+	where O.OrderStatusId = 5 
+end
+go
+
+create or alter procedure SP_Count_Shipped_Products 
+as
+begin
+	Select IsNull(SUM(OP.Quantity),0)
+		from OrderProducts OP
+		inner join Orders O
+		on O.OrderId = OP.OrderId
+	where 
+		O.OrderStatusId = 5
+		And O.DistributionChannelId in (1,4)
+end
 go

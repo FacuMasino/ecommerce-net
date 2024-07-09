@@ -13,7 +13,11 @@ namespace BusinessLogicLayer
         private CategoriesManager _categoriesManager = new CategoriesManager();
         private ImagesManager _imagesManager = new ImagesManager();
 
-        public List<ProductType> List<ProductType>(bool onlyActive = true, bool onlyAvailable = false, int orderId = 0)
+        public List<ProductType> List<ProductType>(
+            bool onlyActive = true,
+            bool onlyAvailable = false,
+            int orderId = 0
+        )
             where ProductType : Product, new()
         {
             List<ProductType> productTypeList = new List<ProductType>();
@@ -34,16 +38,21 @@ namespace BusinessLogicLayer
                     productType.Code = _dataAccess.Reader["Code"]?.ToString();
                     productType.Name = _dataAccess.Reader["ProductName"]?.ToString();
                     productType.Description = _dataAccess.Reader["ProductDescription"]?.ToString();
-                    productType.Price = _dataAccess.Reader["Price"] as decimal? ?? productType.Price;
+                    productType.Price =
+                        _dataAccess.Reader["Price"] as decimal? ?? productType.Price;
                     productType.Cost = _dataAccess.Reader["Cost"] as decimal? ?? productType.Cost;
-                    productType.Stock = (int)_dataAccess.Reader["Stock"] as int? ?? productType.Stock;
-                    productType.Brand.Id = _dataAccess.Reader["BrandId"] as int? ?? productType.Brand.Id;
+                    productType.Stock =
+                        (int)_dataAccess.Reader["Stock"] as int? ?? productType.Stock;
+                    productType.Brand.Id =
+                        _dataAccess.Reader["BrandId"] as int? ?? productType.Brand.Id;
                     productType.Categories = _categoriesManager.List(true, productType.Id);
                     productType.Images = _imagesManager.List(productType.Id);
-                    
+
                     if (productType is ProductSet)
                     {
-                        (productType as ProductSet).Quantity = (int)_dataAccess.Reader["Quantity"] as int? ?? (productType as ProductSet).Quantity;
+                        (productType as ProductSet).Quantity =
+                            (int)_dataAccess.Reader["Quantity"] as int?
+                            ?? (productType as ProductSet).Quantity;
                     }
 
                     if (onlyAvailable & productType.Stock == 0)
@@ -311,6 +320,24 @@ namespace BusinessLogicLayer
                 _dataAccess.CloseConnection();
             }
             return false;
+        }
+
+        public void AddVisit(int productId)
+        {
+            try
+            {
+                _dataAccess.SetProcedure("SP_Add_Visit");
+                _dataAccess.SetParameter("@ProductId", productId);
+                _dataAccess.ExecuteAction();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
         }
     }
 }

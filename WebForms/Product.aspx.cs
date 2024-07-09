@@ -38,6 +38,8 @@ namespace WebForms
             {
                 int articleId = Convert.ToInt32(Request.QueryString["Id"].ToString());
                 _product = _productsManager.Read(articleId);
+                if (_product.Id != 0) // Sumar 1 visita
+                    _productsManager.AddVisit(articleId);
             }
         }
 
@@ -48,7 +50,8 @@ namespace WebForms
         {
             if (Session["CurrentProductSets"] != null)
             {
-                _shoppingCartManager.CurrentProductSets = (List<ProductSet>)Session["CurrentProductSets"];
+                _shoppingCartManager.CurrentProductSets =
+                    (List<ProductSet>)Session["CurrentProductSets"];
             }
         }
 

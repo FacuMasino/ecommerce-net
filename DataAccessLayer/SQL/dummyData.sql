@@ -382,8 +382,8 @@ INSERT INTO
 	(Username, UserPassword, RoleId, PersonId)
 VALUES
 	('Ani77aa', 'aniani', '1', '1'),
-	('FacuMasino', 'donpablo', '2', '2'),
-	('mrmalvicino', 'elchili', '2', '3');
+	('FacuMasino', 'donpablo', '1', '2'),
+	('mrmalvicino', 'elchili', '1', '3');
 
 GO
 

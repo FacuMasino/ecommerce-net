@@ -40,6 +40,7 @@ if /i "%confirm%" NEQ "S" (
 sqlcmd -S %connection_string% -i deleteDB.sql
 sqlcmd -S %connection_string% -i database.sql -f 65001
 sqlcmd -S %connection_string% -i storedProcedures.sql -f 65001
+sqlcmd -S %connection_string% -i views.sql -f 65001
 sqlcmd -S %connection_string% -i dummyData.sql -f 65001
 
 echo.
