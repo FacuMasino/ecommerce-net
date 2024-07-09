@@ -1,12 +1,19 @@
-﻿using DataAccessLayer;
+﻿using System;
+using DataAccessLayer;
 using DomainModelLayer;
-using System;
 
 namespace BusinessLogicLayer
 {
     public class RolesManager
     {
         private DataAccess _dataAccess = new DataAccess();
+
+        public enum Roles
+        {
+            AdminRoleId = 1,
+            DefaultRoleId = 2,
+            VisitorRoleId = 3
+        }
 
         public Role Read(int roleId)
         {
@@ -73,6 +80,25 @@ namespace BusinessLogicLayer
             }
 
             return roleId;
+        }
+
+        public void AssignUserRole(User user)
+        {
+            if (user.Role == null)
+            {
+                user.Role = new Role { Id = (int)Roles.DefaultRoleId };
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(user.Role.Name))
+            {
+                int foundRoleId = GetId(user.Role);
+                user.Role.Id = foundRoleId != 0 ? foundRoleId : (int)Roles.DefaultRoleId;
+            }
+            else
+            {
+                user.Role.Id = (int)Roles.DefaultRoleId;
+            }
         }
     }
 }

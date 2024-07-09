@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Data;
-using System.Net;
 using DataAccessLayer;
 using DomainModelLayer;
 using UtilitiesLayer;
@@ -68,7 +66,7 @@ namespace BusinessLogicLayer
 
         public int Add(Person person)
         {
-            if (person.Address != null)
+            if (person.Address != null && !person.Address.IsEmpty())
             {
                 int foundAddressId = _addressesManager.GetId(person.Address);
 
@@ -224,7 +222,14 @@ namespace BusinessLogicLayer
             _dataAccess.SetParameter("@Phone", person.Phone);
             _dataAccess.SetParameter("@Email", person.Email);
             _dataAccess.SetParameter("@Birth", person.Birth);
-            _dataAccess.SetParameter("@AddressId", person.Address.Id);
+            if (person.Address.Id == 0)
+            {
+                _dataAccess.SetParameter("@AddressId", DBNull.Value);
+            }
+            else
+            {
+                _dataAccess.SetParameter("@AddressId", person.Address.Id);
+            }
         }
     }
 }

@@ -35,6 +35,7 @@ namespace DomainModelLayer
         public Person()
         {
             Address = new Address();
+            Birth = DateTime.Parse("1900/01/01");
         }
     }
 }

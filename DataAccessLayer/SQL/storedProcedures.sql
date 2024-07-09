@@ -296,6 +296,20 @@ go
 -- USERS --
 -----------
 
+create or alter procedure SP_Add_User(
+	@Username varchar(30) = NULL,
+	@UserPassword varchar(30),
+	@RoleId int,
+    @PersonId int
+)
+as
+begin
+	insert into users(Username, UserPassword, RoleId, PersonId)
+	output inserted.UserId
+	values (@Username, @UserPassword, @RoleId, @PersonId)
+end
+go
+
 create or alter procedure SP_Get_Person_Id(
 	@Email varchar(30)
 )
@@ -349,8 +363,8 @@ create or alter procedure SP_Add_Person(
 	@IsActive bit,
 	@FirstName varchar(30),
 	@LastName varchar(30),
-	@TaxCode varchar(30),
-	@Phone varchar(30),
+	@TaxCode varchar(30) = NULL,
+	@Phone varchar(30) = NULL,
 	@Email varchar(30),
 	@Birth datetime,
 	@AddressId int

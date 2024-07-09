@@ -55,19 +55,7 @@ namespace BusinessLogicLayer
         {
             user.PersonId = _peopleManager.Add(user);
 
-            if (user.Role != null)
-            {
-                int foundRoleId = _rolesManager.GetId(user.Role);
-
-                if (foundRoleId == 0)
-                {
-                    user.Role.Id = _rolesManager.Add(user.Role);
-                }
-                else
-                {
-                    user.Role.Id = foundRoleId;
-                }
-            }
+            _rolesManager.AssignUserRole(user);
 
             int UserId = 0;
 
@@ -259,7 +247,7 @@ namespace BusinessLogicLayer
 
         public bool IsAdmin(User user)
         {
-            if (user.Role.Id == 2) // admin
+            if (user.Role.Id == (int)RolesManager.Roles.AdminRoleId) // admin
             {
                 return true;
             }

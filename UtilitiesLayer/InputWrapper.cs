@@ -12,8 +12,8 @@ namespace UtilitiesLayer
         public int MaxLength { get; set; }
         public bool IsPositive { get; set; }
         public bool IsValid { get; set; }
-
         public bool IsAlphanumeric { get; set; }
+        public bool IsPassword { get; set; }
 
         public InputWrapper(
             TextBox textBox,
@@ -21,7 +21,8 @@ namespace UtilitiesLayer
             int minLength = 2,
             int maxLength = 0,
             bool positiveNumber = true,
-            bool alphanumeric = false
+            bool alphanumeric = false,
+            bool password = false
         )
         {
             this.Control = textBox;
@@ -31,6 +32,7 @@ namespace UtilitiesLayer
             IsPositive = positiveNumber;
             IsValid = true;
             IsAlphanumeric = alphanumeric;
+            IsPassword = password;
         }
     }
 }

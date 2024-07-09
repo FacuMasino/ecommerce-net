@@ -205,7 +205,7 @@ namespace BusinessLogicLayer
 
         public int GetId(Address address)
         {
-            if (address == null)
+            if (address == null || address.IsEmpty())
             {
                 return 0;
             }

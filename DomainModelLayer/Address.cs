@@ -34,10 +34,21 @@ namespace DomainModelLayer
 
         public override string ToString()
         {
-            if (Country != null && Province != null && City != null && StreetName != null && StreetNumber != null)
+            if (
+                Country != null
+                && Province != null
+                && City != null
+                && StreetName != null
+                && StreetNumber != null
+            )
                 return $"{StreetName} {StreetNumber}, {City.ToString()}";
 
             return "";
+        }
+
+        public bool IsEmpty()
+        {
+            return string.IsNullOrEmpty(this.ToString());
         }
 
         // CONSTRUCT

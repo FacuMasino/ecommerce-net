@@ -24,22 +24,22 @@ namespace WebForms
         protected global::System.Web.UI.WebControls.TextBox UsrEmailTxt;
 
         /// <summary>
-        /// UsrNameTxt control.
+        /// UsrFirstNameTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrNameTxt;
+        protected global::System.Web.UI.WebControls.TextBox UsrFirstNameTxt;
 
         /// <summary>
-        /// UsrSurNmTxt control.
+        /// UsrLastnameTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrSurNmTxt;
+        protected global::System.Web.UI.WebControls.TextBox UsrLastnameTxt;
 
         /// <summary>
         /// UsrPassTxt control.

@@ -7,7 +7,7 @@
      <div class="d-flex flex-column align-items-center py-4 my-4">
 
          <div class="col-6">
-             <h5 class="text-align-center">¡No pudo realizarse la registración, vuelve a intentar!...   </h5>
+             <h5 class="text-align-center">¡Ups! No pudimos crear la cuenta debido a un error, intenta más tarde...   </h5>
              <asp:Label Text="text" ID="lblMsjeError" runat="server" />
 
              <img src="Content/img/Thinking face-rafiki.svg" class="img-fluid object-fit-cover h-75" />

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 
 namespace UtilitiesLayer
 {
@@ -81,6 +81,23 @@ namespace UtilitiesLayer
             return true;
         }
 
+        public static bool ValidatePassword(string password)
+        {
+            if (string.IsNullOrEmpty(password))
+                return false;
+
+            // Check longitud
+            bool hasValidLength = password.Length >= 8 && password.Length <= 20;
+
+            // Check 1 mayus 1 minus
+            bool hasUpperAndLower = password.Any(char.IsUpper) && password.Any(char.IsLower);
+
+            // Check al menos 1 número
+            bool hasNumber = password.Any(char.IsDigit);
+
+            return hasValidLength && hasUpperAndLower && hasNumber;
+        }
+
         public static bool IsGoodInput(InputWrapper input)
         {
             switch (input.InputType.ToString())
@@ -88,10 +105,11 @@ namespace UtilitiesLayer
                 case "System.String":
                     if (!HasData(input.Control.Text, input.MinLength, input.MaxLength))
                     {
-                        Debug.Print($"Campo Invalido: {input.Control.ClientID}");
                         return false;
                     }
                     if (input.IsAlphanumeric && !IsAlphanumeric(input.Control.Text))
+                        return false;
+                    if (input.IsPassword && !ValidatePassword(input.Control.Text))
                         return false;
                     break;
                 case "System.Decimal":
@@ -102,7 +120,6 @@ namespace UtilitiesLayer
                         || !decimal.TryParse(input.Control.Text, out decimal num)
                     )
                     {
-                        Debug.Print($"Campo Invalido: {input.Control.ClientID}");
                         return false;
                     }
                     if (input.IsPositive && decimal.Parse(input.Control.Text) <= 0)
@@ -114,7 +131,6 @@ namespace UtilitiesLayer
                         || !IsNumber(input.Control.Text)
                     )
                     {
-                        Debug.Print($"Campo Inválido:{input.Control.ClientID}");
                         return false;
                     }
                     break;

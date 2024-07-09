@@ -108,6 +108,7 @@
     <Content Include="Content\img\Empty-pana.svg" />
     <Content Include="Content\img\placeholder.jpg" />
     <Content Include="Content\img\policy-rafiki.svg" />
+    <Content Include="Content\img\success-signup.svg" />
     <Content Include="Content\img\Thinking face-rafiki.svg" />
     <Content Include="ErrorLogin.aspx" />
     <Content Include="GoodBye.aspx" />
@@ -129,6 +130,7 @@
     <Content Include="Scripts\main.js" />
     <Content Include="Signup.aspx" />
     <Content Include="SignUpError.aspx" />
+    <Content Include="SuccessSignup.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -303,6 +305,13 @@
     </Compile>
     <Compile Include="Signup.aspx.designer.cs">
       <DependentUpon>Signup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuccessSignup.aspx.cs">
+      <DependentUpon>SuccessSignup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuccessSignup.aspx.designer.cs">
+      <DependentUpon>SuccessSignup.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
