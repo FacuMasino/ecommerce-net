@@ -13,13 +13,10 @@ namespace WebForms
         private ShoppingCart _shoppingCart;
         private OrdersManager _ordersManager;
         private ProvincesManager _provincesManager;
-        private CitiesManager _citiesManager;
         private AddressesManager _addressesManager;
         private PaymentTypesManager _paymentTypesManager;
         private DistributionChannelsManager _distributionChannelsManager;
         private OrderStatusesManager _orderStatusesManager;
-
-        // PROPERTIES
 
         // CONSTRUCT
 
@@ -29,7 +26,6 @@ namespace WebForms
             _shoppingCart = new ShoppingCart();
             _ordersManager = new OrdersManager();
             _provincesManager = new ProvincesManager();
-            _citiesManager = new CitiesManager();
             _addressesManager = new AddressesManager();
             _paymentTypesManager = new PaymentTypesManager();
             _distributionChannelsManager = new DistributionChannelsManager();
@@ -52,8 +48,8 @@ namespace WebForms
         private void BindProvincesDDL()
         {
             ProvincesDDL.DataSource = _provincesManager.List(1);
-            ProvincesDDL.DataTextField = "Name";
-            ProvincesDDL.DataValueField = "Id";
+            //ProvincesDDL.DataTextField = "Name";
+            //ProvincesDDL.DataValueField = "Id";
             ProvincesDDL.DataBind();
             ProvincesDDL.SelectedIndex = 0;
         }
@@ -67,10 +63,13 @@ namespace WebForms
                 _order.DeliveryAddress.StreetNumber = StreetNumberTxt.Text;
                 _order.DeliveryAddress.City.Name = CityTxt.Text;
                 _order.DeliveryAddress.City.ZipCode = ZipCodeTxt.Text;
-                _order.DeliveryAddress.City.Id = _citiesManager.GetId(_order.DeliveryAddress.City);
-                _order.DeliveryAddress.Province.Name = (string)ProvincesDDL.SelectedValue;
-                _order.DeliveryAddress.Province.Id = _provincesManager.GetId(_order.DeliveryAddress.Province);
-                _order.DeliveryAddress.Id = _addressesManager.GetId(_order.DeliveryAddress);
+                _order.DeliveryAddress.Province.Name = ProvincesDDL.Text;
+                _order.DeliveryAddress.Country.Name = "Argentina";
+                _order.DeliveryAddress.Details = "";
+            }
+            else
+            {
+                _order.DeliveryAddress = null;
             }
         }
 
@@ -95,8 +94,6 @@ namespace WebForms
             {
                 _order.PaymentType.Name = "Transferencia bancaria";
             }
-
-            _order.PaymentType.Id = _paymentTypesManager.GetId(_order.PaymentType);
         }
 
         private void SetDistributionChannel()
@@ -199,8 +196,18 @@ namespace WebForms
 
         protected void SubmitOrder_Click(object sender, EventArgs e)
         {
-            SetOrder();
-            _order.Id = _ordersManager.Add(_order, _shoppingCart.ProductSets);
+            try
+            {
+                FetchShoppingCart(); // hack : agregar update panel para no perder los datos al hacer click en SubmitOrder
+                SetOrder();
+                _order.Id = _ordersManager.Add(_order, _shoppingCart.ProductSets);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            Response.Redirect("Orders.aspx");
         }
     }
 }
