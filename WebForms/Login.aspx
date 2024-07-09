@@ -21,9 +21,11 @@
                 </div>
                 <div class="mb-3">
                     <asp:Button Text="Ingresar" class="btn btn-primary w-100" ID="LoginButton" OnClick="LoginButton_Click" runat="server" />
+                            <%if  ( IncorrectData()) { %>
+                <p  class="text-danger">Datos incorrectos</p> 
                     <a href="AccountRecovery.aspx" class="nav-link px-2 text-body-secondary">¿Olvidaste
-                        tus datos de inicio?</a>
-
+                        tus datos de inicio?</a><% } %>
+            
                 </div>
             </div>
         </div>
