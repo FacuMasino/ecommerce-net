@@ -334,7 +334,7 @@ end
 
 go
 
-create or alter procedure SP_Get_User_Id(
+create or alter procedure SP_Get_User_Id_By_Person(
 	@PersonId int
 )
 as
@@ -343,6 +343,20 @@ begin
 	from Users U
 	right join People P on P.PersonId = U.PersonId
 	where P.PersonId = @PersonId
+end
+
+go
+
+create or alter procedure SP_Get_User_Id_By_Credentials(
+	@Email varchar(30),
+	@Password varchar (30)
+)
+as
+begin
+	select isNull(U.UserId, 0) as UserId
+	from Users U
+	right join People P on P.PersonId = U.PersonId
+	where P.Email = @Email and U.UserPassword = @Password
 end
 
 go

@@ -8,7 +8,7 @@ namespace WebForms
     {
         private User _user;
         private Person _person;
-        private UsersManager _userManager = new UsersManager();
+        private UsersManager _usersManager = new UsersManager();
         private bool errorlog = false;
         private string _redirectTo = "Home.aspx";
 
@@ -43,7 +43,7 @@ namespace WebForms
                 _user.Email = UsrEmail.Text;
                 _user.Password = UsrPass.Text;
 
-                if (_userManager.Login(_user))
+                if (_usersManager.Login(_user))
                 {
                     Session.Add("user", _user);
                     Response.Redirect(_redirectTo, false);

@@ -15,8 +15,7 @@
                     <a class="nav-link fs-5 ps-0 text-black" href="Account.aspx">Mis Datos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fs-5  fw-bold ps-0 text-black active" aria-current="page" href="#">
-                        Mis Pedidos</a>
+                    <a class="nav-link fs-5  fw-bold ps-0 text-black active" aria-current="page" href="#">Mis Pedidos</a>
                 </li>
             </ul>
             <div class="row g-0 border-top">
@@ -26,70 +25,57 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">Nro.</th>
-                                    <th scope="col">Productos</th>
-                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Fecha</th>
                                     <th scope="col">Importe</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Repeater -->
-                                <tr>
-                                    <th scope="row">001</th>
-                                    <td title="Samsung - Galaxy S10, Sony - PlayStation 5">Samsung - Galaxy S10, Sony -
-                                        PlayStation 5
-                                    </td>
-                                    <td>2</td>
-                                    <td>$ 894245.00</td>
-                                    <td>
-                                        <div class="d-flex flex-md-row flex-column gap-2">
-                                            <!-- Ver detalle -->
-                                            <a href="OrderStatus.aspx?order=1111" class="p-0 text-black">Ver detalle
-                                            </a>
-                                            <!-- Cancelar -->
-                                            <a href="#" class="p-0 text-black">Cancelar    
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!-- Fin Repeater -->
-                                <tr>
-                                    <th scope="row">001</th>
-                                    <td title="Samsung - Galaxy S10, Sony - PlayStation 5">Samsung - Galaxy S10, Sony -
-                                        PlayStation 5
-                                    </td>
-                                    <td>2</td>
-                                    <td>$ 894245.00</td>
-                                    <td>
-                                        <div class="d-flex flex-md-row flex-column gap-2">
-                                            <!-- Ver detalle -->
-                                            <a href="OrderStatus.aspx?order=1111" class="p-0 text-black">Ver detalle
-                                            </a>
-                                            <!-- Cancelar -->
-                                            <a href="#" class="p-0 text-black">Cancelar    
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">001</th>
-                                    <td title="Samsung - Galaxy S10, Sony - PlayStation 5">Samsung - Galaxy S10, Sony -
-                                        PlayStation 5
-                                    </td>
-                                    <td>2</td>
-                                    <td>$ 894245.00</td>
-                                    <td>
-                                        <div class="d-flex flex-md-row flex-column gap-2">
-                                            <!-- Ver detalle -->
-                                            <a href="OrderStatus.aspx?order=1111" class="p-0 text-black">Ver detalle
-                                            </a>
-                                            <!-- Cancelar -->
-                                            <a href="#" class="p-0 text-black">Cancelar    
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <asp:Repeater ID="OrdersRpt" runat="server">
+                                    <ItemTemplate>
+                                        <tr>
+
+                                            <!-- Número de pedido -->
+
+                                            <th scope="row">001</th>
+
+                                            <!-- Fecha (de creación) -->
+
+                                            <td scope="row">
+                                                <asp:Label
+                                                    ID="DateLbl"
+                                                    runat="server"
+                                                    Text='<%#Eval("CreationDate", "{0:dd/MM/yyyy}")%>'
+                                                    CssClass="text-black">
+                                                </asp:Label>
+                                            </td>
+
+                                            <!-- Importe -->
+
+                                            <td>$ 123.456,00</td>
+
+                                            <!-- Acciones -->
+
+                                            <td>
+                                                <div class="d-flex flex-md-row flex-column gap-2">
+
+                                                    <!-- Editar -->
+
+                                                    <asp:LinkButton
+                                                        Text='<i class="bi bi-pencil-square"></i>'
+                                                        CssClass="p-0 text-black fs-5"
+                                                        CommandName="Edit"
+                                                        CommandArgument='<%#Eval("Id")%>'
+                                                        ID="EditOrderBtn"
+                                                        runat="server" />
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ItemTemplate>
+                                </asp:Repeater>
+
                             </tbody>
                         </table>
                     </div>

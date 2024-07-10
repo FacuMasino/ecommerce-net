@@ -164,9 +164,14 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetProcedure("SP_Get_User_Id");
+                _dataAccess.SetProcedure("SP_Get_User_Id_By_Person");
                 _dataAccess.SetParameter("@PersonId", personId);
-                userId = _dataAccess.ExecuteScalar();
+                _dataAccess.ExecuteRead();
+
+                if (_dataAccess.Reader.Read())
+                {
+                    userId = (int)_dataAccess.Reader["UserId"];
+                }
             }
             catch (Exception ex)
             {
@@ -180,60 +185,21 @@ namespace BusinessLogicLayer
             return userId;
         }
 
-        private void SetParameters(User user)
+        public int GetId(string email, string password)
         {
-            _dataAccess.SetParameter("@Username", user.Username);
-            _dataAccess.SetParameter("@UserPassword", user.Password);
-            _dataAccess.SetParameter("@RoleId", user.Role.Id);
-            _dataAccess.SetParameter("@PersonId", user.PersonId);
-        }
+            int userId = 0;
 
-        public bool Login(User user)
-        {
             try
             {
-                _dataAccess.SetQuery(
-                    "select UserId,RoleId,P.LastName, P.FirstName,P.Phone, P.Birth,  P.Email, P.TaxCode, P.AddressId, A.StreetName, A.StreetNumber, A.Flat, C.ZipCode,C.CityName,   U.Username from Users U Inner join People P on U.PersonId = P.PersonId Inner join Addresses A On A.AddressId = P.AddressId Inner Join Cities C ON A.CityId = C.CityId where P.Email = @Email AND U.UserPassword = @UserPassword"
-                );
-                _dataAccess.SetParameter("@Email", user.Email);
-                _dataAccess.SetParameter("@UserPassword", user.Password);
-
+                _dataAccess.SetProcedure("SP_Get_User_Id_By_Credentials");
+                _dataAccess.SetParameter("@Email", email);
+                _dataAccess.SetParameter("@UserPassword", password);
                 _dataAccess.ExecuteRead();
 
-                while (_dataAccess.Reader.Read())
+                if (_dataAccess.Reader.Read())
                 {
-                    user.UserId = (int)_dataAccess.Reader["UserId"];
-                    user.Role.Id = Convert.ToInt32(_dataAccess.Reader["RoleId"]);
-
-                    user.LastName = (string)_dataAccess.Reader["LastName"];
-                    user.FirstName = (string)_dataAccess.Reader["FirstName"];
-
-                    if (!(_dataAccess.Reader["Phone"] is DBNull))
-                    {
-                        user.Phone = (string)_dataAccess.Reader["Phone"];
-                    }
-
-                    if (!(_dataAccess.Reader["TaxCode"] is DBNull))
-                    {
-                        user.TaxCode = (string)_dataAccess.Reader["TaxCode"];
-                    }
-                    if (!(_dataAccess.Reader["Birth"] is DBNull))
-                    {
-                        user.Birth = DateTime.Parse(_dataAccess.Reader["Birth"].ToString());
-                    }
-                    /*
-                    _addressesManager.GetId(user.Address);
-                    _addressesManager.Read(_address.Id);
-                    */
-                    user.Address.StreetName = (string)_dataAccess.Reader["StreetName"];
-                    user.Address.StreetNumber = (string)_dataAccess.Reader["StreetNumber"];
-                    user.Address.City.Name = (string)_dataAccess.Reader["CityName"];
-                    user.Address.City.ZipCode = (string)_dataAccess.Reader["ZipCode"];
-                    user.Address.Flat = (string)_dataAccess.Reader["Flat"];
-
-                    return true;
+                    userId = (int)_dataAccess.Reader["UserId"];
                 }
-                return false;
             }
             catch (Exception ex)
             {
@@ -243,11 +209,28 @@ namespace BusinessLogicLayer
             {
                 _dataAccess.CloseConnection();
             }
+
+            return userId;
+        }
+
+        public bool Login(User user)
+        {
+            int userId = GetId(user.Email, user.Password);
+
+            if (userId == 0)
+            {
+                return false;
+            }
+
+            User aux = Read(userId);
+            Helper.AssignPerson<User, User>(user, aux);
+
+            return true;
         }
 
         public bool IsAdmin(User user)
         {
-            if (user.Role.Id == (int)RolesManager.Roles.AdminRoleId) // admin
+            if (user.Role.Id == (int)RolesManager.Roles.AdminRoleId)
             {
                 return true;
             }
@@ -255,6 +238,14 @@ namespace BusinessLogicLayer
             {
                 return false;
             }
+        }
+
+        private void SetParameters(User user)
+        {
+            _dataAccess.SetParameter("@Username", user.Username);
+            _dataAccess.SetParameter("@UserPassword", user.Password);
+            _dataAccess.SetParameter("@RoleId", user.Role.Id);
+            _dataAccess.SetParameter("@PersonId", user.PersonId);
         }
     }
 }

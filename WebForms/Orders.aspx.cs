@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BusinessLogicLayer;
 using DomainModelLayer;
 
@@ -9,12 +10,15 @@ namespace WebForms
         // ATTRIBUTES
 
         private User _user;
+        private List<Order> _orders;
+        private OrdersManager _ordersManager;
 
         // CONSTRUCT
 
         public Orders()
         {
             _user = new User();
+            _ordersManager = new OrdersManager();
         }
 
         // METHODS
@@ -22,11 +26,17 @@ namespace WebForms
         private void FetchUser()
         {
             _user = (User)Session["user"];
+        }
 
-            if (_user == null)
-            {
-                _user = new User();
-            }
+        private void FetchOrders()
+        {
+            _orders = _ordersManager.List(_user.PersonId);
+        }
+
+        private void BindOrdersRpt()
+        {
+            OrdersRpt.DataSource = _orders;
+            OrdersRpt.DataBind();
         }
 
         private void MapControls()
@@ -48,6 +58,8 @@ namespace WebForms
             if (!IsPostBack)
             {
                 FetchUser();
+                FetchOrders();
+                BindOrdersRpt();
                 MapControls();
             }
         }

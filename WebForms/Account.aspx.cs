@@ -16,11 +16,6 @@ namespace WebForms
         private void FetchUser()
         {
             _user = (User)Session["user"];
-
-            if (_user == null)
-            {
-                _user = new User();
-            }
         }
 
         private void MapControls()
@@ -41,10 +36,6 @@ namespace WebForms
 
                 PhoneTxt.Text = _user.Phone;
                 BirthTxt.Text = _user.Birth.ToString("yyyy-MM-dd");
-            }
-            else
-            {
-                GreetingLbl.Text = "¡Hola!";
             }
         }
 
