@@ -6,39 +6,56 @@ namespace WebForms
 {
     public partial class Account : System.Web.UI.Page
     {
+        // ATTRIBUTES
+
+        User _user;
         private UsersManager _usersManager = new UsersManager();
+
+        // METHODS
+
+        private void FetchUser()
+        {
+            _user = (User)Session["user"];
+
+            if (_user == null)
+            {
+                _user = new User();
+            }
+        }
+
+        private void MapControls()
+        {
+            if (_user != null)
+            {
+                GreetingLbl.Text = "¡Hola " + _user.FirstName + "!";
+                LastNameTxt.Text = _user.LastName;
+                FirstNameTxt.Text = _user.FirstName;
+                TaxCodeTxt.Text = _user.TaxCode;
+                EmailTxt.Enabled = false;
+                EmailTxt.Text = _user.Email;
+                StreetNameTxt.Text = _user.Address.StreetName;
+                StreetNumberTxt.Text = _user.Address.StreetNumber;
+                FlatTxt.Text = _user.Address.Flat;
+                CityTxt.Text = _user.Address.City.Name;
+                ZipCodeTxt.Text = _user.Address.City.ZipCode;
+
+                PhoneTxt.Text = _user.Phone;
+                BirthTxt.Text = _user.Birth.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                GreetingLbl.Text = "¡Hola!";
+            }
+        }
+
+        // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
+            if (!IsPostBack)
             {
-                User _user = (User)Session["user"];
-
-                if (_user != null)
-                {
-                    /* if (UsrNameTitleTxt.Text != "")
-                     {
-                         UsrNameTitleTxt.Text = _user.Username;
-                     }*/
-                    UsrGreetingLbl.Text = _user.FirstName;
-                    UsrSurnameTxt.Text = _user.LastName;
-                    UsrNameTxt.Text = _user.FirstName;
-                    UsrDocumentTxt.Text = _user.TaxCode;
-                    UsrEmailTxt.Enabled = false;
-                    UsrEmailTxt.Text = _user.Email;
-                    UsrAdreTxt.Text = _user.Address.StreetName;
-                    UsrNmberTxt.Text = _user.Address.StreetNumber;
-                    UsrDptTxt.Text = _user.Address.Flat;
-                    UsrCityTxt.Text = _user.Address.City.Name;
-                    UsrPCTxt.Text = _user.Address.City.ZipCode;
-
-                    UsrPhoneTxt.Text = _user.Phone;
-                    BirthDateTxt.Text = _user.Birth.ToString("yyyy-MM-dd");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                FetchUser();
+                MapControls();
             }
         }
     }

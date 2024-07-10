@@ -15,111 +15,111 @@ namespace WebForms
     {
 
         /// <summary>
-        /// UsrGreetingLbl control.
+        /// GreetingLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label UsrGreetingLbl;
+        protected global::System.Web.UI.WebControls.Label GreetingLbl;
 
         /// <summary>
-        /// UsrEmailTxt control.
+        /// EmailTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrEmailTxt;
+        protected global::System.Web.UI.WebControls.TextBox EmailTxt;
 
         /// <summary>
-        /// UsrNameTxt control.
+        /// FirstNameTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrNameTxt;
+        protected global::System.Web.UI.WebControls.TextBox FirstNameTxt;
 
         /// <summary>
-        /// UsrSurnameTxt control.
+        /// LastNameTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrSurnameTxt;
+        protected global::System.Web.UI.WebControls.TextBox LastNameTxt;
 
         /// <summary>
-        /// UsrDocumentTxt control.
+        /// TaxCodeTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrDocumentTxt;
+        protected global::System.Web.UI.WebControls.TextBox TaxCodeTxt;
 
         /// <summary>
-        /// BirthDateTxt control.
+        /// BirthTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox BirthDateTxt;
+        protected global::System.Web.UI.WebControls.TextBox BirthTxt;
 
         /// <summary>
-        /// UsrAdreTxt control.
+        /// StreetNameTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrAdreTxt;
+        protected global::System.Web.UI.WebControls.TextBox StreetNameTxt;
 
         /// <summary>
-        /// UsrNmberTxt control.
+        /// StreetNumberTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrNmberTxt;
+        protected global::System.Web.UI.WebControls.TextBox StreetNumberTxt;
 
         /// <summary>
-        /// UsrDptTxt control.
+        /// FlatTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrDptTxt;
+        protected global::System.Web.UI.WebControls.TextBox FlatTxt;
 
         /// <summary>
-        /// UsrPCTxt control.
+        /// ZipCodeTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrPCTxt;
+        protected global::System.Web.UI.WebControls.TextBox ZipCodeTxt;
 
         /// <summary>
-        /// UsrCityTxt control.
+        /// CityTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrCityTxt;
+        protected global::System.Web.UI.WebControls.TextBox CityTxt;
 
         /// <summary>
-        /// UsrPhoneTxt control.
+        /// PhoneTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsrPhoneTxt;
+        protected global::System.Web.UI.WebControls.TextBox PhoneTxt;
     }
 }

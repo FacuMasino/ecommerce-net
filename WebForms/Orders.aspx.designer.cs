@@ -15,12 +15,12 @@ namespace WebForms
     {
 
         /// <summary>
-        /// WelcomeTxt control.
+        /// GreetingLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label WelcomeTxt;
+        protected global::System.Web.UI.WebControls.Label GreetingLbl;
     }
 }

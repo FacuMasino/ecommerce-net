@@ -1,6 +1,4 @@
 ﻿using System;
-using System.EnterpriseServices;
-using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
 
@@ -19,11 +17,6 @@ namespace WebForms
             _user = new User();
         }
 
-        private void MapControls()
-        {
-            WelcomeTxt.Text = "Hola " + _user.FirstName + "!";
-        }
-
         // METHODS
 
         private void FetchUser()
@@ -33,6 +26,18 @@ namespace WebForms
             if (_user == null)
             {
                 _user = new User();
+            }
+        }
+
+        private void MapControls()
+        {
+            if (_user != null)
+            {
+                GreetingLbl.Text = "¡Hola " + _user.FirstName + "!";
+            }
+            else
+            {
+                GreetingLbl.Text = "¡Hola!";
             }
         }
 
