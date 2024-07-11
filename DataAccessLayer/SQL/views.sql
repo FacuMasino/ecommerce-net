@@ -1,3 +1,5 @@
+use ecommerce
+go
 
 -----------
 -- STATS --
@@ -24,6 +26,8 @@ GROUP BY
 ORDER BY 
     TotalQuantitySold DESC;
 
+go
+
 create or alter view VW_TopVisitedProducts
 as
 select top 100
@@ -34,3 +38,5 @@ Where
 And
 	TotalVisits > 0
 Order By TotalVisits DESC
+
+go

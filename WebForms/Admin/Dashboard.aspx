@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="AdminMP.Master" AutoEventWireup="true"
+﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="AdminMP.Master" AutoEventWireup="true"
     CodeBehind="Dashboard.aspx.cs" Inherits="WebForms.Admin.Dashboard" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
@@ -121,7 +121,7 @@
                         {
                     %>
                     <tr>
-                        <th scope="row" class="text-center fs-6 p-4" colspan="4">Ops! No hay productos para
+                        <th scope="row" class="text-center fs-6 p-4" colspan="5">Ops! No hay productos para
                             mostrar.<br />
                         </th>
                     </tr>

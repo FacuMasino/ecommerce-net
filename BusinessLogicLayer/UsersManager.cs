@@ -193,7 +193,7 @@ namespace BusinessLogicLayer
             {
                 _dataAccess.SetProcedure("SP_Get_User_Id_By_Credentials");
                 _dataAccess.SetParameter("@Email", email);
-                _dataAccess.SetParameter("@UserPassword", password);
+                _dataAccess.SetParameter("@Password", password);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
