@@ -4,19 +4,22 @@ setlocal enabledelayedexpansion
 :menu
 echo Elija una cadena de conexion:
 echo.
-echo 1- Ana/Facu
-echo 2- Maxi_Mac
-echo 3- Maxi_Bangho
+echo 1- ana/facu
+echo 2- maxi_bangho
+echo 3- maxi_mac_1
+echo 4- maxi_mac_2
 echo.
 
-set /p choice=Ingrese su eleccion (1, 2, o 3): 
+set /p choice=Ingrese su eleccion (1, 2, 3 o 4): 
 
 if "%choice%"=="1" (
     set connection_string="localhost\SQLEXPRESS"
 ) else if "%choice%"=="2" (
-    set connection_string=192.168.0.221 -U SA -P Password1234
-) else if "%choice%"=="3" (
     set connection_string="BANGHO\SQLEXPRESS"
+) else if "%choice%"=="3" (
+    set connection_string=192.168.0.221 -U SA -P Password1234
+) else if "%choice%"=="4" (
+    set connection_string=192.168.0.20 -U SA -P Password1234
 ) else (
     echo Opción no válida. Por favor, intente nuevamente.
     goto menu
