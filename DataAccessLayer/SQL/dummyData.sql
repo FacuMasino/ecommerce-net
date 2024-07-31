@@ -369,7 +369,8 @@ INSERT INTO
 VALUES
 	('Admin'),
 	('Cliente'),
-	('Visitante');
+	('Transportista'),
+	('Atención al público');
 
 GO
 
@@ -381,9 +382,9 @@ INSERT INTO
 	Users
 	(Username, UserPassword, RoleId, PersonId)
 VALUES
-	('Ani77aa', 'aniani', '1', '1'),
-	('FacuMasino', 'donpablo', '1', '2'),
-	('mrmalvicino', 'elchili', '1', '3');
+	('Ani77aa', 'ani', '1', '1'),
+	('FacuMasino', 'facu', '1', '2'),
+	('mrmalvicino', 'maxi', '1', '3');
 
 GO
 
@@ -393,18 +394,18 @@ GO
 
 INSERT INTO
 	OrderStatuses
-	(OrderStatusName)
+	(OrderStatusName, Transition, RoleId)
 VALUES
-	('Pago en proceso'), -- ID 1 Hardcoded
-	('Envío pendiente'), -- ID 2 Hardcoded
-	('Pedido enviado'), -- ID 3 Hardcoded
-	('Pedido entregado'), -- ID 4 Hardcoded
-	('Orden completada'), -- ID 5 Hardcoded
-	('Pago y retiro pendientes'), -- ID 6 Hardcoded
-	('Retiro pendiente'), -- ID 7 Hardcoded
-	('Devolución pendiente'), -- ID 8 Hardcoded
-	('Orden cancelada'), -- ID 9 Hardcoded
-	('Envío y pago pendientes'); -- ID 10 Hardcoded
+	('Pago en proceso', 'Marcar como abonado', 4), -- ID 1 Hardcoded
+	('Envío pendiente', 'Marcar como enviado', 4), -- ID 2 Hardcoded
+	('Pedido enviado', 'Marcar como entregado', 3), -- ID 3 Hardcoded
+	('Pedido entregado', 'Marcar como recibido', 2), -- ID 4 Hardcoded
+	('Orden completada', 'Devolver pedido', 2), -- ID 5 Hardcoded
+	('Pago y retiro pendientes', 'Marcar como abonado y retirado', 4), -- ID 6 Hardcoded
+	('Retiro pendiente', 'Marcar como retirado', 4), -- ID 7 Hardcoded
+	('Devolución pendiente', 'Marcar como devuelto', 4), -- ID 8 Hardcoded
+	('Orden cancelada', 'Sin acción disponible', 1), -- ID 9 Hardcoded
+	('Envío y pago pendientes', 'Marcar como abonado y entregado', 3); -- ID 10 Hardcoded
 
 GO
 
@@ -432,8 +433,8 @@ INSERT INTO
 VALUES
 	('Pago virtual y envío'),
 	('Pago virtual y retiro'),
-	('Pago personal y retiro'),
-	('Pago personal y envío');
+	('Pago en efectivo y retiro'),
+	('Pago en efectivo y envío');
 
 GO
 
@@ -462,9 +463,10 @@ VALUES
 	(3, 8, 2),
 	(3, 9, 3),
 	(4, 10, 0),
-	(4, 5, 1),
-	(4, 8, 2),
-	(4, 9, 3);
+	(4, 4, 1),
+	(4, 5, 2),
+	(4, 8, 3),
+	(4, 9, 4);
 
 GO
 
