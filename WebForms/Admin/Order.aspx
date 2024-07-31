@@ -95,10 +95,11 @@
                 </div>
             </div>
 
-            <!-- Administrar estado -->
+            <!-- Estado de orden -->
+
             <div class="bg-white py-2 border-1 border rounded">
                 <div class="d-flex align-items-center border-bottom px-3 py-2">
-                    <h3 class="fs-5 m-0 fw-normal">Administrar estado</h3>
+                    <h3 class="fs-5 m-0 fw-normal">Estado de orden</h3>
                 </div>
                 <div class="px-3 py-2">
 
@@ -112,7 +113,7 @@
                         </asp:Label>
                     </td>
 
-                    <!-- Estado -->
+                    <!-- Administrar estado -->
 
                     <asp:DropDownList
                         ID="OrderStatusesDDL"

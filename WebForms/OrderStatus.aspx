@@ -5,121 +5,137 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
-    <div class="container mt-5">
-        <h2 class="mb-3 text-center">Detalle del pedido #001</h2>
-        <div class="row border-2 border-top border-black py-2">
-            <div class="col-8">
-                <div class="row border-2 border-bottom border-black">
-                    <div class="col-md-6">
-                        <h5>Cliente</h5>
-                        <p>
-                            Juan Perez<br>
-                            DNI 20200111
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <h5>Entrega</h5>
-                        <p>
-                            Envío a domicilio<br>
-                            Buenos Aires<br>
-                            Av. Alem 1200
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row border-2 border-bottom border-black mt-4">
-                    <div class="col-md-6">
-                        <h5>Forma de pago</h5>
-                        <p>Mercadopago</p>
-                    </div>
-                    <div class="col-md-6">
-                        <h5>Resumen de la compra</h5>
-                        <table class="table">
-                            <tr>
-                                <td>Subtotal</td>
-                                <td class="text-end">$ 0.00</td>
-                            </tr>
-                            <tr>
-                                <td>Descuento</td>
-                                <td class="text-end">$ 0.00</td>
-                            </tr>
-                            <tr>
-                                <td>Impuestos</td>
-                                <td class="text-end">$ 0.00</td>
-                            </tr>
-                            <tr>
-                                <th>TOTAL</th>
-                                <th class="text-end">$ 0.00</th>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-md-6">
-                        <h5>Estado de la compra</h5>
-                        <ul class="list-unstyled">
-                            <li><i class="bi bi-check-circle-fill text-success"></i>Pago Aceptado</li>
-                            <li><i class="bi bi-check-circle-fill text-success"></i>En Preparación</li>
-                            <li><i class="bi bi-check-circle-fill text-success"></i>En Camino</li>
-                            <li><i class="bi bi-check-circle-fill text-success"></i>Entregado</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-4">
-                <h5>Productos</h5>
-                <!-- Inicio repeater -->
-                <div class="d-flex p-2">
-                    <div class="row py-2 border-bottom border-black">
-                        <div class="col-3">
-                            <img class="w-100 object-fit-contain rounded"
-                                src="https://ik.imagekit.io/tpce16/products/iphone-15-pro-a-2f70988805588cc27816964316066050-1024-1024.png?updatedAt=1718288634185" />
-                        </div>
-                        <div class="col-5">
-                            <p class="mb-1">Marca</p>
-                            <p class="mb-1">Nombre</p>
-                            <span class="text-small">1x $ P.Unit</span>
-                        </div>
-                        <div class="col-4 text-end">
-                            <p class="pe-2">$ Total</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Fin repeater -->
-                <div class="d-flex p-2">
-                    <div class="row py-2 border-bottom border-black">
-                        <div class="col-3">
-                            <img class="w-100 object-fit-contain rounded"
-                                src="https://ik.imagekit.io/tpce16/products/iphone-15-pro-a-2f70988805588cc27816964316066050-1024-1024.png?updatedAt=1718288634185" />
-                        </div>
-                        <div class="col-5">
-                            <p class="mb-1">Marca</p>
-                            <p class="mb-1">Nombre</p>
-                            <span class="text-small">1x $ P.Unit</span>
-                        </div>
-                        <div class="col-4 text-end">
-                            <p class="pe-2">$ Total</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex p-2">
-                    <div class="row py-2 border-bottom border-black">
-                        <div class="col-3">
-                            <img class="w-100 object-fit-contain rounded"
-                                src="https://ik.imagekit.io/tpce16/products/iphone-15-pro-a-2f70988805588cc27816964316066050-1024-1024.png?updatedAt=1718288634185" />
-                        </div>
-                        <div class="col-5">
-                            <p class="mb-1">Marca</p>
-                            <p class="mb-1">Nombre</p>
-                            <span class="text-small">1x $ P.Unit</span>
-                        </div>
-                        <div class="col-4 text-end">
-                            <p class="pe-2">$ Total</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="row container-1200 mx-auto">
+        <div class="d-flex flex-column mb-4">
+            <asp:Label ID="OrderIdLbl" runat="server" CssClass="fs-3 m-0 fw-bold"></asp:Label>
+            <asp:Label ID="OrderCreationDateLbl" runat="server" CssClass="fs-7"></asp:Label>
         </div>
+
+        <!--- Detalles del pedido --->
+
+        <section class="col-md-7 col d-flex flex-column gap-3">
+            <div class="d-flex justify-content-between">
+                <h2 class="fs-4 m-0">Detalles del pedido</h2>
+            </div>
+
+            <!-- Productos -->
+
+            <div class="bg-white py-2 border-1 border rounded">
+                <div class="d-flex justify-content-between align-items-center border-bottom px-3 pb-2">
+                    <h3 class="fs-5 m-0 fw-normal">Productos</h3>
+                    <asp:Label ID="OrderStatusLbl" runat="server" class="text-small bg-body-secondary rounded border py-0 px-2" />
+                </div>
+
+                <div class="d-flex flex-column gap-2 px-3 py-2">
+
+                    <!-- Lista de productos -->
+
+                    <asp:Repeater ID="ProductSetsRpt" runat="server" OnItemDataBound="ProductSetsRpt_ItemDataBound">
+                        <ItemTemplate>
+                            <div class="row">
+                                <div class="col-2">
+                                    <asp:Image
+                                        ID="ImageLbl"
+                                        runat="server"
+                                        ImageUrl="https://cdn-icons-png.flaticon.com/512/3868/3868869.png"
+                                        CssClass="w-100 object-fit-contain rounded" />
+                                </div>
+                                <div class="col-7">
+                                    <asp:Label
+                                        ID="BrandLbl"
+                                        runat="server"
+                                        Text='<%#Eval("Brand")%>'>
+                                    </asp:Label>
+
+                                    <asp:Label
+                                        ID="NameLbl"
+                                        runat="server"
+                                        Text='<%#Eval("Name")%>'>
+                                    </asp:Label>
+
+                                    <p class="text-small mb-0">
+                                        x <%#Eval("Quantity")%> unidades
+                                    </p>
+
+                                    <p class="text-small">
+                                        Precio unitario: $ <%#((decimal)Eval("Price")).ToString("F2")%>
+                                    </p>
+                                </div>
+                                <div class="col-3 text-end">
+                                    <p class="pe-2">
+                                        $<%#((decimal)Eval("Subtotal")).ToString("F2")%>
+                                    </p>
+                                </div>
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+
+                </div>
+            </div>
+
+            <!-- Información de pago -->
+
+            <div class="bg-white py-2 border-1 border rounded">
+                <div class="d-flex align-items-center border-bottom px-3 py-2">
+                    <h3 class="fs-5 m-0 fw-normal">Pago</h3>
+                </div>
+                <div class="d-flex flex-column gap-2">
+                    <div class="bg-body-tertiary">
+                        <div class="px-3 py-2 d-flex align-items-center justify-content-between ">
+                            <span class="fw-bold">Total:</span>
+                            <asp:Label ID="TotalLbl" runat="server" CssClass="fs-7"></asp:Label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="px-3 py-2 d-flex align-items-center justify-content-between ">
+                            <span class="fw-bold">Medio de pago: </span>
+                            <asp:Label ID="PaymentTypeLbl" runat="server"></asp:Label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- hack : Estado de orden -->
+
+            <div class="bg-white py-2 border-1 border rounded mb-3">
+                <div class="d-flex align-items-center border-bottom px-3 py-2">
+                    <h3 class="fs-5 m-0 fw-normal">Estado de orden</h3>
+                </div>
+                <div class="px-3 py-2">
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle-fill text-success"></i>Pago Aceptado</li>
+                        <li><i class="bi bi-check-circle-fill text-success"></i>En Preparación</li>
+                        <li><i class="bi bi-check-circle-fill text-success"></i>En Camino</li>
+                        <li><i class="bi bi-check-circle-fill text-success"></i>Entregado</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Información del cliente -->
+
+        <section class="col-md-5 col d-flex flex-column gap-3">
+            <h2 class="fs-4 m-0">Información del cliente</h2>
+
+            <!-- Dirección de envío -->
+
+            <div class="bg-white py-2 border-1 border rounded">
+                <div class="d-flex align-items-center border-bottom px-3 py-2">
+                    <h3 class="fs-5 m-0 fw-normal">Dirección de envío</h3>
+                </div>
+                <div class="px-3 py-2">
+                    <div class="d-flex flex-column gap-2">
+                        <div>
+                            <asp:Label ID="StreetNameLbl" runat="server" CssClass="fw-bold"></asp:Label>
+                            <asp:Label ID="StreetNumberLbl" runat="server" CssClass="fw-bold"></asp:Label>
+                        </div>
+                        <asp:Label ID="FlatLbl" runat="server"></asp:Label>
+                        <asp:Label ID="CityLbl" runat="server"></asp:Label>
+                        <asp:Label ID="ProvinceLbl" runat="server"></asp:Label>
+                        <asp:Label ID="DetailsLbl" runat="server"></asp:Label>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </asp:Content>

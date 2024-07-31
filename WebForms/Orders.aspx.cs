@@ -63,5 +63,14 @@ namespace WebForms
                 MapControls();
             }
         }
+
+        protected void OrdersRpt_ItemCommand(object source, System.Web.UI.WebControls.RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "Edit")
+            {
+                int orderId = Convert.ToInt32(e.CommandArgument);
+                Response.Redirect("OrderStatus.aspx?orderId=" + orderId, false); // hack : renombrar OrderStatus.aspx por, tal vez, OrderDetails.aspx
+            }
+        }
     }
 }

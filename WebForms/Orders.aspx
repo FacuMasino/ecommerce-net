@@ -25,20 +25,14 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
                                     <th scope="col">Fecha</th>
-                                    <th scope="col">Importe</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <asp:Repeater ID="OrdersRpt" runat="server">
+                                <asp:Repeater ID="OrdersRpt" runat="server" OnItemCommand="OrdersRpt_ItemCommand">
                                     <ItemTemplate>
                                         <tr>
-
-                                            <!-- Número de pedido -->
-
-                                            <th scope="row">001</th>
 
                                             <!-- Fecha (de creación) -->
 
@@ -50,10 +44,6 @@
                                                     CssClass="text-black">
                                                 </asp:Label>
                                             </td>
-
-                                            <!-- Importe -->
-
-                                            <td>$ 123.456,00</td>
 
                                             <!-- Acciones -->
 
