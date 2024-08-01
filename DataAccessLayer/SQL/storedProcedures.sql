@@ -289,12 +289,12 @@ end
 
 go
 
-create or alter procedure SP_List_Order_Statuses(
+create or alter procedure SP_ListOrderStatuses(
 	@DistributionChannelId int
 )
 as
 begin
-	select S.OrderStatusId, S.OrderStatusName
+	select S.OrderStatusId, S.OrderStatusName, S.TransitionText
 	from OrderStatuses S
 	inner join ChannelStatuses CS on CS.OrderStatusId = S.OrderStatusId
 	inner join DistributionChannels C on C.DistributionChannelId = CS.DistributionChannelId

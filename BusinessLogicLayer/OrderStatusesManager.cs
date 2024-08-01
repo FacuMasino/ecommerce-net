@@ -15,7 +15,7 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetProcedure("SP_List_Order_Statuses");
+                _dataAccess.SetProcedure("SP_ListOrderStatuses"); // hack : error al nombrar este SP como SP_List_Order_Statuses
                 _dataAccess.SetParameter("@DistributionChannelId", distributionChannelId);
                 _dataAccess.ExecuteRead();
 
@@ -25,6 +25,7 @@ namespace BusinessLogicLayer
 
                     orderStatus.Id = (int)_dataAccess.Reader["OrderStatusId"];
                     orderStatus.Name = (string)_dataAccess.Reader["OrderStatusName"];
+                    orderStatus.TransitionText = (string)_dataAccess.Reader["TransitionText"];
 
                     orderStatuses.Add(orderStatus);
                 }
@@ -47,7 +48,7 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select OrderStatusName from OrderStatuses where OrderStatusId = @OrderStatusId");
+                _dataAccess.SetQuery("select OrderStatusName, TransitionText from OrderStatuses where OrderStatusId = @OrderStatusId");
                 _dataAccess.SetParameter("@OrderStatusId", orderStatusId);
                 _dataAccess.ExecuteRead();
 
@@ -55,6 +56,7 @@ namespace BusinessLogicLayer
                 {
                     orderStatus.Id = orderStatusId;
                     orderStatus.Name = (string)_dataAccess.Reader["OrderStatusName"];
+                    orderStatus.TransitionText = (string)_dataAccess.Reader["TransitionText"];
                 }
             }
             catch (Exception ex)

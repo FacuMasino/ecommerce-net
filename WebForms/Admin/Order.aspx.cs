@@ -69,8 +69,8 @@ namespace WebForms.Admin
             OrderCreationDateLbl.Text = "Generada el " + _order.CreationDate.ToString("dd-MM-yyyy");
             TotalLbl.Text = "$" + _shoppingCart.Total.ToString("F2");
             PaymentTypeLbl.Text = _order.PaymentType.Name;
-            DistributionChannelLbl.Text =
-                "Canal de distribución: " + _order.DistributionChannel.Name;
+            TransitionButton.Text = _order.OrderStatus.TransitionText;
+            DistributionChannelLbl.Text = _order.DistributionChannel.Name;
 
             if (_order.User.Username != null)
             {

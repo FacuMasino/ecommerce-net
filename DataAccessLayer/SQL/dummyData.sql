@@ -1,4 +1,5 @@
 USE ecommerce 
+
 GO
 
 ------------
@@ -410,7 +411,7 @@ GO
 
 INSERT INTO
 	OrderStatuses
-	(OrderStatusName, Transition, RoleId)
+	(OrderStatusName, TransitionText, RoleId)
 VALUES
 	('Pago en proceso', 'Marcar como abonado', 4), -- ID 1 Hardcoded
 	('Envío pendiente', 'Marcar como enviado', 4), -- ID 2 Hardcoded

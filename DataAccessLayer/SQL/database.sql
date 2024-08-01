@@ -3,7 +3,9 @@ DATABASE ecommerce
 COLLATE Latin1_General_100_CI_AS_SC_UTF8;
 
 GO
+
 USE ecommerce 
+
 GO
 
 ------------
@@ -202,7 +204,7 @@ CREATE TABLE OrderStatuses
 (
 	OrderStatusId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
 	OrderStatusName varchar(30) NOT NULL,
-	Transition varchar(50) NOT NULL,
+	TransitionText varchar(50) NOT NULL,
 	RoleId int NOT NULL
 ) 
 GO

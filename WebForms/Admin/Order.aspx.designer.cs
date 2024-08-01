@@ -33,15 +33,6 @@ namespace WebForms.Admin
         protected global::System.Web.UI.WebControls.Label OrderCreationDateLbl;
 
         /// <summary>
-        /// OrderStatusLbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label OrderStatusLbl;
-
-        /// <summary>
         /// ProductSetsRpt control.
         /// </summary>
         /// <remarks>
@@ -76,6 +67,24 @@ namespace WebForms.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label DistributionChannelLbl;
+
+        /// <summary>
+        /// OrderStatusLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label OrderStatusLbl;
+
+        /// <summary>
+        /// TransitionButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button TransitionButton;
 
         /// <summary>
         /// OrderStatusesDDL control.

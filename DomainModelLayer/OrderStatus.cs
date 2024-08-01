@@ -8,6 +8,8 @@ namespace DomainModelLayer
 
         public string Name { get; set; }
 
+        public string TransitionText { get; set; }
+
         public override string ToString()
         {
             if (Name != null)

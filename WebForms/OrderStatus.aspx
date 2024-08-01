@@ -23,7 +23,6 @@
             <div class="bg-white py-2 border-1 border rounded">
                 <div class="d-flex justify-content-between align-items-center border-bottom px-3 pb-2">
                     <h3 class="fs-5 m-0 fw-normal">Productos</h3>
-                    <asp:Label ID="OrderStatusLbl" runat="server" class="text-small bg-body-secondary rounded border py-0 px-2" />
                 </div>
 
                 <div class="d-flex flex-column gap-2 px-3 py-2">
@@ -95,11 +94,16 @@
                 </div>
             </div>
 
-            <!-- hack : Estado de orden -->
+            <!-- Estado de orden -->
 
             <div class="bg-white py-2 border-1 border rounded mb-3">
-                <div class="d-flex align-items-center border-bottom px-3 py-2">
+                <div class="d-flex justify-content-between align-items-center border-bottom px-3 pb-2">
                     <h3 class="fs-5 m-0 fw-normal">Estado de orden</h3>
+                    <asp:Label
+                        ID="OrderStatusLbl"
+                        runat="server"
+                        CssClass="text-small bg-body-secondary rounded border py-0 px-2">
+                    </asp:Label>
                 </div>
                 <div class="px-3 py-2">
                     <ul class="list-unstyled">
@@ -108,6 +112,11 @@
                         <li><i class="bi bi-check-circle-fill text-success"></i>En Camino</li>
                         <li><i class="bi bi-check-circle-fill text-success"></i>Entregado</li>
                     </ul>
+                </div>
+                <div class="d-flex flex-column gap-2">
+                    <div class="px-3 py-2 d-flex align-items-center justify-content-between">
+                        <asp:Button ID="TransitionButton" runat="server" CssClass="btn btn-primary w-auto" />
+                    </div>
                 </div>
             </div>
         </section>

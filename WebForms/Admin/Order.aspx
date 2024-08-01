@@ -7,8 +7,16 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
     <div class="row container-1200 mx-auto">
         <div class="d-flex flex-column mb-4">
-            <asp:Label ID="OrderIdLbl" runat="server" CssClass="fs-3 m-0 fw-bold"></asp:Label>
-            <asp:Label ID="OrderCreationDateLbl" runat="server" CssClass="fs-7"></asp:Label>
+            <asp:Label
+                ID="OrderIdLbl"
+                runat="server"
+                CssClass="fs-3 m-0 fw-bold">
+            </asp:Label>
+            <asp:Label
+                ID="OrderCreationDateLbl"
+                runat="server"
+                CssClass="fs-7">
+            </asp:Label>
         </div>
 
         <!--- Detalles del pedido --->
@@ -23,7 +31,6 @@
             <div class="bg-white py-2 border-1 border rounded">
                 <div class="d-flex justify-content-between align-items-center border-bottom px-3 pb-2">
                     <h3 class="fs-5 m-0 fw-normal">Productos</h3>
-                    <asp:Label ID="OrderStatusLbl" runat="server" class="text-small bg-body-secondary rounded border py-0 px-2" />
                 </div>
 
                 <div class="d-flex flex-column gap-2 px-3 py-2">
@@ -88,7 +95,7 @@
                     </div>
                     <div>
                         <div class="px-3 py-2 d-flex align-items-center justify-content-between ">
-                            <span class="fw-bold">Medio de pago: </span>
+                            <span>Medio de pago: </span>
                             <asp:Label ID="PaymentTypeLbl" runat="server"></asp:Label>
                         </div>
                     </div>
@@ -98,31 +105,30 @@
             <!-- Estado de orden -->
 
             <div class="bg-white py-2 border-1 border rounded">
-                <div class="d-flex align-items-center border-bottom px-3 py-2">
+                <div class="d-flex justify-content-between align-items-center border-bottom px-3 pb-2">
                     <h3 class="fs-5 m-0 fw-normal">Estado de orden</h3>
-                </div>
-                <div class="px-3 py-2">
-
-                    <!-- Canal de distribución -->
-
-                    <td>
-                        <asp:Label
-                            ID="DistributionChannelLbl"
-                            runat="server"
-                            CssClass="text-black mb-2">
-                        </asp:Label>
-                    </td>
-
-                    <!-- Administrar estado -->
-
-                    <asp:DropDownList
-                        ID="OrderStatusesDDL"
+                    <asp:Label
+                        ID="DistributionChannelLbl"
                         runat="server"
-                        OnSelectedIndexChanged="OrderStatusesDDL_SelectedIndexChanged"
-                        AutoPostBack="true"
-                        CssClass="dropdown btn btn-secondary dropdown-toggle w-100 mt-2">
-                    </asp:DropDownList>
-
+                        CssClass="text-small bg-body-secondary rounded border py-0 px-2">
+                    </asp:Label>
+                    <asp:Label
+                        ID="OrderStatusLbl"
+                        runat="server"
+                        CssClass="text-small bg-body-secondary rounded border py-0 px-2">
+                    </asp:Label>
+                </div>
+                <div class="d-flex flex-column gap-2">
+                    <div class="px-3 py-2 d-flex align-items-center justify-content-between">
+                        <asp:Button ID="TransitionButton" runat="server" CssClass="btn btn-primary w-auto" />
+                        <asp:DropDownList
+                            ID="OrderStatusesDDL"
+                            runat="server"
+                            OnSelectedIndexChanged="OrderStatusesDDL_SelectedIndexChanged"
+                            AutoPostBack="true"
+                            CssClass="dropdown btn btn-danger dropdown-toggle w-auto ml-2">
+                        </asp:DropDownList>
+                    </div>
                 </div>
             </div>
         </section>

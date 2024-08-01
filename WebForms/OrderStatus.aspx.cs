@@ -60,6 +60,7 @@ namespace WebForms
             OrderCreationDateLbl.Text = "Generada el " + _order.CreationDate.ToString("dd-MM-yyyy");
             TotalLbl.Text = "$" + _shoppingCart.Total.ToString("F2");
             PaymentTypeLbl.Text = _order.PaymentType.Name;
+            TransitionButton.Text = _order.OrderStatus.TransitionText;
 
             if (_order.DeliveryAddress.ToString() != "")
             {
