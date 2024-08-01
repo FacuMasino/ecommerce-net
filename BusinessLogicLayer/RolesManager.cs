@@ -30,8 +30,8 @@ namespace BusinessLogicLayer
                 {
                     Role role = new Role();
 
-                    role.Id = (int)_dataAccess.Reader["RoleId"];
-                    role.Name = _dataAccess.Reader["RoleName"]?.ToString();
+                    role.Id = Convert.ToInt32(_dataAccess.Reader["RoleId"]);
+                    role.Name = _dataAccess.Reader["RoleName"].ToString();
 
                     userRoles.Add(role);
                 }
@@ -61,8 +61,7 @@ namespace BusinessLogicLayer
                 if (_dataAccess.Reader.Read())
                 {
                     role.Id = roleId;
-                    role.Name = _dataAccess.Reader["RoleName"]?.ToString();
-                    role.Name = role.Name ?? "";
+                    role.Name = _dataAccess.Reader["RoleName"].ToString();
                 }
             }
             catch (Exception ex)

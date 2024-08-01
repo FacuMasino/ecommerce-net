@@ -311,14 +311,13 @@ go
 create or alter procedure SP_Add_User(
 	@Username varchar(30) = NULL,
 	@UserPassword varchar(30),
-	@RoleId int,
     @PersonId int
 )
 as
 begin
-	insert into users(Username, UserPassword, RoleId, PersonId)
+	insert into users(Username, UserPassword, PersonId)
 	output inserted.UserId
-	values (@Username, @UserPassword, @RoleId, @PersonId)
+	values (@Username, @UserPassword, @PersonId)
 end
 go
 
@@ -378,7 +377,7 @@ create or alter procedure SP_Read_User(
 )
 as
 begin
-	select Username, UserPassword, RoleId, PersonId
+	select Username, UserPassword, PersonId
 	from Users
 	where UserId = @UserId
 end

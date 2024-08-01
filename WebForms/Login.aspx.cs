@@ -7,7 +7,6 @@ namespace WebForms
     public partial class Login : System.Web.UI.Page
     {
         private User _user;
-        private Person _person;
         private UsersManager _usersManager = new UsersManager();
         private bool errorlog = false;
         private string _redirectTo = "Home.aspx";
@@ -60,9 +59,8 @@ namespace WebForms
             }
         }
 
-        public bool IncorrectData()
+        public bool IncorrectData() // hack : ¿Es necesario este método? ¿Borrar?
         {
-            ///// SI EL MAIL NO EXISTE EN LA BASE
             if (errorlog == true)
             {
                 return true;
