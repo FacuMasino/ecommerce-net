@@ -380,11 +380,27 @@ GO
 
 INSERT INTO
 	Users
-	(Username, UserPassword, RoleId, PersonId)
+	(Username, UserPassword, PersonId)
 VALUES
-	('Ani77aa', 'ani', '1', '1'),
-	('FacuMasino', 'facu', '1', '2'),
-	('mrmalvicino', 'maxi', '1', '3');
+	('Ani77aa', 'ani', 1),
+	('FacuMasino', 'facu', 2),
+	('mrmalvicino', 'maxi', 3);
+
+GO
+
+----------------
+-- USER ROLES --
+----------------
+
+INSERT INTO
+	UserRoles
+	(UserId, RoleId)
+VALUES
+	(1, 1),
+	(1, 3),
+	(1, 4),
+	(2, 1),
+	(3, 1);
 
 GO
 

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using System.Xml.Linq;
+using System.Collections.Generic;
 
 namespace DomainModelLayer
 {
@@ -14,12 +14,12 @@ namespace DomainModelLayer
         [DisplayName("Contraseña")]
         public string Password { get; set; }
 
-        [DisplayName("Rol")]
-        public Role Role { get; set; }
+        [DisplayName("Roles")]
+        public List<Role> Roles { get; set; }
 
         public User()
         {
-            Role = new Role();
+            Roles = new List<Role>();
         }
 
         public override string ToString()

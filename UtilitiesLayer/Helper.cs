@@ -134,7 +134,7 @@ namespace UtilitiesLayer
                 (destinyObject as User).UserId = (originObject as User).UserId;
                 (destinyObject as User).Username = (originObject as User).Username;
                 (destinyObject as User).Password = (originObject as User).Password;
-                (destinyObject as User).Role = (originObject as User).Role;
+                (destinyObject as User).Roles = (originObject as User).Roles;
             }
         }
 

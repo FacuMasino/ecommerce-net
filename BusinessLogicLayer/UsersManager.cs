@@ -12,7 +12,6 @@ namespace BusinessLogicLayer
         private PeopleManager _peopleManager = new PeopleManager();
         private RolesManager _rolesManager = new RolesManager();
         private AddressesManager _addressesManager = new AddressesManager();
-        private Address _address;
 
         public User Read(int userId)
         {
@@ -30,7 +29,6 @@ namespace BusinessLogicLayer
                     user.Username = _dataAccess.Reader["Username"]?.ToString();
                     user.Username = user.Username ?? "";
                     user.Password = (string)_dataAccess.Reader["UserPassword"];
-                    user.Role.Id = Convert.ToInt32(_dataAccess.Reader["RoleId"]);
                     user.PersonId = (int)_dataAccess.Reader["PersonId"];
                 }
             }
@@ -43,7 +41,7 @@ namespace BusinessLogicLayer
                 _dataAccess.CloseConnection();
             }
 
-            user.Role = _rolesManager.Read(user.Role.Id);
+            user.Roles = _rolesManager.List(user.UserId);
 
             _person = _peopleManager.Read(user.PersonId);
             Helper.AssignPerson(user, _person);
@@ -54,8 +52,7 @@ namespace BusinessLogicLayer
         public int Add(User user)
         {
             user.PersonId = _peopleManager.Add(user);
-
-            _rolesManager.AssignUserRole(user);
+            _rolesManager.HandleRoleId(user);
 
             int UserId = 0;
 
@@ -80,24 +77,7 @@ namespace BusinessLogicLayer
         public void Edit(User user)
         {
             _peopleManager.Edit(user);
-
-            if (user.Role != null)
-            {
-                int foundRoleId = _rolesManager.GetId(user.Role);
-
-                if (foundRoleId == 0)
-                {
-                    user.Role.Id = _rolesManager.Add(user.Role);
-                }
-                else if (foundRoleId == user.Role.Id)
-                {
-                    _rolesManager.Edit(user.Role);
-                }
-                else
-                {
-                    user.Role.Id = foundRoleId;
-                }
-            }
+            _rolesManager.HandleRoleId(user);
 
             try
             {
@@ -230,21 +210,21 @@ namespace BusinessLogicLayer
 
         public bool IsAdmin(User user)
         {
-            if (user.Role.Id == (int)RolesManager.Roles.AdminRoleId)
+            for (int i = 0; i < user.Roles.Count; i++)
             {
-                return true;
+                if (user.Roles[i].Id == (int)RolesManager.Roles.AdminRoleId)
+                {
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private void SetParameters(User user)
         {
             _dataAccess.SetParameter("@Username", user.Username);
             _dataAccess.SetParameter("@UserPassword", user.Password);
-            _dataAccess.SetParameter("@RoleId", user.Role.Id);
             _dataAccess.SetParameter("@PersonId", user.PersonId);
         }
     }

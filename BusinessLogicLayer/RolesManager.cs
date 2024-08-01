@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DataAccessLayer;
 using DomainModelLayer;
 
@@ -13,6 +14,38 @@ namespace BusinessLogicLayer
             AdminRoleId = 1,
             DefaultRoleId = 2,
             VisitorRoleId = 3
+        }
+
+        public List<Role> List(int userId = 0)
+        {
+            List<Role> userRoles = new List<Role>();
+
+            try
+            {
+                _dataAccess.SetProcedure("SP_List_Roles");
+                _dataAccess.SetParameter("@UserId", userId);
+                _dataAccess.ExecuteRead();
+
+                while (_dataAccess.Reader.Read())
+                {
+                    Role role = new Role();
+
+                    role.Id = (int)_dataAccess.Reader["RoleId"];
+                    role.Name = _dataAccess.Reader["RoleName"]?.ToString();
+
+                    userRoles.Add(role);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+
+            return userRoles;
         }
 
         public Role Read(int roleId)
@@ -82,22 +115,32 @@ namespace BusinessLogicLayer
             return roleId;
         }
 
-        public void AssignUserRole(User user)
+        public void HandleRoleId(User user)
         {
-            if (user.Role == null)
+            if (user.Roles == null)
             {
-                user.Role = new Role { Id = (int)Roles.DefaultRoleId };
+                user.Roles = new List<Role>();
+                Role defaultRole = new Role { Id = (int)Roles.DefaultRoleId };
+                user.Roles.Add(defaultRole);
                 return;
             }
 
-            if (!string.IsNullOrEmpty(user.Role.Name))
+            for (int i = 0; i < user.Roles.Count; i++)
             {
-                int foundRoleId = GetId(user.Role);
-                user.Role.Id = foundRoleId != 0 ? foundRoleId : (int)Roles.DefaultRoleId;
-            }
-            else
-            {
-                user.Role.Id = (int)Roles.DefaultRoleId;
+                int foundRoleId = GetId(user.Roles[i]);
+
+                if (foundRoleId == 0)
+                {
+                    user.Roles[i].Id = Add(user.Roles[i]);
+                }
+                else if (foundRoleId == user.Roles[i].Id)
+                {
+                    Edit(user.Roles[i]);
+                }
+                else
+                {
+                    user.Roles[i].Id = foundRoleId;
+                }
             }
         }
     }

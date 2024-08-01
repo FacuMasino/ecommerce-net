@@ -418,6 +418,27 @@ end
 
 go
 
+create or alter procedure SP_List_Roles(
+	@UserId int
+)
+as
+begin
+	if (0 < @UserId)
+	begin
+		select R.RoleId, R.RoleName
+		from Roles R
+		inner join UserRoles UR on UR.RoleId = R.RoleId
+		where UR.UserId = @UserId
+	end
+	else
+	begin
+		select R.RoleId, R.RoleName
+		from Roles R
+	end
+end
+
+go
+
 -----------
 -- STATS --
 -----------

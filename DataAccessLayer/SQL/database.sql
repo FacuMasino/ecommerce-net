@@ -178,8 +178,19 @@ CREATE TABLE Users
 	UserId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
 	Username varchar(30) NULL,
 	UserPassword varchar(30) NOT NULL,
-	RoleId tinyint FOREIGN KEY REFERENCES Roles (RoleId) DEFAULT(2) NOT NULL,
 	PersonId int FOREIGN KEY REFERENCES People (PersonId) NOT NULL
+) 
+GO
+
+----------------
+-- USER ROLES --
+----------------
+
+CREATE TABLE UserRoles
+(
+	UserId int FOREIGN KEY REFERENCES Users (UserId) NOT NULL,
+	RoleId tinyint FOREIGN KEY REFERENCES Roles (RoleId) NOT NULL,
+	PRIMARY KEY (UserId, RoleId)
 ) 
 GO
 
