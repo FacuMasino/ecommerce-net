@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.UI;
 using BusinessLogicLayer;
 using DomainModelLayer;
 
@@ -41,6 +42,19 @@ namespace WebForms
                 default:
                     return true;
             }
+        }
+
+        public void ShowBsToast(string message)
+        {
+            BsToastBody.Text = message;
+            ScriptManager.RegisterStartupScript(
+                Page,
+                Page.GetType(),
+                "bsToast",
+                "bsToast.show()",
+                true
+            );
+            BsToastUP.Update();
         }
 
         // EVENTS

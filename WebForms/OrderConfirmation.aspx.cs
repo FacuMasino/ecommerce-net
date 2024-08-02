@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
+using UtilitiesLayer;
 
 namespace WebForms
 {
@@ -18,6 +20,8 @@ namespace WebForms
         private DistributionChannelsManager _distributionChannelsManager;
         private OrderStatusesManager _orderStatusesManager;
 
+        private List<InputWrapper> _inputValidations;
+
         // CONSTRUCT
 
         public OrderConfirmation()
@@ -30,9 +34,29 @@ namespace WebForms
             _paymentTypesManager = new PaymentTypesManager();
             _distributionChannelsManager = new DistributionChannelsManager();
             _orderStatusesManager = new OrderStatusesManager();
+            _inputValidations = new List<InputWrapper>();
         }
 
         // METHODS
+
+        private void LoadInputValidations()
+        {
+            _inputValidations.Add(new InputWrapper(FirstNameTxt, typeof(string), 3, 30));
+            _inputValidations.Add(new InputWrapper(LastNameTxt, typeof(string), 3, 30));
+            _inputValidations.Add(new InputWrapper(EmailTxt, typeof(string), 6, 30));
+            _inputValidations.Add(new InputWrapper(CityTxt, typeof(string), 3, 30));
+            _inputValidations.Add(new InputWrapper(StreetNameTxt, typeof(string), 3, 30));
+            _inputValidations.Add(new InputWrapper(StreetNumberTxt, typeof(string), 1, 30));
+            _inputValidations.Add(new InputWrapper(ZipCodeTxt, typeof(string), 3, 30));
+        }
+
+        public bool IsValidInput(string controlId)
+        {
+            InputWrapper auxIW = _inputValidations.Find(ctl => ctl.Control.ID == controlId);
+            if (auxIW != null && auxIW.IsValid)
+                return true;
+            return false;
+        }
 
         private void FetchShoppingCart()
         {
@@ -58,7 +82,9 @@ namespace WebForms
         {
             if (DeliveryRB.Checked)
             {
-                _order.DeliveryAddress.Flat = FlatTxt.Text;
+                _order.DeliveryAddress.Flat = string.IsNullOrEmpty(FlatTxt.Text)
+                    ? "-"
+                    : FlatTxt.Text;
                 _order.DeliveryAddress.StreetName = StreetNameTxt.Text;
                 _order.DeliveryAddress.StreetNumber = StreetNumberTxt.Text;
                 _order.DeliveryAddress.City.Name = CityTxt.Text;
@@ -160,6 +186,7 @@ namespace WebForms
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            LoadInputValidations();
             if (!IsPostBack)
             {
                 FetchShoppingCart();
@@ -169,11 +196,18 @@ namespace WebForms
             }
         }
 
-        protected void ProductSetsRpt_ItemDataBound(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e)
+        protected void ProductSetsRpt_ItemDataBound(
+            object sender,
+            System.Web.UI.WebControls.RepeaterItemEventArgs e
+        )
         {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            if (
+                e.Item.ItemType == ListItemType.Item
+                || e.Item.ItemType == ListItemType.AlternatingItem
+            )
             {
-                System.Web.UI.WebControls.Image imageLbl = e.Item.FindControl("ImageLbl") as System.Web.UI.WebControls.Image;
+                System.Web.UI.WebControls.Image imageLbl =
+                    e.Item.FindControl("ImageLbl") as System.Web.UI.WebControls.Image;
 
                 ProductSet productSet = (ProductSet)e.Item.DataItem;
 
@@ -207,8 +241,16 @@ namespace WebForms
                 throw ex;
             }
 
+            Session.Remove("shoppingCart"); // Limpiar carrito
             Session.Add("user", _order.User);
-            Response.Redirect("Orders.aspx");
+            if (_order.User.UserId == 0)
+            {
+                Response.Redirect($"OrderStatus.aspx?orderId={_order.Id}&success=true"); // Si no está registrado, redirigir al detalle de orden
+            }
+            else
+            {
+                Response.Redirect("Orders.aspx"); // Si está registrado, redirigir a las ordenes del usuario
+            }
         }
     }
 }

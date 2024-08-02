@@ -127,6 +127,7 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\client.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Signup.aspx" />
     <Content Include="SignUpError.aspx" />
