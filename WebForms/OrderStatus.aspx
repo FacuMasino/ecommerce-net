@@ -110,8 +110,24 @@
                             </asp:Label>
                         </li>
 
+                        <asp:Repeater ID="AcceptedStatusesRpt" runat="server">
+                            <ItemTemplate>
+                                <li>
+                                    <i class="bi bi-check-circle-fill text-success"></i>
+                                    <asp:Label
+                                        ID="AcceptedStatusLbl"
+                                        runat="server"
+                                        Text='<%#Eval("AcceptedText")%>'>
+                                    </asp:Label>
+                                </li>
+                            </ItemTemplate>
+                        </asp:Repeater>
+
                         <li>
-                            <i class="bi bi-clock text-warning"></i>
+                            <asp:Label
+                                ID="OrderStatusIco"
+                                runat="server">
+                            </asp:Label>
                             <asp:Label
                                 ID="OrderStatusLbl"
                                 runat="server">

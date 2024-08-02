@@ -290,16 +290,30 @@ end
 go
 
 create or alter procedure SP_List_Order_Statuses(
-	@DistributionChannelId int
+	@DistributionChannelId int,
+	@CurrentOrderStatusId int
 )
 as
 begin
-	select S.OrderStatusId, S.OrderStatusName, S.TransitionText
-	from OrderStatuses S
-	inner join ChannelStatuses CS on CS.OrderStatusId = S.OrderStatusId
-	inner join DistributionChannels C on C.DistributionChannelId = CS.DistributionChannelId
-	where C. DistributionChannelId = @DistributionChannelId
-	order by CS.OrderStatusIndex
+	if (@CurrentOrderStatusId = 0)
+	begin
+		select S.OrderStatusId, S.OrderStatusName, S.TransitionText, S.AcceptedText
+		from OrderStatuses S
+		inner join ChannelStatuses CS on CS.OrderStatusId = S.OrderStatusId
+		inner join DistributionChannels C on C.DistributionChannelId = CS.DistributionChannelId
+		where C. DistributionChannelId = @DistributionChannelId
+		order by CS.OrderStatusIndex
+	end
+	else
+	begin
+		select S.OrderStatusId, S.OrderStatusName, S.TransitionText, S.AcceptedText
+		from OrderStatuses S
+		inner join ChannelStatuses CS on CS.OrderStatusId = S.OrderStatusId
+		inner join DistributionChannels C on C.DistributionChannelId = CS.DistributionChannelId
+		where C. DistributionChannelId = @DistributionChannelId
+		and CS.OrderStatusIndex < dbo.FN_Get_Status_Index(@DistributionChannelId, @CurrentOrderStatusId)
+		order by CS.OrderStatusIndex
+	end
 end
 
 go

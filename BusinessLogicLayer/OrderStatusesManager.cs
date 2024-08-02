@@ -9,7 +9,7 @@ namespace BusinessLogicLayer
     {
         private DataAccess _dataAccess = new DataAccess();
 
-        public List<OrderStatus> List(int distributionChannelId)
+        public List<OrderStatus> List(int distributionChannelId, int currentOrderStatusId = 0)
         {
             List<OrderStatus> orderStatuses = new List<OrderStatus>();
 
@@ -17,6 +17,7 @@ namespace BusinessLogicLayer
             {
                 _dataAccess.SetProcedure("SP_List_Order_Statuses");
                 _dataAccess.SetParameter("@DistributionChannelId", distributionChannelId);
+                _dataAccess.SetParameter("@CurrentOrderStatusId", currentOrderStatusId);
                 _dataAccess.ExecuteRead();
 
                 while (_dataAccess.Reader.Read())
@@ -26,6 +27,7 @@ namespace BusinessLogicLayer
                     orderStatus.Id = (int)_dataAccess.Reader["OrderStatusId"];
                     orderStatus.Name = (string)_dataAccess.Reader["OrderStatusName"];
                     orderStatus.TransitionText = (string)_dataAccess.Reader["TransitionText"];
+                    orderStatus.AcceptedText = (string)_dataAccess.Reader["AcceptedText"];
 
                     orderStatuses.Add(orderStatus);
                 }
@@ -48,7 +50,7 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select OrderStatusName, TransitionText from OrderStatuses where OrderStatusId = @OrderStatusId");
+                _dataAccess.SetQuery("select OrderStatusName, TransitionText, AcceptedText from OrderStatuses where OrderStatusId = @OrderStatusId");
                 _dataAccess.SetParameter("@OrderStatusId", orderStatusId);
                 _dataAccess.ExecuteRead();
 
@@ -57,6 +59,7 @@ namespace BusinessLogicLayer
                     orderStatus.Id = orderStatusId;
                     orderStatus.Name = (string)_dataAccess.Reader["OrderStatusName"];
                     orderStatus.TransitionText = (string)_dataAccess.Reader["TransitionText"];
+                    orderStatus.AcceptedText = (string)_dataAccess.Reader["AcceptedText"];
                 }
             }
             catch (Exception ex)

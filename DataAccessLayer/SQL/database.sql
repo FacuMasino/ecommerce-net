@@ -205,6 +205,7 @@ CREATE TABLE OrderStatuses
 	OrderStatusId int PRIMARY KEY IDENTITY(1, 1) NOT NULL,
 	OrderStatusName varchar(30) NOT NULL,
 	TransitionText varchar(50) NOT NULL,
+	AcceptedText varchar(50) NOT NULL,
 	RoleId int NOT NULL
 ) 
 GO

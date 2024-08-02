@@ -69,6 +69,24 @@ namespace WebForms
         protected global::System.Web.UI.WebControls.Label OrderGeneratedLbl;
 
         /// <summary>
+        /// AcceptedStatusesRpt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater AcceptedStatusesRpt;
+
+        /// <summary>
+        /// OrderStatusIco control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label OrderStatusIco;
+
+        /// <summary>
         /// OrderStatusLbl control.
         /// </summary>
         /// <remarks>

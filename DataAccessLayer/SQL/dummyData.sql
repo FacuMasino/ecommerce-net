@@ -411,18 +411,18 @@ GO
 
 INSERT INTO
 	OrderStatuses
-	(OrderStatusName, TransitionText, RoleId)
+	(OrderStatusName, TransitionText, AcceptedText, RoleId)
 VALUES
-	('Pago en proceso', 'Marcar como abonado', 4), -- ID 1 Hardcoded
-	('Envío pendiente', 'Marcar como enviado', 4), -- ID 2 Hardcoded
-	('Pedido enviado', 'Marcar como entregado', 3), -- ID 3 Hardcoded
-	('Pedido entregado', 'Marcar como recibido', 2), -- ID 4 Hardcoded
-	('Orden completada', 'Devolver pedido', 2), -- ID 5 Hardcoded
-	('Pago y retiro pendientes', 'Marcar como abonado y retirado', 4), -- ID 6 Hardcoded
-	('Retiro pendiente', 'Marcar como retirado', 4), -- ID 7 Hardcoded
-	('Devolución pendiente', 'Marcar como devuelto', 4), -- ID 8 Hardcoded
-	('Orden cancelada', 'Sin acción disponible', 1), -- ID 9 Hardcoded
-	('Envío y pago pendientes', 'Marcar como abonado y entregado', 3); -- ID 10 Hardcoded
+	('Pago en proceso', 'Marcar como abonado', 'Pago aceptado', 4), -- ID 1 Hardcoded
+	('Envío pendiente', 'Marcar como enviado', 'Pedido enviado', 4), -- ID 2 Hardcoded
+	('Pedido enviado', 'Marcar como entregado', 'Pedido entregado', 3), -- ID 3 Hardcoded
+	('Pedido entregado', 'Marcar como recibido', 'Pedido recibido', 2), -- ID 4 Hardcoded
+	('Orden completada', 'Devolver pedido', 'Reclamo iniciado', 2), -- ID 5 Hardcoded
+	('Pago y retiro pendientes', 'Marcar como abonado y retirado', 'Pago aceptado y pedido retirado', 4), -- ID 6 Hardcoded
+	('Retiro pendiente', 'Marcar como retirado', 'Pedido retirado', 4), -- ID 7 Hardcoded
+	('Devolución pendiente', 'Marcar como devuelto', 'Pedido devuelto', 4), -- ID 8 Hardcoded
+	('Orden cancelada', 'Archivar orden', 'Orden cancelada', 1), -- ID 9 Hardcoded
+	('Envío y pago pendientes', 'Marcar como abonado y entregado', 'Pedido enviado y pago aceptado', 3); -- ID 10 Hardcoded
 
 GO
 

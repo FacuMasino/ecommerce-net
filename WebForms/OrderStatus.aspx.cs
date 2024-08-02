@@ -31,6 +31,12 @@ namespace WebForms
 
         // METHODS
 
+        private void BindAcceptedStatusesRpt()
+        {
+            AcceptedStatusesRpt.DataSource = _orderStatusesManager.List(_order.DistributionChannel.Id, _order.OrderStatus.Id);
+            AcceptedStatusesRpt.DataBind();
+        }
+
         private void FetchProducts()
         {
             _shoppingCart.ProductSets = _productsManager.List<ProductSet>(false, false, _order.Id);
@@ -76,6 +82,15 @@ namespace WebForms
             {
                 StreetNameLbl.Text = "Pedido solicitado sin envío";
             }
+
+            if (_order.OrderStatus.Id == 5 || _order.OrderStatus.Id == 9) // hack : ids hardcodiados tienen que coincidir con DB
+            {
+                OrderStatusIco.CssClass = "bi bi-check-circle-fill text-success";
+            }
+            else
+            {
+                OrderStatusIco.CssClass = "bi bi-clock text-warning";
+            }
         }
 
         //  EVENTS
@@ -87,6 +102,7 @@ namespace WebForms
                 FetchOrder();
                 FetchProducts();
                 BindProductSetsRpt();
+                BindAcceptedStatusesRpt();
                 MapControls();
             }
         }
