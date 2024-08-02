@@ -289,7 +289,7 @@ end
 
 go
 
-create or alter procedure SP_ListOrderStatuses(
+create or alter procedure SP_List_Order_Statuses(
 	@DistributionChannelId int
 )
 as

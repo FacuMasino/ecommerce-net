@@ -99,18 +99,24 @@
             <div class="bg-white py-2 border-1 border rounded mb-3">
                 <div class="d-flex justify-content-between align-items-center border-bottom px-3 pb-2">
                     <h3 class="fs-5 m-0 fw-normal">Estado de orden</h3>
-                    <asp:Label
-                        ID="OrderStatusLbl"
-                        runat="server"
-                        CssClass="text-small bg-body-secondary rounded border py-0 px-2">
-                    </asp:Label>
                 </div>
                 <div class="px-3 py-2">
                     <ul class="list-unstyled">
-                        <li><i class="bi bi-check-circle-fill text-success"></i>Pago Aceptado</li>
-                        <li><i class="bi bi-check-circle-fill text-success"></i>En Preparación</li>
-                        <li><i class="bi bi-check-circle-fill text-success"></i>En Camino</li>
-                        <li><i class="bi bi-check-circle-fill text-success"></i>Entregado</li>
+                        <li>
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            <asp:Label
+                                ID="OrderGeneratedLbl"
+                                runat="server">
+                            </asp:Label>
+                        </li>
+
+                        <li>
+                            <i class="bi bi-clock text-warning"></i>
+                            <asp:Label
+                                ID="OrderStatusLbl"
+                                runat="server">
+                            </asp:Label>
+                        </li>
                     </ul>
                 </div>
                 <div class="d-flex flex-column gap-2">

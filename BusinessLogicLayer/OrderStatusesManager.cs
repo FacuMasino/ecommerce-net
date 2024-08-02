@@ -15,7 +15,7 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetProcedure("SP_ListOrderStatuses"); // hack : error al nombrar este SP como SP_List_Order_Statuses
+                _dataAccess.SetProcedure("SP_List_Order_Statuses");
                 _dataAccess.SetParameter("@DistributionChannelId", distributionChannelId);
                 _dataAccess.ExecuteRead();
 

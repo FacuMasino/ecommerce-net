@@ -55,6 +55,7 @@ namespace WebForms
 
         private void MapControls()
         {
+            OrderGeneratedLbl.Text = "Orden generada";
             OrderStatusLbl.Text = _order.OrderStatus.Name;
             OrderIdLbl.Text = "Orden #" + _order.Id.ToString();
             OrderCreationDateLbl.Text = "Generada el " + _order.CreationDate.ToString("dd-MM-yyyy");
