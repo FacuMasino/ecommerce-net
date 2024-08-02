@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
+using UtilitiesLayer;
 
 namespace WebForms
 {
@@ -18,6 +20,8 @@ namespace WebForms
         private DistributionChannelsManager _distributionChannelsManager;
         private OrderStatusesManager _orderStatusesManager;
 
+        private List<InputWrapper> _inputValidations;
+
         // CONSTRUCT
 
         public OrderConfirmation()
@@ -30,9 +34,29 @@ namespace WebForms
             _paymentTypesManager = new PaymentTypesManager();
             _distributionChannelsManager = new DistributionChannelsManager();
             _orderStatusesManager = new OrderStatusesManager();
+            _inputValidations = new List<InputWrapper>();
         }
 
         // METHODS
+
+        private void LoadInputValidations()
+        {
+            _inputValidations.Add(new InputWrapper(FirstNameTxt, typeof(string), 3, 30));
+            _inputValidations.Add(new InputWrapper(LastNameTxt, typeof(string), 3, 30));
+            _inputValidations.Add(new InputWrapper(EmailTxt, typeof(string), 6, 30));
+            _inputValidations.Add(new InputWrapper(CityTxt, typeof(string), 3, 30));
+            _inputValidations.Add(new InputWrapper(StreetNameTxt, typeof(string), 3, 30));
+            _inputValidations.Add(new InputWrapper(StreetNumberTxt, typeof(string), 1, 30));
+            _inputValidations.Add(new InputWrapper(ZipCodeTxt, typeof(string), 3, 30));
+        }
+
+        public bool IsValidInput(string controlId)
+        {
+            InputWrapper auxIW = _inputValidations.Find(ctl => ctl.Control.ID == controlId);
+            if (auxIW != null && auxIW.IsValid)
+                return true;
+            return false;
+        }
 
         private void FetchShoppingCart()
         {
@@ -58,7 +82,9 @@ namespace WebForms
         {
             if (DeliveryRB.Checked)
             {
-                _order.DeliveryAddress.Flat = FlatTxt.Text;
+                _order.DeliveryAddress.Flat = string.IsNullOrEmpty(FlatTxt.Text)
+                    ? "-"
+                    : FlatTxt.Text;
                 _order.DeliveryAddress.StreetName = StreetNameTxt.Text;
                 _order.DeliveryAddress.StreetNumber = StreetNumberTxt.Text;
                 _order.DeliveryAddress.City.Name = CityTxt.Text;
@@ -160,6 +186,7 @@ namespace WebForms
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            LoadInputValidations();
             if (!IsPostBack)
             {
                 FetchShoppingCart();
