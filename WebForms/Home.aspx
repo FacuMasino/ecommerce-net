@@ -7,8 +7,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
     <%// Evita errores de intellisense (https://stackoverflow.com/a/31886588/10302170) %>
     <%=""%>
-    <asp:ScriptManager ID="ScriptManager1" runat="server">
-    </asp:ScriptManager>
+    
     <div class="container-fluid bg-body-tertiary">
         <div id="carouselFeaturedProducts" class="carousel container-xxl slide hero-row-bg">
             <div class="carousel-indicators">

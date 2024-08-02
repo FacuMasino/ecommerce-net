@@ -145,7 +145,7 @@
                             <asp:TextBox
                                 ID="FlatTxt"
                                 runat="server"
-                                Text="Depto/Lote"
+                                placeholder="Depto/Lote"
                                 CssClass="form-control">
                             </asp:TextBox>
                         </div>

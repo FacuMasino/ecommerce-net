@@ -122,7 +122,8 @@
         </header>
 
         <%--BODY--%>
-
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
         <asp:ContentPlaceHolder ID="BodyPlaceHolder" runat="server"></asp:ContentPlaceHolder>
 
         <%--CART--%>
@@ -203,8 +204,6 @@
                 } // cierre bloque if
             %>
         </div>
-        <asp:ScriptManager ID="ScriptManager1" runat="server">
-        </asp:ScriptManager>
         <!-- Toasts Bootstrap -->
         <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
             <div id="bsToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
