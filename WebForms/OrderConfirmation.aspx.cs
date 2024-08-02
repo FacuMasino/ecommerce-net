@@ -169,11 +169,18 @@ namespace WebForms
             }
         }
 
-        protected void ProductSetsRpt_ItemDataBound(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e)
+        protected void ProductSetsRpt_ItemDataBound(
+            object sender,
+            System.Web.UI.WebControls.RepeaterItemEventArgs e
+        )
         {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            if (
+                e.Item.ItemType == ListItemType.Item
+                || e.Item.ItemType == ListItemType.AlternatingItem
+            )
             {
-                System.Web.UI.WebControls.Image imageLbl = e.Item.FindControl("ImageLbl") as System.Web.UI.WebControls.Image;
+                System.Web.UI.WebControls.Image imageLbl =
+                    e.Item.FindControl("ImageLbl") as System.Web.UI.WebControls.Image;
 
                 ProductSet productSet = (ProductSet)e.Item.DataItem;
 
@@ -207,8 +214,16 @@ namespace WebForms
                 throw ex;
             }
 
+            Session.Remove("shoppingCart"); // Limpiar carrito
             Session.Add("user", _order.User);
-            Response.Redirect("Orders.aspx");
+            if (_order.User.UserId == 0)
+            {
+                Response.Redirect($"OrderStatus.aspx?orderId={_order.Id}&success=true"); // Si no está registrado, redirigir al detalle de orden
+            }
+            else
+            {
+                Response.Redirect("Orders.aspx"); // Si está registrado, redirigir a las ordenes del usuario
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using BusinessLogicLayer;
-using DomainModelLayer;
-using System;
+﻿using System;
 using System.Web.UI.WebControls;
+using BusinessLogicLayer;
+using DomainModelLayer;
 using UtilitiesLayer;
 
 namespace WebForms
@@ -46,11 +46,23 @@ namespace WebForms
         {
             int orderId;
             string param = Request.QueryString["orderId"];
+            string success = Request.QueryString["success"];
 
             if (!string.IsNullOrEmpty(param) && int.TryParse(param, out orderId))
             {
                 _order = _ordersManager.Read(orderId);
             }
+
+            if (!string.IsNullOrEmpty(success) && success.ToUpper() == "TRUE")
+            {
+                Notify("Su pedido fue realizado con éxito!");
+            }
+        }
+
+        private void Notify(string message)
+        {
+            Site siteMP = (Site)this.Master;
+            siteMP.ShowBsToast(message);
         }
 
         private void MapControls()

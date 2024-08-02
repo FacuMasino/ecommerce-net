@@ -100,16 +100,13 @@
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDDProducts">
                                     <%if (Session["user"] == null)
-                                    {  %>
-                                    <li class="dropdown-item"><a class="text-decoration-none text-black" href="Login.aspx">
-                                        Iniciar sesión</a></li>
-                                    <li class="dropdown-item"><a class="text-decoration-none text-black" href="Signup.aspx">
-                                        Registrarse</a></li>
+                                        {  %>
+                                    <li class="dropdown-item"><a class="text-decoration-none text-black" href="Login.aspx">Iniciar sesión</a></li>
+                                    <li class="dropdown-item"><a class="text-decoration-none text-black" href="Signup.aspx">Registrarse</a></li>
                                     <%}
-                                    else
-                                    { %>
-                                    <li class="dropdown-item"><a class="text-decoration-none text-black" href="Account.aspx">
-                                        Mi Perfil</a></li>
+                                        else
+                                        { %>
+                                    <li class="dropdown-item"><a class="text-decoration-none text-black" href="Account.aspx">Mi Perfil</a></li>
                                     <li class="dropdown-item">
                                         <asp:LinkButton Text="Cerrar Sesión" CssClass="text-decoration-none text-black" ID="LogOut"
                                             OnClick="LogOut_Click" runat="server" />
@@ -206,6 +203,29 @@
                 } // cierre bloque if
             %>
         </div>
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+        <!-- Toasts Bootstrap -->
+        <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+            <div id="bsToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                <asp:UpdatePanel ID="BsToastUP" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <div class="toast-header">
+                            <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <rect width="100%" height="100%" fill="#dc3545"></rect></svg>
+                            <strong class="me-auto">Notificación</strong>
+                            <small>Ahora</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
+                            </button>
+                        </div>
+                        <div class="toast-body">
+                            <asp:Label ID="BsToastBody" runat="server"></asp:Label>
+                        </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+        </div>
 
         <%--FOOTER--%>
 
@@ -232,9 +252,9 @@
                 </div>
             </footer>
         </div>
-
+        <script src="Scripts/bootstrap.bundle.min.js"></script>
+        <script src="Scripts/main.js"></script>
+        <script src="Scripts/client.js"></script>
     </form>
-    <script src="Scripts/bootstrap.bundle.min.js"></script>
-    <script src="Scripts/main.js"></script>
 </body>
 </html>
