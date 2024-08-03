@@ -31,6 +31,12 @@ namespace WebForms.Admin
 
         // METHODS
 
+        private void BindAcceptedStatusesRpt()
+        {
+            AcceptedStatusesRpt.DataSource = _orderStatusesManager.List(_order.DistributionChannel.Id, _order.OrderStatus.Id);
+            AcceptedStatusesRpt.DataBind();
+        }
+
         private void FetchProducts()
         {
             _shoppingCart.ProductSets = _productsManager.List<ProductSet>(false, false, _order.Id);
@@ -64,6 +70,7 @@ namespace WebForms.Admin
 
         private void MapControls()
         {
+            OrderGeneratedLbl.Text = "Orden generada";
             OrderStatusLbl.Text = _order.OrderStatus.Name;
             OrderIdLbl.Text = "Orden #" + _order.Id.ToString();
             OrderCreationDateLbl.Text = "Generada el " + _order.CreationDate.ToString("dd-MM-yyyy");
@@ -99,6 +106,15 @@ namespace WebForms.Admin
             {
                 StreetNameLbl.Text = "Pedido solicitado sin envío";
             }
+
+            if (_order.OrderStatus.Id == 5 || _order.OrderStatus.Id == 9) // hack : ids hardcodiados tienen que coincidir con DB
+            {
+                OrderStatusIco.CssClass = "bi bi-check-circle-fill text-success";
+            }
+            else
+            {
+                OrderStatusIco.CssClass = "bi bi-clock text-warning";
+            }
         }
 
         //  EVENTS
@@ -108,9 +124,10 @@ namespace WebForms.Admin
             if (!IsPostBack)
             {
                 FetchOrder();
-                BindOrderStatusesDDL();
                 FetchProducts();
+                BindOrderStatusesDDL();
                 BindProductSetsRpt();
+                BindAcceptedStatusesRpt();
                 MapControls();
             }
         }

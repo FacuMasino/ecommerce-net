@@ -100,6 +100,7 @@
                 <div class="d-flex justify-content-between align-items-center border-bottom px-3 pb-2">
                     <h3 class="fs-5 m-0 fw-normal">Estado de orden</h3>
                 </div>
+
                 <div class="px-3 py-2">
                     <ul class="list-unstyled">
                         <li>
@@ -135,6 +136,7 @@
                         </li>
                     </ul>
                 </div>
+
                 <div class="d-flex flex-column gap-2">
                     <div class="px-3 py-2 d-flex align-items-center justify-content-between">
                         <asp:Button ID="TransitionButton" runat="server" CssClass="btn btn-primary w-auto" />

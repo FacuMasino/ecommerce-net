@@ -112,12 +112,44 @@
                         runat="server"
                         CssClass="text-small bg-body-secondary rounded border py-0 px-2">
                     </asp:Label>
-                    <asp:Label
-                        ID="OrderStatusLbl"
-                        runat="server"
-                        CssClass="text-small bg-body-secondary rounded border py-0 px-2">
-                    </asp:Label>
                 </div>
+
+                <div class="px-3 py-2">
+                    <ul class="list-unstyled">
+                        <li>
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            <asp:Label
+                                ID="OrderGeneratedLbl"
+                                runat="server">
+                            </asp:Label>
+                        </li>
+
+                        <asp:Repeater ID="AcceptedStatusesRpt" runat="server">
+                            <ItemTemplate>
+                                <li>
+                                    <i class="bi bi-check-circle-fill text-success"></i>
+                                    <asp:Label
+                                        ID="AcceptedStatusLbl"
+                                        runat="server"
+                                        Text='<%#Eval("AcceptedText")%>'>
+                                    </asp:Label>
+                                </li>
+                            </ItemTemplate>
+                        </asp:Repeater>
+
+                        <li>
+                            <asp:Label
+                                ID="OrderStatusIco"
+                                runat="server">
+                            </asp:Label>
+                            <asp:Label
+                                ID="OrderStatusLbl"
+                                runat="server">
+                            </asp:Label>
+                        </li>
+                    </ul>
+                </div>
+
                 <div class="d-flex flex-column gap-2">
                     <div class="px-3 py-2 d-flex align-items-center justify-content-between">
                         <asp:Button ID="TransitionButton" runat="server" CssClass="btn btn-primary w-auto" />
