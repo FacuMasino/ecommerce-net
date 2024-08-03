@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DataAccessLayer;
 using DomainModelLayer;
 using UtilitiesLayer;
@@ -12,6 +13,48 @@ namespace BusinessLogicLayer
         private PeopleManager _peopleManager = new PeopleManager();
         private RolesManager _rolesManager = new RolesManager();
         private AddressesManager _addressesManager = new AddressesManager();
+
+        public List<User> List()
+        {
+            List<User> users = new List<User>();
+
+            try
+            {
+                _dataAccess.SetProcedure("SP_List_Users");
+                _dataAccess.ExecuteRead();
+
+                while (_dataAccess.Reader.Read())
+                {
+                    User user= new User();
+
+                    user.UserId = (int)_dataAccess.Reader["UserId"];
+                    user.Username = _dataAccess.Reader["Username"]?.ToString();
+                    user.Username = user.Username ?? "";
+                    user.Password = (string)_dataAccess.Reader["UserPassword"];
+                    user.PersonId = (int)_dataAccess.Reader["PersonId"];
+
+                    users.Add(user);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+
+            foreach (User user in users)
+            {
+                user.Roles = _rolesManager.List(user.UserId);
+
+                _person = _peopleManager.Read(user.PersonId);
+                Helper.AssignPerson(user, _person);
+            }
+
+            return users;
+        }
 
         public User Read(int userId)
         {

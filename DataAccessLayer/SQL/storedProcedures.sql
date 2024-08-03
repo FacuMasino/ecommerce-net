@@ -480,6 +480,15 @@ end
 
 go
 
+create or alter procedure SP_List_Users
+as
+begin
+	select UserId, Username, UserPassword, PersonId
+	from Users
+end
+
+go
+
 -----------
 -- STATS --
 -----------

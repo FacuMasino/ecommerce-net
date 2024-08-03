@@ -75,6 +75,7 @@
     <Content Include="Admin\Product.aspx" />
     <Content Include="Admin\Products.aspx" />
     <Content Include="Admin\Featureds.aspx" />
+    <Content Include="Admin\Users.aspx" />
     <Content Include="Cart.aspx" />
     <Content Include="Content\Admin\android-chrome-192x192.png" />
     <Content Include="Content\Admin\android-chrome-256x256.png" />
@@ -218,6 +219,13 @@
     </Compile>
     <Compile Include="Admin\Featureds.aspx.designer.cs">
       <DependentUpon>Featureds.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Users.aspx.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Users.aspx.designer.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
     </Compile>
     <Compile Include="Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>

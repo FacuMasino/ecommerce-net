@@ -93,7 +93,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a id="BtnNavUsers" href="#" class="nav-link text-black" runat="server">
+                                <a id="BtnNavUsers" href="Users.aspx" class="nav-link text-black" runat="server">
                                     <i class="bi bi-people me-2"></i>
                                     Usuarios
                                 </a>
