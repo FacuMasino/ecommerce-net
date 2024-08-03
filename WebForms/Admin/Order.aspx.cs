@@ -167,6 +167,7 @@ namespace WebForms.Admin
             FetchOrder();
             _order.OrderStatus.Id = Convert.ToInt32(OrderStatusesDDL.SelectedValue);
             _ordersManager.UpdateOrderStatus(_order.Id, _order.OrderStatus.Id);
+
             if (_order.OrderStatus.Id == 3) // Implementacion provisoria envio de email
             {
                 EmailMessage<OrderShippingEmail> shippingEmail = Helper.ComposeShippingEmail(
@@ -200,6 +201,15 @@ namespace WebForms.Admin
                     imageLbl.ImageUrl = productSet.Images[0].Url;
                 }
             }
+        }
+
+        protected void TransitionButton_Click(object sender, EventArgs e)
+        {
+            // hack : agregar confirmación
+
+            FetchOrder();
+            int nextStatusId = _orderStatusesManager.GetNextStatusId(_order.DistributionChannel.Id, _order.OrderStatus.Id);
+            _ordersManager.UpdateOrderStatus(_order.Id, nextStatusId);
         }
     }
 }

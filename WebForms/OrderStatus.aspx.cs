@@ -167,5 +167,14 @@ namespace WebForms
                 }
             }
         }
+
+        protected void TransitionButton_Click(object sender, EventArgs e)
+        {
+            // hack : agregar confirmación
+
+            FetchOrder();
+            int nextStatusId = _orderStatusesManager.GetNextStatusId(_order.DistributionChannel.Id, _order.OrderStatus.Id);
+            _ordersManager.UpdateOrderStatus(_order.Id, nextStatusId);
+        }
     }
 }

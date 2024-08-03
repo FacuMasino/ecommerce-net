@@ -330,6 +330,22 @@ end
 
 go
 
+create or alter procedure SP_Get_Next_Status_Id(
+	@DistributionChannelId int,
+	@CurrentOrderStatusId int
+)
+as
+begin
+	select S.OrderStatusId
+	from OrderStatuses S
+	inner join ChannelStatuses CS on CS.OrderStatusId = S.OrderStatusId
+	inner join DistributionChannels C on C.DistributionChannelId = CS.DistributionChannelId
+	where C. DistributionChannelId = @DistributionChannelId
+	and CS.OrderStatusIndex = dbo.FN_Get_Status_Index(@DistributionChannelId, @CurrentOrderStatusId) + 1
+end
+
+go
+
 -----------
 -- USERS --
 -----------

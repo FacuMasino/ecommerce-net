@@ -116,5 +116,33 @@ namespace BusinessLogicLayer
 
             return orderStatusId;
         }
+
+        public int GetNextStatusId(int distributionChannelId, int currentOrderStatusId)
+        {
+            int orderStatusId = 0;
+
+            try
+            {
+                _dataAccess.SetProcedure("SP_Get_Next_Status_Id");
+                _dataAccess.SetParameter("@DistributionChannelId", distributionChannelId);
+                _dataAccess.SetParameter("@CurrentOrderStatusId", currentOrderStatusId);
+                _dataAccess.ExecuteRead();
+
+                if (_dataAccess.Reader.Read())
+                {
+                    orderStatusId = (int)_dataAccess.Reader["OrderStatusId"];
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+
+            return orderStatusId;
+        }
     }
 }
