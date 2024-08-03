@@ -182,6 +182,12 @@ namespace WebForms
             TotalLbl.Text = _shoppingCart.Total.ToString();
         }
 
+        private void Notify(string message)
+        {
+            Site siteMP = (Site)this.Master;
+            siteMP.ShowBsToast(message);
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
@@ -230,6 +236,12 @@ namespace WebForms
 
         protected void SubmitOrder_Click(object sender, EventArgs e)
         {
+            if (!Validator.RunValidations(_inputValidations))
+            {
+                Notify("Por favor complete todos los campos");
+                return;
+            }
+
             try
             {
                 FetchShoppingCart(); // hack : agregar update panel para no perder los datos al hacer click en SubmitOrder

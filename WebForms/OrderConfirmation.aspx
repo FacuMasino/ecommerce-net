@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col <%:IsValidInput("CityTxt") ? "":"invalid"%>">
+                        <div class="col <%:IsValidInput("StreetNameTxt") ? "":"invalid"%>">
                             <asp:TextBox
                                 ID="StreetNameTxt"
                                 runat="server"
@@ -145,7 +145,7 @@
                             <asp:TextBox
                                 ID="FlatTxt"
                                 runat="server"
-                                placeholder="Depto/Lote"
+                                placeholder="Depto/Lote (Opcional)"
                                 CssClass="form-control">
                             </asp:TextBox>
                         </div>
