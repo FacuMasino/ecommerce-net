@@ -8,6 +8,7 @@ namespace BusinessLogicLayer
     public class OrderStatusesManager
     {
         private DataAccess _dataAccess = new DataAccess();
+        private RolesManager _rolesManager = new RolesManager();
 
         public List<OrderStatus> List(int distributionChannelId, int currentOrderStatusId = 0)
         {
@@ -28,6 +29,7 @@ namespace BusinessLogicLayer
                     orderStatus.Name = (string)_dataAccess.Reader["OrderStatusName"];
                     orderStatus.TransitionText = (string)_dataAccess.Reader["TransitionText"];
                     orderStatus.AcceptedText = (string)_dataAccess.Reader["AcceptedText"];
+                    orderStatus.Role.Id = (int)_dataAccess.Reader["RoleId"];
 
                     orderStatuses.Add(orderStatus);
                 }
@@ -41,6 +43,11 @@ namespace BusinessLogicLayer
                 _dataAccess.CloseConnection();
             }
 
+            foreach (OrderStatus orderStatus in orderStatuses)
+            {
+                orderStatus.Role = _rolesManager.Read(orderStatus.Role.Id);
+            }
+
             return orderStatuses;
         }
 
@@ -50,7 +57,7 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetQuery("select OrderStatusName, TransitionText, AcceptedText from OrderStatuses where OrderStatusId = @OrderStatusId");
+                _dataAccess.SetProcedure("SP_Read_Order_Status");
                 _dataAccess.SetParameter("@OrderStatusId", orderStatusId);
                 _dataAccess.ExecuteRead();
 
@@ -60,6 +67,7 @@ namespace BusinessLogicLayer
                     orderStatus.Name = (string)_dataAccess.Reader["OrderStatusName"];
                     orderStatus.TransitionText = (string)_dataAccess.Reader["TransitionText"];
                     orderStatus.AcceptedText = (string)_dataAccess.Reader["AcceptedText"];
+                    orderStatus.Role.Id = (int)_dataAccess.Reader["RoleId"];
                 }
             }
             catch (Exception ex)
@@ -70,6 +78,8 @@ namespace BusinessLogicLayer
             {
                 _dataAccess.CloseConnection();
             }
+
+            orderStatus.Role = _rolesManager.Read(orderStatus.Role.Id);
 
             return orderStatus;
         }

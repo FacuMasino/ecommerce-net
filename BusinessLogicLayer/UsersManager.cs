@@ -221,6 +221,32 @@ namespace BusinessLogicLayer
             return false;
         }
 
+        public bool IsCustomer(User user)
+        {
+            for (int i = 0; i < user.Roles.Count; i++)
+            {
+                if (user.Roles[i].Id == (int)RolesManager.Roles.CustomerRoleId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool UserHasRole(User user, Role role)
+        {
+            for (int i = 0; i < user.Roles.Count; i++)
+            {
+                if (user.Roles[i].Id == role.Id)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private void SetParameters(User user)
         {
             _dataAccess.SetParameter("@Username", user.Username);

@@ -16,6 +16,8 @@ namespace WebForms.Admin
         private ShoppingCart _shoppingCart;
         private ProductsManager _productsManager;
         private EmailManager _emailManager;
+        private User _user;
+        private UsersManager _usersManager;
 
         // CONSTRUCT
 
@@ -27,9 +29,16 @@ namespace WebForms.Admin
             _shoppingCart = new ShoppingCart();
             _productsManager = new ProductsManager();
             _emailManager = new EmailManager();
+            _user = new User();
+            _usersManager = new UsersManager();
         }
 
         // METHODS
+
+        private void FetchUser()
+        {
+            _user = (User)Session["user"];
+        }
 
         private void BindAcceptedStatusesRpt()
         {
@@ -76,8 +85,26 @@ namespace WebForms.Admin
             OrderCreationDateLbl.Text = "Generada el " + _order.CreationDate.ToString("dd-MM-yyyy");
             TotalLbl.Text = "$" + _shoppingCart.Total.ToString("F2");
             PaymentTypeLbl.Text = _order.PaymentType.Name;
-            TransitionButton.Text = _order.OrderStatus.TransitionText;
             DistributionChannelLbl.Text = _order.DistributionChannel.Name;
+            TransitionRoleLbl.Text = "Responsabilidad de: " + _order.OrderStatus.Role.Name;
+
+            bool userHasRole = _usersManager.UserHasRole(_user, _order.OrderStatus.Role);
+            bool ifCustomerHasPermission = true;
+
+            if (_usersManager.IsCustomer(_user) && _order.User.PersonId != _user.PersonId)
+            {
+                ifCustomerHasPermission = false;
+            }
+
+            if (userHasRole && ifCustomerHasPermission)
+            {
+                TransitionButton.Visible = true;
+                TransitionButton.Text = _order.OrderStatus.TransitionText;
+            }
+            else
+            {
+                TransitionButton.Visible = false;
+            }
 
             if (_order.User.Username != null)
             {
@@ -123,6 +150,7 @@ namespace WebForms.Admin
         {
             if (!IsPostBack)
             {
+                FetchUser();
                 FetchOrder();
                 FetchProducts();
                 BindOrderStatusesDDL();

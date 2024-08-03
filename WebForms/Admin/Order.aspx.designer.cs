@@ -105,6 +105,15 @@ namespace WebForms.Admin
         protected global::System.Web.UI.WebControls.Label OrderStatusLbl;
 
         /// <summary>
+        /// TransitionRoleLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TransitionRoleLbl;
+
+        /// <summary>
         /// TransitionButton control.
         /// </summary>
         /// <remarks>

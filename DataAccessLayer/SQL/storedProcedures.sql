@@ -297,7 +297,7 @@ as
 begin
 	if (@CurrentOrderStatusId = 0)
 	begin
-		select S.OrderStatusId, S.OrderStatusName, S.TransitionText, S.AcceptedText
+		select S.OrderStatusId, S.OrderStatusName, S.TransitionText, S.AcceptedText, S.RoleId
 		from OrderStatuses S
 		inner join ChannelStatuses CS on CS.OrderStatusId = S.OrderStatusId
 		inner join DistributionChannels C on C.DistributionChannelId = CS.DistributionChannelId
@@ -306,7 +306,7 @@ begin
 	end
 	else
 	begin
-		select S.OrderStatusId, S.OrderStatusName, S.TransitionText, S.AcceptedText
+		select S.OrderStatusId, S.OrderStatusName, S.TransitionText, S.AcceptedText, S.RoleId
 		from OrderStatuses S
 		inner join ChannelStatuses CS on CS.OrderStatusId = S.OrderStatusId
 		inner join DistributionChannels C on C.DistributionChannelId = CS.DistributionChannelId
@@ -314,6 +314,18 @@ begin
 		and CS.OrderStatusIndex < dbo.FN_Get_Status_Index(@DistributionChannelId, @CurrentOrderStatusId)
 		order by CS.OrderStatusIndex
 	end
+end
+
+go
+
+create or alter procedure SP_Read_Order_Status(
+	@OrderStatusId int
+)
+as
+begin
+	select OrderStatusName, TransitionText, AcceptedText, RoleId
+	from OrderStatuses
+	where OrderStatusId = @OrderStatusId
 end
 
 go

@@ -152,6 +152,15 @@
 
                 <div class="d-flex flex-column gap-2">
                     <div class="px-3 py-2 d-flex align-items-center justify-content-between">
+                        <asp:Label
+                            ID="TransitionRoleLbl"
+                            runat="server">
+                        </asp:Label>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column gap-2">
+                    <div class="px-3 py-2 d-flex align-items-center justify-content-between">
                         <asp:Button ID="TransitionButton" runat="server" CssClass="btn btn-primary w-auto" />
                         <asp:DropDownList
                             ID="OrderStatusesDDL"

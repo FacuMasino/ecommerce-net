@@ -16,6 +16,8 @@ namespace WebForms
         private ShoppingCart _shoppingCart;
         private ProductsManager _productsManager;
         private EmailManager _emailManager;
+        private User _user;
+        private UsersManager _usersManager;
 
         // CONSTRUCT
 
@@ -27,9 +29,16 @@ namespace WebForms
             _shoppingCart = new ShoppingCart();
             _productsManager = new ProductsManager();
             _emailManager = new EmailManager();
+            _user = new User();
+            _usersManager = new UsersManager();
         }
 
         // METHODS
+
+        private void FetchUser()
+        {
+            _user = (User)Session["user"];
+        }
 
         private void BindAcceptedStatusesRpt()
         {
@@ -79,7 +88,24 @@ namespace WebForms
             OrderCreationDateLbl.Text = "Generada el " + _order.CreationDate.ToString("dd-MM-yyyy");
             TotalLbl.Text = "$" + _shoppingCart.Total.ToString("F2");
             PaymentTypeLbl.Text = _order.PaymentType.Name;
-            TransitionButton.Text = _order.OrderStatus.TransitionText;
+
+            bool userHasRole = _usersManager.UserHasRole(_user, _order.OrderStatus.Role);
+            bool ifCustomerHasPermission = true;
+
+            if (_usersManager.IsCustomer(_user) && _order.User.PersonId != _user.PersonId)
+            {
+                ifCustomerHasPermission = false;
+            }
+
+            if (userHasRole && ifCustomerHasPermission)
+            {
+                TransitionButton.Visible = true;
+                TransitionButton.Text = _order.OrderStatus.TransitionText;
+            }
+            else
+            {
+                TransitionButton.Visible = false;
+            }
 
             if (_order.DeliveryAddress.ToString() != "")
             {
@@ -111,6 +137,7 @@ namespace WebForms
         {
             if (!IsPostBack)
             {
+                FetchUser();
                 FetchOrder();
                 FetchProducts();
                 BindProductSetsRpt();
