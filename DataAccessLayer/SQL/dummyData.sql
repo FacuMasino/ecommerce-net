@@ -398,6 +398,7 @@ INSERT INTO
 	(UserId, RoleId)
 VALUES
 	(1, 1),
+	(1, 2),
 	(1, 3),
 	(1, 4),
 	(2, 1),
@@ -416,7 +417,7 @@ INSERT INTO
 VALUES
 	('Pago en proceso', 'Marcar como abonado', 'Pago aceptado', 4), -- ID 1 Hardcoded
 	('Envío pendiente', 'Marcar como enviado', 'Pedido enviado', 4), -- ID 2 Hardcoded
-	('Pedido enviado', 'Marcar como entregado', 'Pedido entregado', 3), -- ID 3 Hardcoded
+	('Paquete en camino', 'Marcar como entregado', 'Pedido entregado', 3), -- ID 3 Hardcoded
 	('Paquete en revisión', 'Marcar como recibido', 'Pedido recibido', 2), -- ID 4 Hardcoded
 	('Orden completada', 'Devolver pedido', 'Reclamo iniciado', 2), -- ID 5 Hardcoded
 	('Pago y retiro pendientes', 'Marcar como abonado y retirado', 'Pago aceptado y pedido retirado', 4), -- ID 6 Hardcoded
