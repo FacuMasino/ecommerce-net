@@ -58,6 +58,17 @@ namespace WebForms.Admin
                 Repeater rpt = (Repeater)e.Item.FindControl("RolesRpt");
                 rpt.DataSource = _rolesManager.List();
                 rpt.DataBind();
+
+                int itemIndex = e.Item.ItemIndex;
+
+                foreach (RepeaterItem roleItem in rpt.Items)
+                {
+                    LinkButton roleBtn = (LinkButton)roleItem.FindControl("RoleBtn");
+                    if (roleBtn != null)
+                    {
+                        roleBtn.CommandArgument = roleBtn.CommandArgument + ";" + itemIndex;
+                    }
+                }
             }
         }
 
@@ -103,7 +114,18 @@ namespace WebForms.Admin
 
         protected void RolesRpt_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
+            if (e.CommandName == "RoleClick")
+            {
+                string[] args = e.CommandArgument.ToString().Split(';');
 
+                int roleId = int.Parse(args[0]);
+                _role = _rolesManager.Read(roleId);
+
+                int index = int.Parse(args[1]);
+                _user = _users[index];
+
+                _usersManager.ToggleUserRole(_user, _role);
+            }
         }
 
         protected void SearchBtn_Click(object sender, EventArgs e)

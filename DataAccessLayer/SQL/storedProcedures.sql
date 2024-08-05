@@ -489,6 +489,31 @@ end
 
 go
 
+create or alter procedure SP_Toggle_User_Role(
+	@UserId int,
+	@RoleId tinyint
+)
+as
+begin
+	declare @UserHasRole bit;
+
+	select @UserHasRole = count(*)
+	from UserRoles
+	where UserId = @UserId and RoleId = @RoleId;
+
+	if (@UserHasRole = 1)
+	begin
+		delete from UserRoles where UserId = @UserId and RoleId = @RoleId
+	end
+	else
+	begin
+		insert into UserRoles(UserId, RoleId)
+		values (@UserId, @RoleId)
+	end
+end
+
+go
+
 -----------
 -- STATS --
 -----------

@@ -85,7 +85,9 @@
                                         <ItemTemplate>
                                             <asp:LinkButton
                                                 ID="RoleBtn"
-                                                runat="server">
+                                                runat="server"
+                                                CommandName="RoleClick"
+                                                CommandArgument='<%# Eval("Id") %>'>
                                             </asp:LinkButton>
                                         </ItemTemplate>
                                     </asp:Repeater>

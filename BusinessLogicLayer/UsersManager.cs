@@ -290,6 +290,25 @@ namespace BusinessLogicLayer
             return false;
         }
 
+        public void ToggleUserRole(User user, Role role)
+        {
+            try
+            {
+                _dataAccess.SetProcedure("SP_Toggle_User_Role");
+                _dataAccess.SetParameter("@UserId", user.UserId);
+                _dataAccess.SetParameter("@RoleId", role.Id);
+                _dataAccess.ExecuteAction();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+        }
+
         private void SetParameters(User user)
         {
             _dataAccess.SetParameter("@Username", user.Username);
