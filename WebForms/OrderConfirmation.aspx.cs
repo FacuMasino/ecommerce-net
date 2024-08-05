@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
@@ -19,6 +20,7 @@ namespace WebForms
         private PaymentTypesManager _paymentTypesManager;
         private DistributionChannelsManager _distributionChannelsManager;
         private OrderStatusesManager _orderStatusesManager;
+        private User _user;
 
         private List<InputWrapper> _inputValidations;
 
@@ -35,6 +37,7 @@ namespace WebForms
             _distributionChannelsManager = new DistributionChannelsManager();
             _orderStatusesManager = new OrderStatusesManager();
             _inputValidations = new List<InputWrapper>();
+            _user = new User();
         }
 
         // METHODS
@@ -101,6 +104,12 @@ namespace WebForms
 
         private void SetPerson()
         {
+            if (_user.UserId != 0)
+            {
+                _order.User = _user;
+                return;
+            }
+
             _order.User.FirstName = FirstNameTxt.Text;
             _order.User.LastName = LastNameTxt.Text;
             _order.User.Email = EmailTxt.Text;
@@ -177,8 +186,34 @@ namespace WebForms
             SetOrderStatus();
         }
 
+        private void MapUserData()
+        {
+            FirstNameTxt.Text = _user.FirstName;
+            LastNameTxt.Text = _user.LastName;
+            EmailTxt.Text = _user.Email;
+
+            StreetNameTxt.Text = _user.Address.StreetName;
+            StreetNumberTxt.Text = _user.Address.StreetNumber;
+            CityTxt.Text = _user.Address.City.Name;
+            ZipCodeTxt.Text = _user.Address.City.ZipCode;
+            ProvincesDDL.Text = _user.Address.Province.Name;
+
+            setOnlyReadData();
+        }
+
+        private void setOnlyReadData()
+        {
+            FirstNameTxt.Enabled = false;
+            LastNameTxt.Enabled = false;
+            EmailTxt.Enabled = false;
+        }
+
         private void MapControls()
         {
+            if (_user.UserId != 0)
+            {
+                MapUserData();
+            }
             TotalLbl.Text = _shoppingCart.Total.ToString();
         }
 
@@ -188,11 +223,20 @@ namespace WebForms
             siteMP.ShowBsToast(message);
         }
 
+        private void FetchUser()
+        {
+            if (Session["user"] != null)
+            {
+                _user = (User)Session["user"];
+            }
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
         {
             LoadInputValidations();
+            FetchUser();
             if (!IsPostBack)
             {
                 FetchShoppingCart();
@@ -254,14 +298,15 @@ namespace WebForms
             }
 
             Session.Remove("shoppingCart"); // Limpiar carrito
-            Session.Add("user", _order.User);
-            if (_order.User.UserId == 0)
+            Session.Remove("CurrentProductSets");
+
+            if (_user.UserId == 0)
             {
-                Response.Redirect($"OrderStatus.aspx?orderId={_order.Id}&success=true"); // Si no está registrado, redirigir al detalle de orden
+                Response.Redirect($"OrderStatus.aspx?orderId={_order.Id}&success=true"); // Si no inició sesión, redirigir al detalle de orden
             }
             else
             {
-                Response.Redirect("Orders.aspx"); // Si está registrado, redirigir a las ordenes del usuario
+                Response.Redirect("Orders.aspx"); // Si inició sesión, redirigir a las ordenes del usuario
             }
         }
     }

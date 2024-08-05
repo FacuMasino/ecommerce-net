@@ -13,6 +13,7 @@ namespace BusinessLogicLayer
         private PeopleManager _peopleManager = new PeopleManager();
         private UsersManager _usersManager = new UsersManager();
         private AddressesManager _addressesManager = new AddressesManager();
+        private CitiesManager _citiesManager = new CitiesManager();
         private OrderStatusesManager _orderStatusesManager = new OrderStatusesManager();
         private DistributionChannelsManager _distributionChannelsManager =
             new DistributionChannelsManager();
@@ -158,10 +159,14 @@ namespace BusinessLogicLayer
         public int Add(Order order, List<ProductSet> productSets)
         {
             HandleDeliveryAddressId(order);
-            HandlePersonId(order);
             HandlePaymentTypeId(order);
             HandleDistributionChannelId(order);
             HandleOrderStatusId(order);
+
+            if (order.User.UserId == 0) // Verifica si no tiene usuario asignado
+            {
+                HandlePersonId(order);
+            }
 
             try
             {
@@ -211,7 +216,7 @@ namespace BusinessLogicLayer
             {
                 _dataAccess.SetParameter("@DeliveryAddressId", DBNull.Value);
             }
-            
+
             _dataAccess.SetParameter("@PersonId", order.User.PersonId);
             _dataAccess.SetParameter("@PaymentTypeId", order.PaymentType.Id);
             _dataAccess.SetParameter("@DistributionChannelId", order.DistributionChannel.Id);
@@ -222,6 +227,7 @@ namespace BusinessLogicLayer
         {
             if (order.DeliveryAddress != null)
             {
+                order.DeliveryAddress.City.Id = _citiesManager.GetId(order.DeliveryAddress.City);
                 int foundDeliveryAddressId = _addressesManager.GetId(order.DeliveryAddress);
 
                 if (foundDeliveryAddressId == 0)
@@ -266,11 +272,15 @@ namespace BusinessLogicLayer
 
         private void HandleDistributionChannelId(Order order)
         {
-            int foundDistributionChannelId = _distributionChannelsManager.GetId(order.DistributionChannel);
+            int foundDistributionChannelId = _distributionChannelsManager.GetId(
+                order.DistributionChannel
+            );
 
             if (foundDistributionChannelId == 0)
             {
-                order.DistributionChannel.Id = _distributionChannelsManager.Add(order.DistributionChannel);
+                order.DistributionChannel.Id = _distributionChannelsManager.Add(
+                    order.DistributionChannel
+                );
             }
             else
             {

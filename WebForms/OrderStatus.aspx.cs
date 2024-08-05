@@ -37,12 +37,16 @@ namespace WebForms
 
         private void FetchUser()
         {
-            _user = (User)Session["user"];
+            if (Session["user"] != null)
+                _user = (User)Session["user"];
         }
 
         private void BindAcceptedStatusesRpt()
         {
-            AcceptedStatusesRpt.DataSource = _orderStatusesManager.List(_order.DistributionChannel.Id, _order.OrderStatus.Id);
+            AcceptedStatusesRpt.DataSource = _orderStatusesManager.List(
+                _order.DistributionChannel.Id,
+                _order.OrderStatus.Id
+            );
             AcceptedStatusesRpt.DataBind();
         }
 
@@ -173,7 +177,10 @@ namespace WebForms
             // hack : agregar confirmación
 
             FetchOrder();
-            int nextStatusId = _orderStatusesManager.GetNextStatusId(_order.DistributionChannel.Id, _order.OrderStatus.Id);
+            int nextStatusId = _orderStatusesManager.GetNextStatusId(
+                _order.DistributionChannel.Id,
+                _order.OrderStatus.Id
+            );
             _ordersManager.UpdateOrderStatus(_order.Id, nextStatusId);
         }
     }
