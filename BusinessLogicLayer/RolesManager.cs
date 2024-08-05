@@ -11,9 +11,11 @@ namespace BusinessLogicLayer
 
         public enum Roles
         {
+            DefaultRoleId = 2,
             AdminRoleId = 1,
             CustomerRoleId = 2,
-            DefaultRoleId = 2
+            DeliveryDriverRoleId = 3,
+            CustomerServiceRoleId = 4
         }
 
         public List<Role> List(int userId = 0)

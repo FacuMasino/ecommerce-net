@@ -11,6 +11,7 @@ namespace WebForms.Admin
         // ATTRIBUTES
 
         private User _user;
+        private Role _role;
         private List<User> _users;
         private UsersManager _usersManager;
         private RolesManager _rolesManager;
@@ -53,11 +54,56 @@ namespace WebForms.Admin
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 _user = (User)e.Item.DataItem;
-                
+
                 Repeater rpt = (Repeater)e.Item.FindControl("RolesRpt");
                 rpt.DataSource = _rolesManager.List();
                 rpt.DataBind();
             }
+        }
+
+        protected void RolesRpt_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                _role = (Role)e.Item.DataItem;
+
+                LinkButton btn = (LinkButton)e.Item.FindControl("RoleBtn");
+
+                string cssClass = "";
+
+                if (_role.Id == (int)RolesManager.Roles.AdminRoleId)
+                {
+                    cssClass += "bi bi-person-badge";
+                }
+                else if (_role.Id == (int)RolesManager.Roles.CustomerRoleId)
+                {
+                    cssClass += "bi bi-cart";
+                }
+                else if (_role.Id == (int)RolesManager.Roles.DeliveryDriverRoleId)
+                {
+                    cssClass += "bi bi-truck";
+                }
+                else if (_role.Id == (int)RolesManager.Roles.CustomerServiceRoleId)
+                {
+                    cssClass += "bi bi-headset";
+                }
+
+                if (_usersManager.UserHasRole(_user, _role))
+                {
+                    cssClass += " btn btn-outline-primary";
+                }
+                else
+                {
+                    cssClass += " btn btn-outline-secondary";
+                }
+
+                btn.CssClass = cssClass;
+            }
+        }
+
+        protected void RolesRpt_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+
         }
 
         protected void SearchBtn_Click(object sender, EventArgs e)

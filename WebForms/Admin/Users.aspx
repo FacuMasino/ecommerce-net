@@ -41,6 +41,7 @@
                         <th scope="col">Apellido</th>
                         <th scope="col">Usuario</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Roles</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,16 +80,15 @@
                                         CssClass="text-black">
                                     </asp:Label>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td colspan="5">
-                                    <div class="btn-group d-flex flex-wrap" role="group">
-                                        <asp:Repeater ID="RolesRpt" runat="server">
-                                            <ItemTemplate>
-                                                <asp:CheckBox ID="RoleChk" runat="server" Text='<%#Eval("Name")%>' CssClass="btn btn-outline-primary" />
-                                            </ItemTemplate>
-                                        </asp:Repeater>
-                                    </div>
+                                <td>
+                                    <asp:Repeater ID="RolesRpt" runat="server" OnItemDataBound="RolesRpt_ItemDataBound" OnItemCommand="RolesRpt_ItemCommand">
+                                        <ItemTemplate>
+                                            <asp:LinkButton
+                                                ID="RoleBtn"
+                                                runat="server">
+                                            </asp:LinkButton>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
                                 </td>
                             </tr>
                         </ItemTemplate>
