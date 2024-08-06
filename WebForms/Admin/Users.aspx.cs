@@ -98,7 +98,7 @@ namespace WebForms.Admin
                 {
                     cssClass += "bi bi-headset";
                 }
-                else if (_role.Id == (int)RolesManager.Roles.SeniorRoleId)
+                else if (_role.Id == (int)RolesManager.Roles.PlusRoleId)
                 {
                     cssClass += "bi bi-star";
                 }

@@ -372,7 +372,7 @@ VALUES
 	('Cliente'),
 	('Transportista'),
 	('Atención al público'),
-	('Senior');
+	('Plus');
 
 GO
 

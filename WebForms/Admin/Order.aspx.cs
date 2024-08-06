@@ -143,7 +143,7 @@ namespace WebForms.Admin
                 OrderStatusIco.CssClass = "bi bi-clock text-warning";
             }
 
-            OrderStatusesDDL.Visible = _usersManager.UserHasRole(_user, (int)RolesManager.Roles.SeniorRoleId);
+            OrderStatusesDDL.Visible = _usersManager.UserHasRole(_user, (int)RolesManager.Roles.PlusRoleId);
         }
 
         public void SendShippingEmail()
@@ -180,7 +180,7 @@ namespace WebForms.Admin
 
         protected void OrderStatusesDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_usersManager.UserHasRole(_user, (int)RolesManager.Roles.SeniorRoleId))
+            if (_usersManager.UserHasRole(_user, (int)RolesManager.Roles.PlusRoleId))
             {
                 FetchOrder();
                 _order.OrderStatus.Id = Convert.ToInt32(OrderStatusesDDL.SelectedValue);

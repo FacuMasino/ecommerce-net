@@ -87,7 +87,8 @@
                                                 ID="RoleBtn"
                                                 runat="server"
                                                 CommandName="RoleClick"
-                                                CommandArgument='<%# Eval("Id") %>'>
+                                                CommandArgument='<%# Eval("Id") %>'
+                                                ToolTip='<%# Eval("Name") %>'>
                                             </asp:LinkButton>
                                         </ItemTemplate>
                                     </asp:Repeater>
