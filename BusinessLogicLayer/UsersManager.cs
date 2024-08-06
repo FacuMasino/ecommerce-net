@@ -253,35 +253,24 @@ namespace BusinessLogicLayer
 
         public bool IsAdmin(User user)
         {
-            for (int i = 0; i < user.Roles.Count; i++)
-            {
-                if (user.Roles[i].Id == (int)RolesManager.Roles.AdminRoleId)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return UserHasRole(user, (int)RolesManager.Roles.AdminRoleId);
         }
 
         public bool IsCustomer(User user)
         {
-            for (int i = 0; i < user.Roles.Count; i++)
-            {
-                if (user.Roles[i].Id == (int)RolesManager.Roles.CustomerRoleId)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return UserHasRole(user, (int)RolesManager.Roles.CustomerRoleId);
         }
 
         public bool UserHasRole(User user, Role role)
         {
+            return UserHasRole(user, role.Id);
+        }
+
+        public bool UserHasRole(User user, int roleId)
+        {
             for (int i = 0; i < user.Roles.Count; i++)
             {
-                if (user.Roles[i].Id == role.Id)
+                if (user.Roles[i].Id == roleId)
                 {
                     return true;
                 }

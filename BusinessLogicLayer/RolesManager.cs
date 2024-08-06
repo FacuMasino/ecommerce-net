@@ -15,7 +15,8 @@ namespace BusinessLogicLayer
             AdminRoleId = 1,
             CustomerRoleId = 2,
             DeliveryDriverRoleId = 3,
-            CustomerServiceRoleId = 4
+            CustomerServiceRoleId = 4,
+            SeniorRoleId = 5
         }
 
         public List<Role> List(int userId = 0)

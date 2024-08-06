@@ -98,6 +98,10 @@ namespace WebForms.Admin
                 {
                     cssClass += "bi bi-headset";
                 }
+                else if (_role.Id == (int)RolesManager.Roles.SeniorRoleId)
+                {
+                    cssClass += "bi bi-star";
+                }
 
                 if (_usersManager.UserHasRole(_user, _role))
                 {
@@ -125,6 +129,7 @@ namespace WebForms.Admin
                 _user = _users[index];
 
                 _usersManager.ToggleUserRole(_user, _role);
+                Session["user"] = _usersManager.Read(_user.UserId);
             }
         }
 

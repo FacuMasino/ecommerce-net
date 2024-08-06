@@ -142,6 +142,24 @@ namespace WebForms.Admin
             {
                 OrderStatusIco.CssClass = "bi bi-clock text-warning";
             }
+
+            OrderStatusesDDL.Visible = _usersManager.UserHasRole(_user, (int)RolesManager.Roles.SeniorRoleId);
+        }
+
+        public void SendShippingEmail()
+        {
+            if (_order.OrderStatus.Id == 3)
+            {
+                EmailMessage<OrderShippingEmail> shippingEmail = Helper.ComposeShippingEmail(
+                    _order.User,
+                    Helper.EcommerceName,
+                    _order.Id.ToString(),
+                    $"https://localhost:44324/Admin/order.aspx?id={_order.Id}",
+                    "NoImplementado"
+                );
+
+                _emailManager.SendEmail(shippingEmail);
+            }
         }
 
         //  EVENTS
@@ -162,22 +180,12 @@ namespace WebForms.Admin
 
         protected void OrderStatusesDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // hack : agregar validacion que le avise al admin que cambiar el estado arbitrariamente es peligroso.
-
-            FetchOrder();
-            _order.OrderStatus.Id = Convert.ToInt32(OrderStatusesDDL.SelectedValue);
-            _ordersManager.UpdateOrderStatus(_order.Id, _order.OrderStatus.Id);
-
-            if (_order.OrderStatus.Id == 3) // Implementacion provisoria envio de email
+            if (_usersManager.UserHasRole(_user, (int)RolesManager.Roles.SeniorRoleId))
             {
-                EmailMessage<OrderShippingEmail> shippingEmail = Helper.ComposeShippingEmail(
-                    _order.User,
-                    Helper.EcommerceName,
-                    _order.Id.ToString(),
-                    $"https://localhost:44324/Admin/order.aspx?id={_order.Id}",
-                    "NoImplementado"
-                );
-                _emailManager.SendEmail(shippingEmail);
+                FetchOrder();
+                _order.OrderStatus.Id = Convert.ToInt32(OrderStatusesDDL.SelectedValue);
+                _ordersManager.UpdateOrderStatus(_order.Id, _order.OrderStatus.Id);
+                SendShippingEmail();
             }
         }
 
@@ -205,11 +213,10 @@ namespace WebForms.Admin
 
         protected void TransitionButton_Click(object sender, EventArgs e)
         {
-            // hack : agregar confirmación
-
             FetchOrder();
             int nextStatusId = _orderStatusesManager.GetNextStatusId(_order.DistributionChannel.Id, _order.OrderStatus.Id);
             _ordersManager.UpdateOrderStatus(_order.Id, nextStatusId);
+            SendShippingEmail();
         }
     }
 }

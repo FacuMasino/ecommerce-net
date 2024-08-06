@@ -371,7 +371,8 @@ VALUES
 	('Admin'),
 	('Cliente'),
 	('Transportista'),
-	('Atención al público');
+	('Atención al público'),
+	('Senior');
 
 GO
 
