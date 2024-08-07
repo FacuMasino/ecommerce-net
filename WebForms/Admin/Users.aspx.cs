@@ -129,7 +129,11 @@ namespace WebForms.Admin
                 _user = _users[index];
 
                 _usersManager.ToggleUserRole(_user, _role);
-                Session["user"] = _usersManager.Read(_user.UserId);
+
+                if (_user.UserId == ((User)Session["user"]).UserId)
+                {
+                    Session["user"] = _usersManager.Read(_user.UserId);
+                }
             }
         }
 
