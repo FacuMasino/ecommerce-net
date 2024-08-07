@@ -279,6 +279,26 @@ namespace BusinessLogicLayer
             return false;
         }
 
+        public bool IsBackOfficeUser(User user)
+        {
+            if (UserHasRole(user, (int)RolesManager.Roles.AdminRoleId))
+            {
+                return true;
+            }
+
+            if (UserHasRole(user, (int)RolesManager.Roles.DeliveryDriverRoleId))
+            {
+                return true;
+            }
+
+            if (UserHasRole(user, (int)RolesManager.Roles.CustomerServiceRoleId))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public void ToggleUserRole(User user, Role role)
         {
             try

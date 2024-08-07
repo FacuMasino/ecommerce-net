@@ -8,13 +8,17 @@ namespace WebForms.Admin
 {
     public partial class Admin : System.Web.UI.MasterPage
     {
-        private OrdersManager _ordersManager;
+        // ATTRIBUTES
+
+        private User _user;
         private UsersManager _usersManager;
-        private string _userFirstName;
+        private OrdersManager _ordersManager;
+
+        // PROPERTIES
 
         public string UserFirstName
         {
-            get { return _userFirstName; }
+            get { return _user.FirstName; }
         }
 
         public int PendingOrders
@@ -22,13 +26,52 @@ namespace WebForms.Admin
             get { return _ordersManager == null ? 0 : _ordersManager.CountPendingOrders(); }
         }
 
+        // CONSTRUCT
+
         public Admin()
         {
-            _ordersManager = new OrdersManager();
             _usersManager = new UsersManager();
+            _ordersManager = new OrdersManager();
         }
 
         // METHODS
+
+        public void ShowMasterModal(string title, string message, bool requiresConfirm = false)
+        {
+            ResetMasterModal();
+            MasterModalTitle.Text = title;
+            MasterModalBody.Text = message;
+
+            if (!requiresConfirm)
+            {
+                MasterModalFrmChk.Visible = false;
+            }
+
+            ScriptManager.RegisterStartupScript(
+                Page,
+                Page.GetType(),
+                "masterModal",
+                "masterModal.show()",
+                true
+            );
+
+            MasterModalUP.Update();
+        }
+
+        public void ShowMasterToast(string message)
+        {
+            MasterToastBody.Text = message;
+
+            ScriptManager.RegisterStartupScript(
+                Page,
+                Page.GetType(),
+                "masterToast",
+                "masterToast.show()",
+                true
+            );
+
+            MasterToastUP.Update();
+        }
 
         private void CheckActiveItem()
         {
@@ -69,61 +112,42 @@ namespace WebForms.Admin
             item.Attributes["class"] = prevClasses + " active";
         }
 
-        public void ShowMasterModal(string title, string message, bool requiresConfirm = false)
-        {
-            ResetMasterModal();
-            MasterModalTitle.Text = title;
-            MasterModalBody.Text = message;
-            if (!requiresConfirm)
-                MasterModalFrmChk.Visible = false;
-            ScriptManager.RegisterStartupScript(
-                Page,
-                Page.GetType(),
-                "masterModal",
-                "masterModal.show()",
-                true
-            );
-            MasterModalUP.Update();
-        }
-
-        public void ShowMasterToast(string message)
-        {
-            MasterToastBody.Text = message;
-            ScriptManager.RegisterStartupScript(
-                Page,
-                Page.GetType(),
-                "masterToast",
-                "masterToast.show()",
-                true
-            );
-            MasterToastUP.Update();
-        }
-
-        // Limpia los controles y clases css del Modal
         private void ResetMasterModal()
         {
             if (MasterModalChk.Checked)
-                MasterModalChk.Checked = false; // Reset checkbox
-            MasterModalBodyWrapper.Attributes["class"] = "d-flex flex-column"; // Reset invalid
+            {
+                MasterModalChk.Checked = false;
+            }
+
+            MasterModalBodyWrapper.Attributes["class"] = "d-flex flex-column";
+        }
+
+        private void FetchUser()
+        {
+            _user = (User)Session["user"];
+        }
+
+        private void CheckUserPermissions()
+        {
+            if (_user == null)
+            {
+                Response.Redirect("/AccessDenied.aspx");
+                return;
+            }
+
+            else if (!_usersManager.IsBackOfficeUser(_user))
+            {
+                Response.Redirect("/AccessDenied.aspx");
+                return;
+            }
         }
 
         //EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["user"] == null)
-            {
-                Response.Redirect("/AccessDenied.aspx");
-                return;
-            }
-
-            if (!_usersManager.IsAdmin((User)Session["user"]))
-            {
-                Response.Redirect("/AccessDenied.aspx");
-                return;
-            }
-
-            _userFirstName = ((User)Session["user"]).FirstName ?? "Usuario";
+            FetchUser();
+            CheckUserPermissions();
             CheckActiveItem();
         }
 
