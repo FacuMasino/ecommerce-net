@@ -12,11 +12,15 @@ namespace WebForms.Admin
     {
         // ATTRIBUTES
 
+        private User _sessionUser;
+        private UsersManager _usersManager;
         private Category _category;
         private List<Category> _categories;
         private CategoriesManager _categoriesManager;
         private bool _isSearching;
         private string _textToSearch;
+
+        // PROPERTIES
 
         public int TotalCategories
         {
@@ -29,6 +33,7 @@ namespace WebForms.Admin
         {
             _category = new Category();
             _categoriesManager = new CategoriesManager();
+            _usersManager = new UsersManager();
             FetchCategories();
         }
 
@@ -52,6 +57,11 @@ namespace WebForms.Admin
         {
             Admin adminMP = (Admin)master;
             adminMP.ShowMasterToast(message);
+        }
+
+        private void FetchSessionUser()
+        {
+            _sessionUser = (User)Session["user"];
         }
 
         private void FetchCategories()
@@ -114,12 +124,29 @@ namespace WebForms.Admin
             ViewState["TextToSearch"] = textToSearch;
         }
 
+        private void CheckUserPermissions()
+        {
+            if (_sessionUser == null)
+            {
+                Response.Redirect("/AccessDenied.aspx");
+                return;
+            }
+
+            else if (!_usersManager.IsAdmin(_sessionUser))
+            {
+                Response.Redirect("/AccessDenied.aspx");
+                return;
+            }
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                FetchSessionUser();
+                CheckUserPermissions();
                 FetchCategories();
                 BindCategoriesRpt();
             }

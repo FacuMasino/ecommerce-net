@@ -11,25 +11,39 @@ namespace WebForms.Admin
 {
     public partial class Products : BasePage
     {
+        // ATTRIBUTES
+
+        private User _sessionUser;
+        private UsersManager _usersManager;
         private ProductsManager _productsManager;
         private List<Product> _products;
         private int _temporalProductId;
         private bool _isSearching;
         private string _textToSearch;
 
+        // PROPERTIES
+
         public int TotalProducts
         {
             get { return _products == null ? 0 : _products.Count; }
         }
 
+        // CONSTRUCT
+
         public Products()
         {
+            _usersManager = new UsersManager();
             _productsManager = new ProductsManager();
             _products = new List<Product>();
             GetProducts();
         }
 
         // METHODS
+
+        private void FetchSessionUser()
+        {
+            _sessionUser = (User)Session["user"];
+        }
 
         private void GetSearchState()
         {
@@ -104,12 +118,29 @@ namespace WebForms.Admin
             BindProductList(masterPage); // Actualizar lista sin Redirect
         }
 
+        private void CheckUserPermissions()
+        {
+            if (_sessionUser == null)
+            {
+                Response.Redirect("/AccessDenied.aspx");
+                return;
+            }
+
+            else if (!_usersManager.IsAdmin(_sessionUser))
+            {
+                Response.Redirect("/AccessDenied.aspx");
+                return;
+            }
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                FetchSessionUser();
+                CheckUserPermissions();
                 CheckRequest();
                 GetProducts();
                 BindProductList();

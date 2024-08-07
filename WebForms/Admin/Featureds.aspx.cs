@@ -11,6 +11,10 @@ namespace WebForms.Admin
 {
     public partial class Featureds : BasePage
     {
+        // ATTRIBUTES
+
+        private User _sessionUser;
+        private UsersManager _usersManager;
         private ProductsManager _productsManager;
         private FeaturedsManager _featuredsManager;
         private List<FeaturedProduct> _featuredsList;
@@ -19,6 +23,8 @@ namespace WebForms.Admin
         private int _currentProductId;
         private bool _isSearching;
         private string _textToSearch;
+
+        // PROPERTIES
 
         public int TotalFeatureds
         {
@@ -30,12 +36,22 @@ namespace WebForms.Admin
             get { return _productsList == null ? 0 : _productsList.Count; }
         }
 
+        // CONSTRUCT
+
         public Featureds()
         {
+            _usersManager = new UsersManager();
             _productsManager = new ProductsManager();
             _featuredsManager = new FeaturedsManager();
             _featuredsList = new List<FeaturedProduct>();
             _productsList = new List<Product>();
+        }
+
+        // METHODS
+
+        private void FetchSessionUser()
+        {
+            _sessionUser = (User)Session["user"];
         }
 
         private void GetSearchState()
@@ -141,10 +157,26 @@ namespace WebForms.Admin
             UpdateProductsList(master);
         }
 
+        private void CheckUserPermissions()
+        {
+            if (_sessionUser == null)
+            {
+                Response.Redirect("/AccessDenied.aspx");
+                return;
+            }
+
+            else if (!_usersManager.IsAdmin(_sessionUser))
+            {
+                Response.Redirect("/AccessDenied.aspx");
+                return;
+            }
+        }
+
+        // EVENTS
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            _adminMP = (Admin)this.Master; // Se asigna la instancia de la Admin Master Page
-            // Para luego poder acceder a sus metodos
+            _adminMP = (Admin)this.Master;
 
             if (IsPostBack)
             {
@@ -153,6 +185,8 @@ namespace WebForms.Admin
 
             if (!IsPostBack)
             {
+                FetchSessionUser();
+                CheckUserPermissions();
                 UpdateFeaturedsList();
                 UpdateProductsList();
             }

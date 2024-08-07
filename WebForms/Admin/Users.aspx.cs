@@ -11,6 +11,7 @@ namespace WebForms.Admin
         // ATTRIBUTES
 
         private User _user;
+        private User _sessionUser;
         private Role _role;
         private List<User> _users;
         private UsersManager _usersManager;
@@ -27,6 +28,11 @@ namespace WebForms.Admin
 
         // METHODS
 
+        private void FetchSessionUser()
+        {
+            _sessionUser = (User)Session["user"];
+        }
+
         private void FetchUsers()
         {
             _users = _usersManager.List();
@@ -38,12 +44,29 @@ namespace WebForms.Admin
             UsersRpt.DataBind();
         }
 
+        private void CheckUserPermissions()
+        {
+            if (_sessionUser == null)
+            {
+                Response.Redirect("/AccessDenied.aspx");
+                return;
+            }
+
+            else if (!_usersManager.IsAdmin(_sessionUser))
+            {
+                Response.Redirect("/AccessDenied.aspx");
+                return;
+            }
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                FetchSessionUser();
+                CheckUserPermissions();
                 FetchUsers();
                 BindUsersRpt();
             }

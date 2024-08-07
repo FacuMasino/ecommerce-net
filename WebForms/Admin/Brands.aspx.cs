@@ -13,6 +13,8 @@ namespace WebForms.Admin
     {
         // ATTRIBUTES
 
+        private User _sessionUser;
+        private UsersManager _usersManager;
         private Brand _brand;
         private List<Brand> _brands;
         private BrandsManager _brandsManager;
@@ -25,10 +27,12 @@ namespace WebForms.Admin
         }
 
         //CONSTRUCT
+
         public Brands()
         {
             _brand = new Brand();
             _brandsManager = new BrandsManager();
+            _usersManager = new UsersManager();
             FetchBrands();
         }
 
@@ -54,6 +58,11 @@ namespace WebForms.Admin
             if (Validator.IsGoodInput(auxWrapper))
                 return true;
             return false;
+        }
+
+        private void FetchSessionUser()
+        {
+            _sessionUser = (User)Session["user"];
         }
 
         private void FetchBrands()
@@ -112,12 +121,42 @@ namespace WebForms.Admin
             ViewState["TextToSearch"] = textToSearch;
         }
 
+        private void DeleteBrandAction(MasterPage masterPage)
+        {
+            if (_brandsManager.CountBrandRelations(_brand) == 0)
+            {
+                _brandsManager.Delete(_brand);
+                HttpContext.Current.Response.Redirect("Brands.aspx?successDelete=true");
+            }
+            else
+            {
+                Notify("La Marca está en uso y no puede ser borrada.", masterPage);
+            }
+        }
+
+        private void CheckUserPermissions()
+        {
+            if (_sessionUser == null)
+            {
+                Response.Redirect("/AccessDenied.aspx");
+                return;
+            }
+
+            else if (!_usersManager.IsAdmin(_sessionUser))
+            {
+                Response.Redirect("/AccessDenied.aspx");
+                return;
+            }
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                FetchSessionUser();
+                CheckUserPermissions();
                 CheckRequest();
                 FetchBrands();
                 BindBrandsRpt();
@@ -246,19 +285,6 @@ namespace WebForms.Admin
                     "Está seguro que desea eliminar la marca?",
                     true // requiere confirmación
                 );
-            }
-        }
-
-        private void DeleteBrandAction(MasterPage masterPage)
-        {
-            if (_brandsManager.CountBrandRelations(_brand) == 0)
-            {
-                _brandsManager.Delete(_brand);
-                HttpContext.Current.Response.Redirect("Brands.aspx?successDelete=true");
-            }
-            else
-            {
-                Notify("La Marca está en uso y no puede ser borrada.", masterPage);
             }
         }
     }
