@@ -77,12 +77,7 @@ namespace WebForms.Admin
             OrderStatusesDDL.SelectedValue = _order.OrderStatus.Id.ToString();
         }
 
-        private void MapTransitionRoleLbl()
-        {
-            TransitionRoleLbl.Text = "Responsabilidad de: " + _order.OrderStatus.Role.Name;
-        }
-
-        private void MapOrderStatusIco()
+        private void MapOrderStatusIcoLbl()
         {
             if (_order.OrderStatus.Id == 5 || _order.OrderStatus.Id == 9) // hack : ids hardcodiados tienen que coincidir con DB
             {
@@ -92,19 +87,15 @@ namespace WebForms.Admin
             {
                 OrderStatusIco.CssClass = "bi bi-clock text-warning";
             }
+
+            OrderStatusLbl.Text = _order.OrderStatus.Name;
         }
 
         private void MapTransitionBtn()
         {
             bool userHasRole = _usersManager.UserHasRole(_sessionUser, _order.OrderStatus.Role);
-            bool ifCustomerHasPermission = true;
 
-            if (_usersManager.IsCustomer(_sessionUser) && _order.User.PersonId != _sessionUser.PersonId)
-            {
-                ifCustomerHasPermission = false;
-            }
-
-            if (userHasRole && ifCustomerHasPermission)
+            if (userHasRole)
             {
                 TransitionBtn.Visible = true;
                 TransitionBtn.Text = _order.OrderStatus.TransitionText;
@@ -115,24 +106,34 @@ namespace WebForms.Admin
             }
         }
 
-        private void MapStatusControls()
+        private void MapOrderData()
         {
-            MapTransitionRoleLbl();
-            MapOrderStatusIco();
-            MapTransitionBtn();
-        }
-
-        private void MapControls()
-        {
-            MapStatusControls();
-            OrderGeneratedLbl.Text = "Orden generada";
-            OrderStatusLbl.Text = _order.OrderStatus.Name;
             OrderIdLbl.Text = "Orden #" + _order.Id.ToString();
             OrderCreationDateLbl.Text = "Generada el " + _order.CreationDate.ToString("dd-MM-yyyy");
+        }
+
+        private void MapPaymentMethod()
+        {
             TotalLbl.Text = "$" + _shoppingCart.Total.ToString("F2");
             PaymentTypeLbl.Text = _order.PaymentType.Name;
-            DistributionChannelLbl.Text = _order.DistributionChannel.Name;
+        }
 
+        private void MapOrderStatus(bool isPostBack = false)
+        {
+            MapOrderStatusIcoLbl();
+            MapTransitionBtn();
+            TransitionRoleLbl.Text = "Responsabilidad de: " + _order.OrderStatus.Role.Name;
+
+            if (!isPostBack)
+            {
+                OrderGeneratedLbl.Text = "Orden generada";
+                OrderStatusesDDL.Visible = _usersManager.UserHasRole(_sessionUser, (int)RolesManager.Roles.PlusRoleId);
+                DistributionChannelLbl.Text = _order.DistributionChannel.Name;
+            }
+        }
+
+        private void MapUserData()
+        {
             if (_order.User.Username != null)
             {
                 UsernameLbl.Text = "Nombre de usuario: " + _order.User.Username;
@@ -146,7 +147,10 @@ namespace WebForms.Admin
             LastNameLbl.Text = _order.User.LastName;
             PhoneLbl.Text = "Tel.: " + _order.User.Phone;
             EmailLbl.Text = "Email: " + _order.User.Email;
+        }
 
+        private void MapAddress()
+        {
             if (_order.DeliveryAddress.ToString() != "")
             {
                 StreetNameLbl.Text = _order.DeliveryAddress.StreetName;
@@ -160,8 +164,15 @@ namespace WebForms.Admin
             {
                 StreetNameLbl.Text = "Pedido solicitado sin envío";
             }
+        }
 
-            OrderStatusesDDL.Visible = _usersManager.UserHasRole(_sessionUser, (int)RolesManager.Roles.PlusRoleId);
+        private void MapControls()
+        {
+            MapOrderData();
+            MapPaymentMethod();
+            MapOrderStatus();
+            MapUserData();
+            MapAddress();
         }
 
         public void SendShippingEmail()
@@ -208,7 +219,7 @@ namespace WebForms.Admin
                 SendShippingEmail();
                 FetchOrder();
                 BindAcceptedStatusesRpt();
-                MapStatusControls();
+                MapOrderStatus(true);
             }
         }
 
@@ -244,7 +255,7 @@ namespace WebForms.Admin
             FetchOrder();
             BindOrderStatusesDDL();
             BindAcceptedStatusesRpt();
-            MapStatusControls();
+            MapOrderStatus(true);
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
-using UtilitiesLayer;
 
 namespace WebForms
 {
@@ -84,17 +83,25 @@ namespace WebForms
             siteMP.ShowBsToast(message);
         }
 
+        private void MapOrderStatusIcoLbl()
+        {
+            if (_order.OrderStatus.Id == 5 || _order.OrderStatus.Id == 9) // hack : ids hardcodiados tienen que coincidir con DB
+            {
+                OrderStatusIco.CssClass = "bi bi-check-circle-fill text-success";
+            }
+            else
+            {
+                OrderStatusIco.CssClass = "bi bi-clock text-warning";
+            }
+
+            OrderStatusLbl.Text = _order.OrderStatus.Name;
+        }
+
         private void MapTransitionBtn()
         {
             bool userHasRole = _usersManager.UserHasRole(_sessionUser, _order.OrderStatus.Role);
-            bool ifCustomerHasPermission = true;
 
-            if (_usersManager.IsCustomer(_sessionUser) && _order.User.PersonId != _sessionUser.PersonId)
-            {
-                ifCustomerHasPermission = false;
-            }
-
-            if (userHasRole && ifCustomerHasPermission)
+            if (userHasRole)
             {
                 TransitionBtn.Visible = true;
                 TransitionBtn.Text = _order.OrderStatus.TransitionText;
@@ -105,16 +112,31 @@ namespace WebForms
             }
         }
 
-        private void MapControls()
+        private void MapOrderData()
         {
-            OrderGeneratedLbl.Text = "Orden generada";
-            OrderStatusLbl.Text = _order.OrderStatus.Name;
             OrderIdLbl.Text = "Orden #" + _order.Id.ToString();
             OrderCreationDateLbl.Text = "Generada el " + _order.CreationDate.ToString("dd-MM-yyyy");
+        }
+
+        private void MapPaymentMethod()
+        {
             TotalLbl.Text = "$" + _shoppingCart.Total.ToString("F2");
             PaymentTypeLbl.Text = _order.PaymentType.Name;
+        }
+
+        private void MapOrderStatus(bool isPostBack = false)
+        {
+            MapOrderStatusIcoLbl();
             MapTransitionBtn();
 
+            if (!isPostBack)
+            {
+                OrderGeneratedLbl.Text = "Orden generada";
+            }
+        }
+
+        private void MapAddress()
+        {
             if (_order.DeliveryAddress.ToString() != "")
             {
                 StreetNameLbl.Text = _order.DeliveryAddress.StreetName;
@@ -128,15 +150,14 @@ namespace WebForms
             {
                 StreetNameLbl.Text = "Pedido solicitado sin envío";
             }
+        }
 
-            if (_order.OrderStatus.Id == 5 || _order.OrderStatus.Id == 9) // hack : ids hardcodiados tienen que coincidir con DB
-            {
-                OrderStatusIco.CssClass = "bi bi-check-circle-fill text-success";
-            }
-            else
-            {
-                OrderStatusIco.CssClass = "bi bi-clock text-warning";
-            }
+        private void MapControls()
+        {
+            MapOrderData();
+            MapPaymentMethod();
+            MapOrderStatus();
+            MapAddress();
         }
 
         //  EVENTS
@@ -186,6 +207,9 @@ namespace WebForms
                 _order.OrderStatus.Id
             );
             _ordersManager.UpdateOrderStatus(_order.Id, nextStatusId);
+            FetchOrder();
+            BindAcceptedStatusesRpt();
+            MapOrderStatus(true);
         }
     }
 }
