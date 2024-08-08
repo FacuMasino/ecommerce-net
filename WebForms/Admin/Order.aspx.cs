@@ -16,7 +16,7 @@ namespace WebForms.Admin
         private ShoppingCart _shoppingCart;
         private ProductsManager _productsManager;
         private EmailManager _emailManager;
-        private User _user;
+        private User _sessionUser;
         private UsersManager _usersManager;
 
         // CONSTRUCT
@@ -29,7 +29,7 @@ namespace WebForms.Admin
             _shoppingCart = new ShoppingCart();
             _productsManager = new ProductsManager();
             _emailManager = new EmailManager();
-            _user = new User();
+            _sessionUser = new User();
             _usersManager = new UsersManager();
         }
 
@@ -37,7 +37,7 @@ namespace WebForms.Admin
 
         private void FetchUser()
         {
-            _user = (User)Session["user"];
+            _sessionUser = (User)Session["user"];
         }
 
         private void BindAcceptedStatusesRpt()
@@ -77,6 +77,27 @@ namespace WebForms.Admin
             OrderStatusesDDL.SelectedValue = _order.OrderStatus.Id.ToString();
         }
 
+        private void MapTransitionBtn()
+        {
+            bool userHasRole = _usersManager.UserHasRole(_sessionUser, _order.OrderStatus.Role);
+            bool ifCustomerHasPermission = true;
+
+            if (_usersManager.IsCustomer(_sessionUser) && _order.User.PersonId != _sessionUser.PersonId)
+            {
+                ifCustomerHasPermission = false;
+            }
+
+            if (userHasRole && ifCustomerHasPermission)
+            {
+                TransitionBtn.Visible = true;
+                TransitionBtn.Text = _order.OrderStatus.TransitionText;
+            }
+            else
+            {
+                TransitionBtn.Visible = false;
+            }
+        }
+
         private void MapControls()
         {
             OrderGeneratedLbl.Text = "Orden generada";
@@ -87,24 +108,7 @@ namespace WebForms.Admin
             PaymentTypeLbl.Text = _order.PaymentType.Name;
             DistributionChannelLbl.Text = _order.DistributionChannel.Name;
             TransitionRoleLbl.Text = "Responsabilidad de: " + _order.OrderStatus.Role.Name;
-
-            bool userHasRole = _usersManager.UserHasRole(_user, _order.OrderStatus.Role);
-            bool ifCustomerHasPermission = true;
-
-            if (_usersManager.IsCustomer(_user) && _order.User.PersonId != _user.PersonId)
-            {
-                ifCustomerHasPermission = false;
-            }
-
-            if (userHasRole && ifCustomerHasPermission)
-            {
-                TransitionButton.Visible = true;
-                TransitionButton.Text = _order.OrderStatus.TransitionText;
-            }
-            else
-            {
-                TransitionButton.Visible = false;
-            }
+            MapTransitionBtn();
 
             if (_order.User.Username != null)
             {
@@ -143,7 +147,7 @@ namespace WebForms.Admin
                 OrderStatusIco.CssClass = "bi bi-clock text-warning";
             }
 
-            OrderStatusesDDL.Visible = _usersManager.UserHasRole(_user, (int)RolesManager.Roles.PlusRoleId);
+            OrderStatusesDDL.Visible = _usersManager.UserHasRole(_sessionUser, (int)RolesManager.Roles.PlusRoleId);
         }
 
         public void SendShippingEmail()
@@ -180,7 +184,7 @@ namespace WebForms.Admin
 
         protected void OrderStatusesDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_usersManager.UserHasRole(_user, (int)RolesManager.Roles.PlusRoleId))
+            if (_usersManager.UserHasRole(_sessionUser, (int)RolesManager.Roles.PlusRoleId))
             {
                 FetchOrder();
                 _order.OrderStatus.Id = Convert.ToInt32(OrderStatusesDDL.SelectedValue);

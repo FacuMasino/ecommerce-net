@@ -16,7 +16,7 @@ namespace WebForms
         private ShoppingCart _shoppingCart;
         private ProductsManager _productsManager;
         private EmailManager _emailManager;
-        private User _user;
+        private User _sessionUser;
         private UsersManager _usersManager;
 
         // CONSTRUCT
@@ -29,7 +29,7 @@ namespace WebForms
             _shoppingCart = new ShoppingCart();
             _productsManager = new ProductsManager();
             _emailManager = new EmailManager();
-            _user = new User();
+            _sessionUser = new User();
             _usersManager = new UsersManager();
         }
 
@@ -38,7 +38,7 @@ namespace WebForms
         private void FetchUser()
         {
             if (Session["user"] != null)
-                _user = (User)Session["user"];
+                _sessionUser = (User)Session["user"];
         }
 
         private void BindAcceptedStatusesRpt()
@@ -84,6 +84,27 @@ namespace WebForms
             siteMP.ShowBsToast(message);
         }
 
+        private void MapTransitionBtn()
+        {
+            bool userHasRole = _usersManager.UserHasRole(_sessionUser, _order.OrderStatus.Role);
+            bool ifCustomerHasPermission = true;
+
+            if (_usersManager.IsCustomer(_sessionUser) && _order.User.PersonId != _sessionUser.PersonId)
+            {
+                ifCustomerHasPermission = false;
+            }
+
+            if (userHasRole && ifCustomerHasPermission)
+            {
+                TransitionBtn.Visible = true;
+                TransitionBtn.Text = _order.OrderStatus.TransitionText;
+            }
+            else
+            {
+                TransitionBtn.Visible = false;
+            }
+        }
+
         private void MapControls()
         {
             OrderGeneratedLbl.Text = "Orden generada";
@@ -92,24 +113,7 @@ namespace WebForms
             OrderCreationDateLbl.Text = "Generada el " + _order.CreationDate.ToString("dd-MM-yyyy");
             TotalLbl.Text = "$" + _shoppingCart.Total.ToString("F2");
             PaymentTypeLbl.Text = _order.PaymentType.Name;
-
-            bool userHasRole = _usersManager.UserHasRole(_user, _order.OrderStatus.Role);
-            bool ifCustomerHasPermission = true;
-
-            if (_usersManager.IsCustomer(_user) && _order.User.PersonId != _user.PersonId)
-            {
-                ifCustomerHasPermission = false;
-            }
-
-            if (userHasRole && ifCustomerHasPermission)
-            {
-                TransitionButton.Visible = true;
-                TransitionButton.Text = _order.OrderStatus.TransitionText;
-            }
-            else
-            {
-                TransitionButton.Visible = false;
-            }
+            MapTransitionBtn();
 
             if (_order.DeliveryAddress.ToString() != "")
             {

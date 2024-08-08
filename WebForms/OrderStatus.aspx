@@ -140,7 +140,7 @@
                 <div class="d-flex flex-column gap-2">
                     <div class="px-3 py-2 d-flex align-items-center justify-content-between">
                         <asp:Button
-                            ID="TransitionButton"
+                            ID="TransitionBtn"
                             runat="server"
                             CssClass="btn btn-primary w-auto"
                             OnClick="TransitionButton_Click" />
