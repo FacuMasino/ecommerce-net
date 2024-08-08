@@ -77,6 +77,23 @@ namespace WebForms.Admin
             OrderStatusesDDL.SelectedValue = _order.OrderStatus.Id.ToString();
         }
 
+        private void MapTransitionRoleLbl()
+        {
+            TransitionRoleLbl.Text = "Responsabilidad de: " + _order.OrderStatus.Role.Name;
+        }
+
+        private void MapOrderStatusIco()
+        {
+            if (_order.OrderStatus.Id == 5 || _order.OrderStatus.Id == 9) // hack : ids hardcodiados tienen que coincidir con DB
+            {
+                OrderStatusIco.CssClass = "bi bi-check-circle-fill text-success";
+            }
+            else
+            {
+                OrderStatusIco.CssClass = "bi bi-clock text-warning";
+            }
+        }
+
         private void MapTransitionBtn()
         {
             bool userHasRole = _usersManager.UserHasRole(_sessionUser, _order.OrderStatus.Role);
@@ -98,8 +115,16 @@ namespace WebForms.Admin
             }
         }
 
+        private void MapStatusControls()
+        {
+            MapTransitionRoleLbl();
+            MapOrderStatusIco();
+            MapTransitionBtn();
+        }
+
         private void MapControls()
         {
+            MapStatusControls();
             OrderGeneratedLbl.Text = "Orden generada";
             OrderStatusLbl.Text = _order.OrderStatus.Name;
             OrderIdLbl.Text = "Orden #" + _order.Id.ToString();
@@ -107,8 +132,6 @@ namespace WebForms.Admin
             TotalLbl.Text = "$" + _shoppingCart.Total.ToString("F2");
             PaymentTypeLbl.Text = _order.PaymentType.Name;
             DistributionChannelLbl.Text = _order.DistributionChannel.Name;
-            TransitionRoleLbl.Text = "Responsabilidad de: " + _order.OrderStatus.Role.Name;
-            MapTransitionBtn();
 
             if (_order.User.Username != null)
             {
@@ -136,15 +159,6 @@ namespace WebForms.Admin
             else
             {
                 StreetNameLbl.Text = "Pedido solicitado sin envío";
-            }
-
-            if (_order.OrderStatus.Id == 5 || _order.OrderStatus.Id == 9) // hack : ids hardcodiados tienen que coincidir con DB
-            {
-                OrderStatusIco.CssClass = "bi bi-check-circle-fill text-success";
-            }
-            else
-            {
-                OrderStatusIco.CssClass = "bi bi-clock text-warning";
             }
 
             OrderStatusesDDL.Visible = _usersManager.UserHasRole(_sessionUser, (int)RolesManager.Roles.PlusRoleId);
@@ -192,6 +206,9 @@ namespace WebForms.Admin
                 _order.OrderStatus.Id = Convert.ToInt32(OrderStatusesDDL.SelectedValue);
                 _ordersManager.UpdateOrderStatus(_order.Id, _order.OrderStatus.Id);
                 SendShippingEmail();
+                FetchOrder();
+                BindAcceptedStatusesRpt();
+                MapStatusControls();
             }
         }
 
@@ -219,10 +236,15 @@ namespace WebForms.Admin
 
         protected void TransitionButton_Click(object sender, EventArgs e)
         {
+            FetchUser();
             FetchOrder();
             int nextStatusId = _orderStatusesManager.GetNextStatusId(_order.DistributionChannel.Id, _order.OrderStatus.Id);
             _ordersManager.UpdateOrderStatus(_order.Id, nextStatusId);
             SendShippingEmail();
+            FetchOrder();
+            BindOrderStatusesDDL();
+            BindAcceptedStatusesRpt();
+            MapStatusControls();
         }
     }
 }
