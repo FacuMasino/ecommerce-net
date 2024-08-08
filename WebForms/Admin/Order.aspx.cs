@@ -184,6 +184,8 @@ namespace WebForms.Admin
 
         protected void OrderStatusesDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
+            FetchUser();
+
             if (_usersManager.UserHasRole(_sessionUser, (int)RolesManager.Roles.PlusRoleId))
             {
                 FetchOrder();
