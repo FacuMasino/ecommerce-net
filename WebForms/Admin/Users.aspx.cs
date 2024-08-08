@@ -59,6 +59,43 @@ namespace WebForms.Admin
             }
         }
 
+        private void UpdateButtonClass(LinkButton btn)
+        {
+            string cssClass = "";
+
+            if (_role.Id == (int)RolesManager.Roles.AdminRoleId)
+            {
+                cssClass += "bi bi-person-badge";
+            }
+            else if (_role.Id == (int)RolesManager.Roles.CustomerRoleId)
+            {
+                cssClass += "bi bi-cart";
+            }
+            else if (_role.Id == (int)RolesManager.Roles.DeliveryDriverRoleId)
+            {
+                cssClass += "bi bi-truck";
+            }
+            else if (_role.Id == (int)RolesManager.Roles.CustomerServiceRoleId)
+            {
+                cssClass += "bi bi-headset";
+            }
+            else if (_role.Id == (int)RolesManager.Roles.PlusRoleId)
+            {
+                cssClass += "bi bi-star";
+            }
+
+            if (_usersManager.UserHasRole(_user, _role))
+            {
+                cssClass += " btn btn-outline-primary";
+            }
+            else
+            {
+                cssClass += " btn btn-outline-secondary";
+            }
+
+            btn.CssClass = cssClass;
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
@@ -101,41 +138,9 @@ namespace WebForms.Admin
             {
                 _role = (Role)e.Item.DataItem;
 
-                LinkButton btn = (LinkButton)e.Item.FindControl("RoleBtn");
+                LinkButton roleBtn = (LinkButton)e.Item.FindControl("RoleBtn");
 
-                string cssClass = "";
-
-                if (_role.Id == (int)RolesManager.Roles.AdminRoleId)
-                {
-                    cssClass += "bi bi-person-badge";
-                }
-                else if (_role.Id == (int)RolesManager.Roles.CustomerRoleId)
-                {
-                    cssClass += "bi bi-cart";
-                }
-                else if (_role.Id == (int)RolesManager.Roles.DeliveryDriverRoleId)
-                {
-                    cssClass += "bi bi-truck";
-                }
-                else if (_role.Id == (int)RolesManager.Roles.CustomerServiceRoleId)
-                {
-                    cssClass += "bi bi-headset";
-                }
-                else if (_role.Id == (int)RolesManager.Roles.PlusRoleId)
-                {
-                    cssClass += "bi bi-star";
-                }
-
-                if (_usersManager.UserHasRole(_user, _role))
-                {
-                    cssClass += " btn btn-outline-primary";
-                }
-                else
-                {
-                    cssClass += " btn btn-outline-secondary";
-                }
-
-                btn.CssClass = cssClass;
+                UpdateButtonClass(roleBtn);
             }
         }
 
@@ -157,6 +162,9 @@ namespace WebForms.Admin
                 {
                     Session["user"] = _usersManager.Read(_user.UserId);
                 }
+
+                FetchUsers();
+                BindUsersRpt();
             }
         }
 

@@ -10,7 +10,7 @@ namespace WebForms.Admin
     {
         // ATTRIBUTES
 
-        private User _user;
+        private User _sessionUser;
         private UsersManager _usersManager;
         private OrdersManager _ordersManager;
 
@@ -18,7 +18,7 @@ namespace WebForms.Admin
 
         public string UserFirstName
         {
-            get { return _user.FirstName; }
+            get { return _sessionUser.FirstName; }
         }
 
         public int PendingOrders
@@ -124,18 +124,18 @@ namespace WebForms.Admin
 
         private void FetchUser()
         {
-            _user = (User)Session["user"];
+            _sessionUser = (User)Session["user"];
         }
 
         private void CheckUserPermissions()
         {
-            if (_user == null)
+            if (_sessionUser == null)
             {
                 Response.Redirect("/AccessDenied.aspx");
                 return;
             }
 
-            else if (!_usersManager.IsBackOfficeUser(_user))
+            else if (!_usersManager.IsBackOfficeUser(_sessionUser))
             {
                 Response.Redirect("/AccessDenied.aspx");
                 return;
