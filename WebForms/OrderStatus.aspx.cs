@@ -83,6 +83,13 @@ namespace WebForms
             siteMP.ShowBsToast(message);
         }
 
+        private bool UserHasTransitionRole()
+        {
+            bool userHasTransitionRole = _usersManager.UserHasRole(_sessionUser, _order.OrderStatus.Role);
+
+            return userHasTransitionRole;
+        }
+
         private void MapOrderStatusIcoLbl()
         {
             if (_order.OrderStatus.Id == 5 || _order.OrderStatus.Id == 9) // hack : ids hardcodiados tienen que coincidir con DB
@@ -99,9 +106,7 @@ namespace WebForms
 
         private void MapTransitionBtn()
         {
-            bool userHasRole = _usersManager.UserHasRole(_sessionUser, _order.OrderStatus.Role);
-
-            if (userHasRole)
+            if (UserHasTransitionRole())
             {
                 TransitionBtn.Visible = true;
                 TransitionBtn.Text = _order.OrderStatus.TransitionText;

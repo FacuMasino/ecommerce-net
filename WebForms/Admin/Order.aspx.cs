@@ -77,6 +77,23 @@ namespace WebForms.Admin
             OrderStatusesDDL.SelectedValue = _order.OrderStatus.Id.ToString();
         }
 
+        private bool UserHasTransitionRole()
+        {
+            bool userHasTransitionRole = _usersManager.UserHasRole(_sessionUser, _order.OrderStatus.Role);
+
+            if (_usersManager.IsAdmin(_sessionUser))
+            {
+                userHasTransitionRole = true;
+            }
+
+            if (_order.OrderStatus.Role.Id == (int)RolesManager.Roles.CustomerRoleId)
+            {
+                userHasTransitionRole = false;
+            }
+
+            return userHasTransitionRole;
+        }
+
         private void MapOrderStatusIcoLbl()
         {
             if (_order.OrderStatus.Id == 5 || _order.OrderStatus.Id == 9) // hack : ids hardcodiados tienen que coincidir con DB
@@ -93,9 +110,7 @@ namespace WebForms.Admin
 
         private void MapTransitionBtn()
         {
-            bool userHasRole = _usersManager.UserHasRole(_sessionUser, _order.OrderStatus.Role);
-
-            if (userHasRole)
+            if (UserHasTransitionRole())
             {
                 TransitionBtn.Visible = true;
                 TransitionBtn.Text = _order.OrderStatus.TransitionText;
@@ -249,13 +264,17 @@ namespace WebForms.Admin
         {
             FetchUser();
             FetchOrder();
-            int nextStatusId = _orderStatusesManager.GetNextStatusId(_order.DistributionChannel.Id, _order.OrderStatus.Id);
-            _ordersManager.UpdateOrderStatus(_order.Id, nextStatusId);
-            SendShippingEmail();
-            FetchOrder();
-            BindOrderStatusesDDL();
-            BindAcceptedStatusesRpt();
-            MapOrderStatus(true);
+
+            if (UserHasTransitionRole())
+            {
+                int nextStatusId = _orderStatusesManager.GetNextStatusId(_order.DistributionChannel.Id, _order.OrderStatus.Id);
+                _ordersManager.UpdateOrderStatus(_order.Id, nextStatusId);
+                SendShippingEmail();
+                FetchOrder();
+                BindOrderStatusesDDL();
+                BindAcceptedStatusesRpt();
+                MapOrderStatus(true);
+            }
         }
     }
 }

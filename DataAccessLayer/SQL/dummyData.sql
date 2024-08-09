@@ -56,8 +56,8 @@ VALUES
 		'El Samsung Galaxy S10 es una línea de teléfonos inteligentes Android de gama alta fabricados por Samsung. La línea incluye los modelos S10, S10+, S10e y S10 5G',
 		'399999.99',
 		'255630.95',
-		'5',
-		'1'
+		5,
+		1
 	),
 	(
 		'M03',
@@ -65,8 +65,8 @@ VALUES
 		'Momentos únicos, capturas reales. Capturá tus mejores momentos y revivilos cuando quieras con la cámara trasera de 13 Mpx.',
 		'228576',
 		'130200',
-		'10',
-		'5'
+		10,
+		5
 	),
 	(
 		'S99',
@@ -74,8 +74,8 @@ VALUES
 		'Experimenta una velocidad sorprendente con una SSD de velocidad ultrarrápida, una inmersión más profunda con soporte para respuesta háptica, gatillos adaptables y audio 3D',
 		'1350000',
 		'895300',
-		'15',
-		'3'
+		15,
+		3
 	),
 	(
 		'S56',
@@ -83,8 +83,8 @@ VALUES
 		'Disfruta de tu contenido favorito de Google TV en 4K HDR gracias al color, el contraste y la claridad de alta calidad de BRAVIA.',
 		'1899999',
 		'1230000',
-		'20',
-		'3'
+		20,
+		3
 	),
 	(
 		'A23',
@@ -92,8 +92,8 @@ VALUES
 		'Con este dispositivo podrás acceder a diversas aplicaciones para disfrutar de todas las herramientas y funcionalidades multimedia que ofrece. ¡Entretenimiento asegurado!',
 		'269990',
 		'215000',
-		'0',
-		'2'
+		0,
+		2
 	),	
 	(
 		'APL-VP-1',
@@ -103,8 +103,8 @@ VALUES
 		 La era de la computación espacial ya está aquí.',
 		'5600000',
 		'4050000',
-		'4',
-		'2'
+		4,
+		2
 	),
 	(
 		'APL-IPRO-15',
@@ -114,8 +114,8 @@ VALUES
 		aeroespacial y parte posterior de vidrio mate texturizado.',
 		'1450000',
 		'995000',
-		'8',
-		'2'
+		8,
+		2
 	),
 		(
 		'S256',
@@ -123,8 +123,8 @@ VALUES
 		'Neftlix en pantalla ergonomica',
 		'215000',
 		'19500',
-		'2',
-		'1'
+		2,
+		1
 	),
 	(
 		'P50 Pro',
@@ -132,8 +132,8 @@ VALUES
 		'Momentos únicos, capturas reales. Especial para ver los videos del profe Maxi.',
 		'150000',
 		'95000',
-		'10',
-		'4'
+		10,
+		4
 	),
 		(
 		'MR-40',
@@ -141,8 +141,8 @@ VALUES
 		'Descubrí la pantalla plegable.Al plegarse, adopta un tamaño pequeño y compacto. ',
 		'1299999',
 		'950000',
-		'2',
-		'5'
+		2,
+		5
 	);
 
 GO
@@ -175,13 +175,16 @@ GO
 -----------------------
 -- FEATURED PRODUCTS --
 -----------------------
+
 INSERT INTO
 	FeaturedProducts
 	(ProductId, DisplayOrder, ShowAsNew)
 VALUES
 	(3,0,0),
 	(1,1,0),
-	(6,2,0)
+	(6,2,0);
+
+GO
 
 ------------
 -- IMAGES --
@@ -193,62 +196,62 @@ INSERT INTO
 VALUES
 	(
 		'https://ik.imagekit.io/tpce16/products/S10-01-1024x1024.png?updatedAt=1717372633354',
-		'1'
+		1
 	),
 	(
 		'https://ik.imagekit.io/tpce16/products/prod-171-c1c8ff3e46f669939c15718532203779-1024-1024.jpg?updatedAt=1717374050896',
-		'1'
+		1
 	),
 	(
 		'https://ik.imagekit.io/tpce16/products/motogplay7magen_1024x1024.png?updatedAt=1717373361655',
-		'2'
+		2
 	),
 	(
 		'https://ik.imagekit.io/tpce16/products/723755131859-001-1400Wx1400H.jpeg?updatedAt=1717374542249',
-		'2'
+		2
 	),
 	(
 		'https://ik.imagekit.io/tpce16/products/Playstation-5.webp?updatedAt=1717373430693',
-		'3'
+		3
 	),
 	(
 		'https://ik.imagekit.io/tpce16/products/783661-11-729d40384c5a2ec86916826086826570-1024-1024.jpg?updatedAt=1717374648104',
-		'3'
+		3
 	),
 	(
 		'https://ik.imagekit.io/tpce16/products/Sonyx80j_4S._SL1500_1024x.webp?updatedAt=1717373650982',
-		'4'
+		4
 	),
 	(
 		'https://ik.imagekit.io/tpce16/products/Apple-Vision-Pro-1024x1024.png?updatedAt=1718281729142',
-		'6'
+		6
 	),
 	(
 		'https://ik.imagekit.io/tpce16/products/06techfix-top-fzqj-mobileMasterAt3x-1024x1024.jpg?updatedAt=1718281754644',
-		'6'
+		6
 	),
 	(
 		'https://ik.imagekit.io/tpce16/products/iphone-15-pro-a-2f70988805588cc27816964316066050-1024-1024.png?updatedAt=1718288634185',
-		'7'
+		7
 	),
 	(
 		'https://ik.imagekit.io/tpce16/products/IPHONE15PRO_WHITE_1024x1024.png_v=1710128219?updatedAt=1718288712790',
-		'7'
+		7
 	),
 	('https://arrichetta.com.ar/wp-content/uploads/2021/01/LF27T350FHLCZB-1',
-		'8'
+		8
 	),
 	(
 		'https://arrichetta.com.ar/wp-content/uploads/2021/01/LF27T350FH_3.png',
-		'8'
+		8
 	),
 	(
 		'https://clevercel.mx/cdn/shop/files/huawei-p30-lite_06ed1a77-5959-4add-8239-fabacde4fd77_700x.png?v=1713365233',
-		'9'
+		9
 	),
 	(
 		'https://armoto.vtexassets.com/arquivos/ids/165522-800-800?v=638439565882870000&width=800&height=800&aspect=true',
-		'10'
+		10
 	);
 
 GO
@@ -308,14 +311,14 @@ INSERT INTO
 	Cities
 	(CityName, ZipCode, ProvinceId)
 VALUES
-	('CABA', '1000', '1'),
-	('Villa Adelina', '1607', '1'),
-	('General Pacheco', '1617', '1'),
-	('San Fernando', '1646', '1'),
-	('Tigre', '1648', '1'),
-	('Don Torcuato', '1617', '1'),
-	('Villa Carlos Paz', '5152', '5'),
-	('San Carlos de Bariloche', '8400', '15');
+	('CABA', '1000', 1),
+	('Villa Adelina', '1607', 1),
+	('General Pacheco', '1617', 1),
+	('San Fernando', '1646', 1),
+	('Tigre', '1648', 1),
+	('Don Torcuato', '1617', 1),
+	('Villa Carlos Paz', '5152', 5),
+	('San Carlos de Bariloche', '8400', 15);
 
 GO
 
@@ -327,12 +330,12 @@ INSERT INTO
 	Addresses
 	(StreetName, StreetNumber, Flat, Details, CityId)
 VALUES
-	('Piedra Buena', '389', '2C', 'En frente de las vías', '2'),
-	('9 de Julio', '1290', '2C', 'No anda el timbre', '1'),
-	('Córdoba', '2345', '9B', 'Puerta roja', '1'),
-	('Perón', '345', '', '', '4'),
-	('Cazón', '768', '', '', '5'),
-	('Santa Fé', '1290', '', '', '3');
+	('Piedra Buena', '389', '2C', 'En frente de las vías', 2),
+	('9 de Julio', '1290', '2C', 'No anda el timbre', 1),
+	('Córdoba', '2345', '9B', 'Puerta roja', 1),
+	('Perón', '345', null, null, 4),
+	('Cazón', '768', null, null, 5),
+	('Santa Fé', '1290', null, null, 3);
 
 GO
 
@@ -416,16 +419,16 @@ INSERT INTO
 	OrderStatuses
 	(OrderStatusName, TransitionText, AcceptedText, RoleId)
 VALUES
-	('Pago en proceso', 'Marcar como abonado', 'Pago aceptado', 4), -- ID 1 Hardcoded
-	('Envío pendiente', 'Marcar como enviado', 'Pedido enviado', 4), -- ID 2 Hardcoded
-	('Paquete en camino', 'Marcar como entregado', 'Pedido entregado', 3), -- ID 3 Hardcoded
-	('Paquete en revisión', 'Marcar como recibido', 'Pedido recibido', 2), -- ID 4 Hardcoded
-	('Orden completada', 'Devolver pedido', 'Reclamo iniciado', 2), -- ID 5 Hardcoded
-	('Pago y retiro pendientes', 'Marcar como abonado y retirado', 'Pago aceptado y pedido retirado', 4), -- ID 6 Hardcoded
-	('Retiro pendiente', 'Marcar como retirado', 'Pedido retirado', 4), -- ID 7 Hardcoded
-	('Devolución pendiente', 'Marcar como devuelto', 'Pedido devuelto', 4), -- ID 8 Hardcoded
-	('Orden cancelada', 'Archivar orden', 'Orden cancelada', 1), -- ID 9 Hardcoded
-	('Envío y pago pendientes', 'Marcar como abonado y entregado', 'Pedido enviado y pago aceptado', 3); -- ID 10 Hardcoded
+	('Pago en proceso', 'Marcar como abonado', 'Pago aceptado', 4), -- ID 1
+	('Envío pendiente', 'Marcar como enviado', 'Pedido enviado', 4), -- ID 2
+	('Paquete en camino', 'Marcar como entregado', 'Pedido entregado', 3), -- ID 3
+	('Paquete en revisión', 'Marcar como recibido', 'Pedido recibido', 2), -- ID 4
+	('Orden completada', 'Devolver pedido', 'Reclamo iniciado', 2), -- ID 5
+	('Pago y retiro pendientes', 'Marcar como abonado y retirado', 'Pago aceptado y pedido retirado', 4), -- ID 6
+	('Retiro pendiente', 'Marcar como retirado', 'Pedido retirado', 4), -- ID 7
+	('Devolución pendiente', 'Marcar como devuelto', 'Pedido devuelto', 4), -- ID 8
+	('Orden cancelada', 'Archivar orden', 'Orden cancelada', 1), -- ID 9
+	('Envío y pago pendientes', 'Marcar como abonado y entregado', 'Pedido enviado y pago aceptado', 3); -- ID 10
 
 GO
 
@@ -464,7 +467,7 @@ GO
 
 INSERT INTO
 	ChannelStatuses
-	(DistributionChannelId, OrderStatusId, OrderStatusIndex) -- OrderStatusIndex Hardcoded
+	(DistributionChannelId, OrderStatusId, OrderStatusIndex)
 VALUES
 	(1, 1, 0),
 	(1, 2, 1),
