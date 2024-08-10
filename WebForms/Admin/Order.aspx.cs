@@ -81,11 +81,6 @@ namespace WebForms.Admin
         {
             bool userHasTransitionRole = _usersManager.UserHasRole(_sessionUser, _order.OrderStatus.Role);
 
-            if (_usersManager.IsAdmin(_sessionUser))
-            {
-                userHasTransitionRole = true;
-            }
-
             if (_order.OrderStatus.Role.Id == (int)RolesManager.Roles.CustomerRoleId)
             {
                 userHasTransitionRole = false;
