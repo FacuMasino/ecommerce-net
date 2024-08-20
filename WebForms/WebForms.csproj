@@ -347,6 +347,8 @@
     <Content Include="Content\site.webmanifest" />
     <Content Include="Content\bootstrap-icons.json" />
     <Content Include="Content\bootstrap-icons.scss" />
+    <Content Include="Content\fonts\bootstrap-icons.woff" />
+    <Content Include="Content\fonts\bootstrap-icons.woff2" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
@@ -354,7 +356,6 @@
     <Content Include="Scripts\bootstrap.esm.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <None Include="Properties\FTPProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
