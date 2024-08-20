@@ -447,6 +447,27 @@ end
 
 go
 
+create or alter procedure SP_Edit_Person(
+	@IsActive bit,
+	@FirstName varchar(30),
+	@LastName varchar(30),
+	@TaxCode varchar(30) = NULL,
+	@Phone varchar(30) = NULL,
+	@Email varchar(30),
+	@Birth datetime,
+	@AddressId int,
+	@PersonId int
+)
+as
+begin
+	update People
+	set IsActive = @IsActive, FirstName = @FirstName, LastName = @LastName, TaxCode = @TaxCode, Phone = @Phone, Email = @Email, Birth = @Birth, AddressId = @AddressId
+	where
+	PersonId = @PersonId;
+end
+
+go
+
 create or alter procedure SP_Delete_Person_Logically(
 	@PersonId int
 )
