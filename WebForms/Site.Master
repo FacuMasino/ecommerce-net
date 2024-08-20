@@ -230,7 +230,7 @@
 
         <div class="bg-body-tertiary mt-auto">
             <footer class="container-xxl py-3 my-4">
-                <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <ul class="nav justify-content-center">
                     <li class="nav-item"><a href="Home.aspx" class="nav-link px-2 text-body-secondary">Tienda</a>
                     </li>
                     <li class="nav-item"><a href="Cart.aspx" class="nav-link px-2 text-body-secondary">Ir
@@ -240,15 +240,6 @@
                     <li class="nav-item"><a href="#mainForm" class="nav-link px-2 text-body-secondary">Ir
                         arriba</a></li>
                 </ul>
-                <div class="d-flex align-items-center justify-content-between">
-                    <p class="text-center mb-0 text-body-secondary">© 2024 TPC - Equipo 16</p>
-                    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-                        <li class="ms-3">
-                            <a class="text-body-secondary fs-4" href="https://github.com/FacuMasino/tpc-equipo-16"
-                                target="_blank"><i class="bi bi-github"></i></a>
-                        </li>
-                    </ul>
-                </div>
             </footer>
         </div>
         <script src="Scripts/bootstrap.bundle.min.js"></script>
