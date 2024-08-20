@@ -75,7 +75,7 @@ namespace BusinessLogicLayer
                 );
                 order.PaymentType = _paymentTypesManager.Read(order.PaymentType.Id);
 
-                order.User.UserId = _usersManager.GetId(order.User.PersonId);
+                order.User.UserId = _usersManager.GetUserId(order.User.PersonId);
 
                 if (0 < order.User.UserId)
                 {
@@ -141,7 +141,7 @@ namespace BusinessLogicLayer
             );
             order.PaymentType = _paymentTypesManager.Read(order.PaymentType.Id);
 
-            order.User.UserId = _usersManager.GetId(order.User.PersonId);
+            order.User.UserId = _usersManager.GetUserId(order.User.PersonId);
 
             if (0 < order.User.UserId)
             {
@@ -158,14 +158,14 @@ namespace BusinessLogicLayer
 
         public int Add(Order order, List<ProductSet> productSets)
         {
-            HandleDeliveryAddressId(order);
-            HandlePaymentTypeId(order);
-            HandleDistributionChannelId(order);
-            HandleOrderStatusId(order);
+            _addressesManager.HandleDeliveryAddressId(order);
+            _paymentTypesManager.HandlePaymentTypeId(order);
+            _distributionChannelsManager.HandleDistributionChannelId(order);
+            _orderStatusesManager.HandleOrderStatusId(order);
 
             if (order.User.UserId == 0) // Verifica si no tiene usuario asignado
             {
-                HandlePersonId(order);
+                _peopleManager.HandlePersonId(order); // hack : reemplazar argumentos de los metodos Handle por sus semejantes de mas bajo nivel
             }
 
             try
@@ -206,102 +206,6 @@ namespace BusinessLogicLayer
             return order.Id;
         }
 
-        private void SetParameters(Order order)
-        {
-            if (order.DeliveryAddress != null)
-            {
-                _dataAccess.SetParameter("@DeliveryAddressId", order.DeliveryAddress.Id);
-            }
-            else
-            {
-                _dataAccess.SetParameter("@DeliveryAddressId", DBNull.Value);
-            }
-
-            _dataAccess.SetParameter("@PersonId", order.User.PersonId);
-            _dataAccess.SetParameter("@PaymentTypeId", order.PaymentType.Id);
-            _dataAccess.SetParameter("@DistributionChannelId", order.DistributionChannel.Id);
-            _dataAccess.SetParameter("@OrderStatusId", order.OrderStatus.Id);
-        }
-
-        private void HandleDeliveryAddressId(Order order)
-        {
-            if (order.DeliveryAddress != null)
-            {
-                order.DeliveryAddress.City.Id = _citiesManager.GetId(order.DeliveryAddress.City);
-                int foundDeliveryAddressId = _addressesManager.GetId(order.DeliveryAddress);
-
-                if (foundDeliveryAddressId == 0)
-                {
-                    _addressesManager.Add(order.DeliveryAddress);
-                    order.DeliveryAddress.Id = Helper.GetLastId("Addresses");
-                }
-                else
-                {
-                    order.DeliveryAddress.Id = foundDeliveryAddressId;
-                }
-            }
-        }
-
-        private void HandlePersonId(Order order)
-        {
-            int foundPersonId = _peopleManager.GetId(order.User);
-
-            if (foundPersonId == 0)
-            {
-                order.User.PersonId = _peopleManager.Add(order.User);
-            }
-            else
-            {
-                order.User.PersonId = foundPersonId;
-            }
-        }
-
-        private void HandlePaymentTypeId(Order order)
-        {
-            int foundPaymentTypeId = _paymentTypesManager.GetId(order.PaymentType);
-
-            if (foundPaymentTypeId == 0)
-            {
-                order.PaymentType.Id = _paymentTypesManager.Add(order.PaymentType);
-            }
-            else
-            {
-                order.PaymentType.Id = foundPaymentTypeId;
-            }
-        }
-
-        private void HandleDistributionChannelId(Order order)
-        {
-            int foundDistributionChannelId = _distributionChannelsManager.GetId(
-                order.DistributionChannel
-            );
-
-            if (foundDistributionChannelId == 0)
-            {
-                order.DistributionChannel.Id = _distributionChannelsManager.Add(
-                    order.DistributionChannel
-                );
-            }
-            else
-            {
-                order.DistributionChannel.Id = foundDistributionChannelId;
-            }
-        }
-
-        private void HandleOrderStatusId(Order order)
-        {
-            int foundOrderStatusId = _orderStatusesManager.GetId(order.OrderStatus);
-
-            if (foundOrderStatusId == 0)
-            {
-                order.OrderStatus.Id = _orderStatusesManager.Add(order.OrderStatus);
-            }
-            else
-            {
-                order.OrderStatus.Id = foundOrderStatusId;
-            }
-        }
-
         /// <summary>
         /// Actualiza el estado de una orden. En caso de estar usando Edit(), sería redundante ejecutar ambos métodos en serie.
         /// </summary>
@@ -340,6 +244,23 @@ namespace BusinessLogicLayer
             }
 
             return counter;
+        }
+
+        private void SetParameters(Order order)
+        {
+            if (order.DeliveryAddress != null)
+            {
+                _dataAccess.SetParameter("@DeliveryAddressId", order.DeliveryAddress.Id);
+            }
+            else
+            {
+                _dataAccess.SetParameter("@DeliveryAddressId", DBNull.Value);
+            }
+
+            _dataAccess.SetParameter("@PersonId", order.User.PersonId);
+            _dataAccess.SetParameter("@PaymentTypeId", order.PaymentType.Id);
+            _dataAccess.SetParameter("@DistributionChannelId", order.DistributionChannel.Id);
+            _dataAccess.SetParameter("@OrderStatusId", order.OrderStatus.Id);
         }
     }
 }

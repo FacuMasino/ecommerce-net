@@ -42,6 +42,11 @@ namespace BusinessLogicLayer
             return -1;
         }
 
+        public void Edit(PaymentType paymentType)
+        {
+            // hack : No es necesario para un MVP
+        }
+
         public int GetId(PaymentType paymentType)
         {
             if (paymentType == null)
@@ -72,6 +77,24 @@ namespace BusinessLogicLayer
             }
 
             return paymentTypeId;
+        }
+
+        public void HandlePaymentTypeId(Order order)
+        {
+            int foundPaymentTypeId = GetId(order.PaymentType);
+
+            if (foundPaymentTypeId == 0)
+            {
+                order.PaymentType.Id = Add(order.PaymentType);
+            }
+            else if (foundPaymentTypeId == order.PaymentType.Id)
+            {
+                Edit(order.PaymentType);
+            }
+            else
+            {
+                order.PaymentType.Id = foundPaymentTypeId;
+            }
         }
     }
 }

@@ -239,6 +239,51 @@ namespace BusinessLogicLayer
             return addressId;
         }
 
+        public void HandleAddressId(Person person)
+        {
+            if (person.Address != null && !person.Address.IsEmpty())
+            {
+                int foundAddressId = GetId(person.Address);
+
+                if (foundAddressId == 0)
+                {
+                    Add(person.Address);
+                    person.Address.Id = Helper.GetLastId("Addresses");
+                }
+                else if (foundAddressId == person.Address.Id)
+                {
+                    Edit(person.Address);
+                }
+                else
+                {
+                    person.Address.Id = foundAddressId;
+                }
+            }
+        }
+
+        public void HandleDeliveryAddressId(Order order)
+        {
+            if (order.DeliveryAddress != null)
+            {
+                order.DeliveryAddress.City.Id = _citiesManager.GetId(order.DeliveryAddress.City);
+                int foundDeliveryAddressId = GetId(order.DeliveryAddress);
+
+                if (foundDeliveryAddressId == 0)
+                {
+                    Add(order.DeliveryAddress);
+                    order.DeliveryAddress.Id = Helper.GetLastId("Addresses");
+                }
+                else if (foundDeliveryAddressId == order.DeliveryAddress.Id)
+                {
+                    Edit(order.DeliveryAddress);
+                }
+                else
+                {
+                    order.DeliveryAddress.Id = foundDeliveryAddressId;
+                }
+            }
+        }
+
         private void SetParameters(Address address)
         {
             _dataAccess.SetParameter("@StreetName", address.StreetName);

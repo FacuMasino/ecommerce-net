@@ -8,25 +8,39 @@ namespace WebForms
 {
     public partial class Signup : BasePage
     {
-        User _user = new User();
-        UsersManager _usersManager = new UsersManager();
-        EmailManager _emailManager = new EmailManager();
-        List<InputWrapper> _inputValidations = new List<InputWrapper>();
-        private bool _passwordsMatch = true;
+        // ATTRIBUTES
 
-        // Verificar que las contraseñas coincidan
+        private User _user;
+        private UsersManager _usersManager;
+        private EmailManager _emailManager;
+        private List<InputWrapper> _inputValidations;
+        private bool _passwordsMatch;
+
+        // CONSTRUCT
+
+        public Signup()
+        {
+            _user = new User();
+            _usersManager = new UsersManager();
+            _emailManager = new EmailManager();
+            _inputValidations = new List<InputWrapper>();
+            _passwordsMatch = true;
+        }
+
+        // PROPERTIES
+
         public bool PasswordsMatch
         {
             get { return _passwordsMatch; }
         }
 
+        // METHODS
+
         private void AddValidations()
         {
             _inputValidations.Add(new InputWrapper(UsrFirstNameTxt, typeof(string), 2, 30));
             _inputValidations.Add(new InputWrapper(UsrLastnameTxt, typeof(string), 2, 30));
-            _inputValidations.Add(
-                new InputWrapper(UsrPassTxt, typeof(string), 8, 20, false, false, true)
-            );
+            _inputValidations.Add(new InputWrapper(UsrPassTxt, typeof(string), 8, 20, false, false, true));
         }
 
         private void SendWelcomeEmail()
@@ -36,25 +50,33 @@ namespace WebForms
                 Helper.EcommerceName,
                 Helper.EcommerceUrl
             );
+
             _emailManager.SendEmail(welcomeEmail);
         }
 
-        private bool Validate()
+        private bool ValidateSignup()
         {
             if (UsrPassTxt.Text != UsrPassCheckTxt.Text)
             {
                 _passwordsMatch = false;
             }
+
             return Validator.RunValidations(_inputValidations) && _passwordsMatch;
         }
 
         public bool IsValidInput(string controlId)
         {
             InputWrapper auxIW = _inputValidations.Find(ctl => ctl.Control.ID == controlId);
+            
             if (auxIW != null && auxIW.IsValid)
+            {
                 return true;
+            }
+            
             return false;
         }
+
+        // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -70,28 +92,32 @@ namespace WebForms
                 _user.LastName = UsrLastnameTxt.Text;
                 _user.Password = UsrPassTxt.Text;
 
-                if (!Validate())
+                if (!ValidateSignup())
+                {
                     return;
-
-                ////SI EL MAIL YA ESTÁ REGISTRADO - desarrollar funcion de busqueda en la base
-
-                /*if ()
-                {
-                    Session.Add("error", "Mail no disponible para registrarse");
-
                 }
-          
-               */
 
-                if (_usersManager.Add(_user) != 0)
+                _user.PersonId = _usersManager.GetPersonId(_user.Email);
+                _user.UserId = _usersManager.GetUserId(_user.PersonId);
+
+                if (0 < _user.UserId)
                 {
-                    Session["SuccessSignup"] = true;
-                    SendWelcomeEmail();
-                    Response.Redirect("SuccessSignup.aspx", false);
+                    throw new Exception("Ya existe un usuario registrado con el email ingresado.");
                 }
                 else
                 {
-                    throw new Exception("No se pudo realizar el registro");
+                    _user.UserId = _usersManager.Add(_user);
+
+                    if (0 < _user.UserId)
+                    {
+                        Session["SuccessSignup"] = true;
+                        SendWelcomeEmail();
+                        Response.Redirect("SuccessSignup.aspx", false);
+                    }
+                    else
+                    {
+                        throw new Exception("No se pudo realizar el registro");
+                    }
                 }
             }
             catch (Exception ex)

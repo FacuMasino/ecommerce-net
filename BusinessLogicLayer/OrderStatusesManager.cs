@@ -90,6 +90,11 @@ namespace BusinessLogicLayer
             return -1;
         }
 
+        public void Edit(OrderStatus orderStatus)
+        {
+            // hack : No es necesario para un MVP
+        }
+
         public int GetId(OrderStatus orderStatus)
         {
             int orderStatusId = 0;
@@ -143,6 +148,24 @@ namespace BusinessLogicLayer
             }
 
             return orderStatusId;
+        }
+
+        public void HandleOrderStatusId(Order order)
+        {
+            int foundOrderStatusId = GetId(order.OrderStatus);
+
+            if (foundOrderStatusId == 0)
+            {
+                order.OrderStatus.Id = Add(order.OrderStatus);
+            }
+            else if (foundOrderStatusId == order.OrderStatus.Id)
+            {
+                Edit(order.OrderStatus);
+            }
+            else
+            {
+                order.OrderStatus.Id = foundOrderStatusId;
+            }
         }
     }
 }

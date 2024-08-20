@@ -237,6 +237,7 @@ namespace WebForms
         {
             LoadInputValidations();
             FetchUser();
+
             if (!IsPostBack)
             {
                 FetchShoppingCart();

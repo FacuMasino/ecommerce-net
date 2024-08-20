@@ -45,6 +45,11 @@ namespace BusinessLogicLayer
             return -1;
         }
 
+        public void Edit(DistributionChannel distributionChannel)
+        {
+            // hack : No es necesario para un MVP
+        }
+
         public int GetId(DistributionChannel distributionChannel)
         {
             int distributionChannelId = 0;
@@ -70,6 +75,24 @@ namespace BusinessLogicLayer
             }
 
             return distributionChannelId;
+        }
+
+        public void HandleDistributionChannelId(Order order)
+        {
+            int foundDistributionChannelId = GetId(order.DistributionChannel);
+
+            if (foundDistributionChannelId == 0)
+            {
+                order.DistributionChannel.Id = Add(order.DistributionChannel);
+            }
+            else if (foundDistributionChannelId == order.DistributionChannel.Id)
+            {
+                Edit(order.DistributionChannel);
+            }
+            else
+            {
+                order.DistributionChannel.Id = foundDistributionChannelId;
+            }
         }
     }
 }

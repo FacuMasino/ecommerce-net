@@ -94,7 +94,7 @@ namespace BusinessLogicLayer
 
         public int Add(User user)
         {
-            user.PersonId = _peopleManager.Add(user);
+            _peopleManager.HandlePersonId(user);
             _rolesManager.HandleRoleId(user);
 
             int UserId = 0;
@@ -181,7 +181,12 @@ namespace BusinessLogicLayer
             }
         }
 
-        public int GetId(int personId)
+        public int GetPersonId(string email)
+        {
+            return _peopleManager.GetId(email);
+        }
+
+        public int GetUserId(int personId)
         {
             int userId = 0;
 
@@ -208,7 +213,7 @@ namespace BusinessLogicLayer
             return userId;
         }
 
-        public int GetId(string email, string password)
+        public int GetUserId(string email, string password)
         {
             int userId = 0;
 
@@ -238,7 +243,7 @@ namespace BusinessLogicLayer
 
         public bool Login(User user)
         {
-            int userId = GetId(user.Email, user.Password);
+            int userId = GetUserId(user.Email, user.Password);
 
             if (userId == 0)
             {

@@ -66,20 +66,7 @@ namespace BusinessLogicLayer
 
         public int Add(Person person)
         {
-            if (person.Address != null && !person.Address.IsEmpty())
-            {
-                int foundAddressId = _addressesManager.GetId(person.Address);
-
-                if (foundAddressId == 0)
-                {
-                    _addressesManager.Add(person.Address);
-                    person.Address.Id = Helper.GetLastId("Addresses");
-                }
-                else
-                {
-                    person.Address.Id = foundAddressId;
-                }
-            }
+            _addressesManager.HandleAddressId(person);
 
             int personId = 0;
 
@@ -103,24 +90,7 @@ namespace BusinessLogicLayer
 
         public void Edit(Person person)
         {
-            if (person.Address != null)
-            {
-                int foundAddressId = _addressesManager.GetId(person.Address);
-
-                if (foundAddressId == 0)
-                {
-                    _addressesManager.Add(person.Address);
-                    person.Address.Id = Helper.GetLastId("Addresses");
-                }
-                else if (foundAddressId == person.Address.Id)
-                {
-                    _addressesManager.Edit(person.Address);
-                }
-                else
-                {
-                    person.Address.Id = foundAddressId;
-                }
-            }
+            _addressesManager.HandleAddressId(person);
 
             try
             {
@@ -188,12 +158,17 @@ namespace BusinessLogicLayer
                 return 0;
             }
 
+            return GetId(person.Email);
+        }
+
+        public int GetId(string email)
+        {
             int personId = 0;
 
             try
             {
                 _dataAccess.SetProcedure("SP_Get_Person_Id");
-                _dataAccess.SetParameter("@Email", person.Email);
+                _dataAccess.SetParameter("@Email", email);
                 _dataAccess.ExecuteRead();
 
                 if (_dataAccess.Reader.Read())
@@ -213,6 +188,42 @@ namespace BusinessLogicLayer
             return personId;
         }
 
+        public void HandlePersonId(Person person)
+        {
+            int foundPersonId = GetId(person);
+
+            if (foundPersonId == 0)
+            {
+                person.PersonId = Add(person);
+            }
+            else if (foundPersonId == person.PersonId)
+            {
+                Edit(person);
+            }
+            else
+            {
+                person.PersonId = foundPersonId;
+            }
+        }
+
+        public void HandlePersonId(Order order) // hack : reemplazar por HandlePersonId(Person person) y hacer lo mismo en todos los managers
+        {
+            int foundPersonId = GetId(order.User);
+
+            if (foundPersonId == 0)
+            {
+                order.User.PersonId = Add(order.User);
+            }
+            else if (foundPersonId == order.User.PersonId)
+            {
+                Edit(order.User);
+            }
+            else
+            {
+                order.User.PersonId = foundPersonId;
+            }
+        }
+
         private void SetParameters(Person person)
         {
             _dataAccess.SetParameter("@IsActive", person.IsActive);
@@ -222,6 +233,7 @@ namespace BusinessLogicLayer
             _dataAccess.SetParameter("@Phone", person.Phone);
             _dataAccess.SetParameter("@Email", person.Email);
             _dataAccess.SetParameter("@Birth", person.Birth);
+
             if (person.Address.Id == 0)
             {
                 _dataAccess.SetParameter("@AddressId", DBNull.Value);

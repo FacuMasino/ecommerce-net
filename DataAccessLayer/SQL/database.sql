@@ -206,7 +206,7 @@ CREATE TABLE OrderStatuses
 	OrderStatusName varchar(30) NOT NULL,
 	TransitionText varchar(50) NOT NULL,
 	AcceptedText varchar(50) NOT NULL,
-	RoleId int NOT NULL
+	RoleId tinyint FOREIGN KEY REFERENCES Roles (RoleId) NOT NULL
 ) 
 GO
 
