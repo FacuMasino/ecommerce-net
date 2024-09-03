@@ -29,7 +29,7 @@ namespace BusinessLogicLayer
                     orderStatus.Name = (string)_dataAccess.Reader["OrderStatusName"];
                     orderStatus.TransitionText = (string)_dataAccess.Reader["TransitionText"];
                     orderStatus.AcceptedText = (string)_dataAccess.Reader["AcceptedText"];
-                    orderStatus.Role.Id = (int)_dataAccess.Reader["RoleId"];
+                    orderStatus.Role.Id = Convert.ToInt32(_dataAccess.Reader["RoleId"]);
 
                     orderStatuses.Add(orderStatus);
                 }
@@ -67,7 +67,7 @@ namespace BusinessLogicLayer
                     orderStatus.Name = (string)_dataAccess.Reader["OrderStatusName"];
                     orderStatus.TransitionText = (string)_dataAccess.Reader["TransitionText"];
                     orderStatus.AcceptedText = (string)_dataAccess.Reader["AcceptedText"];
-                    orderStatus.Role.Id = (int)_dataAccess.Reader["RoleId"];
+                    orderStatus.Role.Id = Convert.ToInt32(_dataAccess.Reader["RoleId"]);
                 }
             }
             catch (Exception ex)

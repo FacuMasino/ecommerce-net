@@ -2,6 +2,6 @@ use master
 
 go
 
-alter database [ecommerce] set single_user with rollback immediate
+alter database [ecommerce_net_db] set single_user with rollback immediate
 
-drop database [ecommerce]
+drop database [ecommerce_net_db]

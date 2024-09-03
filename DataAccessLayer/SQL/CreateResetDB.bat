@@ -2,50 +2,49 @@
 setlocal enabledelayedexpansion
 
 :menu
-echo Elija una cadena de conexion:
+echo Choose database host:
 echo.
-echo 1- ana/facu
-echo 2- maxi_bangho
-echo 3- maxi_mac_1
-echo 4- maxi_mac_2
+echo 1- Localhost
+echo 2- Bangho
+echo 3- Docker (IP 192.168.0.221)
+echo 4- Docker (IP 192.168.0.20)
 echo.
 
-set /p choice=Ingrese su eleccion (1, 2, 3 o 4): 
+set /p choice=Enter your choice (1, 2, 3 or 4): 
 
 if "%choice%"=="1" (
-    set connection_string="localhost\SQLEXPRESS"
+    set database_host="localhost\SQLEXPRESS"
 ) else if "%choice%"=="2" (
-    set connection_string="BANGHO\SQLEXPRESS"
+    set database_host="BANGHO\SQLEXPRESS"
 ) else if "%choice%"=="3" (
-    set connection_string=192.168.0.221 -U SA -P Password1234
+    set database_host=192.168.0.221 -U SA -P Password1234
 ) else if "%choice%"=="4" (
-    set connection_string=192.168.0.20 -U SA -P Password1234
+    set database_host=192.168.0.20 -U SA -P Password1234
 ) else (
-    echo Opción no válida. Por favor, intente nuevamente.
+    echo Invalid option. Please try again.
     goto menu
 )
 
 cls
 echo.
-echo La cadena de conexion seleccionada es: %connection_string%
+echo The selected host data is: %database_host%
 echo.
-echo Esta a punto de escribir la base de datos DESDE 0.
-echo SE PERDERAN LOS DATOS ACTUALES, seguro desea continuar? (S/N)
+echo Do you really want to overwrite the current database?
 echo.
-set /p confirm=Su eleccion: 
+set /p confirm=Enter your choice (Y/N):
 
-if /i "%confirm%" NEQ "S" (
-    echo Operacion cancelada.
+if /i "%confirm%" NEQ "Y" (
+    echo Cancelled by user.
     pause
     goto menu
 )
 
-sqlcmd -S %connection_string% -i deleteDB.sql
-sqlcmd -S %connection_string% -i database.sql -f 65001
-sqlcmd -S %connection_string% -i functions.sql -f 65001
-sqlcmd -S %connection_string% -i storedProcedures.sql -f 65001
-sqlcmd -S %connection_string% -i views.sql -f 65001
-sqlcmd -S %connection_string% -i dummyData.sql -f 65001
+sqlcmd -S %database_host% -i deleteDB.sql
+sqlcmd -S %database_host% -i database.sql -f 65001
+sqlcmd -S %database_host% -i functions.sql -f 65001
+sqlcmd -S %database_host% -i storedProcedures.sql -f 65001
+sqlcmd -S %database_host% -i views.sql -f 65001
+sqlcmd -S %database_host% -i initialData_DummyData.sql -f 65001
 
 echo.
 pause

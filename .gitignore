@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# Moka by Paula Alvear
+DataAccessLayer/SQL/CreateResetDB_Moka.bat
+DataAccessLayer/SQL/initialData_Moka.sql
+
 # Web.Config
 WebForms/Web.config
 

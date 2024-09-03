@@ -1,4 +1,4 @@
-USE ecommerce 
+USE ecommerce_net_db 
 
 GO
 

@@ -1,10 +1,13 @@
-CREATE
-DATABASE ecommerce
-COLLATE Latin1_General_100_CI_AS_SC_UTF8;
+CREATE DATABASE ecommerce_net_db
 
 GO
 
-USE ecommerce 
+USE ecommerce_net_db
+
+GO
+
+ALTER DATABASE ecommerce_net_db
+COLLATE Latin1_General_100_CI_AS_SC_UTF8;
 
 GO
 
