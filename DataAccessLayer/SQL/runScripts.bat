@@ -39,12 +39,14 @@ if /i "%confirm%" NEQ "Y" (
     goto menu
 )
 
-sqlcmd -S %database_host% -i deleteDB.sql
-sqlcmd -S %database_host% -i database.sql -f 65001
-sqlcmd -S %database_host% -i functions.sql -f 65001
-sqlcmd -S %database_host% -i storedProcedures.sql -f 65001
-sqlcmd -S %database_host% -i views.sql -f 65001
-sqlcmd -S %database_host% -i initialData_DummyData.sql -f 65001
+sqlcmd -S %database_host% -i deleteDatabase.sql
+sqlcmd -S %database_host% -i createDatabase.sql
+sqlcmd -S %database_host% -i collateUTF8.sql
+sqlcmd -S %database_host% -i createTables.sql -f 65001
+sqlcmd -S %database_host% -i createFunctions.sql -f 65001
+sqlcmd -S %database_host% -i createStoredProcedures.sql -f 65001
+sqlcmd -S %database_host% -i createViews.sql -f 65001
+sqlcmd -S %database_host% -i insertData.sql -f 65001
 
 echo.
 pause

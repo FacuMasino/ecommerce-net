@@ -1,0 +1,1 @@
+CREATE DATABASE ecommerce_net_db;
