@@ -37,5 +37,17 @@ namespace DomainModelLayer
             Address = new Address();
             Birth = DateTime.Parse("1900/01/01");
         }
+
+        public override string ToString()
+        {
+            if (!string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName))
+            {
+                return FirstName + " " + LastName;
+            }
+            else
+            {
+                return "";
+            }
+        }
     }
 }

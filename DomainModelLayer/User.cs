@@ -24,17 +24,13 @@ namespace DomainModelLayer
 
         public override string ToString()
         {
-            if (Username != null)
+            if (!string.IsNullOrEmpty(Username))
             {
                 return Username;
             }
-            else if (FirstName != null && LastName != null)
-            {
-                return FirstName + " " + LastName;
-            }
             else
             {
-                return "";
+                return base.ToString();
             }
         }
     }

@@ -68,7 +68,7 @@
                                     <asp:Label
                                         ID="UsernameLbl"
                                         runat="server"
-                                        Text='<%#Eval("Username")%>'
+                                        Text='<%# string.IsNullOrEmpty((string)Eval("Username")) ? "No registrado" : Eval("Username") %>'
                                         CssClass="text-black">
                                     </asp:Label>
                                 </td>

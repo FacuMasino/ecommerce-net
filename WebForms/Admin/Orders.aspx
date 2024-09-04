@@ -69,7 +69,7 @@
                                     <asp:Label
                                         ID="CategoryNameLbl"
                                         runat="server"
-                                        Text='<%#Eval("User")%>'
+                                        Text='<%# Eval("User")?.ToString() ?? "N/A" %>'
                                         CssClass="text-black">
                                     </asp:Label>
                                 </td>
