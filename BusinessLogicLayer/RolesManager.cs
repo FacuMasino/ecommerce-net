@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DataAccessLayer;
 using DomainModelLayer;
 
@@ -102,7 +103,7 @@ namespace BusinessLogicLayer
 
                 if (_dataAccess.Reader.Read())
                 {
-                    roleId = (int)_dataAccess.Reader["RoleId"];
+                    roleId = Convert.ToInt32(_dataAccess.Reader["RoleId"]);
                 }
             }
             catch (Exception ex)
@@ -117,14 +118,23 @@ namespace BusinessLogicLayer
             return roleId;
         }
 
+        public Role DefaultRole()
+        {
+            return Read((int)Roles.DefaultRoleId);
+        }
+
         public void HandleRoleId(User user)
         {
             if (user.Roles == null)
             {
                 user.Roles = new List<Role>();
-                Role defaultRole = new Role { Id = (int)Roles.DefaultRoleId };
-                user.Roles.Add(defaultRole);
+                user.Roles.Add(DefaultRole());
                 return;
+            }
+
+            if (user.Roles.Count == 0)
+            {
+                user.Roles.Add(DefaultRole());
             }
 
             for (int i = 0; i < user.Roles.Count; i++)
@@ -143,6 +153,70 @@ namespace BusinessLogicLayer
                 {
                     user.Roles[i].Id = foundRoleId;
                 }
+            }
+        }
+
+        public void UpdateRelations(User user)
+        {
+            List<Role> oldRoles = List(user.UserId);
+            List<Role> newRoles = user.Roles;
+
+            List<Role> rolesToRemove = oldRoles.Except(newRoles).ToList();
+
+            foreach (Role role in rolesToRemove)
+            {
+                DeleteRelation(user.UserId, role.Id);
+                oldRoles.Remove(role);
+            }
+
+            if (oldRoles.Count == newRoles.Count)
+            {
+                return;
+            }
+
+            List<Role> rolesToAdd = newRoles.Except(oldRoles).ToList();
+
+            foreach (Role role in rolesToAdd)
+            {
+                AddRelation(user.UserId, role.Id);
+            }
+        }
+
+        public void AddRelation(int userId, int roleId)
+        {
+            try
+            {
+                _dataAccess.SetQuery("insert into UserRoles (UserId, RoleId) values (@UserId, @RoleId)");
+                _dataAccess.SetParameter("@UserId", userId);
+                _dataAccess.SetParameter("@RoleId", roleId);
+                _dataAccess.ExecuteAction();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+        }
+
+        public void DeleteRelation(int userId, int roleId)
+        {
+            try
+            {
+                _dataAccess.SetQuery("delete from UserRoles where UserId = @UserId and RoleId = @RoleId");
+                _dataAccess.SetParameter("@UserId", userId);
+                _dataAccess.SetParameter("@RoleId", roleId);
+                _dataAccess.ExecuteAction();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
             }
         }
     }

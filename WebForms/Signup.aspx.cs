@@ -12,6 +12,7 @@ namespace WebForms
 
         private User _user;
         private UsersManager _usersManager;
+        private RolesManager _rolesManager;
         private EmailManager _emailManager;
         private List<InputWrapper> _inputValidations;
         private bool _passwordsMatch;
@@ -22,6 +23,7 @@ namespace WebForms
         {
             _user = new User();
             _usersManager = new UsersManager();
+            _rolesManager = new RolesManager();
             _emailManager = new EmailManager();
             _inputValidations = new List<InputWrapper>();
             _passwordsMatch = true;
@@ -110,6 +112,7 @@ namespace WebForms
 
                     if (0 < _user.UserId)
                     {
+                        _rolesManager.UpdateRelations(_user);
                         Session["SuccessSignup"] = true;
                         SendWelcomeEmail();
                         Response.Redirect("SuccessSignup.aspx", false);
