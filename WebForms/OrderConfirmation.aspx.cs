@@ -56,8 +56,12 @@ namespace WebForms
         public bool IsValidInput(string controlId)
         {
             InputWrapper auxIW = _inputValidations.Find(ctl => ctl.Control.ID == controlId);
+            
             if (auxIW != null && auxIW.IsValid)
+            {
                 return true;
+            }
+
             return false;
         }
 
@@ -85,9 +89,7 @@ namespace WebForms
         {
             if (DeliveryRB.Checked)
             {
-                _order.DeliveryAddress.Flat = string.IsNullOrEmpty(FlatTxt.Text)
-                    ? "-"
-                    : FlatTxt.Text;
+                _order.DeliveryAddress.Flat = string.IsNullOrEmpty(FlatTxt.Text) ? "-" : FlatTxt.Text;
                 _order.DeliveryAddress.StreetName = StreetNameTxt.Text;
                 _order.DeliveryAddress.StreetNumber = StreetNumberTxt.Text;
                 _order.DeliveryAddress.City.Name = CityTxt.Text;
@@ -214,6 +216,7 @@ namespace WebForms
             {
                 MapUserData();
             }
+
             TotalLbl.Text = _shoppingCart.Total.ToString();
         }
 

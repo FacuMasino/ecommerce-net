@@ -216,6 +216,7 @@
                         </div>
                         <asp:Label ID="FlatLbl" runat="server"></asp:Label>
                         <asp:Label ID="CityLbl" runat="server"></asp:Label>
+                        <asp:Label ID="ZipCodeLbl" runat="server"></asp:Label>
                         <asp:Label ID="ProvinceLbl" runat="server"></asp:Label>
                         <asp:Label ID="DetailsLbl" runat="server"></asp:Label>
                     </div>

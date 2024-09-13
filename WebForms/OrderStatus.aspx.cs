@@ -153,6 +153,7 @@ namespace WebForms
                 StreetNumberLbl.Text = _order.DeliveryAddress.StreetNumber;
                 FlatLbl.Text = "Departamento: " + _order.DeliveryAddress.Flat;
                 CityLbl.Text = "Ciudad: " + _order.DeliveryAddress.City;
+                ZipCodeLbl.Text = "Cód. postal: " + _order.DeliveryAddress.City.ZipCode;
                 ProvinceLbl.Text = "Provincia: " + _order.DeliveryAddress.Province;
                 DetailsLbl.Text = "Detalles: " + _order.DeliveryAddress.Details;
             }

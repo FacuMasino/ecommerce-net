@@ -213,6 +213,15 @@ namespace WebForms.Admin
         protected global::System.Web.UI.WebControls.Label CityLbl;
 
         /// <summary>
+        /// ZipCodeLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ZipCodeLbl;
+
+        /// <summary>
         /// ProvinceLbl control.
         /// </summary>
         /// <remarks>

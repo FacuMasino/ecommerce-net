@@ -78,6 +78,15 @@ namespace WebForms
             return false;
         }
 
+        private void MapControlsToObj()
+        {
+            _user.Email = UsrEmailTxt.Text;
+            _user.FirstName = UsrFirstNameTxt.Text;
+            _user.LastName = UsrLastnameTxt.Text;
+            _user.Password = UsrPassTxt.Text;
+            _user.Phone = PhoneTxt.Text;
+        }
+
         // EVENTS
 
         protected void Page_Load(object sender, EventArgs e)
@@ -89,10 +98,7 @@ namespace WebForms
         {
             try
             {
-                _user.Email = UsrEmailTxt.Text;
-                _user.FirstName = UsrFirstNameTxt.Text;
-                _user.LastName = UsrLastnameTxt.Text;
-                _user.Password = UsrPassTxt.Text;
+                MapControlsToObj();
 
                 if (!ValidateSignup())
                 {

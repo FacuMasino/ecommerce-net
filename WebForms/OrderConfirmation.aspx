@@ -16,10 +16,11 @@
                 <div class="row mb-3">
                     <div class="col <%:IsValidInput("FirstNameTxt") ? "":"invalid"%>">
                         <asp:TextBox
-                            ID="FirstNameTxt"
                             runat="server"
+                            ID="FirstNameTxt"
+                            CssClass="form-control"
                             placeholder="Nombre"
-                            CssClass="form-control" required>
+                            required>
                         </asp:TextBox>
                         <div class="invalid-feedback">
                             Campo Inválido, ingrese un nombre.
@@ -27,10 +28,11 @@
                     </div>
                     <div class="col <%:IsValidInput("LastNameTxt") ? "":"invalid"%>">
                         <asp:TextBox
-                            ID="LastNameTxt"
                             runat="server"
+                            ID="LastNameTxt"
+                            CssClass="form-control"
                             placeholder="Apellido"
-                            CssClass="form-control" required>
+                            required>
                         </asp:TextBox>
                         <div class="invalid-feedback">
                             Campo Inválido, ingrese un apellido.
@@ -42,115 +44,17 @@
 
                 <div class="mb-3 <%:IsValidInput("EmailTxt") ? "":"invalid"%>">
                     <asp:TextBox
-                        ID="EmailTxt"
                         runat="server"
+                        ID="EmailTxt"
+                        CssClass="form-control"
                         placeholder="tucorreo@electronico.com"
                         TextMode="Email"
-                        CssClass="form-control" required>
+                        required>
                     </asp:TextBox>
                     <div class="invalid-feedback">
                         Campo Inválido, ingrese un correo electrónico.
                     </div>
                 </div>
-
-                <!-- Forma de entrega -->
-
-                <div class="mb-3">
-                    <h2 class="fs-5 mb-3">Forma de Entrega</h2>
-                    <div class="d-flex gap-2">
-                        <asp:RadioButton
-                            ID="DeliveryRB"
-                            runat="server"
-                            Checked="true"
-                            GroupName="Delivery"
-                            Text="Envío a domicilio"
-                            OnCheckedChanged="DeliveryRB_CheckedChanged"
-                            AutoPostBack="true" />
-                    </div>
-                    <div class="d-flex gap-2">
-                        <asp:RadioButton
-                            ID="PickupRB"
-                            runat="server"
-                            Checked="false"
-                            GroupName="Delivery"
-                            Text="Retiro en sucursal"
-                            OnCheckedChanged="PickupRB_CheckedChanged"
-                            AutoPostBack="true" />
-                    </div>
-                </div>
-
-                <!-- Dirección de entrega -->
-
-                <asp:Panel ID="AddressPnl" runat="server">
-                    <div class="mb-3">
-                        <h2 class="fs-5 mb-3">Dirección de entrega</h2>
-                    </div>
-
-                    <div class="mb-3">
-                        <asp:DropDownList
-                            ID="ProvincesDDL"
-                            runat="server"
-                            CssClass="form-select" required>
-                        </asp:DropDownList>
-                    </div>
-                    <div class="mb-3 <%:IsValidInput("CityTxt") ? "":"invalid"%>">
-                        <asp:TextBox
-                            ID="CityTxt"
-                            runat="server"
-                            placeholder="Ciudad"
-                            CssClass="form-control" required>
-                        </asp:TextBox>
-                        <div class="invalid-feedback">
-                            Campo Inválido, ingrese la ciudad.
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col <%:IsValidInput("StreetNameTxt") ? "":"invalid"%>">
-                            <asp:TextBox
-                                ID="StreetNameTxt"
-                                runat="server"
-                                placeholder="Calle"
-                                CssClass="form-control" required>
-                            </asp:TextBox>
-                            <div class="invalid-feedback">
-                                Campo Inválido, ingrese la calle.
-                            </div>
-                        </div>
-                        <div class="col <%:IsValidInput("StreetNumberTxt") ? "":"invalid"%>">
-                            <asp:TextBox
-                                ID="StreetNumberTxt"
-                                runat="server"
-                                placeholder="1234"
-                                CssClass="form-control" required>
-                            </asp:TextBox>
-                            <div class="invalid-feedback">
-                                Campo Inválido, ingrese el número.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col <%:IsValidInput("ZipCodeTxt") ? "":"invalid"%>">
-                            <asp:TextBox
-                                ID="ZipCodeTxt"
-                                runat="server"
-                                placeholder="Código Postal"
-                                CssClass="form-control" required>
-                            </asp:TextBox>
-                            <div class="invalid-feedback">
-                                Campo Inválido, ingrese el código postal.
-                            </div>
-                        </div>
-                        <div class="col">
-                            <asp:TextBox
-                                ID="FlatTxt"
-                                runat="server"
-                                placeholder="Depto/Lote (Opcional)"
-                                CssClass="form-control">
-                            </asp:TextBox>
-                        </div>
-                    </div>
-                </asp:Panel>
 
                 <!-- Método de pago -->
 
@@ -158,39 +62,152 @@
                     <h2 class="fs-5 mb-3">Método de pago</h2>
                     <div class="d-flex gap-2">
                         <asp:RadioButton
-                            ID="CashRB"
                             runat="server"
+                            ID="CashRB"
                             Checked="true"
                             GroupName="PaymentType"
                             Text="Efectivo" />
                     </div>
                     <div class="d-flex gap-2">
                         <asp:RadioButton
-                            ID="MercadoPagoRB"
                             runat="server"
+                            ID="MercadoPagoRB"
                             Checked="false"
                             GroupName="PaymentType"
                             Text="Mercado Pago" />
                     </div>
                     <div class="d-flex gap-2">
                         <asp:RadioButton
-                            ID="BankRB"
                             runat="server"
+                            ID="BankRB"
                             Checked="false"
                             GroupName="PaymentType"
                             Text="Transferencia bancaria" />
                     </div>
                 </div>
 
+                <!-- Forma de entrega -->
+
+                <div class="mb-3">
+                    <h2 class="fs-5 mb-3">Forma de entrega</h2>
+                    <div class="d-flex gap-2">
+                        <asp:RadioButton
+                            runat="server"
+                            ID="PickupRB"
+                            Checked="true"
+                            GroupName="Delivery"
+                            Text="Retiro en sucursal"
+                            OnCheckedChanged="PickupRB_CheckedChanged"
+                            AutoPostBack="true" />
+                    </div>
+                    <div class="d-flex gap-2">
+                        <asp:RadioButton
+                            runat="server"
+                            ID="DeliveryRB"
+                            Checked="false"
+                            GroupName="Delivery"
+                            Text="Envío a domicilio"
+                            OnCheckedChanged="DeliveryRB_CheckedChanged"
+                            AutoPostBack="true" />
+                    </div>
+                </div>
+
+                <!-- Dirección de entrega -->
+
+                <asp:Panel ID="AddressPnl" runat="server" Visible="false">
+                    <div class="mb-3">
+                        <h2 class="fs-5 mb-3">Dirección de entrega</h2>
+                    </div>
+                    <div class="mb-3">
+                        <asp:DropDownList
+                            runat="server"
+                            ID="ProvincesDDL"
+                            CssClass="form-select"
+                            required>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col <%:IsValidInput("CityTxt") ? "":"invalid"%>">
+                            <asp:TextBox
+                                runat="server"
+                                ID="CityTxt"
+                                CssClass="form-control"
+                                placeholder="Localidad o ciudad"
+                                required>
+                            </asp:TextBox>
+                            <div class="invalid-feedback">
+                                Campo Inválido, ingrese la localidad o ciudad.
+                            </div>
+                        </div>
+                        <div class="col <%:IsValidInput("ZipCodeTxt") ? "":"invalid"%>">
+                            <asp:TextBox
+                                runat="server"
+                                ID="ZipCodeTxt"
+                                CssClass="form-control"
+                                placeholder="Código Postal"
+                                required>
+                            </asp:TextBox>
+                            <div class="invalid-feedback">
+                                Campo Inválido, ingrese el código postal.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col <%:IsValidInput("StreetNameTxt") ? "":"invalid"%>">
+                            <asp:TextBox
+                                runat="server"
+                                ID="StreetNameTxt"
+                                CssClass="form-control"
+                                placeholder="Calle"
+                                required>
+                            </asp:TextBox>
+                            <div class="invalid-feedback">
+                                Campo Inválido, ingrese la calle.
+                            </div>
+                        </div>
+                        <div class="col <%:IsValidInput("StreetNumberTxt") ? "":"invalid"%>">
+                            <asp:TextBox
+                                runat="server"
+                                ID="StreetNumberTxt"
+                                CssClass="form-control"
+                                placeholder="1234"
+                                required>
+                            </asp:TextBox>
+                            <div class="invalid-feedback">
+                                Campo Inválido, ingrese el número.
+                            </div>
+                        </div>
+                        <div class="col">
+                            <asp:TextBox
+                                runat="server"
+                                ID="FlatTxt"
+                                CssClass="form-control"
+                                placeholder="Depto. (opcional)">
+                            </asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <asp:TextBox
+                            runat="server"
+                            ID="DetailsTxt"
+                            CssClass="form-control"
+                            TextMode="MultiLine"
+                            Rows="3"
+                            Columns="40"
+                            placeholder="Indicaciones adicionales">
+                        </asp:TextBox>
+                    </div>
+                </asp:Panel>
+
                 <!-- Realizar pedido -->
 
                 <div class="mb-3">
                     <asp:Button
-                        ID="SubmitOrder"
                         runat="server"
+                        ID="SubmitOrder"
+                        CssClass="btn btn-dark w-100"
                         Text="Realizar pedido"
-                        OnClick="SubmitOrder_Click"
-                        CssClass="btn btn-dark w-100" />
+                        OnClick="SubmitOrder_Click" />
                 </div>
             </section>
 
@@ -207,21 +224,21 @@
                                 <div class="row">
                                     <div class="col-2">
                                         <asp:Image
-                                            ID="ImageLbl"
                                             runat="server"
-                                            ImageUrl="https://cdn-icons-png.flaticon.com/512/3868/3868869.png"
-                                            CssClass="w-100 object-fit-contain rounded" />
+                                            ID="ImageLbl"
+                                            CssClass="w-100 object-fit-contain rounded"
+                                            ImageUrl="https://cdn-icons-png.flaticon.com/512/3868/3868869.png" />
                                     </div>
                                     <div class="col-7">
                                         <asp:Label
-                                            ID="BrandLbl"
                                             runat="server"
+                                            ID="BrandLbl"
                                             Text='<%#Eval("Brand")%>'>
                                         </asp:Label>
 
                                         <asp:Label
-                                            ID="NameLbl"
                                             runat="server"
+                                            ID="NameLbl"
                                             Text='<%#Eval("Name")%>'>
                                         </asp:Label>
 
@@ -249,10 +266,9 @@
                 <div class="d-flex w-100 align-items-end flex-column mt-4">
                     <h2 class="fs-4">Total</h2>
                     <asp:Label
-                        ID="TotalLbl"
                         runat="server"
-                        CssClass="fs-5"
-                        Text="$97.000,00">
+                        ID="TotalLbl"
+                        CssClass="fs-5">
                     </asp:Label>
                 </div>
             </section>

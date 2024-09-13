@@ -10,10 +10,17 @@
             <div class="mb-4 text-center">
                 <h2 class="fs-3">Crear una cuenta</h2>
             </div>
+
             <div class="mb-3">
                 <label for="UsrEmailTxt" class="form-label">Correo Electrónico</label>
-                <asp:TextBox runat="server" TextMode="email" class="form-control" ID="UsrEmailTxt"
-                    placeholder="tucorreo@correo.com" required/>
+                <asp:TextBox runat="server" TextMode="Email" class="form-control" ID="UsrEmailTxt"
+                    placeholder="tucorreo@correo.com" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="PhoneTxt" class="form-label">Teléfono</label>
+                <asp:TextBox runat="server" TextMode="Phone" class="form-control" ID="PhoneTxt"
+                    placeholder="11 1234 1234" required />
             </div>
 
             <div class="mb-3 <%:IsValidInput("UsrFirstNameTxt") ? "":"invalid"%>">

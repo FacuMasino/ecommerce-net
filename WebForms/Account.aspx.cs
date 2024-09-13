@@ -9,7 +9,16 @@ namespace WebForms
         // ATTRIBUTES
 
         User _user;
-        private UsersManager _usersManager = new UsersManager();
+        private UsersManager _usersManager;
+        private ProvincesManager _provincesManager;
+
+        // CONSTRUCT
+
+        public Account()
+        {
+            _usersManager = new UsersManager();
+            _provincesManager = new ProvincesManager();
+        }
 
         // METHODS
 
@@ -18,7 +27,7 @@ namespace WebForms
             _user = (User)Session["user"];
         }
 
-        private void MapControls()
+        private void MapObjToControls()
         {
             if (_user != null)
             {
@@ -26,17 +35,24 @@ namespace WebForms
                 LastNameTxt.Text = _user.LastName;
                 FirstNameTxt.Text = _user.FirstName;
                 TaxCodeTxt.Text = _user.TaxCode;
-                EmailTxt.Enabled = false;
                 EmailTxt.Text = _user.Email;
                 StreetNameTxt.Text = _user.Address.StreetName;
                 StreetNumberTxt.Text = _user.Address.StreetNumber;
                 FlatTxt.Text = _user.Address.Flat;
                 CityTxt.Text = _user.Address.City.Name;
                 ZipCodeTxt.Text = _user.Address.City.ZipCode;
-
                 PhoneTxt.Text = _user.Phone;
                 BirthTxt.Text = _user.Birth.ToString("yyyy-MM-dd");
             }
+        }
+
+        private void BindProvincesDDL()
+        {
+            ProvincesDDL.DataSource = _provincesManager.List(1);
+            //ProvincesDDL.DataTextField = "Name";
+            //ProvincesDDL.DataValueField = "Id";
+            ProvincesDDL.DataBind();
+            ProvincesDDL.SelectedIndex = 0;
         }
 
         // EVENTS
@@ -46,8 +62,14 @@ namespace WebForms
             if (!IsPostBack)
             {
                 FetchUser();
-                MapControls();
+                BindProvincesDDL();
+                MapObjToControls();
             }
+        }
+
+        protected void SaveBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
