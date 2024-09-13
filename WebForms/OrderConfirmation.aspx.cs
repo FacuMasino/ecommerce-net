@@ -12,6 +12,7 @@ namespace WebForms
     {
         // ATTRIBUTES
 
+        private User _user;
         private Order _order;
         private ShoppingCart _shoppingCart;
         private OrdersManager _ordersManager;
@@ -20,14 +21,13 @@ namespace WebForms
         private PaymentTypesManager _paymentTypesManager;
         private DistributionChannelsManager _distributionChannelsManager;
         private OrderStatusesManager _orderStatusesManager;
-        private User _user;
-
         private List<InputWrapper> _inputValidations;
 
         // CONSTRUCT
 
         public OrderConfirmation()
         {
+            _user = new User();
             _order = new Order();
             _shoppingCart = new ShoppingCart();
             _ordersManager = new OrdersManager();
@@ -37,7 +37,6 @@ namespace WebForms
             _distributionChannelsManager = new DistributionChannelsManager();
             _orderStatusesManager = new OrderStatusesManager();
             _inputValidations = new List<InputWrapper>();
-            _user = new User();
         }
 
         // METHODS
@@ -51,6 +50,7 @@ namespace WebForms
             _inputValidations.Add(new InputWrapper(StreetNameTxt, typeof(string), 3, 30));
             _inputValidations.Add(new InputWrapper(StreetNumberTxt, typeof(string), 1, 30));
             _inputValidations.Add(new InputWrapper(ZipCodeTxt, typeof(string), 3, 30));
+            _inputValidations.Add(new InputWrapper(DetailsTxt, typeof(string), 3, 300));
         }
 
         public bool IsValidInput(string controlId)
@@ -79,24 +79,35 @@ namespace WebForms
         private void BindProvincesDDL()
         {
             ProvincesDDL.DataSource = _provincesManager.List(1);
-            //ProvincesDDL.DataTextField = "Name";
-            //ProvincesDDL.DataValueField = "Id";
+            ProvincesDDL.DataTextField = "Name";
+            ProvincesDDL.DataValueField = "Id";
             ProvincesDDL.DataBind();
             ProvincesDDL.SelectedIndex = 0;
+        }
+
+        private void ToggleAddressFields(bool enabled)
+        {
+            ProvincesDDL.Enabled = enabled;
+            CityTxt.Enabled = enabled;
+            ZipCodeTxt.Enabled = enabled;
+            StreetNameTxt.Enabled = enabled;
+            StreetNumberTxt.Enabled = enabled;
+            FlatTxt.Enabled = enabled;
+            DetailsTxt.Enabled = enabled;
         }
 
         private void SetAddress()
         {
             if (DeliveryRB.Checked)
             {
-                _order.DeliveryAddress.Flat = string.IsNullOrEmpty(FlatTxt.Text) ? "-" : FlatTxt.Text;
-                _order.DeliveryAddress.StreetName = StreetNameTxt.Text;
-                _order.DeliveryAddress.StreetNumber = StreetNumberTxt.Text;
+                _order.DeliveryAddress.Country.Name = "Argentina";
+                _order.DeliveryAddress.Province.Name = ProvincesDDL.Text;
                 _order.DeliveryAddress.City.Name = CityTxt.Text;
                 _order.DeliveryAddress.City.ZipCode = ZipCodeTxt.Text;
-                _order.DeliveryAddress.Province.Name = ProvincesDDL.Text;
-                _order.DeliveryAddress.Country.Name = "Argentina";
-                _order.DeliveryAddress.Details = "";
+                _order.DeliveryAddress.StreetName = StreetNameTxt.Text;
+                _order.DeliveryAddress.StreetNumber = StreetNumberTxt.Text;
+                _order.DeliveryAddress.Flat = string.IsNullOrEmpty(FlatTxt.Text) ? "-" : FlatTxt.Text;
+                _order.DeliveryAddress.Details = DetailsTxt.Text;
             }
             else
             {
@@ -188,33 +199,33 @@ namespace WebForms
             SetOrderStatus();
         }
 
-        private void MapUserData()
+        private void MapUserToControls()
         {
             FirstNameTxt.Text = _user.FirstName;
             LastNameTxt.Text = _user.LastName;
             EmailTxt.Text = _user.Email;
-
-            StreetNameTxt.Text = _user.Address.StreetName;
-            StreetNumberTxt.Text = _user.Address.StreetNumber;
+            ProvincesDDL.SelectedValue = _user.Address.Province.Id.ToString();
             CityTxt.Text = _user.Address.City.Name;
             ZipCodeTxt.Text = _user.Address.City.ZipCode;
-            ProvincesDDL.Text = _user.Address.Province.Name;
-
-            setOnlyReadData();
+            StreetNameTxt.Text = _user.Address.StreetName;
+            StreetNumberTxt.Text = _user.Address.StreetNumber;
+            FlatTxt.Text = _user.Address.Flat;
+            DetailsTxt.Text = _user.Address.Details;
         }
 
-        private void setOnlyReadData()
+        private void TogglePersonalFields(bool enabled = false)
         {
-            FirstNameTxt.Enabled = false;
-            LastNameTxt.Enabled = false;
-            EmailTxt.Enabled = false;
+            FirstNameTxt.Enabled = enabled;
+            LastNameTxt.Enabled = enabled;
+            EmailTxt.Enabled = enabled;
         }
 
         private void MapControls()
         {
-            if (_user.UserId != 0)
+            if (0 < _user.UserId)
             {
-                MapUserData();
+                MapUserToControls();
+                TogglePersonalFields();
             }
 
             TotalLbl.Text = _shoppingCart.Total.ToString();
@@ -247,6 +258,7 @@ namespace WebForms
                 BindProductSetsRpt();
                 BindProvincesDDL();
                 MapControls();
+                ToggleAddressFields(false);
             }
         }
 
@@ -275,11 +287,13 @@ namespace WebForms
         protected void DeliveryRB_CheckedChanged(object sender, EventArgs e)
         {
             AddressPnl.Visible = !AddressPnl.Visible;
+            ToggleAddressFields(AddressPnl.Visible);
         }
 
         protected void PickupRB_CheckedChanged(object sender, EventArgs e)
         {
             AddressPnl.Visible = !AddressPnl.Visible;
+            ToggleAddressFields(AddressPnl.Visible);
         }
 
         protected void SubmitOrder_Click(object sender, EventArgs e)
@@ -292,7 +306,7 @@ namespace WebForms
 
             try
             {
-                FetchShoppingCart(); // hack : agregar update panel para no perder los datos al hacer click en SubmitOrder
+                FetchShoppingCart();
                 SetOrder();
                 _order.Id = _ordersManager.Add(_order, _shoppingCart.ProductSets);
             }
@@ -301,16 +315,16 @@ namespace WebForms
                 throw ex;
             }
 
-            Session.Remove("shoppingCart"); // Limpiar carrito
+            Session.Remove("shoppingCart");
             Session.Remove("CurrentProductSets");
 
             if (_user.UserId == 0)
             {
-                Response.Redirect($"OrderStatus.aspx?orderId={_order.Id}&success=true"); // Si no inició sesión, redirigir al detalle de orden
+                Response.Redirect($"OrderStatus.aspx?orderId={_order.Id}&success=true");
             }
             else
             {
-                Response.Redirect("Orders.aspx"); // Si inició sesión, redirigir a las ordenes del usuario
+                Response.Redirect("Orders.aspx");
             }
         }
     }

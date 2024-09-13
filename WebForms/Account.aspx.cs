@@ -27,7 +27,7 @@ namespace WebForms
             _user = (User)Session["user"];
         }
 
-        private void MapObjToControls()
+        private void MapControls()
         {
             if (_user != null)
             {
@@ -35,22 +35,25 @@ namespace WebForms
                 LastNameTxt.Text = _user.LastName;
                 FirstNameTxt.Text = _user.FirstName;
                 TaxCodeTxt.Text = _user.TaxCode;
+                BirthTxt.Text = _user.Birth.ToString("yyyy-MM-dd");
                 EmailTxt.Text = _user.Email;
+                PhoneTxt.Text = _user.Phone;
+                UsernameTxt.Text = _user.Username;
+                ProvincesDDL.SelectedValue = _user.Address.Province.Id.ToString();
+                CityTxt.Text = _user.Address.City.Name;
+                ZipCodeTxt.Text = _user.Address.City.ZipCode;
                 StreetNameTxt.Text = _user.Address.StreetName;
                 StreetNumberTxt.Text = _user.Address.StreetNumber;
                 FlatTxt.Text = _user.Address.Flat;
-                CityTxt.Text = _user.Address.City.Name;
-                ZipCodeTxt.Text = _user.Address.City.ZipCode;
-                PhoneTxt.Text = _user.Phone;
-                BirthTxt.Text = _user.Birth.ToString("yyyy-MM-dd");
+                DetailsTxt.Text = _user.Address.Details;
             }
         }
 
         private void BindProvincesDDL()
         {
             ProvincesDDL.DataSource = _provincesManager.List(1);
-            //ProvincesDDL.DataTextField = "Name";
-            //ProvincesDDL.DataValueField = "Id";
+            ProvincesDDL.DataTextField = "Name";
+            ProvincesDDL.DataValueField = "Id";
             ProvincesDDL.DataBind();
             ProvincesDDL.SelectedIndex = 0;
         }
@@ -63,7 +66,7 @@ namespace WebForms
             {
                 FetchUser();
                 BindProvincesDDL();
-                MapObjToControls();
+                MapControls();
             }
         }
 
