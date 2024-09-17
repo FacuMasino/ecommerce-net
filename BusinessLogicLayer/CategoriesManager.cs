@@ -286,11 +286,7 @@ namespace BusinessLogicLayer
         private void SetParameters(Category category)
         {
             _dataAccess.SetParameter("@IsActive", category.IsActive);
-
-            if (category.Name != null)
-            {
-                _dataAccess.SetParameter("@CategoryName", category.Name);
-            }
+            _dataAccess.SetParameter("@CategoryName", category.Name);
         }
     }
 }

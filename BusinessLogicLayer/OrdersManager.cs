@@ -158,14 +158,14 @@ namespace BusinessLogicLayer
 
         public int Add(Order order, List<ProductSet> productSets)
         {
-            _addressesManager.HandleDeliveryAddressId(order);
-            _paymentTypesManager.HandlePaymentTypeId(order);
-            _distributionChannelsManager.HandleDistributionChannelId(order);
-            _orderStatusesManager.HandleOrderStatusId(order);
+            _addressesManager.HandleAddressId(order.DeliveryAddress);
+            _paymentTypesManager.HandlePaymentTypeId(order.PaymentType);
+            _distributionChannelsManager.HandleDistributionChannelId(order.DistributionChannel);
+            _orderStatusesManager.HandleOrderStatusId(order.OrderStatus);
 
-            if (order.User.UserId == 0) // Verifica si no tiene usuario asignado
+            if (order.User.UserId == 0)
             {
-                _peopleManager.HandlePersonId(order);
+                _peopleManager.HandlePersonId(order.User);
             }
 
             try
@@ -248,6 +248,15 @@ namespace BusinessLogicLayer
 
         private void SetParameters(Order order)
         {
+            if (order.DeliveryDate != null)
+            {
+                _dataAccess.SetParameter("@DeliveryDate", order.DeliveryDate);
+            }
+            else
+            {
+                _dataAccess.SetParameter("@DeliveryDate", DBNull.Value);
+            }
+
             if (order.DeliveryAddress != null)
             {
                 _dataAccess.SetParameter("@DeliveryAddressId", order.DeliveryAddress.Id);
@@ -257,10 +266,10 @@ namespace BusinessLogicLayer
                 _dataAccess.SetParameter("@DeliveryAddressId", DBNull.Value);
             }
 
-            _dataAccess.SetParameter("@PersonId", order.User.PersonId);
-            _dataAccess.SetParameter("@PaymentTypeId", order.PaymentType.Id);
-            _dataAccess.SetParameter("@DistributionChannelId", order.DistributionChannel.Id);
             _dataAccess.SetParameter("@OrderStatusId", order.OrderStatus.Id);
+            _dataAccess.SetParameter("@PersonId", order.User.PersonId);
+            _dataAccess.SetParameter("@DistributionChannelId", order.DistributionChannel.Id);
+            _dataAccess.SetParameter("@PaymentTypeId", order.PaymentType.Id);
         }
     }
 }

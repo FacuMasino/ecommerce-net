@@ -239,46 +239,24 @@ namespace BusinessLogicLayer
             return addressId;
         }
 
-        public void HandleAddressId(Person person)
+        public void HandleAddressId(Address address)
         {
-            if (person.Address != null && !person.Address.IsEmpty())
+            if (address != null && !address.IsEmpty())
             {
-                int foundAddressId = GetId(person.Address);
+                int foundId = GetId(address);
 
-                if (foundAddressId == 0)
+                if (foundId == 0)
                 {
-                    Add(person.Address);
-                    person.Address.Id = Helper.GetLastId("Addresses");
+                    Add(address);
+                    address.Id = Helper.GetLastId("Addresses");
                 }
-                else if (foundAddressId == person.Address.Id)
+                else if (foundId == address.Id)
                 {
-                    Edit(person.Address);
+                    Edit(address);
                 }
                 else
                 {
-                    person.Address.Id = foundAddressId;
-                }
-            }
-        }
-
-        public void HandleDeliveryAddressId(Order order) // hack : unificar con HandleAddressId(Person person) y eventualmente crear funcion generica
-        {
-            if (order.DeliveryAddress != null)
-            {
-                int foundDeliveryAddressId = GetId(order.DeliveryAddress);
-
-                if (foundDeliveryAddressId == 0)
-                {
-                    Add(order.DeliveryAddress);
-                    order.DeliveryAddress.Id = Helper.GetLastId("Addresses");
-                }
-                else if (foundDeliveryAddressId == order.DeliveryAddress.Id)
-                {
-                    Edit(order.DeliveryAddress);
-                }
-                else
-                {
-                    order.DeliveryAddress.Id = foundDeliveryAddressId;
+                    address.Id = foundId;
                 }
             }
         }

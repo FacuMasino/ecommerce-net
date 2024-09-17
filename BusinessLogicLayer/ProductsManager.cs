@@ -229,10 +229,28 @@ namespace BusinessLogicLayer
         {
             _dataAccess.SetParameter("@Code", product.Code);
             _dataAccess.SetParameter("@ProductName", product.Name);
-            _dataAccess.SetParameter("@ProductDescription", product.Description);
+
+            if (product.Description != null)
+            {
+                _dataAccess.SetParameter("@ProductDescription", product.Description);
+            }
+            else
+            {
+                _dataAccess.SetParameter("@ProductDescription", DBNull.Value);
+            }
+            
             _dataAccess.SetParameter("@Price", product.Price);
             _dataAccess.SetParameter("@Cost", product.Cost);
-            _dataAccess.SetParameter("@BrandId", product.Brand?.Id);
+
+            if (product.Brand != null)
+            {
+                _dataAccess.SetParameter("@BrandId", product.Brand.Id);
+            }
+            else
+            {
+                _dataAccess.SetParameter("@BrandId", DBNull.Value);
+            }
+
             _dataAccess.SetParameter("@Stock", product.Stock);
             _dataAccess.SetParameter("@IsActive", product.IsActive);
         }

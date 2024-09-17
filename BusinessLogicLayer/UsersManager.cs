@@ -95,7 +95,7 @@ namespace BusinessLogicLayer
         public int Add(User user)
         {
             _peopleManager.HandlePersonId(user);
-            _rolesManager.HandleRoleId(user);
+            _rolesManager.HandleRolesId(user.Roles);
 
             int UserId = 0;
 
@@ -120,7 +120,7 @@ namespace BusinessLogicLayer
         public void Edit(User user)
         {
             _peopleManager.Edit(user);
-            _rolesManager.HandleRoleId(user);
+            _rolesManager.HandleRolesId(user.Roles);
 
             try
             {
@@ -325,7 +325,15 @@ namespace BusinessLogicLayer
 
         private void SetParameters(User user)
         {
-            _dataAccess.SetParameter("@Username", user.Username);
+            if (user.Username != null)
+            {
+                _dataAccess.SetParameter("@Username", user.Username);
+            }
+            else
+            {
+                _dataAccess.SetParameter("@Username", DBNull.Value);
+            }
+            
             _dataAccess.SetParameter("@UserPassword", user.Password);
             _dataAccess.SetParameter("@PersonId", user.PersonId);
         }

@@ -206,11 +206,7 @@ namespace BusinessLogicLayer
         private void SetParameters(Brand brand)
         {
             _dataAccess.SetParameter("@IsActive", brand.IsActive);
-
-            if (brand.Name != null)
-            {
-                _dataAccess.SetParameter("@BrandName", brand.Name);
-            }
+            _dataAccess.SetParameter("@BrandName", brand.Name);
         }
 
         private List<int> GetBrandsIds(int productId)

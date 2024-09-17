@@ -85,21 +85,21 @@ namespace BusinessLogicLayer
             return distributionChannelId;
         }
 
-        public void HandleDistributionChannelId(Order order)
+        public void HandleDistributionChannelId(DistributionChannel distributionChannel)
         {
-            int foundDistributionChannelId = GetId(order.DistributionChannel);
+            int foundId = GetId(distributionChannel);
 
-            if (foundDistributionChannelId == 0)
+            if (foundId == 0)
             {
-                order.DistributionChannel.Id = Add(order.DistributionChannel);
+                distributionChannel.Id = Add(distributionChannel);
             }
-            else if (foundDistributionChannelId == order.DistributionChannel.Id)
+            else if (foundId == distributionChannel.Id)
             {
-                Edit(order.DistributionChannel);
+                Edit(distributionChannel);
             }
             else
             {
-                order.DistributionChannel.Id = foundDistributionChannelId;
+                distributionChannel.Id = foundId;
             }
         }
     }

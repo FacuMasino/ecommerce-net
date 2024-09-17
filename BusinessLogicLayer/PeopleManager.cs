@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using DataAccessLayer;
 using DomainModelLayer;
 using UtilitiesLayer;
@@ -66,7 +67,7 @@ namespace BusinessLogicLayer
 
         public int Add(Person person)
         {
-            _addressesManager.HandleAddressId(person);
+            _addressesManager.HandleAddressId(person.Address);
 
             int personId = 0;
 
@@ -90,7 +91,7 @@ namespace BusinessLogicLayer
 
         public void Edit(Person person)
         {
-            _addressesManager.HandleAddressId(person);
+            _addressesManager.HandleAddressId(person.Address);
 
             try
             {
@@ -190,37 +191,19 @@ namespace BusinessLogicLayer
 
         public void HandlePersonId(Person person)
         {
-            int foundPersonId = GetId(person);
+            int foundId = GetId(person);
 
-            if (foundPersonId == 0)
+            if (foundId == 0)
             {
                 person.PersonId = Add(person);
             }
-            else if (foundPersonId == person.PersonId)
+            else if (foundId == person.PersonId)
             {
                 Edit(person);
             }
             else
             {
-                person.PersonId = foundPersonId;
-            }
-        }
-
-        public void HandlePersonId(Order order) // hack : reemplazar por HandlePersonId(Person person) y hacer lo mismo en todos los managers
-        {
-            int foundPersonId = GetId(order.User);
-
-            if (foundPersonId == 0)
-            {
-                order.User.PersonId = Add(order.User);
-            }
-            else if (foundPersonId == order.User.PersonId)
-            {
-                Edit(order.User);
-            }
-            else
-            {
-                order.User.PersonId = foundPersonId;
+                person.PersonId = foundId;
             }
         }
 
@@ -229,12 +212,37 @@ namespace BusinessLogicLayer
             _dataAccess.SetParameter("@IsActive", person.IsActive);
             _dataAccess.SetParameter("@FirstName", person.FirstName);
             _dataAccess.SetParameter("@LastName", person.LastName);
-            _dataAccess.SetParameter("@TaxCode", person.TaxCode);
-            _dataAccess.SetParameter("@Phone", person.Phone);
-            _dataAccess.SetParameter("@Email", person.Email);
-            _dataAccess.SetParameter("@Birth", person.Birth);
 
-            if (person.Address.Id == 0)
+            if (person.TaxCode != null)
+            {
+                _dataAccess.SetParameter("@TaxCode", person.TaxCode);
+            }
+            else
+            {
+                _dataAccess.SetParameter("@TaxCode", DBNull.Value);
+            }
+
+            if (person.Phone != null)
+            {
+                _dataAccess.SetParameter("@Phone", person.Phone);
+            }
+            else
+            {
+                _dataAccess.SetParameter("@Phone", DBNull.Value);
+            }
+
+            _dataAccess.SetParameter("@Email", person.Email);
+
+            if (person.Birth != null)
+            {
+                _dataAccess.SetParameter("@Birth", person.Birth);
+            }
+            else
+            {
+                _dataAccess.SetParameter("@Birth", DBNull.Value);
+            }
+
+            if (person.Address == null || person.Address.Id == 0)
             {
                 _dataAccess.SetParameter("@AddressId", DBNull.Value);
             }

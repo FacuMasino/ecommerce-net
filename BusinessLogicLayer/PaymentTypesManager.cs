@@ -86,21 +86,21 @@ namespace BusinessLogicLayer
             return paymentTypeId;
         }
 
-        public void HandlePaymentTypeId(Order order)
+        public void HandlePaymentTypeId(PaymentType paymentType)
         {
-            int foundPaymentTypeId = GetId(order.PaymentType);
+            int foundId = GetId(paymentType);
 
-            if (foundPaymentTypeId == 0)
+            if (foundId == 0)
             {
-                order.PaymentType.Id = Add(order.PaymentType);
+                paymentType.Id = Add(paymentType);
             }
-            else if (foundPaymentTypeId == order.PaymentType.Id)
+            else if (foundId == paymentType.Id)
             {
-                Edit(order.PaymentType);
+                Edit(paymentType);
             }
             else
             {
-                order.PaymentType.Id = foundPaymentTypeId;
+                paymentType.Id = foundId;
             }
         }
     }

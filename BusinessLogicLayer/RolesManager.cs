@@ -123,36 +123,41 @@ namespace BusinessLogicLayer
             return Read((int)Ids.DefaultRoleId);
         }
 
-        public void HandleRoleId(User user)
+        public void HandleRolesId(List<Role> roles)
         {
-            if (user.Roles == null)
+            if (roles == null)
             {
-                user.Roles = new List<Role>();
-                user.Roles.Add(DefaultRole());
+                roles = new List<Role>();
+                roles.Add(DefaultRole());
                 return;
             }
 
-            if (user.Roles.Count == 0)
+            if (roles.Count == 0)
             {
-                user.Roles.Add(DefaultRole());
+                roles.Add(DefaultRole());
             }
 
-            for (int i = 0; i < user.Roles.Count; i++)
+            for (int i = 0; i < roles.Count; i++)
             {
-                int foundRoleId = GetId(user.Roles[i]);
+                HandleRoleId(roles[i]);
+            }
+        }
 
-                if (foundRoleId == 0)
-                {
-                    user.Roles[i].Id = Add(user.Roles[i]);
-                }
-                else if (foundRoleId == user.Roles[i].Id)
-                {
-                    Edit(user.Roles[i]);
-                }
-                else
-                {
-                    user.Roles[i].Id = foundRoleId;
-                }
+        public void HandleRoleId(Role role)
+        {
+            int foundId = GetId(role);
+
+            if (foundId == 0)
+            {
+                role.Id = Add(role);
+            }
+            else if (foundId == role.Id)
+            {
+                Edit(role);
+            }
+            else
+            {
+                role.Id = foundId;
             }
         }
 

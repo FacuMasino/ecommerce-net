@@ -157,21 +157,21 @@ namespace BusinessLogicLayer
             return orderStatusId;
         }
 
-        public void HandleOrderStatusId(Order order)
+        public void HandleOrderStatusId(OrderStatus orderStatus)
         {
-            int foundOrderStatusId = GetId(order.OrderStatus);
+            int foundId = GetId(orderStatus);
 
-            if (foundOrderStatusId == 0)
+            if (foundId == 0)
             {
-                order.OrderStatus.Id = Add(order.OrderStatus);
+                orderStatus.Id = Add(orderStatus);
             }
-            else if (foundOrderStatusId == order.OrderStatus.Id)
+            else if (foundId == orderStatus.Id)
             {
-                Edit(order.OrderStatus);
+                Edit(orderStatus);
             }
             else
             {
-                order.OrderStatus.Id = foundOrderStatusId;
+                orderStatus.Id = foundId;
             }
         }
     }
