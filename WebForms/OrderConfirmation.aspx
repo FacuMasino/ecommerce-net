@@ -139,13 +139,12 @@
                                 Campo Inválido, ingrese la localidad o ciudad.
                             </div>
                         </div>
-                        <div class="col <%:IsValidInput("ZipCodeTxt") ? "":"invalid"%>">
+                        <div class="col">
                             <asp:TextBox
                                 runat="server"
                                 ID="ZipCodeTxt"
                                 CssClass="form-control"
-                                placeholder="Código Postal"
-                                required>
+                                placeholder="Código Postal">
                             </asp:TextBox>
                             <div class="invalid-feedback">
                                 Campo Inválido, ingrese el código postal.

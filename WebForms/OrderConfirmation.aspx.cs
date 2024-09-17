@@ -54,8 +54,6 @@ namespace WebForms
             _inputValidations.Add(new InputWrapper(CityTxt, typeof(string), 3, 30));
             _inputValidations.Add(new InputWrapper(StreetNameTxt, typeof(string), 3, 30));
             _inputValidations.Add(new InputWrapper(StreetNumberTxt, typeof(string), 1, 30));
-            _inputValidations.Add(new InputWrapper(ZipCodeTxt, typeof(string), 3, 30));
-            _inputValidations.Add(new InputWrapper(DetailsTxt, typeof(string), 3, 300));
         }
 
         public bool IsValidInput(string controlId)
@@ -131,12 +129,12 @@ namespace WebForms
                 _order.DeliveryAddress.Province.Id = Convert.ToInt32(ProvincesDDL.SelectedValue);
                 _order.DeliveryAddress.Province = _provincesManager.Read(_order.DeliveryAddress.Province.Id);
                 _order.DeliveryAddress.City.Name = CityTxt.Text;
-                _order.DeliveryAddress.City.ZipCode = ZipCodeTxt.Text;
+                _order.DeliveryAddress.City.ZipCode = !string.IsNullOrEmpty(ZipCodeTxt.Text) ? ZipCodeTxt.Text : null;
                 _order.DeliveryAddress.City.Id = _citiesManager.GetId(_order.DeliveryAddress.City);
                 _order.DeliveryAddress.StreetName = StreetNameTxt.Text;
                 _order.DeliveryAddress.StreetNumber = StreetNumberTxt.Text;
-                _order.DeliveryAddress.Flat = !string.IsNullOrEmpty(FlatTxt.Text) ? FlatTxt.Text : _order.DeliveryAddress.Flat;
-                _order.DeliveryAddress.Details = DetailsTxt.Text;
+                _order.DeliveryAddress.Flat = !string.IsNullOrEmpty(FlatTxt.Text) ? FlatTxt.Text : null;
+                _order.DeliveryAddress.Details = !string.IsNullOrEmpty(DetailsTxt.Text) ? DetailsTxt.Text : null;
             }
             else
             {
@@ -309,10 +307,11 @@ namespace WebForms
                 return;
             }
 
+            FetchShoppingCart();
+            MapOrder();
+
             try
             {
-                FetchShoppingCart();
-                MapOrder();
                 _order.Id = _ordersManager.Add(_order, _shoppingCart.ProductSets);
             }
             catch (Exception ex)

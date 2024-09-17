@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using DataAccessLayer;
 using DomainModelLayer;
 
@@ -128,7 +129,16 @@ namespace BusinessLogicLayer
         private void SetParameters(City city, int provinceId)
         {
             _dataAccess.SetParameter("@CityName", city.Name);
-            _dataAccess.SetParameter("@ZipCode", city.ZipCode);
+
+            if (city.ZipCode != null)
+            {
+                _dataAccess.SetParameter("@ZipCode", city.ZipCode);
+            }
+            else
+            {
+                _dataAccess.SetParameter("@ZipCode", DBNull.Value);
+            }
+            
             _dataAccess.SetParameter("@ProvinceId", provinceId);
         }
     }

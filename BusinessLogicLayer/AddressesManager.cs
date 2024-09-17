@@ -287,8 +287,25 @@ namespace BusinessLogicLayer
         {
             _dataAccess.SetParameter("@StreetName", address.StreetName);
             _dataAccess.SetParameter("@StreetNumber", address.StreetNumber);
-            _dataAccess.SetParameter("@Flat", address.Flat);
-            _dataAccess.SetParameter("@Details", address.Details);
+
+            if (address.Flat != null)
+            {
+                _dataAccess.SetParameter("@Flat", address.Flat);
+            }
+            else
+            {
+                _dataAccess.SetParameter("@Flat", DBNull.Value);
+            }
+
+            if (address.Details != null)
+            {
+                _dataAccess.SetParameter("@Details", address.Details);
+            }
+            else
+            {
+                _dataAccess.SetParameter("@Details", DBNull.Value);
+            }
+
             _dataAccess.SetParameter("@CityId", address.City.Id);
         }
     }

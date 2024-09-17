@@ -165,7 +165,7 @@ namespace BusinessLogicLayer
 
             if (order.User.UserId == 0) // Verifica si no tiene usuario asignado
             {
-                _peopleManager.HandlePersonId(order); // hack : reemplazar argumentos de los metodos Handle por sus semejantes de mas bajo nivel
+                _peopleManager.HandlePersonId(order);
             }
 
             try
