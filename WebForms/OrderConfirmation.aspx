@@ -146,9 +146,6 @@
                                 CssClass="form-control"
                                 placeholder="Código postal (opcional)">
                             </asp:TextBox>
-                            <div class="invalid-feedback">
-                                Campo Inválido, ingrese el código postal.
-                            </div>
                         </div>
                     </div>
                     <div class="row mb-3">

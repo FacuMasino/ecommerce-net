@@ -14,6 +14,7 @@ namespace UtilitiesLayer
         public bool IsValid { get; set; }
         public bool IsAlphanumeric { get; set; }
         public bool IsPassword { get; set; }
+        public bool Bypass { get; set; }
 
         public InputWrapper(
             TextBox textBox,
@@ -22,7 +23,8 @@ namespace UtilitiesLayer
             int maxLength = 0,
             bool positiveNumber = true,
             bool alphanumeric = false,
-            bool password = false
+            bool password = false,
+            bool bypass = false
         )
         {
             this.Control = textBox;
@@ -33,6 +35,7 @@ namespace UtilitiesLayer
             IsValid = true;
             IsAlphanumeric = alphanumeric;
             IsPassword = password;
+            Bypass = bypass;
         }
     }
 }

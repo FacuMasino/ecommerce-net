@@ -51,19 +51,15 @@ namespace WebForms
             _inputValidations.Add(new InputWrapper(FirstNameTxt, typeof(string), 3, 30));
             _inputValidations.Add(new InputWrapper(LastNameTxt, typeof(string), 3, 30));
             _inputValidations.Add(new InputWrapper(EmailTxt, typeof(string), 6, 30));
-
-            if (AddressPnl.Visible)
-            {
-                _inputValidations.Add(new InputWrapper(CityTxt, typeof(string), 3, 30));
-                _inputValidations.Add(new InputWrapper(StreetNameTxt, typeof(string), 3, 30));
-                _inputValidations.Add(new InputWrapper(StreetNumberTxt, typeof(string), 1, 30));
-            }
+            _inputValidations.Add(new InputWrapper(CityTxt, typeof(string), 3, 30));
+            _inputValidations.Add(new InputWrapper(StreetNameTxt, typeof(string), 3, 30));
+            _inputValidations.Add(new InputWrapper(StreetNumberTxt, typeof(string), 1, 30));
         }
 
         public bool IsValidInput(string controlId)
         {
             InputWrapper auxIW = _inputValidations.Find(ctl => ctl.Control.ID == controlId);
-            
+
             if (auxIW != null && auxIW.IsValid)
             {
                 return true;
@@ -122,6 +118,19 @@ namespace WebForms
             StreetNumberTxt.Enabled = enabled;
             FlatTxt.Enabled = enabled;
             DetailsTxt.Enabled = enabled;
+        }
+
+        private void ToggleBypass(bool enabled)
+        {
+            Validator.FindInputWrapper(_inputValidations, "CityTxt").Bypass = enabled;
+            Validator.FindInputWrapper(_inputValidations, "StreetNameTxt").Bypass = enabled;
+            Validator.FindInputWrapper(_inputValidations, "StreetNumberTxt").Bypass = enabled;
+        }
+
+        private void ToggleDeliveryRB()
+        {
+            AddressPnl.Visible = !AddressPnl.Visible;
+            ToggleAddressFields(AddressPnl.Visible);
         }
 
         private void MapAddress()
@@ -292,18 +301,18 @@ namespace WebForms
 
         protected void DeliveryRB_CheckedChanged(object sender, EventArgs e)
         {
-            AddressPnl.Visible = !AddressPnl.Visible;
-            ToggleAddressFields(AddressPnl.Visible);
+            ToggleDeliveryRB();
         }
 
         protected void PickupRB_CheckedChanged(object sender, EventArgs e)
         {
-            AddressPnl.Visible = !AddressPnl.Visible;
-            ToggleAddressFields(AddressPnl.Visible);
+            ToggleDeliveryRB();
         }
 
         protected void SubmitOrder_Click(object sender, EventArgs e)
         {
+            ToggleBypass(!AddressPnl.Visible);
+
             if (!Validator.RunValidations(_inputValidations))
             {
                 Notify("Por favor complete todos los campos");

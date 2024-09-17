@@ -141,18 +141,20 @@ namespace UtilitiesLayer
         public static bool RunValidations(List<InputWrapper> inputs)
         {
             int invalids = 0;
+
             foreach (InputWrapper input in inputs)
             {
-                if (!Validator.IsGoodInput(input))
+                if (input.Bypass || Validator.IsGoodInput(input))
+                {
+                    input.IsValid = true;
+                }
+                else
                 {
                     input.IsValid = false;
                     invalids++;
                 }
-                else
-                {
-                    input.IsValid = true;
-                }
             }
+
             return invalids == 0;
         }
 
