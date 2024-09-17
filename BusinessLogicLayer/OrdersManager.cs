@@ -170,7 +170,7 @@ namespace BusinessLogicLayer
 
             try
             {
-                _dataAccess.SetProcedure("SP_Add_Order_Confirmation");
+                _dataAccess.SetProcedure("SP_Add_Order");
                 SetParameters(order);
                 order.Id = _dataAccess.ExecuteScalar();
             }
@@ -248,7 +248,9 @@ namespace BusinessLogicLayer
 
         private void SetParameters(Order order)
         {
-            if (order.DeliveryDate != null)
+            DateTime minDateTime = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
+
+            if (order.DeliveryDate != null && order.DeliveryDate >= minDateTime)
             {
                 _dataAccess.SetParameter("@DeliveryDate", order.DeliveryDate);
             }

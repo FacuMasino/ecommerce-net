@@ -51,9 +51,13 @@ namespace WebForms
             _inputValidations.Add(new InputWrapper(FirstNameTxt, typeof(string), 3, 30));
             _inputValidations.Add(new InputWrapper(LastNameTxt, typeof(string), 3, 30));
             _inputValidations.Add(new InputWrapper(EmailTxt, typeof(string), 6, 30));
-            _inputValidations.Add(new InputWrapper(CityTxt, typeof(string), 3, 30));
-            _inputValidations.Add(new InputWrapper(StreetNameTxt, typeof(string), 3, 30));
-            _inputValidations.Add(new InputWrapper(StreetNumberTxt, typeof(string), 1, 30));
+
+            if (AddressPnl.Visible)
+            {
+                _inputValidations.Add(new InputWrapper(CityTxt, typeof(string), 3, 30));
+                _inputValidations.Add(new InputWrapper(StreetNameTxt, typeof(string), 3, 30));
+                _inputValidations.Add(new InputWrapper(StreetNumberTxt, typeof(string), 1, 30));
+            }
         }
 
         public bool IsValidInput(string controlId)
@@ -165,7 +169,7 @@ namespace WebForms
             {
                 _order.PaymentType.Id = (int)PaymentTypesManager.Ids.MercadoPagoId;
             }
-            else
+            else // if (BankTransferRB.Checked)
             {
                 _order.PaymentType.Id = (int)PaymentTypesManager.Ids.BankTransferId;
             }
@@ -265,7 +269,6 @@ namespace WebForms
                 BindProductSetsRpt();
                 BindProvincesDDL();
                 MapControls();
-                ToggleAddressFields(false);
             }
         }
 

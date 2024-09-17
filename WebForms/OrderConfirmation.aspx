@@ -79,7 +79,7 @@
                     <div class="d-flex gap-2">
                         <asp:RadioButton
                             runat="server"
-                            ID="BankRB"
+                            ID="BankTransferRB"
                             Checked="false"
                             GroupName="PaymentType"
                             Text="Transferencia bancaria" />
@@ -144,7 +144,7 @@
                                 runat="server"
                                 ID="ZipCodeTxt"
                                 CssClass="form-control"
-                                placeholder="Código Postal">
+                                placeholder="Código postal (opcional)">
                             </asp:TextBox>
                             <div class="invalid-feedback">
                                 Campo Inválido, ingrese el código postal.
@@ -193,7 +193,7 @@
                             TextMode="MultiLine"
                             Rows="3"
                             Columns="40"
-                            placeholder="Indicaciones adicionales">
+                            placeholder="Indicaciones adicionales (opcional)">
                         </asp:TextBox>
                     </div>
                 </asp:Panel>

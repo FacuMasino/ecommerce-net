@@ -256,7 +256,8 @@ end
 
 go
 
-create or alter procedure SP_Add_Order_Confirmation(
+create or alter procedure SP_Add_Order(
+	@DeliveryDate datetime,
 	@DeliveryAddressId int,
 	@OrderStatusId int,
 	@PersonId int,
@@ -266,10 +267,10 @@ create or alter procedure SP_Add_Order_Confirmation(
 as
 begin
 	insert into Orders
-	(DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId, PaymentTypeId)
+	(DeliveryDate, DeliveryAddressId, OrderStatusId, PersonId, DistributionChannelId, PaymentTypeId)
 	output inserted.OrderId
 	values
-	(@DeliveryAddressId, @OrderStatusId, @PersonId, @DistributionChannelId, @PaymentTypeId)
+	(@DeliveryDate, @DeliveryAddressId, @OrderStatusId, @PersonId, @DistributionChannelId, @PaymentTypeId)
 end
 
 go

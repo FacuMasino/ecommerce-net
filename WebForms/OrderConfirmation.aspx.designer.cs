@@ -60,13 +60,13 @@ namespace WebForms
         protected global::System.Web.UI.WebControls.RadioButton MercadoPagoRB;
 
         /// <summary>
-        /// BankRB control.
+        /// BankTransferRB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton BankRB;
+        protected global::System.Web.UI.WebControls.RadioButton BankTransferRB;
 
         /// <summary>
         /// PickupRB control.
