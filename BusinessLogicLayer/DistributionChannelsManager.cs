@@ -9,6 +9,14 @@ namespace BusinessLogicLayer
         private DataAccess _dataAccess = new DataAccess();
         private OrderStatusesManager _orderStatusesManager = new OrderStatusesManager();
 
+        public enum Ids
+        {
+            NoCashDeliveryId = 1,
+            NoCashNoDeliveryId = 2,
+            CashNoDeliveryId = 3,
+            CashDeliveryId = 4
+        }
+
         public DistributionChannel Read(int distributionChannelId)
         {
             DistributionChannel distributionChannel = new DistributionChannel();

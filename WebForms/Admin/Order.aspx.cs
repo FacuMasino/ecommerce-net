@@ -81,7 +81,7 @@ namespace WebForms.Admin
         {
             bool userHasTransitionRole = _usersManager.UserHasRole(_sessionUser, _order.OrderStatus.Role);
 
-            if (_order.OrderStatus.Role.Id == (int)RolesManager.Roles.CustomerRoleId)
+            if (_order.OrderStatus.Role.Id == (int)RolesManager.Ids.CustomerRoleId)
             {
                 userHasTransitionRole = false;
             }
@@ -137,7 +137,7 @@ namespace WebForms.Admin
             if (!isPostBack)
             {
                 OrderGeneratedLbl.Text = "Orden generada";
-                OrderStatusesDDL.Visible = _usersManager.UserHasRole(_sessionUser, (int)RolesManager.Roles.PlusRoleId);
+                OrderStatusesDDL.Visible = _usersManager.UserHasRole(_sessionUser, (int)RolesManager.Ids.PlusRoleId);
                 DistributionChannelLbl.Text = _order.DistributionChannel.Name;
             }
         }
@@ -222,7 +222,7 @@ namespace WebForms.Admin
         {
             FetchUser();
 
-            if (_usersManager.UserHasRole(_sessionUser, (int)RolesManager.Roles.PlusRoleId))
+            if (_usersManager.UserHasRole(_sessionUser, (int)RolesManager.Ids.PlusRoleId))
             {
                 FetchOrder();
                 _order.OrderStatus.Id = Convert.ToInt32(OrderStatusesDDL.SelectedValue);

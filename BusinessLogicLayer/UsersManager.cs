@@ -258,12 +258,12 @@ namespace BusinessLogicLayer
 
         public bool IsAdmin(User user)
         {
-            return UserHasRole(user, (int)RolesManager.Roles.AdminRoleId);
+            return UserHasRole(user, (int)RolesManager.Ids.AdminRoleId);
         }
 
         public bool IsCustomer(User user)
         {
-            return UserHasRole(user, (int)RolesManager.Roles.CustomerRoleId);
+            return UserHasRole(user, (int)RolesManager.Ids.CustomerRoleId);
         }
 
         public bool UserHasRole(User user, Role role)
@@ -286,17 +286,17 @@ namespace BusinessLogicLayer
 
         public bool IsBackOfficeUser(User user)
         {
-            if (UserHasRole(user, (int)RolesManager.Roles.AdminRoleId))
+            if (UserHasRole(user, (int)RolesManager.Ids.AdminRoleId))
             {
                 return true;
             }
 
-            if (UserHasRole(user, (int)RolesManager.Roles.DeliveryDriverRoleId))
+            if (UserHasRole(user, (int)RolesManager.Ids.DeliveryDriverRoleId))
             {
                 return true;
             }
 
-            if (UserHasRole(user, (int)RolesManager.Roles.CustomerServiceRoleId))
+            if (UserHasRole(user, (int)RolesManager.Ids.CustomerServiceRoleId))
             {
                 return true;
             }

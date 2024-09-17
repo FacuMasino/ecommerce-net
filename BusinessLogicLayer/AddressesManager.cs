@@ -261,11 +261,10 @@ namespace BusinessLogicLayer
             }
         }
 
-        public void HandleDeliveryAddressId(Order order)
+        public void HandleDeliveryAddressId(Order order) // hack : unificar con HandleAddressId(Person person) y eventualmente crear funcion generica
         {
             if (order.DeliveryAddress != null)
             {
-                order.DeliveryAddress.City.Id = _citiesManager.GetId(order.DeliveryAddress.City);
                 int foundDeliveryAddressId = GetId(order.DeliveryAddress);
 
                 if (foundDeliveryAddressId == 0)

@@ -5,6 +5,7 @@ using System.Web.UI.WebControls;
 using BusinessLogicLayer;
 using DomainModelLayer;
 using UtilitiesLayer;
+using WebForms.Admin;
 
 namespace WebForms
 {
@@ -16,7 +17,9 @@ namespace WebForms
         private Order _order;
         private ShoppingCart _shoppingCart;
         private OrdersManager _ordersManager;
+        private CountriesManager _countriesManager;
         private ProvincesManager _provincesManager;
+        private CitiesManager _citiesManager;
         private AddressesManager _addressesManager;
         private PaymentTypesManager _paymentTypesManager;
         private DistributionChannelsManager _distributionChannelsManager;
@@ -31,7 +34,9 @@ namespace WebForms
             _order = new Order();
             _shoppingCart = new ShoppingCart();
             _ordersManager = new OrdersManager();
+            _countriesManager = new CountriesManager();
             _provincesManager = new ProvincesManager();
+            _citiesManager = new CitiesManager();
             _addressesManager = new AddressesManager();
             _paymentTypesManager = new PaymentTypesManager();
             _distributionChannelsManager = new DistributionChannelsManager();
@@ -65,6 +70,20 @@ namespace WebForms
             return false;
         }
 
+        private void Notify(string message)
+        {
+            Site siteMP = (Site)this.Master;
+            siteMP.ShowBsToast(message);
+        }
+
+        private void FetchUser()
+        {
+            if (Session["user"] != null)
+            {
+                _user = (User)Session["user"];
+            }
+        }
+
         private void FetchShoppingCart()
         {
             _shoppingCart = (ShoppingCart)Session["shoppingCart"];
@@ -85,6 +104,13 @@ namespace WebForms
             ProvincesDDL.SelectedIndex = 0;
         }
 
+        private void TogglePersonalFields(bool enabled)
+        {
+            FirstNameTxt.Enabled = enabled;
+            LastNameTxt.Enabled = enabled;
+            EmailTxt.Enabled = enabled;
+        }
+
         private void ToggleAddressFields(bool enabled)
         {
             ProvincesDDL.Enabled = enabled;
@@ -96,17 +122,20 @@ namespace WebForms
             DetailsTxt.Enabled = enabled;
         }
 
-        private void SetAddress()
+        private void MapAddress()
         {
             if (DeliveryRB.Checked)
             {
-                _order.DeliveryAddress.Country.Name = "Argentina";
-                _order.DeliveryAddress.Province.Name = ProvincesDDL.Text;
+                _order.DeliveryAddress.Country.Id = (int)CountriesManager.Ids.ArgentinaId;
+                _order.DeliveryAddress.Country = _countriesManager.Read(_order.DeliveryAddress.Country.Id);
+                _order.DeliveryAddress.Province.Id = Convert.ToInt32(ProvincesDDL.SelectedValue);
+                _order.DeliveryAddress.Province = _provincesManager.Read(_order.DeliveryAddress.Province.Id);
                 _order.DeliveryAddress.City.Name = CityTxt.Text;
                 _order.DeliveryAddress.City.ZipCode = ZipCodeTxt.Text;
+                _order.DeliveryAddress.City.Id = _citiesManager.GetId(_order.DeliveryAddress.City);
                 _order.DeliveryAddress.StreetName = StreetNameTxt.Text;
                 _order.DeliveryAddress.StreetNumber = StreetNumberTxt.Text;
-                _order.DeliveryAddress.Flat = string.IsNullOrEmpty(FlatTxt.Text) ? "-" : FlatTxt.Text;
+                _order.DeliveryAddress.Flat = !string.IsNullOrEmpty(FlatTxt.Text) ? FlatTxt.Text : _order.DeliveryAddress.Flat;
                 _order.DeliveryAddress.Details = DetailsTxt.Text;
             }
             else
@@ -115,7 +144,7 @@ namespace WebForms
             }
         }
 
-        private void SetPerson()
+        private void MapPerson()
         {
             if (_user.UserId != 0)
             {
@@ -128,121 +157,101 @@ namespace WebForms
             _order.User.Email = EmailTxt.Text;
         }
 
-        private void SetPaymentType()
+        private void MapPaymentType()
         {
             if (CashRB.Checked)
             {
-                _order.PaymentType.Name = "Efectivo";
+                _order.PaymentType.Id = (int)PaymentTypesManager.Ids.CashId;
             }
             else if (MercadoPagoRB.Checked)
             {
-                _order.PaymentType.Name = "Mercado Pago";
+                _order.PaymentType.Id = (int)PaymentTypesManager.Ids.MercadoPagoId;
             }
             else
             {
-                _order.PaymentType.Name = "Transferencia bancaria";
+                _order.PaymentType.Id = (int)PaymentTypesManager.Ids.BankTransferId;
             }
+
+            _order.PaymentType = _paymentTypesManager.Read(_order.PaymentType.Id);
         }
 
-        private void SetDistributionChannel()
+        private void MapDistributionChannel()
         {
             if (CashRB.Checked)
             {
                 if (DeliveryRB.Checked)
                 {
-                    _order.DistributionChannel = _distributionChannelsManager.Read(4);
+                    _order.DistributionChannel.Id = (int)DistributionChannelsManager.Ids.CashDeliveryId;
                 }
                 else
                 {
-                    _order.DistributionChannel = _distributionChannelsManager.Read(3);
+                    _order.DistributionChannel.Id = (int)DistributionChannelsManager.Ids.CashNoDeliveryId;
                 }
             }
             else
             {
                 if (DeliveryRB.Checked)
                 {
-                    _order.DistributionChannel = _distributionChannelsManager.Read(1);
+                    _order.DistributionChannel.Id = (int)DistributionChannelsManager.Ids.NoCashDeliveryId;
                 }
                 else
                 {
-                    _order.DistributionChannel = _distributionChannelsManager.Read(2);
+                    _order.DistributionChannel.Id = (int)DistributionChannelsManager.Ids.NoCashNoDeliveryId;
                 }
             }
+
+            _order.DistributionChannel = _distributionChannelsManager.Read(_order.DistributionChannel.Id);
         }
 
-        private void SetOrderStatus()
+        private void MapOrderStatus()
         {
             if (_order.DistributionChannel.Id == 1)
             {
-                _order.OrderStatus = _orderStatusesManager.Read(1);
+                _order.OrderStatus.Id = (int)OrderStatusesManager.Ids.ProcessingPaymentId;
             }
             else if (_order.DistributionChannel.Id == 2)
             {
-                _order.OrderStatus = _orderStatusesManager.Read(1);
+                _order.OrderStatus.Id = (int)OrderStatusesManager.Ids.ProcessingPaymentId;
             }
             else if (_order.DistributionChannel.Id == 3)
             {
-                _order.OrderStatus = _orderStatusesManager.Read(6);
+                _order.OrderStatus.Id = (int)OrderStatusesManager.Ids.PaymentAndWithdrawalPendingId;
             }
             else // if (_order.DistributionChannel.Id == 4)
             {
-                _order.OrderStatus = _orderStatusesManager.Read(10);
+                _order.OrderStatus.Id = (int)OrderStatusesManager.Ids.DeliveryAndPaymentPendingId;
             }
+
+            _order.OrderStatus = _orderStatusesManager.Read(_order.OrderStatus.Id);
         }
 
-        private void SetOrder()
+        private void MapOrder()
         {
-            SetAddress();
-            SetPerson();
-            SetPaymentType();
-            SetDistributionChannel();
-            SetOrderStatus();
-        }
-
-        private void MapUserToControls()
-        {
-            FirstNameTxt.Text = _user.FirstName;
-            LastNameTxt.Text = _user.LastName;
-            EmailTxt.Text = _user.Email;
-            ProvincesDDL.SelectedValue = _user.Address.Province.Id.ToString();
-            CityTxt.Text = _user.Address.City.Name;
-            ZipCodeTxt.Text = _user.Address.City.ZipCode;
-            StreetNameTxt.Text = _user.Address.StreetName;
-            StreetNumberTxt.Text = _user.Address.StreetNumber;
-            FlatTxt.Text = _user.Address.Flat;
-            DetailsTxt.Text = _user.Address.Details;
-        }
-
-        private void TogglePersonalFields(bool enabled = false)
-        {
-            FirstNameTxt.Enabled = enabled;
-            LastNameTxt.Enabled = enabled;
-            EmailTxt.Enabled = enabled;
+            MapAddress();
+            MapPerson();
+            MapPaymentType();
+            MapDistributionChannel();
+            MapOrderStatus();
         }
 
         private void MapControls()
         {
             if (0 < _user.UserId)
             {
-                MapUserToControls();
-                TogglePersonalFields();
+                FirstNameTxt.Text = _user.FirstName;
+                LastNameTxt.Text = _user.LastName;
+                EmailTxt.Text = _user.Email;
+                ProvincesDDL.SelectedValue = _user.Address.Province.Id.ToString();
+                CityTxt.Text = _user.Address.City.Name;
+                ZipCodeTxt.Text = _user.Address.City.ZipCode;
+                StreetNameTxt.Text = _user.Address.StreetName;
+                StreetNumberTxt.Text = _user.Address.StreetNumber;
+                FlatTxt.Text = _user.Address.Flat;
+                DetailsTxt.Text = _user.Address.Details;
+                TogglePersonalFields(false);
             }
 
             TotalLbl.Text = _shoppingCart.Total.ToString();
-        }
-
-        private void Notify(string message)
-        {
-            Site siteMP = (Site)this.Master;
-            siteMP.ShowBsToast(message);
-        }
-
-        private void FetchUser()
-        {
-            if (Session["user"] != null)
-            {
-                _user = (User)Session["user"];
-            }
         }
 
         // EVENTS
@@ -262,18 +271,14 @@ namespace WebForms
             }
         }
 
-        protected void ProductSetsRpt_ItemDataBound(
-            object sender,
-            System.Web.UI.WebControls.RepeaterItemEventArgs e
-        )
+        protected void ProductSetsRpt_ItemDataBound(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e)
         {
-            if (
-                e.Item.ItemType == ListItemType.Item
-                || e.Item.ItemType == ListItemType.AlternatingItem
-            )
+            bool isStandardItem = e.Item.ItemType == ListItemType.Item;
+            bool isAlternatingItem = e.Item.ItemType == ListItemType.AlternatingItem;
+
+            if (isStandardItem || isAlternatingItem)
             {
-                System.Web.UI.WebControls.Image imageLbl =
-                    e.Item.FindControl("ImageLbl") as System.Web.UI.WebControls.Image;
+                System.Web.UI.WebControls.Image imageLbl = e.Item.FindControl("ImageLbl") as System.Web.UI.WebControls.Image;
 
                 ProductSet productSet = (ProductSet)e.Item.DataItem;
 
@@ -307,7 +312,7 @@ namespace WebForms
             try
             {
                 FetchShoppingCart();
-                SetOrder();
+                MapOrder();
                 _order.Id = _ordersManager.Add(_order, _shoppingCart.ProductSets);
             }
             catch (Exception ex)

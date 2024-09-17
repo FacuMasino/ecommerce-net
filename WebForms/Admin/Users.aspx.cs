@@ -63,23 +63,23 @@ namespace WebForms.Admin
         {
             string cssClass = "";
 
-            if (_role.Id == (int)RolesManager.Roles.AdminRoleId)
+            if (_role.Id == (int)RolesManager.Ids.AdminRoleId)
             {
                 cssClass += "bi bi-person-badge";
             }
-            else if (_role.Id == (int)RolesManager.Roles.CustomerRoleId)
+            else if (_role.Id == (int)RolesManager.Ids.CustomerRoleId)
             {
                 cssClass += "bi bi-cart";
             }
-            else if (_role.Id == (int)RolesManager.Roles.DeliveryDriverRoleId)
+            else if (_role.Id == (int)RolesManager.Ids.DeliveryDriverRoleId)
             {
                 cssClass += "bi bi-truck";
             }
-            else if (_role.Id == (int)RolesManager.Roles.CustomerServiceRoleId)
+            else if (_role.Id == (int)RolesManager.Ids.CustomerServiceRoleId)
             {
                 cssClass += "bi bi-headset";
             }
-            else if (_role.Id == (int)RolesManager.Roles.PlusRoleId)
+            else if (_role.Id == (int)RolesManager.Ids.PlusRoleId)
             {
                 cssClass += "bi bi-star";
             }

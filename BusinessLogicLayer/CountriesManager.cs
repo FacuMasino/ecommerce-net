@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Security;
 using DataAccessLayer;
 using DomainModelLayer;
 
@@ -7,11 +8,12 @@ namespace BusinessLogicLayer
 {
     public class CountriesManager
     {
-        // ATTRIBUTES
-
         private DataAccess _dataAccess = new DataAccess();
 
-        // METHODS
+        public enum Ids
+        {
+            ArgentinaId = 1
+        }
 
         public List<Country> List()
         {
@@ -42,6 +44,34 @@ namespace BusinessLogicLayer
             }
 
             return countriesList;
+        }
+
+        public Country Read(int countryId)
+        {
+            Country country = new Country();
+
+            try
+            {
+                _dataAccess.SetQuery("select CountryName from Countries where CountryId = @CountryId");
+                _dataAccess.SetParameter("@CountryId", countryId);
+                _dataAccess.ExecuteRead();
+
+                if (_dataAccess.Reader.Read())
+                {
+                    country.Id = countryId;
+                    country.Name = _dataAccess.Reader["CountryName"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+
+            return country;
         }
 
         public void Add(Country country)

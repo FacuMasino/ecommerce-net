@@ -87,7 +87,7 @@ namespace WebForms
         {
             bool userHasTransitionRole = _usersManager.UserHasRole(_sessionUser, _order.OrderStatus.Role);
 
-            if (_order.OrderStatus.Role.Id != (int)RolesManager.Roles.CustomerRoleId)
+            if (_order.OrderStatus.Role.Id != (int)RolesManager.Ids.CustomerRoleId)
             {
                 userHasTransitionRole = false;
             }

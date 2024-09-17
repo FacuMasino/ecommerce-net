@@ -51,6 +51,34 @@ namespace BusinessLogicLayer
             return provincesList;
         }
 
+        public Province Read(int provinceId)
+        {
+            Province province = new Province();
+
+            try
+            {
+                _dataAccess.SetQuery("select ProvinceName from Provinces where ProvinceId = @ProvinceId");
+                _dataAccess.SetParameter("@ProvinceId", provinceId);
+                _dataAccess.ExecuteRead();
+
+                if (_dataAccess.Reader.Read())
+                {
+                    province.Id = provinceId;
+                    province.Name = _dataAccess.Reader["ProvinceName"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _dataAccess.CloseConnection();
+            }
+
+            return province;
+        }
+
         public void Add(Province province, int countryId)
         {
             try

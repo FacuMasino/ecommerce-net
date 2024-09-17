@@ -8,6 +8,13 @@ namespace BusinessLogicLayer
     {
         private DataAccess _dataAccess = new DataAccess();
 
+        public enum Ids
+        {
+            CashId = 1,
+            MercadoPagoId = 2,
+            BankTransferId = 3
+        }
+
         public PaymentType Read(int paymentTypeId)
         {
             PaymentType paymentType = new PaymentType();

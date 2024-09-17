@@ -10,7 +10,7 @@ namespace BusinessLogicLayer
     {
         private DataAccess _dataAccess = new DataAccess();
 
-        public enum Roles
+        public enum Ids
         {
             DefaultRoleId = 2,
             AdminRoleId = 1,
@@ -120,7 +120,7 @@ namespace BusinessLogicLayer
 
         public Role DefaultRole()
         {
-            return Read((int)Roles.DefaultRoleId);
+            return Read((int)Ids.DefaultRoleId);
         }
 
         public void HandleRoleId(User user)

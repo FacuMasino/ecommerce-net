@@ -10,6 +10,13 @@ namespace BusinessLogicLayer
         private DataAccess _dataAccess = new DataAccess();
         private RolesManager _rolesManager = new RolesManager();
 
+        public enum Ids
+        {
+            ProcessingPaymentId = 1,
+            PaymentAndWithdrawalPendingId = 6,
+            DeliveryAndPaymentPendingId = 10
+        }
+
         public List<OrderStatus> List(int distributionChannelId, int currentOrderStatusId = 0)
         {
             List<OrderStatus> orderStatuses = new List<OrderStatus>();
