@@ -9,11 +9,11 @@ namespace UtilitiesLayer
 {
     public static class Helper
     {
-        // TODO: Estos datos podrian estar en una tabla de configuraciones de la DB
         public static string EcommerceName
         {
             get { return WebConfigurationManager.AppSettings["ecommerce_name"]; }
         }
+
         public static string EcommerceUrl
         {
             get { return WebConfigurationManager.AppSettings["ecommerce_url"]; }

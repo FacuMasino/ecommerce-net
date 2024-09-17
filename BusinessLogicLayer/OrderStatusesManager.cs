@@ -13,7 +13,9 @@ namespace BusinessLogicLayer
         public enum Ids
         {
             ProcessingPaymentId = 1,
+            OrderCompletedId = 5,
             PaymentAndWithdrawalPendingId = 6,
+            OrderCancelledId = 9,
             DeliveryAndPaymentPendingId = 10
         }
 

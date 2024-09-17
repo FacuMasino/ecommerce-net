@@ -97,7 +97,10 @@ namespace WebForms
 
         private void MapOrderStatusIcoLbl()
         {
-            if (_order.OrderStatus.Id == 5 || _order.OrderStatus.Id == 9) // hack : ids hardcodiados tienen que coincidir con DB
+            int orderCompletedId = (int)OrderStatusesManager.Ids.OrderCompletedId;
+            int orderCancelledId = (int)OrderStatusesManager.Ids.OrderCancelledId;
+
+            if (_order.OrderStatus.Id == orderCompletedId || _order.OrderStatus.Id == orderCancelledId)
             {
                 OrderStatusIco.CssClass = "bi bi-check-circle-fill text-success";
             }
@@ -210,13 +213,8 @@ namespace WebForms
 
         protected void TransitionButton_Click(object sender, EventArgs e)
         {
-            // hack : agregar confirmación
-
             FetchOrder();
-            int nextStatusId = _orderStatusesManager.GetNextStatusId(
-                _order.DistributionChannel.Id,
-                _order.OrderStatus.Id
-            );
+            int nextStatusId = _orderStatusesManager.GetNextStatusId(_order.DistributionChannel.Id, _order.OrderStatus.Id);
             _ordersManager.UpdateOrderStatus(_order.Id, nextStatusId);
             FetchOrder();
             BindAcceptedStatusesRpt();
